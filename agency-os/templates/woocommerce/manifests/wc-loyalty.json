@@ -1,0 +1,7 @@
+{
+  "plugins": {
+    "required": [
+      "woocommerce-points-and-rewards"
+    ]
+  }
+}

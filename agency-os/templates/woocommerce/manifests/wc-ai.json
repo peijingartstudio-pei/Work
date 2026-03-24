@@ -1,0 +1,7 @@
+{
+  "plugins": {
+    "required": [
+      "wordpress-mcp"
+    ]
+  }
+}

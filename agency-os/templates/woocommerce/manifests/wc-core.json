@@ -1,0 +1,18 @@
+{
+  "theme": { "slug": "kadence" },
+  "plugins": {
+    "required": [
+      "woocommerce",
+      "cartflows",
+      "kadence-blocks",
+      "seo-by-rank-math",
+      "fluent-smtp",
+      "google-site-kit"
+    ],
+    "conditional": {
+      "litespeed-cache": {
+        "when_server_header_matches": "(?i)(litespeed|openlitespeed)"
+      }
+    }
+  }
+}

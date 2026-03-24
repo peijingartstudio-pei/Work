@@ -1,0 +1,30 @@
+﻿# Docs Index
+
+## 目的
+- 集中管理治理文件，避免根目錄文件散落
+
+## 結構
+- `docs/operations/`：系統操作與執行流程
+- `docs/sales/`：報價與變更核價規則
+- `docs/templates/`：合約與變更模板
+- `docs/standards/`：技術與開發標準
+- `docs/metrics/`：KPI 與毛利量測規格
+- `docs/quality/`：交付品質門檻與放行機制
+- `docs/international/`：跨時區與跨國營運政策
+- `docs/product/`：可販售套件與買方交接規範
+- `docs/compliance/`：合規檢核與稽核清單
+- `docs/releases/`：版本發布、升級路徑、遷移清單
+- `docs/architecture/`：總控中心與多平台架構設計
+- `docs/overview/`：整體系統介紹與導讀文件
+- `docs/CHANGE_IMPACT_MATRIX.md`：文件連動關係
+
+## 使用規則
+1. 先改「主文件」（single source of truth）
+2. 依 `docs/CHANGE_IMPACT_MATRIX.md` 同步更新關聯文件
+3. 完成後更新 `WORKLOG.md` 與 `TASKS.md`
+
+## Related Documents (Auto-Synced)
+- `docs/overview/agency-os-complete-system-introduction.md`
+
+_Last synced: 2026-03-20 04:57:16 UTC_
+

@@ -1,0 +1,13 @@
+{
+  "plugins": {
+    "required": [
+      "facetwp-blocks",
+      "facetwp-cache",
+      "facetwp-conditional-logic",
+      "facetwp-hierarchy-select",
+      "facetwp-i18n",
+      "facetwp-relevanssi",
+      "facetwp-submit"
+    ]
+  }
+}

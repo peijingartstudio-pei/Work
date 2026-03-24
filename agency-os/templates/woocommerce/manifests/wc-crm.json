@@ -1,0 +1,12 @@
+{
+  "plugins": {
+    "required": [
+      "fluent-crm",
+      "fluentform",
+      "newsletter-fluentforms"
+    ],
+    "pro": [
+      "fluentformpro"
+    ]
+  }
+}
