@@ -1,0 +1,39 @@
+---
+description: End-of-day closeout before shutdown with linkage verification
+alwaysApply: true
+---
+
+# Shutdown Closeout
+
+When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
+"要關機", "收工", "今天先到這"), run this closeout sequence before ending:
+
+1. Run:
+`powershell -ExecutionPolicy Bypass -File .\scripts\doc-sync-automation.ps1 -AutoDetect`
+2. Run:
+`powershell -ExecutionPolicy Bypass -File .\scripts\system-health-check.ps1`
+3. Run:
+`powershell -ExecutionPolicy Bypass -File .\scripts\system-guard.ps1 -Mode manual`
+4. Confirm linkage integrity is PASS (Critical Gate must pass).
+5. Update:
+- `TASKS.md`
+- `WORKLOG.md`
+- `memory/CONVERSATION_MEMORY.md`
+- `memory/daily/YYYY-MM-DD.md`
+6. If `memory/daily/YYYY-MM-DD.md` does not exist, create it first and then
+   write today's closeout summary into it.
+
+Then respond with this exact structure:
+
+- 今日完成:
+  - <completed work>
+- 今日未完成:
+  - <pending work>
+- 連動檢查:
+  - <PASS/FAIL + key evidence>
+- 明日優先:
+  - P1
+  - P2
+  - P3
+
+If any check fails, provide a rollback-safe fix plan before signing off.

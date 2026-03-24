@@ -1,12 +1,1 @@
-# Sensitive config and backups
-mcp.json
-mcp-backups/
-*.bak
-
-# Local/editor/runtime
-.cursor/
-.claude/
-
-# Common secrets
-.env
-.env.*
+# Sync everything for full environment restore

@@ -1,0 +1,32 @@
+---
+description: Session startup report with yesterday recap and today plan
+alwaysApply: true
+---
+
+# Session Bootstrap
+
+Before proposing any implementation plan, always read:
+- `README.md`
+- `AGENTS.md`
+- `memory/CONVERSATION_MEMORY.md`
+- `memory/daily/` today and yesterday notes if they exist
+- `TASKS.md`
+- `WORKLOG.md`
+
+At the beginning of every new conversation, output this exact structure:
+
+- Yesterday Recap:
+  - Completed
+  - Pending
+  - Risks/Blockers
+- Today Plan:
+  - Priority 1
+  - Priority 2
+  - Priority 3
+- Confirm:
+  - "今天先做哪一項？"
+
+If prior context is missing, explicitly say "無法可靠讀取昨日脈絡" and ask
+the user for a one-line recap before continuing.
+
+If files are missing, create them using project templates before proceeding.

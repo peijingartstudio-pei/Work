@@ -1,0 +1,162 @@
+{
+  "mcpServers": {
+    "airtable": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@loticdigital/airtable-mcp-server"
+      ],
+      "env": {
+        "AIRTABLE_API_KEY": "patVgCIuooi8ZcqUG.317236d18a17ad282d70cee0763b9f53636474d8b832ed897f2fc81d55eafba8"
+      }
+    },
+    "wordpress": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@automattic/mcp-wordpress-remote@latest"
+      ],
+      "env": {
+        "WP_API_URL": "https://soulfulexpression.org/",
+        "JWT_TOKEN": "GeAW Zxq5 g8wx WL1r HOKU TQRq"
+      }
+    },
+    "replicate": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "replicate-mcp"
+      ],
+      "env": {
+        "REPLICATE_API_TOKEN": "r8_UZjCFstQUpxY2AAdloxexcbtjCy4elk4CRWCR",
+        "REPLICATE_WEBHOOK_SIGNING_KEY": "whsec_NQOEvk5qCJOhBPgRCs97+cMgA8/zrcBt"
+      }
+    },
+    "n8n": {
+      "type": "http",
+      "url": "https://jonjonesai.app.n8n.cloud/mcp-server/http",
+      "headers": {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkYmQ3YTFlMC1mZDA5LTRjMzctYmM0Ni0xY2IwMzcxZjI3OTYiLCJpc3MiOiJuOG4iLCJhdWQiOiJtY3Atc2VydmVyLWFwaSIsImp0aSI6ImZjMTIyYjM4LTU0MDUtNGRhMC05ZGZmLWQxZWI3YWVhZGI1NyIsImlhdCI6MTc3MzkzODAxNH0.tsKtGqkBgjGA1VvAcNoTRmBUPAH-UkIS96DSOpvCmwY"
+      }
+    },
+    "github": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
+      }
+    },
+    "work-global": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Users\\user1115",
+        "D:\\work"
+      ]
+    },
+   "supabase": {
+   "type": "http",
+   "url": "https://mcp.supabase.com/mcp?project_ref=iknutyjsntaqktnnzgxl&read_only=true&features=database,docs,development,debugging",
+   "headers": {
+   "Authorization": "Bearer sbp_f94121daf0e43a884509c4f7eda0a796da5339cb"
+   }
+   },
+     "chatgpt-fast": {
+      "command": "node",
+      "args": [
+        "D:\\Work\\mcp-local-wrappers\\llm-mcp.mjs",
+        "openai"
+      ],
+      "env": {
+        "OPENAI_API_KEY": "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",
+        "OPENAI_MODEL": "gpt-5.3-chat-latest"
+      }
+    },
+    "chatgpt-latest": {
+      "command": "node",
+      "args": [
+        "D:\\Work\\mcp-local-wrappers\\llm-mcp.mjs",
+        "openai"
+      ],
+      "env": {
+        "OPENAI_API_KEY": "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",
+        "OPENAI_MODEL": "gpt-5.4"
+      }
+    },
+    "claude-fast": {
+      "command": "node",
+      "args": [
+        "D:\\Work\\mcp-local-wrappers\\llm-mcp.mjs",
+        "anthropic"
+      ],
+      "env": {
+        "ANTHROPIC_API_KEY": "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",
+        "ANTHROPIC_MODEL": "claude-haiku-4-5-20251001"
+      }
+    },
+    "claude-latest": {
+      "command": "node",
+      "args": [
+        "D:\\Work\\mcp-local-wrappers\\llm-mcp.mjs",
+        "anthropic"
+      ],
+      "env": {
+        "ANTHROPIC_API_KEY": "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",
+        "ANTHROPIC_MODEL": "claude-sonnet-4-6"
+      }
+    },
+    "perplexity": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@perplexity-ai/mcp-server"
+      ],
+      "env": {
+        "PERPLEXITY_API_KEY": "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"
+      }
+    },
+    "gemini-fast": {
+      "command": "node",
+      "args": [
+        "D:\\Work\\mcp-local-wrappers\\llm-mcp.mjs",
+        "gemini"
+      ],
+      "env": {
+        "GEMINI_API_KEY": "AIzaSyCzc7UOxnaC1D-7PeQulBzdmgOOKi2waU8",
+        "GEMINI_MODEL": "gemini-2.5-flash"
+      }
+    },
+    "gemini-latest": {
+      "command": "node",
+      "args": [
+        "D:\\Work\\mcp-local-wrappers\\llm-mcp.mjs",
+        "gemini"
+      ],
+      "env": {
+        "GEMINI_API_KEY": "AIzaSyCzc7UOxnaC1D-7PeQulBzdmgOOKi2waU8",
+        "GEMINI_MODEL": "gemini-3.1-pro-preview"
+      }
+    },
+    "copilot": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer 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"
+      }
+    }
+  }
+}
