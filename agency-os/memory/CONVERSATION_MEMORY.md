@@ -1,4 +1,4 @@
-﻿# Conversation Memory
+# Conversation Memory
 
 ## Current Operating Context
 - 你正在建立多客戶網站與系統代營運模式
@@ -76,6 +76,29 @@
     - `scripts/validate-manifests.mjs`、`scripts/validate-governance-configs.mjs`
     - `scripts/bootstrap-validate.mjs`（整體健檢基線）
 - 已修復 `agency-os` 的 Critical Gate FAIL：在 `agency-os/.cursor` 建 junction 指向 `D:\Work\.cursor`
+- 已完成跨電腦 pull 相容修正：`system-health-check.ps1` 新增 `.cursor` 規則路徑 fallback（`agency-os/.cursor` 缺失時可改由 `../.cursor` 驗證）
+- 已完成 AO-CLOSE 收工檢查三步：doc-sync / health / guard 全 PASS（最新 health score 100%，Critical Gate PASS）
+- 已重讀 `docs/spec/raw` 三份 master 規格並完成差距盤點；已把缺口回寫到 `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`
+- 已完成 raw spec 差距第一批落地（C4-1~C4-3）：
+  - `templates/woocommerce/scripts/install-from-manifest.sh`
+  - `templates/woocommerce/scripts/smoke-test.sh`
+  - `infra/github/workflows/validate-manifest.yml`
+- 已完成 raw spec 差距第二批落地（C4-4~C4-5）：
+  - `infra/n8n/exports/client-onboarding-flow.json`
+  - `docs/ROUTING_MATRIX.md`
+- 已新增 C1-1 寫入驗證腳本：`lobster-factory/scripts/validate-workflow-runs-write.mjs`
+  - 預設 dryrun（安全）
+  - `--execute=1` + Supabase env 時可執行 `workflow_runs` 真寫入驗證
+- 已新增 C1-2 狀態流驗證腳本：`lobster-factory/scripts/validate-package-install-runs-flow.mjs`
+  - 預設 dryrun（安全）
+  - `--execute=1` + Supabase env 時可執行 `package_install_runs` 的 pending -> running -> completed 流程
+- 已完成 C1-3 第一版：DB 寫入韌性（重試/補償/可觀測）
+  - `supabaseRestInsert` 已加入 retry/backoff + traceId header（`x-lobster-trace-id`）
+  - 新增 `lobster-factory/scripts/validate-db-write-resilience.mjs`（dryrun/execute）
+- 已新增 C1 一次性實戰流程文件：`lobster-factory/docs/C1_EXECUTION_RUNBOOK.md`
+  - 固定順序：dryrun -> execute -> acceptance -> rollback-safe handling
+- 目前已確認缺口（尚未實作）：
+  - Enterprise 工具層（Sentry/PostHog/Cloudflare/Secrets/Identity）
 
 ## Remaining - 需要接下來做完的事（依序）
 1. 為 `lobster-factory` 接上「只寫 `workflow_runs`」的真寫入流程（預設關閉寫入，需你提供 Supabase 相關 env）
@@ -140,11 +163,17 @@ node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=f
   - 風險
   - 下一步
 
+## Today (2026-03-26) - AO-CLOSE
+- 收工三步：doc-sync（無新差異／沿用 closeout `closeout-20260326-015712.md`）、`system-health-check` 100% `health-20260326-020219.md`、`system-guard` PASS `guard-20260326-020220.md`；無 `ALERT_REQUIRED.txt`
+- 收工清單已納入 §1b Git／GitHub；使用者約定 **commit／push 改次日處理**
+- MCP/Cursor：`mcp.json` 為伺服器設定；本機同步仍以 `git` 為主，GitHub MCP 適合小範圍 API 提交，與整庫 `git push` 不同路
+
 ## Related Documents (Auto-Synced)
 - `.cursor/rules/00-session-bootstrap.mdc`
 - `.cursor/rules/10-memory-maintenance.mdc`
 - `.cursor/rules/30-resume-keyword.mdc`
 - `.cursor/rules/40-shutdown-closeout.mdc`
+- `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-25 14:45:16 UTC_
+_Last synced: 2026-03-25 17:57:12 UTC_
 

@@ -1,4 +1,4 @@
-﻿# Worklog
+# Worklog
 
 ## 2026-02-27
 
@@ -78,7 +78,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-25 14:45:16 UTC_
+_Last synced: 2026-03-25 17:57:12 UTC_
 
 ## 2026-03-20
 
@@ -111,5 +111,29 @@ _Last synced: 2026-03-25 14:45:16 UTC_
 - `doc-sync-automation -AutoDetect`：PASS（生成 `reports/closeout/closeout-20260325-223356.md`）
 - `system-health-check`：PASS，100%（Critical Gate PASS；`reports/health/health-20260325-223403.md`）
 - `system-guard -Mode manual`：PASS（`reports/guard/guard-20260325-223414.md`）
+
+### 二次收工確認（跨電腦 pull 相容後）
+- `doc-sync-automation -AutoDetect`：PASS（`reports/closeout/closeout-20260325-231338.md`）
+- `system-health-check`：PASS，100%（Critical Gate PASS；`reports/health/health-20260325-231344.md`）
+- `system-guard -Mode manual`：PASS（`reports/guard/guard-20260325-231349.md`）
+
+
+
+## 2026-03-26
+
+### Periodic system review + 週期總檢基建（合併同日紀錄）
+- 01:30–01:35：首次週檢後修復 `generate-integrated-status-report.ps1`（完整實作 + WORKLOG `-Tail 60`）；`integrated-status-LATEST` 已刷新
+- 01:36：週檢 `verify-build-gates` PASS；綜合報告已刷新
+- **排程**：`REGISTER_WEEKLY_SYSTEM_REVIEW_TASK.ps1` 使用 `Register-ScheduledTask` → 工作 **AgencyOS-WeeklySystemReview**（預設週一 09:00；`-NoInteractive` = S4U）
+- **Health §1b**：產報／週檢腳本 script sanity（防 wrapper 覆蓋）；`health-20260326-014630.md` Critical Gate PASS
+- 儀表板／學習路徑已掛每週儀式與排程說明
+
+### AO-CLOSE（2026-03-26 晚）
+- `doc-sync-automation -AutoDetect`：無新變更偵測；沿用 closeout `reports/closeout/closeout-20260326-015712.md`
+- `system-health-check`（`D:\Work`）：PASS，100%（265/265），`reports/health/health-20260326-020219.md`，Critical Gate PASS
+- `system-guard -Mode manual`：PASS，`reports/guard/guard-20260326-020220.md`
+- **Git**：依本人指示改明天再 commit／push（見 §1b 與對話約定）
+- `ALERT_REQUIRED.txt`：無
+
 
 

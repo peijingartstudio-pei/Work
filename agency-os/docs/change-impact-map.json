@@ -16,6 +16,9 @@
     "scripts/build-product-bundle.ps1",
     "scripts/system-health-check.ps1",
     "scripts/doc-sync-automation.ps1",
+    "scripts/weekly-system-review.ps1",
+    "scripts/generate-integrated-status-report.ps1",
+    "automation/REGISTER_WEEKLY_SYSTEM_REVIEW_TASK.ps1",
     "docs/operations/finance-operations.md",
     "docs/operations/scope-change-policy.md",
     "docs/operations/security-secrets-policy.md",
@@ -310,6 +313,22 @@
         "TASKS.md",
         "WORKLOG.md",
         "LAST_SYSTEM_STATUS.md"
+      ]
+    },
+    {
+      "source": "docs/overview/EXECUTION_DASHBOARD.md",
+      "targets": [
+        "docs/overview/INTEGRATED_STATUS_REPORT.md",
+        "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
+        "docs/operations/end-of-day-checklist.md",
+        "memory/CONVERSATION_MEMORY.md"
+      ]
+    },
+    {
+      "source": "automation/REGISTER_WEEKLY_SYSTEM_REVIEW_TASK.ps1",
+      "targets": [
+        "docs/overview/EXECUTION_DASHBOARD.md",
+        "docs/overview/INTEGRATED_STATUS_REPORT.md"
       ]
     },
     {

@@ -24,6 +24,7 @@
 - [x] 建立對外販售打包腳本（`scripts/build-product-bundle.ps1`）
 - [x] 建立總控中心架構與多平台（WordPress-first）連動設計
 - [ ] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md`
+- [x] 完成今日 AO-CLOSE 三步收工檢查（doc-sync / health / guard 全 PASS）
 - [x] 建立標準 MSA/SOW/CR 文件模板
 - [x] 修復 `AgencyOS-*` 排程路徑到 `D:\Work\agency-os` 並補齊命令引號防呆
 - [x] 建立 reports 歸檔腳本（`scripts/archive-old-reports.ps1`）與 README 操作入口
@@ -35,6 +36,8 @@
 - [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核）
 - [x] 建立英文化客戶輸出模板（Proposal/SOW/Monthly Report）
 - [x] 建立 release notes + upgrade path + migration checklist
+- [x] `lobster-factory` 補齊 raw spec 差距檔案（C4-1~C4-5 完成）
+- [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity
 
 ## Related Documents (Auto-Synced)
 - `.cursor/rules/00-session-bootstrap.mdc`
@@ -49,5 +52,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-25 14:45:16 UTC_
+_Last synced: 2026-03-25 17:57:12 UTC_
 

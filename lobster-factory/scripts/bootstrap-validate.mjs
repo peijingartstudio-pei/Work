@@ -43,5 +43,14 @@ execSync(`node "${path.join(repoRoot, "scripts", "validate-governance-configs.mj
   stdio: "inherit",
 });
 
+console.log("Running doc link + canonical integrity...");
+execSync(`node "${path.join(repoRoot, "scripts", "validate-doc-integrity.mjs")}"`, {
+  stdio: "inherit",
+  env: {
+    ...process.env,
+    LOBSTER_WORK_ROOT: path.resolve(repoRoot, ".."),
+  },
+});
+
 console.log("Bootstrap validation PASSED ✅");
 

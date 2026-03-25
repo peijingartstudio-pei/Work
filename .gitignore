@@ -1,1 +1,26 @@
-# Sync everything for full environment restore
+# --- Secrets & local app state (never push) ---
+.claude/
+**/.claude/
+
+# --- Dependencies (reinstall with npm ci / npm install) ---
+node_modules/
+
+# --- Environment & keys ---
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+id_rsa
+id_ed25519
+*.key
+
+# --- OS & editors ---
+Thumbs.db
+.DS_Store
+*.swp
+*~
+
+# --- Cursor / IDE ephemeral locks (optional noise) ---
+.cursor/**/.lock
+**/.cursor/**/locks/

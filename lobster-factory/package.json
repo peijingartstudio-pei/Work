@@ -1,0 +1,14 @@
+{
+  "name": "lobster-factory",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "validate": "node scripts/bootstrap-validate.mjs",
+    "validate:manifest": "node scripts/validate-manifests.mjs",
+    "validate:governance": "node scripts/validate-governance-configs.mjs",
+    "validate:docs": "node scripts/validate-doc-integrity.mjs"
+  }
+}

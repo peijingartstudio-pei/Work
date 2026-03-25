@@ -1,0 +1,53 @@
+﻿# End-of-day Checklist (AO-CLOSE)
+
+> 目的：每次關機前**逐項打勾**，確保不疏漏、不重工，並留下可追溯證據（reports + 進度文件）。
+
+## 0) 先決條件（遇到阻塞先停）
+- [ ] 若存在 `ALERT_REQUIRED.txt`：先處理/回報原因，**不可帶著 FAIL 收工**
+- [ ] 確認今天的「主線任務」已更新到 `TASKS.md`（至少狀態正確）
+- [ ] （可選）送 PR / 大改 docs 前：在 `D:\Work` 跑 `.\scripts\verify-build-gates.ps1`（工程 + doc + 治理 health 一次完成）
+- [ ] （可選）有註冊 **AgencyOS-WeeklySystemReview** 者：若本週排程曾跑過，確認未被寫入 `ALERT_REQUIRED.txt`；若有，表示週檢閘道曾 FAIL，須先處理再收工
+
+## 1) 必跑三步（硬性 Gate）
+在 `D:\Work\agency-os` 目錄執行：
+
+- [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\doc-sync-automation.ps1 -AutoDetect`
+  - [ ] 產生 closeout 報告：`reports/closeout/closeout-*.md`
+- [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\system-health-check.ps1`
+  - [ ] `Critical Gate` 必須 **PASS**
+  - [ ] 記下：`reports/health/health-*.md`
+- [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\system-guard.ps1 -Mode manual`
+  - [ ] 更新：`LAST_SYSTEM_STATUS.md`
+  - [ ] 記下：`reports/guard/guard-*.md`
+
+## 1b) Git / GitHub（收工標準動作；跨電腦續接）
+在**實際 Git  repo 根目錄**執行（本機 monorepo 多為 `D:\Work`；若 `agency-os` 為獨立 repo 請在該根目錄另跑一輪）：
+
+- [ ] `git status`：**無**未提交變更，或已將今日應留下的變更 **commit**（訊息簡潔、可讀）
+- [ ] `git push`（或 `git push origin <你的分支>`）：**無**未推送的 commit（與遠端同步）
+  - 若今天刻意不推：在 `WORKLOG.md` 寫一句原因（例如等待審查、只在私機）
+- [ ] 推送前快速掃描：diff 與暫存區**不得**含 token、私钥、還原後的 MCP/IDE 備份路徑內敏感檔
+
+> 與舊版「只做三步」相比：收工不僅要本機 PASS，還要**遠端有同款快照**，隔天或另一台電腦 `pull` 才不會斷線。
+
+## 2) 四份文件必回寫（避免明天斷線）
+- [ ] `TASKS.md`
+  - [ ] 今天完成項目標記完成
+  - [ ] 明天要做的 3 件事（P1/P2/P3）在 Next/Backlog 清楚可見
+- [ ] `WORKLOG.md`
+  - [ ] 寫下今天「做了什麼」與 closeout 證據檔名
+- [ ] `memory/CONVERSATION_MEMORY.md`
+  - [ ] 更新 Today/Remaining/Tomorrow（保持可續接）
+- [ ] `memory/daily/YYYY-MM-DD.md`
+  - [ ] 補上 closeout 三步 PASS 的證據檔名（closeout/health/guard）
+
+## 3) 防重工確認（關機前最後 30 秒）
+- [ ] 明天第一步的指令已寫在 `memory/CONVERSATION_MEMORY.md`（Strict/Fast Runbook）
+- [ ] **§1b Git/GitHub 已完成**（勿只靠記憶；以 `git status` / 遠端為準）
+- [ ] 任何機密（token/key）**不得**出現在 repo 內（尤其是 `mcp-backups/`、`.claude.json` 這類）
+
+## Related Documents (Auto-Synced)
+- `docs/overview/EXECUTION_DASHBOARD.md`
+
+_Last synced: 2026-03-25 17:57:12 UTC_
+

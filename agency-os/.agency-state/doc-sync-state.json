@@ -1,19 +1,33 @@
 ﻿{
-    "last_run_utc":  "2026-03-25T14:45:16.8368691Z",
+    "last_run_utc":  "2026-03-25T17:57:12.4062273Z",
     "changed_files":  [
-                          "memory/CONVERSATION_MEMORY.md",
-                          "memory/daily/2026-03-25.md",
-                          "TASKS.md",
-                          "WORKLOG.md"
+                          ".cursor/rules/40-shutdown-closeout.mdc",
+                          "docs/operations/end-of-day-checklist.md",
+                          "docs/overview/EXECUTION_DASHBOARD.md"
                       ],
     "impacted_files":  [
+                           ".cursor/rules/40-shutdown-closeout.mdc",
+                           "AGENTS.md",
+                           "docs/operations/end-of-day-checklist.md",
+                           "docs/overview/EXECUTION_DASHBOARD.md",
+                           "docs/overview/INTEGRATED_STATUS_REPORT.md",
+                           "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
                            "memory/CONVERSATION_MEMORY.md",
-                           "memory/daily/2026-03-25.md",
+                           "README.md",
+                           "scripts/doc-sync-automation.ps1",
+                           "scripts/system-guard.ps1",
+                           "scripts/system-health-check.ps1",
                            "TASKS.md",
                            "WORKLOG.md"
                        ],
     "auto_updated_files":  [
+                               "AGENTS.md",
+                               "docs/operations/end-of-day-checklist.md",
+                               "docs/overview/EXECUTION_DASHBOARD.md",
+                               "docs/overview/INTEGRATED_STATUS_REPORT.md",
+                               "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
                                "memory/CONVERSATION_MEMORY.md",
+                               "README.md",
                                "TASKS.md",
                                "WORKLOG.md"
                            ]

@@ -3,6 +3,21 @@ export type SupabaseRestConfig = {
   serviceRoleKey: string;
 };
 
+export type SupabaseRestInsertOptions = {
+  maxRetries?: number;
+  baseDelayMs?: number;
+  traceId?: string;
+  onAttempt?: (ctx: {
+    attempt: number;
+    table: string;
+    traceId: string;
+    status?: number;
+    error?: string;
+  }) => void;
+};
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 /**
  * Phase 1: do not call by default.
  * This adapter exists so later you can execute the returned row payloads via PostgREST.
@@ -10,30 +25,57 @@ export type SupabaseRestConfig = {
 export async function supabaseRestInsert(
   config: SupabaseRestConfig,
   table: string,
-  row: Record<string, unknown>
+  row: Record<string, unknown>,
+  options: SupabaseRestInsertOptions = {}
 ) {
   const fetchImpl = (globalThis as any).fetch as typeof fetch;
   if (!fetchImpl) throw new Error("global fetch is not available in this runtime");
 
-  const res = await fetchImpl(`${config.supabaseUrl}/rest/v1/${table}`, {
-    method: "POST",
-    headers: {
-      apikey: config.serviceRoleKey,
-      Authorization: `Bearer ${config.serviceRoleKey}`,
-      "Content-Type": "application/json",
-      Prefer: "return=representation",
-    },
-    body: JSON.stringify([row]),
-  });
+  const maxRetries = Math.max(0, Number(options.maxRetries ?? 2));
+  const baseDelayMs = Math.max(50, Number(options.baseDelayMs ?? 250));
+  const traceId = options.traceId ?? `trace-${Date.now()}`;
 
-  if (!res.ok) {
+  let lastError = "";
+  for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
+    const res = await fetchImpl(`${config.supabaseUrl}/rest/v1/${table}`, {
+      method: "POST",
+      headers: {
+        apikey: config.serviceRoleKey,
+        Authorization: `Bearer ${config.serviceRoleKey}`,
+        "Content-Type": "application/json",
+        Prefer: "return=representation",
+        "x-lobster-trace-id": traceId,
+      },
+      body: JSON.stringify([row]),
+    });
+
+    if (res.ok) {
+      options.onAttempt?.({ attempt, table, traceId, status: res.status });
+      const json = (await res.json()) as unknown;
+      return json;
+    }
+
     const text = await res.text().catch(() => "");
-    throw new Error(
-      `Supabase REST insert failed for ${table}: ${res.status} ${res.statusText} ${text}`
-    );
+    lastError = `${res.status} ${res.statusText} ${text}`.trim();
+    options.onAttempt?.({
+      attempt,
+      table,
+      traceId,
+      status: res.status,
+      error: lastError,
+    });
+
+    const retryable = res.status >= 500 || res.status === 429;
+    if (!retryable || attempt >= maxRetries) break;
+
+    const delay = baseDelayMs * 2 ** attempt;
+    await sleep(delay);
   }
 
-  const json = (await res.json()) as unknown;
-  return json;
+  throw new Error(
+    `Supabase REST insert failed for ${table} [traceId=${traceId}] after ${
+      maxRetries + 1
+    } attempts: ${lastError}`
+  );
 }
 

@@ -1,0 +1,1242 @@
+﻿[
+    {
+        "name":  "Core file exists: README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: WORKLOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: scripts/doc-sync-automation.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: scripts/system-health-check.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: scripts/system-guard.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: scripts/build-product-bundle.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: docs/CHANGE_IMPACT_MATRIX.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: docs/change-impact-map.json",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: automation/TENANT_AUTOMATION_RUNNER.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: automation/REGISTER_TENANT_TASKS.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Core file exists: automation/ENQUEUE_TENANT_TASK.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/operations/system-operation-sop.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-operation-sop.md -\u003e docs/operations/end-to-end-linkage-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-operation-sop.md -\u003e docs/overview/agency-os-complete-system-introduction.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-operation-sop.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-operation-sop.md -\u003e AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-operation-sop.md -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-operation-sop.md -\u003e WORKLOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/overview/agency-os-complete-system-introduction.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/overview/agency-os-complete-system-introduction.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/overview/agency-os-complete-system-introduction.md -\u003e docs/README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/overview/agency-os-complete-system-introduction.md -\u003e tenants/company-a/01_COMMANDER_SYSTEM_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/overview/agency-os-complete-system-introduction.md -\u003e tenants/company-a/02_CLIENT_WORKSPACE_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/overview/agency-os-complete-system-introduction.md -\u003e tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/overview/agency-os-complete-system-introduction.md -\u003e tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/architecture/agency-command-center-v1.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/architecture/agency-command-center-v1.md -\u003e docs/architecture/multi-platform-delivery-architecture.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/architecture/agency-command-center-v1.md -\u003e docs/operations/system-operation-sop.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/architecture/agency-command-center-v1.md -\u003e docs/operations/tenant-scheduling.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/architecture/agency-command-center-v1.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/architecture/agency-command-center-v1.md -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/architecture/multi-platform-delivery-architecture.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/architecture/multi-platform-delivery-architecture.md -\u003e docs/standards/wordpress-custom-dev-guidelines.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/architecture/multi-platform-delivery-architecture.md -\u003e docs/operations/end-to-end-linkage-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/architecture/multi-platform-delivery-architecture.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/operations/client-risk-scoring-model.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/client-risk-scoring-model.md -\u003e docs/metrics/kpi-margin-dashboard-spec.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/client-risk-scoring-model.md -\u003e docs/product/templates/monthly-report-template-en.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/client-risk-scoring-model.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/client-risk-scoring-model.md -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/operations/outsourcing-vendor-scorecard.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/outsourcing-vendor-scorecard.md -\u003e docs/operations/outsourcing-playbook.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/outsourcing-vendor-scorecard.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/outsourcing-vendor-scorecard.md -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/operations/tenant-scheduling.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/tenant-scheduling.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/tenant-scheduling.md -\u003e tenants/README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/tenant-scheduling.md -\u003e tenants/NEW_TENANT_ONBOARDING_SOP.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/tenant-scheduling.md -\u003e automation/README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/operations/system-guard-and-notification.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-guard-and-notification.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-guard-and-notification.md -\u003e AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-guard-and-notification.md -\u003e RESUME_AFTER_REBOOT.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-guard-and-notification.md -\u003e automation/REGISTER_SYSTEM_GUARD_TASKS.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/system-guard-and-notification.md -\u003e scripts/system-guard.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/operations/end-to-end-linkage-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/end-to-end-linkage-checklist.md -\u003e scripts/system-guard.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/end-to-end-linkage-checklist.md -\u003e scripts/system-health-check.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/end-to-end-linkage-checklist.md -\u003e scripts/doc-sync-automation.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/operations/end-to-end-linkage-checklist.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/international/global-delivery-model.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/global-delivery-model.md -\u003e docs/international/global-compliance-baseline.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/global-delivery-model.md -\u003e docs/international/multi-currency-commercial-policy.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/global-delivery-model.md -\u003e docs/operations/tenant-scheduling.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/global-delivery-model.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/international/global-compliance-baseline.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/global-compliance-baseline.md -\u003e docs/operations/security-secrets-policy.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/global-compliance-baseline.md -\u003e docs/operations/incident-response-runbook.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/global-compliance-baseline.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/international/multi-currency-commercial-policy.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/multi-currency-commercial-policy.md -\u003e docs/operations/finance-operations.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/multi-currency-commercial-policy.md -\u003e docs/metrics/kpi-margin-dashboard-spec.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/international/multi-currency-commercial-policy.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/quality/delivery-qa-gate.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/quality/delivery-qa-gate.md -\u003e project-kit/20_BUILD_AND_CUSTOM_SYSTEM.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/quality/delivery-qa-gate.md -\u003e project-kit/30_LAUNCH_AND_HANDOVER.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/quality/delivery-qa-gate.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/compliance/leads-and-scraping-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/compliance/leads-and-scraping-checklist.md -\u003e docs/international/global-compliance-baseline.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/compliance/leads-and-scraping-checklist.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/compliance/leads-and-scraping-checklist.md -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/product/resell-package-blueprint.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/product/resell-package-blueprint.md -\u003e docs/product/buyer-handover-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/product/resell-package-blueprint.md -\u003e docs/product/templates/proposal-template-en.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/product/resell-package-blueprint.md -\u003e docs/product/templates/sow-template-en.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/product/resell-package-blueprint.md -\u003e docs/product/templates/monthly-report-template-en.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/product/resell-package-blueprint.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/product/resell-package-blueprint.md -\u003e scripts/build-product-bundle.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/releases/release-notes.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/releases/release-notes.md -\u003e docs/releases/upgrade-path.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/releases/release-notes.md -\u003e docs/releases/migration-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/releases/release-notes.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/releases/release-notes.md -\u003e WORKLOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/releases/upgrade-path.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/releases/upgrade-path.md -\u003e docs/releases/migration-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/releases/upgrade-path.md -\u003e scripts/system-health-check.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/releases/upgrade-path.md -\u003e scripts/system-guard.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/releases/upgrade-path.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/sales/service-packages-standard.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/sales/service-packages-standard.md -\u003e docs/operations/finance-operations.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/sales/service-packages-standard.md -\u003e docs/sales/cr-pricing-rules.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/sales/service-packages-standard.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/sales/cr-pricing-rules.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/sales/cr-pricing-rules.md -\u003e docs/operations/scope-change-policy.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/sales/cr-pricing-rules.md -\u003e docs/templates/cr-template.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/templates/msa-template.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/templates/msa-template.md -\u003e docs/templates/sow-template.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/templates/msa-template.md -\u003e docs/templates/cr-template.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/templates/msa-template.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/standards/wordpress-custom-dev-guidelines.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/standards/wordpress-custom-dev-guidelines.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/standards/n8n-workflow-architecture.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/standards/n8n-workflow-architecture.md -\u003e docs/operations/tools-and-integrations.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/standards/n8n-workflow-architecture.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: docs/metrics/kpi-margin-dashboard-spec.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/metrics/kpi-margin-dashboard-spec.md -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/metrics/kpi-margin-dashboard-spec.md -\u003e WORKLOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: docs/metrics/kpi-margin-dashboard-spec.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: tenants/NEW_TENANT_ONBOARDING_SOP.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e tenants/README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e tenants/company-a/01_COMMANDER_SYSTEM_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e tenants/company-a/02_CLIENT_WORKSPACE_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e tenants/company-a/03_TOOLS_CONFIGURATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e tenants/company-a/04_OPERATIONS_AUTOMATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/NEW_TENANT_ONBOARDING_SOP.md -\u003e WORKLOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md -\u003e tenants/company-a/01_COMMANDER_SYSTEM_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md -\u003e tenants/README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md -\u003e tenants/company-a/02_CLIENT_WORKSPACE_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md -\u003e tenants/README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md -\u003e tenants/company-a/03_TOOLS_CONFIGURATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md -\u003e tenants/README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md -\u003e docs/operations/tools-and-integrations.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md -\u003e tenants/company-a/04_OPERATIONS_AUTOMATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md -\u003e tenants/README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md -\u003e docs/operations/tenant-scheduling.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md -\u003e automation/README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: .cursor/rules/00-session-bootstrap.mdc",
+        "pass":  false,
+        "detail":  "Missing source"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/00-session-bootstrap.mdc -\u003e AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/00-session-bootstrap.mdc -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/00-session-bootstrap.mdc -\u003e memory/CONVERSATION_MEMORY.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/00-session-bootstrap.mdc -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/00-session-bootstrap.mdc -\u003e WORKLOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: .cursor/rules/10-memory-maintenance.mdc",
+        "pass":  false,
+        "detail":  "Missing source"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/10-memory-maintenance.mdc -\u003e AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/10-memory-maintenance.mdc -\u003e memory/CONVERSATION_MEMORY.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/10-memory-maintenance.mdc -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: .cursor/rules/20-doc-sync-closeout.mdc",
+        "pass":  false,
+        "detail":  "Missing source"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/20-doc-sync-closeout.mdc -\u003e AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/20-doc-sync-closeout.mdc -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/20-doc-sync-closeout.mdc -\u003e scripts/doc-sync-automation.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/20-doc-sync-closeout.mdc -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/20-doc-sync-closeout.mdc -\u003e WORKLOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: .cursor/rules/30-resume-keyword.mdc",
+        "pass":  false,
+        "detail":  "Missing source"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/30-resume-keyword.mdc -\u003e AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/30-resume-keyword.mdc -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/30-resume-keyword.mdc -\u003e memory/CONVERSATION_MEMORY.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/30-resume-keyword.mdc -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/30-resume-keyword.mdc -\u003e WORKLOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/30-resume-keyword.mdc -\u003e LAST_SYSTEM_STATUS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map source exists: .cursor/rules/40-shutdown-closeout.mdc",
+        "pass":  false,
+        "detail":  "Missing source"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/40-shutdown-closeout.mdc -\u003e AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/40-shutdown-closeout.mdc -\u003e README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/40-shutdown-closeout.mdc -\u003e TASKS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/40-shutdown-closeout.mdc -\u003e WORKLOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/40-shutdown-closeout.mdc -\u003e memory/CONVERSATION_MEMORY.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/40-shutdown-closeout.mdc -\u003e scripts/doc-sync-automation.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/40-shutdown-closeout.mdc -\u003e scripts/system-health-check.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Map target exists: .cursor/rules/40-shutdown-closeout.mdc -\u003e scripts/system-guard.ps1",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/PROFILE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/SERVICE_CATALOG.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/SITES_INDEX.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/FINANCIAL_LEDGER.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/ACCESS_REGISTER.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/01_COMMANDER_SYSTEM_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/02_CLIENT_WORKSPACE_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/03_TOOLS_CONFIGURATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/04_OPERATIONS_AUTOMATION_GUIDE.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/OPERATIONS_SCHEDULE.json",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Tenant file exists: company-a/OPS_QUEUE.json",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "UTF8 readable: docs/operations/system-operation-sop.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "UTF8 readable: README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "UTF8 readable: AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\CHANGE_IMPACT_MATRIX.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\architecture\\agency-command-center-v1.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\architecture\\multi-platform-delivery-architecture.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\compliance\\leads-and-scraping-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\international\\global-compliance-baseline.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\international\\global-delivery-model.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\international\\multi-currency-commercial-policy.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\metrics\\kpi-margin-dashboard-spec.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\client-risk-scoring-model.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\ecommerce-project-playbook.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\end-to-end-linkage-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\finance-operations.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\incident-response-runbook.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\outsourcing-playbook.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\outsourcing-vendor-scorecard.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\scope-change-policy.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\security-secrets-policy.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\system-guard-and-notification.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\system-operation-sop.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\tenant-scheduling.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\operations\\tools-and-integrations.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\overview\\agency-os-complete-system-introduction.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\product\\buyer-handover-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\product\\resell-package-blueprint.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\product\\templates\\monthly-report-template-en.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\product\\templates\\proposal-template-en.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\product\\templates\\sow-template-en.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\quality\\delivery-qa-gate.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\releases\\migration-checklist.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\releases\\release-notes.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\releases\\upgrade-path.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\sales\\cr-pricing-rules.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\sales\\service-packages-standard.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\standards\\n8n-workflow-architecture.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\standards\\wordpress-custom-dev-guidelines.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\templates\\cr-template.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\templates\\msa-template.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: docs\\templates\\sow-template.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: README.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "Mojibake scan: AGENTS.md",
+        "pass":  true,
+        "detail":  "OK"
+    },
+    {
+        "name":  "AgencyOS scheduled tasks exist",
+        "pass":  true,
+        "detail":  "Found 4 tasks"
+    },
+    {
+        "name":  "Task file path exists: AgencyOS-company-a-daily",
+        "pass":  true,
+        "detail":  "D:\\Work\\agency-os\\automation\\TENANT_AUTOMATION_RUNNER.ps1"
+    },
+    {
+        "name":  "Task workspace path exists: AgencyOS-company-a-daily",
+        "pass":  true,
+        "detail":  "D:\\Work\\agency-os"
+    },
+    {
+        "name":  "Task file path exists: AgencyOS-company-a-monthly",
+        "pass":  true,
+        "detail":  "D:\\Work\\agency-os\\automation\\TENANT_AUTOMATION_RUNNER.ps1"
+    },
+    {
+        "name":  "Task workspace path exists: AgencyOS-company-a-monthly",
+        "pass":  true,
+        "detail":  "D:\\Work\\agency-os"
+    },
+    {
+        "name":  "Task file path exists: AgencyOS-company-a-weekly",
+        "pass":  true,
+        "detail":  "D:\\Work\\agency-os\\automation\\TENANT_AUTOMATION_RUNNER.ps1"
+    },
+    {
+        "name":  "Task workspace path exists: AgencyOS-company-a-weekly",
+        "pass":  true,
+        "detail":  "D:\\Work\\agency-os"
+    },
+    {
+        "name":  "Task file path exists: AgencyOS-SystemGuard-Daily",
+        "pass":  true,
+        "detail":  "D:\\Work\\agency-os\\scripts\\system-guard.ps1"
+    },
+    {
+        "name":  "Task workspace path exists: AgencyOS-SystemGuard-Daily",
+        "pass":  true,
+        "detail":  "D:\\Work\\agency-os"
+    }
+]
