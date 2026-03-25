@@ -88,8 +88,25 @@ $mapPath = Join-Path $root "docs/change-impact-map.json"
 if (Test-Path $mapPath) {
     $map = Read-Json -Path $mapPath
     foreach ($r in $map.rules) {
-        $sourceOk = Test-Path (Join-Path $root $r.source)
-        Add-Check -Name ("Map source exists: " + $r.source) -Pass $sourceOk -Detail ($(if ($sourceOk) { "OK" } else { "Missing source" }))
+        $sourcePath = Join-Path $root $r.source
+        $sourceOk = Test-Path $sourcePath
+        $sourceDetail = ($(if ($sourceOk) { "OK" } else { "Missing source" }))
+
+        # Cross-machine compatibility: some systems keep Cursor rules at repo root (.cursor)
+        # while this repo's scripts run with root=agency-os. If agency-os/.cursor is missing
+        # (e.g. junction not recreated on a new computer), fallback to ../.cursor.
+        if (-not $sourceOk -and $r.source -like ".cursor/*") {
+            $fallbackRoot = Join-Path $root ".."
+            $fallbackPath = Join-Path $fallbackRoot $r.source
+            $sourceOk = Test-Path $fallbackPath
+            if ($sourceOk) {
+                $sourceDetail = "OK (fallback ../)"
+            } else {
+                $sourceDetail = "Missing source (no agency-os/.cursor or ../.cursor)"
+            }
+        }
+
+        Add-Check -Name ("Map source exists: " + $r.source) -Pass $sourceOk -Detail $sourceDetail
         if (-not $sourceOk) { Add-CriticalFailure -Reason ("Missing map source: " + $r.source) }
         foreach ($t in $r.targets) {
             $targetOk = Test-Path (Join-Path $root $t)
