@@ -78,7 +78,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-23 14:30:03 UTC_
+_Last synced: 2026-03-25 14:45:16 UTC_
 
 ## 2026-03-20
 
@@ -95,5 +95,21 @@ _Last synced: 2026-03-23 14:30:03 UTC_
 - `doc-sync-automation -AutoDetect`：PASS（`reports/closeout/closeout-20260320-205301.md`）
 - `system-health-check`：PASS，100%（`reports/health/health-20260320-205311.md`）
 - `system-guard -Mode manual`：PASS（`reports/guard/guard-20260320-205318.md`）
+
+
+
+## 2026-03-25
+
+### 今日建立
+- 修復會話層關鍵 Critical Gate FAIL（在 `agency-os/.cursor` 建 junction 指向 `D:\Work\.cursor`）
+- 落地 `lobster-factory` Phase 1：Supabase multi-tenant migrations、`wc-core` manifest、durable workflow（`create-wp-site` / `apply-manifest`）安全骨架
+- 補齊 manifest/governance 結構驗證腳本並建立本機 bootstrap 健檢（`scripts/bootstrap-validate.mjs`）
+- 恢復 `agency-os/memory/CONVERSATION_MEMORY.md`，並加入 Runbook commands 方便 `AO-RESUME/AO-CLOSE` 快速操作
+- 設定收工三步 closeout 流程並確認 Critical Gate PASS
+
+### 收工檢查
+- `doc-sync-automation -AutoDetect`：PASS（生成 `reports/closeout/closeout-20260325-223356.md`）
+- `system-health-check`：PASS，100%（Critical Gate PASS；`reports/health/health-20260325-223403.md`）
+- `system-guard -Mode manual`：PASS（`reports/guard/guard-20260325-223414.md`）
 
 

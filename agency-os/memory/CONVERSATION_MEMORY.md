@@ -64,6 +64,73 @@
 - 在 `README.md` 首頁加入 `AO-RESUME` / `AO-CLOSE` 快速操作卡
 - 進行一次完整「開工 -> 收工」演練並回寫 WORKLOG
 
+## Today (2026-03-25) - 重點進度
+- 已修復會話記憶檔案遺失：恢復 `agency-os/memory/CONVERSATION_MEMORY.md`（確保 `AO-RESUME/AO-CLOSE` 快速操作卡仍可用）
+- 已建立 `lobster-factory` 的 Phase 1 工程骨架（先安全、可驗證、可逐步接上真寫入）
+  - Supabase migrations：`packages/db/migrations/0001_core.sql` ~ `0006_seed_catalog.sql`
+  - Manifest：`packages/manifests/wc-core.json`（Phase 1 目前只支援 `wc-core`）
+  - Durable workflows（Trigger.dev 風格骨架）：
+    - `packages/workflows/src/trigger/create-wp-site.ts`
+    - `packages/workflows/src/trigger/apply-manifest.ts`
+  - 安全與治理：
+    - `scripts/validate-manifests.mjs`、`scripts/validate-governance-configs.mjs`
+    - `scripts/bootstrap-validate.mjs`（整體健檢基線）
+- 已修復 `agency-os` 的 Critical Gate FAIL：在 `agency-os/.cursor` 建 junction 指向 `D:\Work\.cursor`
+
+## Remaining - 需要接下來做完的事（依序）
+1. 為 `lobster-factory` 接上「只寫 `workflow_runs`」的真寫入流程（預設關閉寫入，需你提供 Supabase 相關 env）
+2. 接上 `package_install_runs` 的狀態更新（pending -> running -> completed/failed -> rolled_back）與 artifacts/logs ref
+3. 把 `apply-manifest` 的 shell 執行器真正串上（仍需維持 `staging-only` + guardrails），並確保 rollback 可用
+4. 接回 `create-wp-site` 的 staging 環境建立流程（需要後續 hosting provider adapter）
+
+## Tomorrow (2026-03-26) - 建議第一優先
+- 先跑一個 end-to-end「乾跑」payload（不寫 DB），確認回傳的 SQL template + row payload 完整且欄位對齊
+- 再開啟真寫入一次（建議只開 `LOBSTER_ENABLE_DB_WRITES=true` 並先寫 `workflow_runs`），用你手上的 Supabase UI 查表插入是否正確
+- 把所有「驚險步驟」都留在人機核可/approval 設計裡，不允許 production 自動執行
+
+## Runbook Commands (明天照跑)
+你有兩種模式：`Strict`（安全最大）與 `Fast`（速度優先但仍有門檻）。
+
+### Strict Mode（推薦，確保今天/明天不出問題）
+1. Phase 1 基線健檢
+```
+node D:\Work\lobster-factory\scripts\bootstrap-validate.mjs
+```
+2. manifest 顯式驗證（只驗 JSON 結構與 guardrail）
+```
+node D:\Work\lobster-factory\scripts\validate-manifests.mjs
+```
+3. governance 顯式驗證（驗 agent/policy JSON）
+```
+node D:\Work\lobster-factory\scripts\validate-governance-configs.mjs
+```
+4. apply-manifest 乾跑（不寫 DB，只輸出 payload + SQL template）
+```
+node D:\Work\lobster-factory\scripts\dryrun-apply-manifest.mjs --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
+```
+5. apply-manifest 乾跑驗收（失敗即停，`--mode=strict`）
+```
+node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=strict --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
+```
+
+### Fast Mode（快、但仍有關鍵門檻）
+1. manifest 顯式驗證
+```
+node D:\Work\lobster-factory\scripts\validate-manifests.mjs
+```
+2. governance 顯式驗證
+```
+node D:\Work\lobster-factory\scripts\validate-governance-configs.mjs
+```
+3. apply-manifest 乾跑（不寫 DB）
+```
+node D:\Work\lobster-factory\scripts\dryrun-apply-manifest.mjs --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
+```
+4. apply-manifest 乾跑驗收（`--mode=fast`，失敗即停）
+```
+node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=fast --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
+```
+
 ## Memory Update Protocol
 - 每完成一個里程碑就新增一段摘要
 - 對話內容很長時，用以下格式壓縮：
@@ -79,5 +146,5 @@
 - `.cursor/rules/30-resume-keyword.mdc`
 - `.cursor/rules/40-shutdown-closeout.mdc`
 
-_Last synced: 2026-03-23 14:30:03 UTC_
+_Last synced: 2026-03-25 14:45:16 UTC_
 

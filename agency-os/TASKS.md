@@ -7,6 +7,7 @@
 - [x] 套入第一個真實客戶到 `tenants/company-a/`
 - [x] 完成 `2026-001` Discovery 需求盤點（初版）
 - [x] 補齊 `2026-001` 時程與里程碑日期（初版）
+- [x] 建立 `lobster-factory` Phase 1 底座骨架（Supabase migrations + wc-core manifest + workflow 安全骨架）
 
 ## Next
 - [x] 定義 WordPress 客製系統開發準則（plugin/mu-plugin/資料表策略）
@@ -48,5 +49,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-23 14:30:03 UTC_
+_Last synced: 2026-03-25 14:45:16 UTC_
 
