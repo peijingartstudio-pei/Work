@@ -135,5 +135,7 @@ _Last synced: 2026-03-25 17:57:12 UTC_
 - **Git**：依本人指示改明天再 commit／push（見 §1b 與對話約定）
 - `ALERT_REQUIRED.txt`：無
 
+- **GitHub 同步（公司機用）**：自 `.git` 索引移除 `.claude/`（含 OAuth 憑證檔）與 `mcp-local-wrappers/node_modules`，新增 `.gitignore`；`verify-build-gates` PASS 後已 `git push origin main`（`f6a19e6`）。**舊 commit 歷史仍可能含已外洩憑證，請至 Anthropic／Claude 端撤銷並重新登入。**
+
 
 
