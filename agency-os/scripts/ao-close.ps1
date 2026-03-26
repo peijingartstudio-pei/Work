@@ -9,7 +9,8 @@ param(
     [string]$WorkRoot = "",
     [string]$CommitMessage = "",
     [switch]$SkipPush,
-    [switch]$SkipVerify
+    [switch]$SkipVerify,
+    [switch]$AllowNonPerfectHealth
 )
 
 Set-StrictMode -Version Latest
@@ -64,6 +65,31 @@ if (Test-Path -LiteralPath $genScript) {
     if ($LASTEXITCODE -ne 0) {
         Write-Error "ao-close: generate-integrated-status-report failed (exit $LASTEXITCODE)"
         exit $LASTEXITCODE
+    }
+}
+
+# Enforce health score = 100% by default (unless explicitly relaxed).
+$healthDir = Join-Path $agencyRoot "reports\health"
+if (Test-Path -LiteralPath $healthDir) {
+    $latestHealth = Get-ChildItem -LiteralPath $healthDir -Filter "health-*.md" |
+        Sort-Object LastWriteTime -Descending |
+        Select-Object -First 1
+    if ($latestHealth) {
+        $healthText = Get-Content -LiteralPath $latestHealth.FullName -Raw -Encoding UTF8
+        $scoreMatch = [regex]::Match($healthText, 'Score:\s*\*\*([0-9]+(?:\.[0-9]+)?)%')
+        if ($scoreMatch.Success) {
+            $score = [double]$scoreMatch.Groups[1].Value
+            if (($score -lt 100.0) -and (-not $AllowNonPerfectHealth)) {
+                Write-Error "ao-close: health score is $score% (<100%). Fix remaining checks or rerun with -AllowNonPerfectHealth only when explicitly approved."
+                exit 1
+            }
+            if (($score -lt 100.0) -and $AllowNonPerfectHealth) {
+                Write-Host "== AO-CLOSE: health score $score% allowed by -AllowNonPerfectHealth ==" -ForegroundColor Yellow
+            }
+        } elseif (-not $AllowNonPerfectHealth) {
+            Write-Error "ao-close: unable to parse health score from $($latestHealth.FullName)."
+            exit 1
+        }
     }
 }
 

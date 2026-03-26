@@ -26,6 +26,7 @@ When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
    - 若全程 **PASS**：`git add -A` → 有變更則 `git commit` → `git push origin <current-branch>`。
    - **`-SkipPush`**：仍跑上述閘道與產報，**不** commit／push（僅當使用者明確要暫存本機時）。
    - **`-SkipVerify`**：略過龍蝦閘道（較快；**不建議**在「明天公司機要 pull 完整」前使用）。
+   - 預設要求 `system-health-check` 分數 **100%**；未達 100% 視為收工未完成（除非使用者明確允許非 100% 收工）。
    - Execute from a folder that is the git repository root (or contains `agency-os/`).
 3. Confirm：`verify-build-gates` 與 guard 路徑皆 **PASS**，且 push 成功（或依使用者要求正確使用 `-SkipPush`）。
 

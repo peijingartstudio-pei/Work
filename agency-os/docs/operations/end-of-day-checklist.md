@@ -27,6 +27,7 @@
   - [ ] 產生 closeout 報告：`reports/closeout/closeout-*.md`
 - [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\system-health-check.ps1`
   - [ ] `Critical Gate` 必須 **PASS**
+  - [ ] 健康分數預設需達 **100%**（未達 100% 先修復；僅在明確核准下可例外）
   - [ ] 記下：`reports/health/health-*.md`
 - [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\system-guard.ps1 -Mode manual`
   - [ ] 更新：`LAST_SYSTEM_STATUS.md`
@@ -61,5 +62,5 @@
 ## Related Documents (Auto-Synced)
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-26 07:43:44 UTC_
+_Last synced: 2026-03-26 09:38:32 UTC_
 
