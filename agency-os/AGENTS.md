@@ -1,4 +1,4 @@
-﻿# AGENTS.md - Agency Operating Rules
+# AGENTS.md - Agency Operating Rules
 
 ## 語言與輸出
 - 預設使用繁體中文
@@ -20,7 +20,7 @@
 - 使用者輸入 `AO-RESUME` 時，必須先讀取記憶與進度檔後再回覆。
 - 回覆格式固定為：`已完成`、`目前進度`、`下一步`。
 - 使用者輸入 **`AO-CLOSE`**（關鍵字不變）或明確表達要關機/收工時，必須先執行 **closeout**，再輸出：`今日完成`、`今日未完成`、`連動檢查`、`明日優先`。
-  - **建議一鍵**（更新 `TASKS` / `WORKLOG` / `memory/**` 後）：`powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`  
+  - **建議一鍵**（更新 `TASKS` / `WORKLOG` / `memory/**` 後）：`D:\Work\scripts\ao-close.ps1` 或 `agency-os\scripts\ao-close.ps1`（**同邏輯雙複本**，請保持內容一致）  
     → 內部依序等同：`doc-sync-automation -AutoDetect`、`system-health-check`、`system-guard -Mode manual`；**Gate PASS 後自動** `git commit`（有變更時）+ `git push`。今夜不推：加 `-SkipPush`。
   - **或分部手動**（與一鍵擇一）：`doc-sync-automation -AutoDetect` → `system-health-check` → `system-guard -Mode manual` → 再自行 `git push`（見 `docs/operations/end-of-day-checklist.md`）。
 
