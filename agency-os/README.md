@@ -74,6 +74,11 @@
 ## 主動守護與告警
 - 手動守護：`powershell -ExecutionPolicy Bypass -File .\scripts\system-guard.ps1 -Mode manual`
 - 註冊守護排程：`powershell -ExecutionPolicy Bypass -File .\automation\REGISTER_SYSTEM_GUARD_TASKS.ps1 -DailyTime 22:30`
+- 註冊 Autopilot Phase1（開機 preflight + 告警自修，每 10 分鐘掃 `ALERT_REQUIRED.txt`）：`powershell -ExecutionPolicy Bypass -File .\scripts\register-autopilot-phase1.ps1`
+- 停用 Autopilot Phase1：`powershell -ExecutionPolicy Bypass -File .\scripts\register-autopilot-phase1.ps1 -RemoveOnly`
+- 可選：啟用「登出時自動 closeout」：`powershell -ExecutionPolicy Bypass -File .\scripts\register-autopilot-phase1.ps1 -EnableLogoffCloseout`（加 `-EnablePushOnLogoff` 才會 push）
+- 若排程權限受限（無法建立新工作）：安裝 Startup fallback：`powershell -ExecutionPolicy Bypass -File .\scripts\install-autopilot-startup-fallback.ps1`（停用：加 `-RemoveOnly`）
+- Slack 通知：設定環境變數 `AGENCY_OS_SLACK_WEBHOOK_URL` 後，`scripts/notify-ops.ps1` 會自動送出 preflight/告警修復/closeout 結果
 - 桌面彈窗：PASS/FAIL（含 ALERT 提示）
 - 開機後自動開啟：`LAST_SYSTEM_STATUS.md`（可用 `-NoOpenStatusOnStartup` 關閉）
 - 狀態文件：`LAST_SYSTEM_STATUS.md`
@@ -151,5 +156,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-03-26 09:38:32 UTC_
+_Last synced: 2026-03-26 16:50:05 UTC_
 

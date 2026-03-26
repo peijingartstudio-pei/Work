@@ -30,6 +30,9 @@
 - [x] 修復 `AgencyOS-*` 排程路徑到 `D:\Work\agency-os` 並補齊命令引號防呆
 - [x] 建立 reports 歸檔腳本（`scripts/archive-old-reports.ps1`）與 README 操作入口
 - [x] 他處／公司機開機須知（`docs/overview/REMOTE_WORKSTATION_STARTUP.md` + `RESUME_AFTER_REBOOT.md` 分機情境）
+- [x] Enterprise 工具層選型/安裝完成（Sentry/PostHog/Cloudflare/Clerk；Secrets 先採 env/mcp；輔助：Supabase/Slack）
+- [x] 啟用 Operator Autopilot 規則與 Phase1 自動化腳本（startup preflight / alert auto-repair / closeout optional push / Slack notify）
+- [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
 
 ## Backlog
 - [x] 客戶分級與風險評分模型
@@ -39,7 +42,7 @@
 - [x] 建立英文化客戶輸出模板（Proposal/SOW/Monthly Report）
 - [x] 建立 release notes + upgrade path + migration checklist
 - [x] `lobster-factory` 補齊 raw spec 差距檔案（C4-1~C4-5 完成）
-- [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity
+- [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager）
 
 ## Related Documents (Auto-Synced)
 - `.cursor/rules/00-session-bootstrap.mdc`
@@ -54,5 +57,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-26 09:54:29 UTC_
+_Last synced: 2026-03-26 16:50:05 UTC_
 

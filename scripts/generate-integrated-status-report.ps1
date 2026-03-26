@@ -11,11 +11,7 @@ $ErrorActionPreference = "Stop"
 function Resolve-AgencyRoot {
     param([string]$InputRoot)
     if ($InputRoot -and (Test-Path $InputRoot)) { return (Resolve-Path $InputRoot).Path }
-    if ($PSScriptRoot) {
-        $candidate = Join-Path $PSScriptRoot "..\agency-os"
-        if (Test-Path $candidate) { return (Resolve-Path $candidate).Path }
-        return (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
-    }
+    if ($PSScriptRoot) { return (Resolve-Path (Join-Path $PSScriptRoot "..")).Path }
     return (Get-Location).Path
 }
 

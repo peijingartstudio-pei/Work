@@ -21,6 +21,7 @@
 
 ## 快速續接關鍵字
 - 使用者輸入 `AO-RESUME` 時，必須先讀取記憶與進度檔後再回覆。
+- 若已啟用 Autopilot Phase1，開機會自動執行 `scripts/ao-resume.ps1 -SkipVerify -AllowUnexpectedDirty`（不阻塞使用者本地未提交工作）。
 - 回覆格式固定為：`已完成`、`目前進度`、`下一步`。
 - `目前進度` 必須包含龍蝦工廠欄位：`目前 Milestone`、`今日 DoD`、`阻塞/風險`。
 - 使用者輸入 **`AO-CLOSE`**（關鍵字不變）或明確表達要關機/收工時，必須先執行 **closeout**，再輸出：`今日完成`、`今日未完成`、`連動檢查`、`明日優先`。
@@ -70,5 +71,5 @@
 - `docs/operations/system-guard-and-notification.md`
 - `docs/operations/system-operation-sop.md`
 
-_Last synced: 2026-03-26 09:38:32 UTC_
+_Last synced: 2026-03-26 16:50:05 UTC_
 
