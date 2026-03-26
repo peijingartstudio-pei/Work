@@ -1,8 +1,27 @@
 ﻿{
-    "last_run_utc":  "2026-03-26T00:27:51.0893162Z",
+    "last_run_utc":  "2026-03-26T00:32:36.0229444Z",
     "changed_files":  [
-                          "docs/operations/end-of-day-checklist.md"
+                          "AGENTS.md",
+                          "docs/overview/EXECUTION_DASHBOARD.md",
+                          "memory/CONVERSATION_MEMORY.md",
+                          "WORKLOG.md"
                       ],
-    "impacted_files":  "docs/operations/end-of-day-checklist.md",
-    "auto_updated_files":  "docs/operations/end-of-day-checklist.md"
+    "impacted_files":  [
+                           "AGENTS.md",
+                           "docs/operations/end-of-day-checklist.md",
+                           "docs/overview/EXECUTION_DASHBOARD.md",
+                           "docs/overview/INTEGRATED_STATUS_REPORT.md",
+                           "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
+                           "memory/CONVERSATION_MEMORY.md",
+                           "WORKLOG.md"
+                       ],
+    "auto_updated_files":  [
+                               "AGENTS.md",
+                               "docs/operations/end-of-day-checklist.md",
+                               "docs/overview/EXECUTION_DASHBOARD.md",
+                               "docs/overview/INTEGRATED_STATUS_REPORT.md",
+                               "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
+                               "memory/CONVERSATION_MEMORY.md",
+                               "WORKLOG.md"
+                           ]
 }
