@@ -129,4 +129,6 @@ Write-Output ("System guard report: reports/guard/" + [System.IO.Path]::GetFileN
 Write-Output ("Status file: LAST_SYSTEM_STATUS.md")
 if (-not $ok) {
     Write-Output ("ALERT file generated: ALERT_REQUIRED.txt")
+    exit 1
 }
+exit 0

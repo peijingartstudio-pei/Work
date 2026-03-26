@@ -62,7 +62,10 @@
    - 參考 `memory/CONVERSATION_MEMORY.md` 的 Runbook Commands
 
 ### 收工（AO-CLOSE）
-- 直接照 `docs/operations/end-of-day-checklist.md` 逐項打勾（含 **§1b Git / GitHub**：commit + `git push`，跨電腦才不斷線）
+- **一鍵（建議）**：先更新 `TASKS.md` / `WORKLOG.md` / `memory/**`，再在 monorepo 根執行：  
+  `powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`  
+  → 內含 `system-guard`（doc-sync + health + guard）；**PASS 後自動** `git commit`（有變更時）+ `git push`。**FAIL 不會 push。** 暫不推遠端：加 `-SkipPush`。
+- 手動核銷：仍可依 `docs/operations/end-of-day-checklist.md` 逐項打勾（與 §1b 對齊）。
 
 ### 每週（建議固定一天，例如週一）
 - **週期總檢**：`powershell -ExecutionPolicy Bypass -File .\scripts\weekly-system-review.ps1`（於 `agency-os`，或於 `D:\Work` 跑 `.\scripts\weekly-system-review.ps1`）
@@ -88,5 +91,5 @@
 - `docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-03-25 17:57:12 UTC_
+_Last synced: 2026-03-26 00:13:34 UTC_
 

@@ -19,11 +19,10 @@
 ## 快速續接關鍵字
 - 使用者輸入 `AO-RESUME` 時，必須先讀取記憶與進度檔後再回覆。
 - 回覆格式固定為：`已完成`、`目前進度`、`下一步`。
-- 使用者輸入 `AO-CLOSE` 或明確表達要關機/收工時，必須先執行 closeout：
-  - `doc-sync-automation -AutoDetect`
-  - `system-health-check`
-  - `system-guard -Mode manual`
-  - 再輸出：`今日完成`、`今日未完成`、`連動檢查`、`明日優先`
+- 使用者輸入 **`AO-CLOSE`**（關鍵字不變）或明確表達要關機/收工時，必須先執行 **closeout**，再輸出：`今日完成`、`今日未完成`、`連動檢查`、`明日優先`。
+  - **建議一鍵**（更新 `TASKS` / `WORKLOG` / `memory/**` 後）：`powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`  
+    → 內部依序等同：`doc-sync-automation -AutoDetect`、`system-health-check`、`system-guard -Mode manual`；**Gate PASS 後自動** `git commit`（有變更時）+ `git push`。今夜不推：加 `-SkipPush`。
+  - **或分部手動**（與一鍵擇一）：`doc-sync-automation -AutoDetect` → `system-health-check` → `system-guard -Mode manual` → 再自行 `git push`（見 `docs/operations/end-of-day-checklist.md`）。
 
 ## First Run
 - 若有 `BOOTSTRAP.md`，先照檔案完成初始化再開始任務。
@@ -65,5 +64,5 @@
 - `docs/operations/system-guard-and-notification.md`
 - `docs/operations/system-operation-sop.md`
 
-_Last synced: 2026-03-25 17:57:12 UTC_
+_Last synced: 2026-03-26 00:15:48 UTC_
 

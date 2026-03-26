@@ -9,6 +9,17 @@
 - [ ] （可選）有註冊 **AgencyOS-WeeklySystemReview** 者：若本週排程曾跑過，確認未被寫入 `ALERT_REQUIRED.txt`；若有，表示週檢閘道曾 FAIL，須先處理再收工
 
 ## 1) 必跑三步（硬性 Gate）
+
+### 1a) 一鍵收工 + 推 GitHub（推薦）
+在 **monorepo 根** `D:\Work` 執行（且請**先**改好 `TASKS.md` / `WORKLOG.md` / `memory/**`，才會被 commit 進去）：
+
+- [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`
+  - 內部會跑 `agency-os\scripts\system-guard.ps1 -Mode manual`（已含 doc-sync + health + guard 報告）
+  - **Guard PASS**：自動 `git add -A` → 有變更則 `git commit` → `git push origin <目前分支>`
+  - **Guard FAIL**：**不會 push**，請修復後重跑
+  - 今夜不推遠端：加 `-SkipPush`
+
+### 1b) 手動三步（與 1a 擇一即可）
 在 `D:\Work\agency-os` 目錄執行：
 
 - [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\doc-sync-automation.ps1 -AutoDetect`
@@ -20,7 +31,7 @@
   - [ ] 更新：`LAST_SYSTEM_STATUS.md`
   - [ ] 記下：`reports/guard/guard-*.md`
 
-## 1b) Git / GitHub（收工標準動作；跨電腦續接）
+## 1c) Git / GitHub（手動收工時；若已跑 1a 可勾「已由 ao-close 完成」）
 在**實際 Git  repo 根目錄**執行（本機 monorepo 多為 `D:\Work`；若 `agency-os` 為獨立 repo 請在該根目錄另跑一輪）：
 
 - [ ] `git status`：**無**未提交變更，或已將今日應留下的變更 **commit**（訊息簡潔、可讀）
@@ -43,11 +54,11 @@
 
 ## 3) 防重工確認（關機前最後 30 秒）
 - [ ] 明天第一步的指令已寫在 `memory/CONVERSATION_MEMORY.md`（Strict/Fast Runbook）
-- [ ] **§1b Git/GitHub 已完成**（勿只靠記憶；以 `git status` / 遠端為準）
+- [ ] **§1c Git/GitHub 已完成**（或 §1a `ao-close.ps1` 已成功 push）
 - [ ] 任何機密（token/key）**不得**出現在 repo 內（尤其是 `mcp-backups/`、`.claude.json` 這類）
 
 ## Related Documents (Auto-Synced)
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-25 17:57:12 UTC_
+_Last synced: 2026-03-26 00:13:34 UTC_
 

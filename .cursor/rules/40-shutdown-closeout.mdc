@@ -5,24 +5,24 @@ alwaysApply: true
 
 # Shutdown Closeout
 
+**`AO-CLOSE` 關鍵字與收工回覆格式（今日完成／未完成／連動檢查／明日優先）維持不變。**  
+以下是在**既有** doc-sync + health + system-guard 基礎上，**新增**關機前可一鍵執行並**通過 Gate 後推 GitHub** 的步驟（`ao-close.ps1`）。
+
 When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
 "要關機", "收工", "今天先到這"), run this closeout sequence before ending:
 
-1. Run:
-`powershell -ExecutionPolicy Bypass -File .\scripts\doc-sync-automation.ps1 -AutoDetect`
-2. Run:
-`powershell -ExecutionPolicy Bypass -File .\scripts\system-health-check.ps1`
-3. Run:
-`powershell -ExecutionPolicy Bypass -File .\scripts\system-guard.ps1 -Mode manual`
-4. **Git / GitHub**：在實際 repo 根目錄確認 `git status` 乾淨或已 commit；執行 `git push` 使遠端與本機一致（無敏感檔入庫）。若刻意不推，在 `WORKLOG.md` 註明原因。
-5. Confirm linkage integrity is PASS (Critical Gate must pass).
-6. Update:
-- `TASKS.md`
-- `WORKLOG.md`
-- `memory/CONVERSATION_MEMORY.md`
-- `memory/daily/YYYY-MM-DD.md`
-7. If `memory/daily/YYYY-MM-DD.md` does not exist, create it first and then
-   write today's closeout summary into it.
+1. **First** update progress files (so the next step can commit them):
+   - `TASKS.md`
+   - `WORKLOG.md`
+   - `memory/CONVERSATION_MEMORY.md`
+   - `memory/daily/YYYY-MM-DD.md` (create if missing, then write closeout summary)
+2. Run **one-shot closeout + GitHub push** (monorepo root `D:\Work`):
+   `powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`
+   - Runs `system-guard` (which runs `doc-sync-automation -AutoDetect` + `system-health-check` + guard report).
+   - If guard **PASS**: `git add -A`, `git commit` when there are staged changes, then `git push origin <current-branch>`.
+   - If guard **FAIL**: **no push**; user must fix and re-run.
+   - To push later manually this session only: add `-SkipPush`.
+3. Confirm linkage integrity is PASS (Critical Gate from the health step inside guard) and push succeeded or was correctly skipped (`-SkipPush`).
 
 Then respond with this exact structure:
 
