@@ -23,6 +23,7 @@
 - [x] 建立可販售產品化藍圖與交接清單（`docs/product/*`）
 - [x] 建立對外販售打包腳本（`scripts/build-product-bundle.ps1`）
 - [x] 建立總控中心架構與多平台（WordPress-first）連動設計
+- [x] AO-CLOSE 預設 100% health 閘道已落地（規則/文件/腳本三層）
 - [ ] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 - [x] 完成今日 AO-CLOSE 三步收工檢查（doc-sync / health / guard 全 PASS）
 - [x] 建立標準 MSA/SOW/CR 文件模板
@@ -53,5 +54,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-26 09:38:32 UTC_
+_Last synced: 2026-03-26 09:54:29 UTC_
 
