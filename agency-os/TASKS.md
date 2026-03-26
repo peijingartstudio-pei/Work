@@ -1,4 +1,4 @@
-﻿# Global Task Board
+# Global Task Board
 
 ## In Progress
 - [x] 建立多租戶案場資料夾結構（company -> site -> project）
@@ -28,6 +28,7 @@
 - [x] 建立標準 MSA/SOW/CR 文件模板
 - [x] 修復 `AgencyOS-*` 排程路徑到 `D:\Work\agency-os` 並補齊命令引號防呆
 - [x] 建立 reports 歸檔腳本（`scripts/archive-old-reports.ps1`）與 README 操作入口
+- [x] 他處／公司機開機須知（`docs/overview/REMOTE_WORKSTATION_STARTUP.md` + `RESUME_AFTER_REBOOT.md` 分機情境）
 
 ## Backlog
 - [x] 客戶分級與風險評分模型
