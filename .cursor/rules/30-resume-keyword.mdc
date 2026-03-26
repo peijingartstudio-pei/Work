@@ -16,6 +16,9 @@ When the user message contains `AO-RESUME`, before proposing any new implementat
 - `WORKLOG.md`
 - `LAST_SYSTEM_STATUS.md` (if exists)
 
+If those files are not found in the current opened folder, retry under `agency-os/`
+with the same filenames before continuing.
+
 2. Respond with a concise startup brief in this exact structure:
 - 已完成
 - 目前進度

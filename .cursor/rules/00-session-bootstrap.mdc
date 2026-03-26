@@ -13,6 +13,9 @@ Before proposing any implementation plan, always read:
 - `TASKS.md`
 - `WORKLOG.md`
 
+If those files are not found in the current opened folder, retry under `agency-os/`
+with the same filenames before declaring context missing.
+
 At the beginning of every new conversation, output this exact structure:
 
 - Yesterday Recap:

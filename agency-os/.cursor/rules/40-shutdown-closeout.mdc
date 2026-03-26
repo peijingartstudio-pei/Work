@@ -16,14 +16,17 @@ When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
    - `WORKLOG.md`
    - `memory/CONVERSATION_MEMORY.md`
    - `memory/daily/YYYY-MM-DD.md` (create if missing, then write closeout summary)
-2. Run **one-shot closeout + GitHub push** (monorepo root `D:\Work`):
-   `powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`
+2. Run **one-shot closeout + GitHub push** from the current repo root:
+   `powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`
+   If `.\scripts\ao-close.ps1` is missing, retry:
+   `powershell -ExecutionPolicy Bypass -File .\agency-os\scripts\ao-close.ps1`
    - **`verify-build-gates.ps1`**（lobster `bootstrap-validate` + Agency `system-health-check`）— **預設必跑**；失敗則 **不 push**。
    - **`system-guard -Mode manual`**（內含 `doc-sync-automation -AutoDetect` + health + guard 報告 + `LAST_SYSTEM_STATUS.md`）。
    - **`generate-integrated-status-report.ps1`** → 更新 `reports/status/integrated-status-LATEST.md`。
    - 若全程 **PASS**：`git add -A` → 有變更則 `git commit` → `git push origin <current-branch>`。
    - **`-SkipPush`**：仍跑上述閘道與產報，**不** commit／push（僅當使用者明確要暫存本機時）。
    - **`-SkipVerify`**：略過龍蝦閘道（較快；**不建議**在「明天公司機要 pull 完整」前使用）。
+   - Execute from a folder that is the git repository root (or contains `agency-os/`).
 3. Confirm：`verify-build-gates` 與 guard 路徑皆 **PASS**，且 push 成功（或依使用者要求正確使用 `-SkipPush`）。
 
 **公司機續接（pull 後建議）**：在 repo 根執行一次 `.\scripts\verify-build-gates.ps1` 確認環境；若使用 `mcp-local-wrappers`，於該目錄 `npm ci`（或 `npm install`）還原依賴（`node_modules` 不入庫）。
