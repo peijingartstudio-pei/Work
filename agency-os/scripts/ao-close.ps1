@@ -42,6 +42,17 @@ if ($guardExit -ne 0) {
     exit $guardExit
 }
 
+# Refresh reports/status (integrated-status-LATEST); system-guard does not run this.
+$genScript = Join-Path $agencyRoot "scripts\generate-integrated-status-report.ps1"
+if (Test-Path -LiteralPath $genScript) {
+    Write-Host "== AO-CLOSE: generate integrated-status report ==" -ForegroundColor Cyan
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $genScript -WorkspaceRoot $agencyRoot
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "ao-close: generate-integrated-status-report failed (exit $LASTEXITCODE)"
+        exit $LASTEXITCODE
+    }
+}
+
 if ($SkipPush) {
     Write-Host "== AO-CLOSE: -SkipPush set; skipping git commit/push ==" -ForegroundColor Yellow
     exit 0

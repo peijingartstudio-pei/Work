@@ -1,4 +1,4 @@
-﻿# End-of-day Checklist (AO-CLOSE)
+# End-of-day Checklist (AO-CLOSE)
 
 > 目的：每次關機前**逐項打勾**，確保不疏漏、不重工，並留下可追溯證據（reports + 進度文件）。
 
@@ -14,7 +14,7 @@
 在 **monorepo 根** `D:\Work` 執行（且請**先**改好 `TASKS.md` / `WORKLOG.md` / `memory/**`，才會被 commit 進去）：
 
 - [ ] `powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`
-  - 內部會跑 `agency-os\scripts\system-guard.ps1 -Mode manual`（已含 doc-sync + health + guard 報告）
+  - 內部會跑 `agency-os\scripts\system-guard.ps1 -Mode manual`（已含 doc-sync + health + guard 報告），再跑 **`generate-integrated-status-report.ps1`** 更新 `reports/status/integrated-status-LATEST.md`
   - **Guard PASS**：自動 `git add -A` → 有變更則 `git commit` → `git push origin <目前分支>`
   - **Guard FAIL**：**不會 push**，請修復後重跑
   - 今夜不推遠端：加 `-SkipPush`
@@ -60,5 +60,5 @@
 ## Related Documents (Auto-Synced)
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-26 00:27:51 UTC_
+_Last synced: 2026-03-26 00:32:35 UTC_
 
