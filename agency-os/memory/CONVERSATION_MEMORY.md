@@ -1,4 +1,4 @@
-# Conversation Memory
+﻿# Conversation Memory
 
 ## Current Operating Context
 - 你正在建立多客戶網站與系統代營運模式
@@ -164,7 +164,7 @@ node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=f
   - 下一步
 
 ## Today (2026-03-26) - AO-CLOSE
-- **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；新增 **`ao-close.ps1`**（`Work\scripts` 與 `agency-os\scripts` **同內容複本**，自動判斷啟動目錄）：內跑 `system-guard`（= doc-sync + health + guard），**PASS 後自動** `git commit`／`git push`；FAIL 不推；`-SkipPush` 可略過推送。
+- **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`ao-close.ps1`**（雙路徑同內容）預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`，讓公司機 **`pull` 即完整**；`-SkipPush`／`-SkipVerify` 為選用。
 - `AGENTS.md`、`.cursor/rules/40-shutdown-closeout.mdc`、`end-of-day-checklist.md`、`EXECUTION_DASHBOARD` 已對齊（一鍵與分部手動擇一）。
 - 先前晚間收工：doc-sync（無新差異／沿用 `closeout-20260326-015712.md`）、health、`system-guard` PASS；當時約定 Git 次日處理。
 - MCP：`mcp.json` 為伺服器設定；整庫同步以本機 **git** 為主。
@@ -176,5 +176,5 @@ node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=f
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-26 00:15:48 UTC_
+_Last synced: 2026-03-26 00:37:28 UTC_
 

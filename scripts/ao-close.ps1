@@ -1,12 +1,15 @@
-# AO-CLOSE: system-guard (doc-sync + health + guard) then optional git commit + push.
+# AO-CLOSE: monorepo verify-build-gates -> system-guard (doc-sync + health + guard) ->
+#   generate integrated-status report -> git commit + push.
 # Run AFTER updating TASKS.md, WORKLOG.md, and memory files so they are included in the commit.
-# May be invoked from monorepo root scripts\ OR agency-os\scripts\ (copy same file if needed).
-# Skip remote: -SkipPush
+# May be invoked from monorepo root scripts\ OR agency-os\scripts\ (keep both copies identical).
+# -SkipPush: no git commit/push (still runs gates and reports).
+# -SkipVerify: skip verify-build-gates (faster; not recommended before company pull).
 
 param(
     [string]$WorkRoot = "",
     [string]$CommitMessage = "",
-    [switch]$SkipPush
+    [switch]$SkipPush,
+    [switch]$SkipVerify
 )
 
 Set-StrictMode -Version Latest
@@ -34,6 +37,18 @@ if (-not (Test-Path -LiteralPath $guardScript)) {
     exit 1
 }
 
+$verifyScript = Join-Path $WorkRoot "scripts\verify-build-gates.ps1"
+if (-not $SkipVerify -and (Test-Path -LiteralPath $verifyScript)) {
+    Write-Host "== AO-CLOSE: verify-build-gates (lobster bootstrap + agency health) ==" -ForegroundColor Cyan
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $verifyScript -WorkRoot $WorkRoot
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "ao-close: verify-build-gates failed (exit $LASTEXITCODE). Fix before push."
+        exit $LASTEXITCODE
+    }
+} elseif ($SkipVerify) {
+    Write-Host "== AO-CLOSE: -SkipVerify set; skipping verify-build-gates ==" -ForegroundColor Yellow
+}
+
 Write-Host "== AO-CLOSE: system-guard (doc-sync + health + guard) ==" -ForegroundColor Cyan
 & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $guardScript -WorkspaceRoot $agencyRoot -Mode manual
 $guardExit = $LASTEXITCODE
@@ -42,7 +57,6 @@ if ($guardExit -ne 0) {
     exit $guardExit
 }
 
-# Refresh reports/status (integrated-status-LATEST); system-guard does not run this.
 $genScript = Join-Path $agencyRoot "scripts\generate-integrated-status-report.ps1"
 if (Test-Path -LiteralPath $genScript) {
     Write-Host "== AO-CLOSE: generate integrated-status report ==" -ForegroundColor Cyan
@@ -101,7 +115,7 @@ try {
         Write-Error "ao-close: git push failed (check auth / network)"
         exit 1
     }
-    Write-Host "ao-close: done (guard PASS, push OK)." -ForegroundColor Green
+    Write-Host "ao-close: done (verify + guard + integrated report + push OK)." -ForegroundColor Green
 } finally {
     Pop-Location
 }

@@ -1,4 +1,4 @@
-# AGENTS.md - Agency Operating Rules
+﻿# AGENTS.md - Agency Operating Rules
 
 ## 語言與輸出
 - 預設使用繁體中文
@@ -21,7 +21,7 @@
 - 回覆格式固定為：`已完成`、`目前進度`、`下一步`。
 - 使用者輸入 **`AO-CLOSE`**（關鍵字不變）或明確表達要關機/收工時，必須先執行 **closeout**，再輸出：`今日完成`、`今日未完成`、`連動檢查`、`明日優先`。
   - **建議一鍵**（更新 `TASKS` / `WORKLOG` / `memory/**` 後）：`D:\Work\scripts\ao-close.ps1` 或 `agency-os\scripts\ao-close.ps1`（**同邏輯雙複本**，請保持內容一致）  
-    → 內部依序等同：`doc-sync-automation -AutoDetect`、`system-health-check`、`system-guard -Mode manual`；**Gate PASS 後自動** `git commit`（有變更時）+ `git push`。今夜不推：加 `-SkipPush`。
+    → 預設依序：`verify-build-gates`（龍蝦 + 治理 health）→ `system-guard`（內含 doc-sync + health + guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`（公司機 `pull` 即完整）。不推：`-SkipPush`；略過龍蝦閘（不建議）：`-SkipVerify`。
   - **或分部手動**（與一鍵擇一）：`doc-sync-automation -AutoDetect` → `system-health-check` → `system-guard -Mode manual` → 再自行 `git push`（見 `docs/operations/end-of-day-checklist.md`）。
 
 ## First Run
@@ -64,5 +64,5 @@
 - `docs/operations/system-guard-and-notification.md`
 - `docs/operations/system-operation-sop.md`
 
-_Last synced: 2026-03-26 00:15:48 UTC_
+_Last synced: 2026-03-26 00:37:28 UTC_
 

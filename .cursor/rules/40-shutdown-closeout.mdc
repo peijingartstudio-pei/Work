@@ -6,7 +6,7 @@ alwaysApply: true
 # Shutdown Closeout
 
 **`AO-CLOSE` 關鍵字與收工回覆格式（今日完成／未完成／連動檢查／明日優先）維持不變。**  
-以下是在**既有** doc-sync + health + system-guard 基礎上，**新增**關機前可一鍵執行並**通過 Gate 後推 GitHub** 的步驟（`ao-close.ps1`）。
+目標：使用者收工前打 `AO-CLOSE` 後，**本機通過完整閘道、產出報告、並推上 GitHub**，公司電腦 **`git pull` 即得完整可續接狀態**（含龍蝦治理 + Agency 連動 + 綜合狀態檔）。
 
 When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
 "要關機", "收工", "今天先到這"), run this closeout sequence before ending:
@@ -18,11 +18,15 @@ When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
    - `memory/daily/YYYY-MM-DD.md` (create if missing, then write closeout summary)
 2. Run **one-shot closeout + GitHub push** (monorepo root `D:\Work`):
    `powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`
-   - Runs `system-guard` (which runs `doc-sync-automation -AutoDetect` + `system-health-check` + guard report).
-   - If guard **PASS**: `git add -A`, `git commit` when there are staged changes, then `git push origin <current-branch>`.
-   - If guard **FAIL**: **no push**; user must fix and re-run.
-   - To push later manually this session only: add `-SkipPush`.
-3. Confirm linkage integrity is PASS (Critical Gate from the health step inside guard) and push succeeded or was correctly skipped (`-SkipPush`).
+   - **`verify-build-gates.ps1`**（lobster `bootstrap-validate` + Agency `system-health-check`）— **預設必跑**；失敗則 **不 push**。
+   - **`system-guard -Mode manual`**（內含 `doc-sync-automation -AutoDetect` + health + guard 報告 + `LAST_SYSTEM_STATUS.md`）。
+   - **`generate-integrated-status-report.ps1`** → 更新 `reports/status/integrated-status-LATEST.md`。
+   - 若全程 **PASS**：`git add -A` → 有變更則 `git commit` → `git push origin <current-branch>`。
+   - **`-SkipPush`**：仍跑上述閘道與產報，**不** commit／push（僅當使用者明確要暫存本機時）。
+   - **`-SkipVerify`**：略過龍蝦閘道（較快；**不建議**在「明天公司機要 pull 完整」前使用）。
+3. Confirm：`verify-build-gates` 與 guard 路徑皆 **PASS**，且 push 成功（或依使用者要求正確使用 `-SkipPush`）。
+
+**公司機續接（pull 後建議）**：在 repo 根執行一次 `.\scripts\verify-build-gates.ps1` 確認環境；若使用 `mcp-local-wrappers`，於該目錄 `npm ci`（或 `npm install`）還原依賴（`node_modules` 不入庫）。
 
 Then respond with this exact structure:
 
