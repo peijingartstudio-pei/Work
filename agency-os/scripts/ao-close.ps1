@@ -1,4 +1,4 @@
-# Thin wrapper: canonical script is monorepo scripts\ao-close.ps1 (WorkRoot must be repo root).
+# Thin wrapper: canonical AO-CLOSE script is monorepo root scripts\ao-close.ps1.
 param(
     [string]$WorkRoot = "",
     [string]$CommitMessage = "",
