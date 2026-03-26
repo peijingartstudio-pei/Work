@@ -9,6 +9,7 @@
 - 讓 AI 每次會話都先讀記憶，不從空白開始
 
 ## 核心文件
+- **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：**他處電腦／公司機開機與 pull 後須知**（與 `RESUME_AFTER_REBOOT.md` 同列必讀）
 - `AGENTS.md`: AI 協作規則
 - `BOOTSTRAP.md`: 新環境初始化清單
 - `TASKS.md`: 全域任務看板
@@ -150,5 +151,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-03-26 00:37:28 UTC_
+_Last synced: 2026-03-26 00:43:03 UTC_
 

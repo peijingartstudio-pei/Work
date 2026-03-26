@@ -1,18 +1,25 @@
 # Resume After Reboot
 
-重開機後，請先在 Cursor 開啟：
-`D:\Work\agency-os`
+## 同一台電腦 — 重開機後
 
-然後貼上這段訊息：
+請先在 Cursor 開啟工作區：
+- **建議 monorepo 根**：`D:\Work`（含 `agency-os`、`lobster-factory` 與根 `scripts`）
+- 或僅開：`D:\Work\agency-os`
 
-「AO-RESUME」
+貼上：**`AO-RESUME`**
 
-重開後先看：
-- `LAST_SYSTEM_STATUS.md`
-- 若存在 `ALERT_REQUIRED.txt`，先修復再繼續交付
+先看：
+- `LAST_SYSTEM_STATUS.md`（在 `agency-os` 根目錄）
+- 若存在 **`ALERT_REQUIRED.txt`**：先修復再繼續交付
+
+## 他處電腦／公司機 — 第一次或換機
+
+請改看：**`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（`git pull`、`verify-build-gates`、`npm ci`、狀態檔路徑）。
 
 ## Related Documents (Auto-Synced)
 - `docs/operations/system-guard-and-notification.md`
+- `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
+- `docs/overview/EXECUTION_DASHBOARD.md`
 
 _Last synced: 2026-03-20 04:57:16 UTC_
 

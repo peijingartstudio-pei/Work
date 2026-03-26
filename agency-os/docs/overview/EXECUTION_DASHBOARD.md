@@ -67,10 +67,12 @@
   - 或於 `agency-os`：`powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`  
   → 預設依序：**`verify-build-gates`**（龍蝦 bootstrap + Agency health）→ **`system-guard`**（doc-sync + health + guard）→ **`generate-integrated-status-report`**（`reports/status/integrated-status-LATEST.md`）→ **PASS 後** `git commit` + `git push`（**公司機 `git pull` 即與你收工快照一致**）。**FAIL 不 push。** `-SkipPush`：仍跑閘道與產報，不推遠端。`-SkipVerify`：略過龍蝦閘（收工要跨機完整時**不建議**）。
 
-### 公司機續接（pull 後）
-1. 在 monorepo 根 `git pull`
-2. 建議再跑：`powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1`（確認本機 Node／路徑無誤）
-3. 若用 `mcp-local-wrappers`：`cd mcp-local-wrappers` → `npm ci`（`node_modules` 不入庫）
+### 公司機／他處電腦（pull 後）
+**完整清單請固定看：`docs/overview/REMOTE_WORKSTATION_STARTUP.md`。** 摘要：
+1. monorepo 根 `git pull`
+2. `powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1`
+3. `mcp-local-wrappers`：`npm ci`
+4. 綜合狀態以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準（勿與根目錄 `reports/status` 混淆）
 - 手動核銷：仍可依 `docs/operations/end-of-day-checklist.md` 逐項打勾（與 §1b 對齊）。
 
 ### 每週（建議固定一天，例如週一）
@@ -97,5 +99,5 @@
 - `docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-03-26 00:37:28 UTC_
+_Last synced: 2026-03-26 00:43:03 UTC_
 
