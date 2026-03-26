@@ -93,6 +93,8 @@
 - **事實與狀態分離**：做了什麼寫 `WORKLOG.md`，待辦狀態改 `TASKS.md`
 - **Gate 先行**：未通過 gate 不進下一步（避免把錯誤帶到後面）
 - **收工必留證據**：closeout/health/guard report 檔名要寫進 `daily note`
+- **龍蝦工廠主軸固定追蹤**：每次 AO-RESUME 必須同步回報 Milestone（M1~M5）/ 今日 DoD / 阻塞
+- **變更一致性檢查**：每次修改前後都要檢查重複、矛盾、舊路徑與跨檔狀態不一致
 
 ## Related Documents (Auto-Synced)
 - `automation/REGISTER_WEEKLY_SYSTEM_REVIEW_TASK.ps1`
@@ -101,5 +103,5 @@
 - `docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-03-26 07:17:09 UTC_
+_Last synced: 2026-03-26 07:43:44 UTC_
 

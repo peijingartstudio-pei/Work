@@ -118,3 +118,8 @@ node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=s
 - 已確認現況缺口（repo 尚未存在）：
   - （已完成）C4-1~C4-5 raw spec 差距第一輪補齊
 
+## G) 完工路線圖（v2）
+- 主要執行文件：`docs/LOBSTER_FACTORY_COMPLETION_PLAN_V2.md`
+- 推進原則：依 M1 -> M5 順序，不跳關。
+- 每個 milestone 完成後，回寫 `agency-os/WORKLOG.md` 與 `agency-os/memory/daily/YYYY-MM-DD.md` 證據。
+

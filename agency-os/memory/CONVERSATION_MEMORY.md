@@ -179,5 +179,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-26 07:17:09 UTC_
+_Last synced: 2026-03-26 07:43:44 UTC_
 

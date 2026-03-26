@@ -11,7 +11,10 @@
 3. 讀 `memory/CONVERSATION_MEMORY.md`（長期記憶）
 4. 讀 `memory/daily/` 的今日與昨日筆記（若存在）
 5. 讀 `TASKS.md` 與 `WORKLOG.md`
-6. 先輸出啟動摘要（固定格式）：
+6. 讀龍蝦工廠主軸文件（若存在）：
+   - `../lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`
+   - `../lobster-factory/docs/LOBSTER_FACTORY_COMPLETION_PLAN_V2.md`
+7. 先輸出啟動摘要（固定格式）：
    - `Yesterday Recap`（Completed/Pending/Risks）
    - `Today Plan`（Priority 1/2/3）
    - `Confirm`：「今天先做哪一項？」
@@ -19,6 +22,7 @@
 ## 快速續接關鍵字
 - 使用者輸入 `AO-RESUME` 時，必須先讀取記憶與進度檔後再回覆。
 - 回覆格式固定為：`已完成`、`目前進度`、`下一步`。
+- `目前進度` 必須包含龍蝦工廠欄位：`目前 Milestone`、`今日 DoD`、`阻塞/風險`。
 - 使用者輸入 **`AO-CLOSE`**（關鍵字不變）或明確表達要關機/收工時，必須先執行 **closeout**，再輸出：`今日完成`、`今日未完成`、`連動檢查`、`明日優先`。
   - **建議一鍵**（更新 `TASKS` / `WORKLOG` / `memory/**` 後）：`.\scripts\ao-close.ps1`（repo 根）或 `.\agency-os\scripts\ao-close.ps1`（fallback；**同邏輯雙複本**，請保持內容一致）  
     → 預設依序：`verify-build-gates`（龍蝦 + 治理 health）→ `system-guard`（內含 doc-sync + health + guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`（公司機 `pull` 即完整）。不推：`-SkipPush`；略過龍蝦閘（不建議）：`-SkipVerify`。
@@ -49,6 +53,7 @@
 - 會話結束前，執行：`powershell -ExecutionPolicy Bypass -File .\scripts\system-guard.ps1 -Mode manual`
 - `system-health-check` 的 Critical Gate 必須 PASS（連動缺漏不允許帶過）
 - 所有腳本讀寫檔案必須顯式使用 UTF-8，避免亂碼與編碼漂移
+- 每次變更前必須完整閱讀目標檔與直接關聯的 source-of-truth；變更後必做衝突檢查（重複、矛盾、路徑舊值、狀態不一致）
 
 ## 執行安全
 - 不做不可逆破壞操作
@@ -64,5 +69,5 @@
 - `docs/operations/system-guard-and-notification.md`
 - `docs/operations/system-operation-sop.md`
 
-_Last synced: 2026-03-26 07:17:09 UTC_
+_Last synced: 2026-03-26 07:43:44 UTC_
 
