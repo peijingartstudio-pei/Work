@@ -3,8 +3,8 @@
 ## 同一台電腦 — 重開機後
 
 請先在 Cursor 開啟工作區：
-- **建議 monorepo 根**：`D:\Work`（含 `agency-os`、`lobster-factory` 與根 `scripts`）
-- 或僅開：`D:\Work\agency-os`
+- **建議 monorepo 根**：`<WORK_ROOT>`（含 `agency-os`、`lobster-factory` 與根 `scripts`）
+- 或僅開：`<WORK_ROOT>\agency-os`
 
 貼上：**`AO-RESUME`**
 
@@ -15,6 +15,8 @@
 ## 他處電腦／公司機 — 第一次或換機
 
 請改看：**`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（`git pull`、`verify-build-gates`、`npm ci`、狀態檔路徑）。
+
+> `<WORK_ROOT>` 例子：筆電可能是 `D:\Work`；公司桌機可能是 `C:\Users\USER\Work`。
 
 ## Related Documents (Auto-Synced)
 - `docs/operations/system-guard-and-notification.md`

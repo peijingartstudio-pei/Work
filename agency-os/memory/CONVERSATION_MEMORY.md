@@ -113,45 +113,46 @@
 
 ## Runbook Commands (明天照跑)
 你有兩種模式：`Strict`（安全最大）與 `Fast`（速度優先但仍有門檻）。
+以下命令中的 `<WORK_ROOT>` 請替換為本機實際路徑（例如 `D:\Work` 或 `C:\Users\USER\Work`）。
 
 ### Strict Mode（推薦，確保今天/明天不出問題）
 1. Phase 1 基線健檢
 ```
-node D:\Work\lobster-factory\scripts\bootstrap-validate.mjs
+node <WORK_ROOT>\lobster-factory\scripts\bootstrap-validate.mjs
 ```
 2. manifest 顯式驗證（只驗 JSON 結構與 guardrail）
 ```
-node D:\Work\lobster-factory\scripts\validate-manifests.mjs
+node <WORK_ROOT>\lobster-factory\scripts\validate-manifests.mjs
 ```
 3. governance 顯式驗證（驗 agent/policy JSON）
 ```
-node D:\Work\lobster-factory\scripts\validate-governance-configs.mjs
+node <WORK_ROOT>\lobster-factory\scripts\validate-governance-configs.mjs
 ```
 4. apply-manifest 乾跑（不寫 DB，只輸出 payload + SQL template）
 ```
-node D:\Work\lobster-factory\scripts\dryrun-apply-manifest.mjs --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
+node <WORK_ROOT>\lobster-factory\scripts\dryrun-apply-manifest.mjs --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="<WORK_ROOT>\dummy" --environmentType=staging
 ```
 5. apply-manifest 乾跑驗收（失敗即停，`--mode=strict`）
 ```
-node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=strict --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
+node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=strict --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="<WORK_ROOT>\dummy" --environmentType=staging
 ```
 
 ### Fast Mode（快、但仍有關鍵門檻）
 1. manifest 顯式驗證
 ```
-node D:\Work\lobster-factory\scripts\validate-manifests.mjs
+node <WORK_ROOT>\lobster-factory\scripts\validate-manifests.mjs
 ```
 2. governance 顯式驗證
 ```
-node D:\Work\lobster-factory\scripts\validate-governance-configs.mjs
+node <WORK_ROOT>\lobster-factory\scripts\validate-governance-configs.mjs
 ```
 3. apply-manifest 乾跑（不寫 DB）
 ```
-node D:\Work\lobster-factory\scripts\dryrun-apply-manifest.mjs --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
+node <WORK_ROOT>\lobster-factory\scripts\dryrun-apply-manifest.mjs --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="<WORK_ROOT>\dummy" --environmentType=staging
 ```
 4. apply-manifest 乾跑驗收（`--mode=fast`，失敗即停）
 ```
-node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=fast --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
+node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=fast --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="<WORK_ROOT>\dummy" --environmentType=staging
 ```
 
 ## Memory Update Protocol
@@ -178,5 +179,5 @@ node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=f
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-26 06:29:49 UTC_
+_Last synced: 2026-03-26 07:17:09 UTC_
 
