@@ -1,4 +1,4 @@
-﻿# Worklog
+# Worklog
 
 ## 2026-02-27
 
@@ -142,6 +142,7 @@ _Last synced: 2026-03-26 00:15:48 UTC_
 - `system-guard.ps1`：失敗時 `exit 1`，供 `ao-close` 判斷。
 - `.cursor/rules/40-shutdown-closeout.mdc`、`AGENTS.md`、`end-of-day-checklist.md`、`EXECUTION_DASHBOARD.md` 已對齊說明（**AO-CLOSE 仍為同一關鍵字與四段回覆格式**）。
 - 本回合收工：執行 `ao-close.ps1`（含 push）並記錄報告檔名於 `memory/daily/2026-03-26.md`。
+- **修正**：`ao-close.ps1` 改為**單一邏輯**（自動判斷從 `Work\scripts` 或 `agency-os\scripts` 啟動），兩處各保留**同內容**複本，避免 wrapper 誤指 `D:\scripts`；已再驗證雙入口 `-SkipPush` PASS。
 
 
 

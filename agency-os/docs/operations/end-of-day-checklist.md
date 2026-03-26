@@ -13,7 +13,7 @@
 ### 1a) 一鍵收工 + 推 GitHub（推薦）
 在 **monorepo 根** `D:\Work` 執行（且請**先**改好 `TASKS.md` / `WORKLOG.md` / `memory/**`，才會被 commit 進去）：
 
-- [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`
+- [ ] `powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`
   - 內部會跑 `agency-os\scripts\system-guard.ps1 -Mode manual`（已含 doc-sync + health + guard 報告）
   - **Guard PASS**：自動 `git add -A` → 有變更則 `git commit` → `git push origin <目前分支>`
   - **Guard FAIL**：**不會 push**，請修復後重跑
@@ -60,5 +60,5 @@
 ## Related Documents (Auto-Synced)
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-26 00:13:34 UTC_
+_Last synced: 2026-03-26 00:27:51 UTC_
 

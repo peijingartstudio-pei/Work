@@ -1,4 +1,4 @@
-﻿# Execution Dashboard (Agency OS + Lobster Factory)
+# Execution Dashboard (Agency OS + Lobster Factory)
 
 > 目的：用**一頁**掌握「完整建置系統、目前進度、尚未完成、下一步、硬性 Gate」並降低遺漏與重工。
 
@@ -62,8 +62,9 @@
    - 參考 `memory/CONVERSATION_MEMORY.md` 的 Runbook Commands
 
 ### 收工（AO-CLOSE）
-- **一鍵（建議）**：先更新 `TASKS.md` / `WORKLOG.md` / `memory/**`，再在 monorepo 根執行：  
-  `powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`  
+- **一鍵（建議）**：先更新 `TASKS.md` / `WORKLOG.md` / `memory/**`，再執行（擇一，**同一份腳本邏輯**，請保持兩路徑檔案內容一致）：  
+  - `powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`  
+  - 或於 `agency-os`：`powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`  
   → 內含 `system-guard`（doc-sync + health + guard）；**PASS 後自動** `git commit`（有變更時）+ `git push`。**FAIL 不會 push。** 暫不推遠端：加 `-SkipPush`。
 - 手動核銷：仍可依 `docs/operations/end-of-day-checklist.md` 逐項打勾（與 §1b 對齊）。
 

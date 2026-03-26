@@ -1,29 +1,8 @@
 ﻿{
-    "last_run_utc":  "2026-03-26T00:15:48.7655749Z",
+    "last_run_utc":  "2026-03-26T00:27:51.0893162Z",
     "changed_files":  [
-                          ".cursor/rules/40-shutdown-closeout.mdc",
-                          "AGENTS.md",
-                          "memory/CONVERSATION_MEMORY.md",
-                          "memory/daily/2026-03-26.md",
-                          "WORKLOG.md"
+                          "docs/operations/end-of-day-checklist.md"
                       ],
-    "impacted_files":  [
-                           ".cursor/rules/40-shutdown-closeout.mdc",
-                           "AGENTS.md",
-                           "memory/CONVERSATION_MEMORY.md",
-                           "memory/daily/2026-03-26.md",
-                           "README.md",
-                           "scripts/doc-sync-automation.ps1",
-                           "scripts/system-guard.ps1",
-                           "scripts/system-health-check.ps1",
-                           "TASKS.md",
-                           "WORKLOG.md"
-                       ],
-    "auto_updated_files":  [
-                               "AGENTS.md",
-                               "memory/CONVERSATION_MEMORY.md",
-                               "README.md",
-                               "TASKS.md",
-                               "WORKLOG.md"
-                           ]
+    "impacted_files":  "docs/operations/end-of-day-checklist.md",
+    "auto_updated_files":  "docs/operations/end-of-day-checklist.md"
 }
