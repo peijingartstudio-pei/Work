@@ -55,7 +55,7 @@
 
 ## C) 尚未完成（下一步主線，避免重工）
 ### C1. 寫入鏈路（先小後大）
-- [ ] C1-1. 先只開 `LOBSTER_ENABLE_DB_WRITES=true` 驗證 `workflow_runs` 寫入（已新增 `scripts/validate-workflow-runs-write.mjs`，待實際 env 執行）
+- [x] C1-1. 先只開 `LOBSTER_ENABLE_DB_WRITES=true` 驗證 `workflow_runs` 寫入（execute PASS，`insertedId=1e53ec18-1c01-4547-9593-20feee6bdc2c`）
 - [ ] C1-2. 再接 `package_install_runs` 寫入與狀態流（pending/running/completed/failed/rolled_back；已新增 `scripts/validate-package-install-runs-flow.mjs`，待實際 env 執行）
 - [ ] C1-3. 補齊 DB 寫入錯誤處理（重試、補償、可觀測；已新增 `scripts/validate-db-write-resilience.mjs` + `supabaseRestInsert` retry/trace）
 

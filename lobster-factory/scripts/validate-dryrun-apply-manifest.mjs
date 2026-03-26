@@ -1,4 +1,6 @@
 import { execFileSync } from "node:child_process";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 function getArg(name) {
   const prefix = `--${name}=`;
@@ -44,7 +46,9 @@ const args = {
 
 const mode = getMode();
 
-const dryrunScript = "D:\\Work\\lobster-factory\\scripts\\dryrun-apply-manifest.mjs";
+const currentFile = fileURLToPath(import.meta.url);
+const currentDir = path.dirname(currentFile);
+const dryrunScript = path.resolve(currentDir, "dryrun-apply-manifest.mjs");
 
 const raw = execFileSync(
   process.execPath,
