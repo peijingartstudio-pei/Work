@@ -1,31 +1,17 @@
 ﻿{
-    "last_run_utc":  "2026-03-26T00:43:03.1265781Z",
+    "last_run_utc":  "2026-03-26T00:43:57.6449420Z",
     "changed_files":  [
-                          "docs/overview/EXECUTION_DASHBOARD.md",
-                          "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                          "memory/CONVERSATION_MEMORY.md",
                           "memory/daily/2026-03-27.md",
-                          "README.md",
+                          "TASKS.md",
                           "WORKLOG.md"
                       ],
     "impacted_files":  [
-                           "docs/operations/end-of-day-checklist.md",
-                           "docs/overview/EXECUTION_DASHBOARD.md",
-                           "docs/overview/INTEGRATED_STATUS_REPORT.md",
-                           "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
-                           "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                           "memory/CONVERSATION_MEMORY.md",
                            "memory/daily/2026-03-27.md",
-                           "README.md",
+                           "TASKS.md",
                            "WORKLOG.md"
                        ],
     "auto_updated_files":  [
-                               "docs/operations/end-of-day-checklist.md",
-                               "docs/overview/EXECUTION_DASHBOARD.md",
-                               "docs/overview/INTEGRATED_STATUS_REPORT.md",
-                               "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
-                               "memory/CONVERSATION_MEMORY.md",
-                               "README.md",
+                               "TASKS.md",
                                "WORKLOG.md"
                            ]
 }

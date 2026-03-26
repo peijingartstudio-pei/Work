@@ -1,4 +1,4 @@
-# Global Task Board
+﻿# Global Task Board
 
 ## In Progress
 - [x] 建立多租戶案場資料夾結構（company -> site -> project）
@@ -53,5 +53,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-26 00:37:28 UTC_
+_Last synced: 2026-03-26 00:43:57 UTC_
 
