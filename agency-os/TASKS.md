@@ -39,6 +39,8 @@
 - [x] `lobster-factory` H4 Decision Engine baseline（recommendations schema + contract）
 - [x] `lobster-factory` H5 CX retention/upsell baseline（workflow_runs 串接骨架）
 - [x] `lobster-factory` C3-3 release gate baseline（PR gate + prod deploy gate）
+- [x] `lobster-factory` Trigger deploy CI 修復完成（project ref 對齊 + 缺失 `uid` 補齊 + Actions 綠燈）
+- [x] 修復 Cursor `user-trigger` MCP 啟動錯誤（移除錯誤 `--api-key` 參數，改 vault 啟動腳本）
 - [x] `lobster-factory` C1-2 execute 驗證（`package_install_runs` lifecycle：pending -> running -> completed）
 - [x] `lobster-factory` C1-3 execute 驗證（DB 寫入韌性：retry/compensation/trace）
 - [x] 建立零成本本機 Secrets Vault（Windows DPAPI，`scripts/secrets-vault.ps1`）
@@ -67,5 +69,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-27 12:01:54 UTC_
+_Last synced: 2026-03-27 16:23:56 UTC_
 

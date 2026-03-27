@@ -78,7 +78,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-27 12:01:54 UTC_
+_Last synced: 2026-03-27 16:23:56 UTC_
 
 ## 2026-03-20
 
@@ -282,6 +282,16 @@ _Last synced: 2026-03-27 12:01:54 UTC_
   - 於 `lobster-factory` 執行 `npm run validate`
   - CI 使用 `LOBSTER_SKIP_AGENCY_CANONICAL=1`（單 repo runner 場景）
 
+### Trigger deploy / MCP 連動修復（同日）
+- 已完成 Trigger deploy 鏈路修復並通過 GitHub Actions：
+  - `project ref` 對齊為 `proj_rqykzzwujizcxdzgnedn`
+  - 補齊缺失檔：`lobster-factory/packages/workflows/src/utils/uid.ts`
+  - `release-trigger-prod.yml` 完成相容性調整（checkout v5 / node 22 / Node24 actions 相容）
+  - Actions 結果：`Deploy to Trigger.dev (prod)` `gate` + `deploy` 皆綠燈
+- 已修復 Cursor `user-trigger` MCP 啟動錯誤：
+  - 根因：錯用 `--api-key`（Trigger MCP CLI 不支援）
+  - 修正：`C:\Users\user1115\.cursor\mcp.json` 改為呼叫 `scripts/start-trigger-mcp.ps1`，並用 vault 注入 `TRIGGER_ACCESS_TOKEN`
+
 ### AO-CLOSE（2026-03-27）
 - 已完成收工前進度同步（`TASKS.md`、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-27.md`）。
 - 準備執行 `D:\Work\scripts\ao-close.ps1` 一鍵閘道與推送。
@@ -307,6 +317,7 @@ _Last synced: 2026-03-27 12:01:54 UTC_
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
 
 
 
