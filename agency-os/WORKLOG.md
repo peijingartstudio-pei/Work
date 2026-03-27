@@ -1,4 +1,4 @@
-﻿# Worklog
+# Worklog
 
 ## 2026-02-27
 
@@ -344,8 +344,9 @@ _Last synced: 2026-03-27 17:29:01 UTC_
 
 ### AO-CLOSE（2026-03-28）
 - 收工前已更新 `TASKS.md`、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-28.md`。
-- 執行 `D:\Work\scripts\ao-close.ps1`：`verify-build-gates` → `system-guard`（doc-sync + health + guard）→ `generate-integrated-status-report` → **PASS 後** `git commit` / `git push origin main`。
-- 證據與 commit hash：見本節下方執行後補記。
+- 執行 `D:\Work\scripts\ao-close.ps1`：`verify-build-gates` **PASS** → `system-guard` **PASS** → `generate-integrated-status-report` **OK** → `git commit` / `git push origin main` **OK**。
+- **證據**：`reports/health/health-20260328-012900.md`、`reports/guard/guard-20260328-012904.md`、`reports/status/integrated-status-20260328-012912.md`、`LAST_SYSTEM_STATUS.md`（皆在 `agency-os/` 下）。
+- **Git**：`e31966c` `chore: AO-CLOSE sync 2026-03-28 0129`（已推送 `main`）。
 
 ### AO-CLOSE（2026-03-27）
 - 已完成收工前進度同步（`TASKS.md`、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-27.md`）。
