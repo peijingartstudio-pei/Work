@@ -4,10 +4,11 @@
     "private": true,
     "type": "module",
     "dependencies": {
-      "@trigger.dev/sdk": "^3.0.0",
+      "@trigger.dev/sdk": "^4.0.0",
       "zod": "^3.22.0"
     },
     "devDependencies": {
-      "trigger.dev": "^3.0.0"
+      "trigger.dev": "^4.0.0"
     }
   }
+ 
