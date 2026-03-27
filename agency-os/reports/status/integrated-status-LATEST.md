@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-03-28 00:24:11
+- Generated: 2026-03-28 01:25:55
 - agency-os root: `D:\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -89,6 +89,7 @@
 - **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`ao-close.ps1`**（雙路徑同內容）預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`，讓公司機 **`pull` 即完整**；`-SkipPush`／`-SkipVerify` 為選用。
 - AO-CLOSE 預設新增硬門檻：`system-health-check` 分數需為 **100%**，未達 100% 直接視為收工未完成（需修復或經使用者明確授權才可放寬）。
 - **他處電腦開機**：固定閱讀 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（與 `RESUME_AFTER_REBOOT.md` 分機情境）；綜合報告以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準。
+- **報表路徑收斂**：腳本已加 monorepo guardrail，從 repo 根執行也會強制寫入 `agency-os/reports/*`；root `reports/*` 已退役為相容用途。
 - **2026-03-27**：使用者授權代理於不在現場時執行完整 AO-CLOSE（含 push），並落地上述須知文件。
 - **Enterprise 工具層（C5）決策**：`Identity = Clerk`；`Secrets` 先採 `env/mcp`（1Password 因付費方案暫不採用）。
 - **工具連通現況**：`Cloudflare`、`Sentry`、`PostHog`、`Slack`、`Clerk` 可用；`Supabase` plugin OAuth 回傳 `Unrecognized client_id`，暫以既有 `mcp.json` 連線運行。
@@ -148,6 +149,9 @@
 - 已完成 `C3-3` baseline：新增 PR release gate + prod deploy 前 gate（未過 gate 不執行 deploy）。
 - 已進入 `AO-CLOSE`：收工前四檔進度同步已完成，下一步執行 `scripts/ao-close.ps1`。
 - Trigger 經過多輪修復後已收斂：GitHub Actions deploy 成功、`project ref` 對齊、缺失 `uid` 已補、Cursor `user-trigger` MCP 的 `--api-key` 錯參數已修正為 vault 啟動腳本路徑。
+- 已落地工具路由治理：新增 `MCP_TOOL_ROUTING_SPEC.md` 與 `workflow-risk-matrix.json`，固定 Trigger / n8n / GitHub / Supabase / WordPress 的強制分工與風險邊界。
+- 已落地 `WORDPRESS_FACTORY_EXECUTION_SPEC.md` 細部規格（固定執行步驟、approval gate、rollback、audit trail）。
+- 已將 WordPress Factory 規範轉為可執行 gate：新增 execution policy JSON + routing validation script，並納入 `bootstrap-validate` 與 `npm validate`。
 
 > Full runbook: see `## Runbook Commands` in the source file.
 
@@ -183,6 +187,66 @@
 - 進入 H6 第二階段（擴充可執行治理 checks）或推進 Enterprise 工具層正式串接。
 - 安排 secrets 去敏與輪替作業。
 
+## 補充：Tool Routing / Factory 通道固定（同日）
+
+### 已完成
+- 新增 `lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`（強制版工具分工、權限邊界、WordPress Factory 固定通道）
+- 新增 `lobster-factory/workflow-risk-matrix.json`（機器可讀風險路由策略）
+- 更新揭示與連動：
+  - `lobster-factory/README.md`
+  - `lobster-factory/docs/ROUTING_MATRIX.md`
+
+### 驗證
+- `validate-doc-integrity.mjs` PASS
+- `system-health-check` PASS（100%）
+
+## 補充：WordPress Factory 細部 runbook（同日）
+
+### 已完成
+- 新增 `lobster-factory/docs/WORDPRESS_FACTORY_EXECUTION_SPEC.md`
+- 規格內容補齊：
+  - 固定執行通道（staging-first）
+  - failure/rollback handling
+  - approval payload template
+  - audit trail 必填要求
+
+### 連動
+- `lobster-factory/README.md` 已新增入口
+
+## 補充：WordPress Factory 規範可執行化（同日）
+
+### 已完成
+- 新增 `lobster-factory/packages/policies/approval/wordpress-factory-execution-policy.json`
+- 新增 `lobster-factory/scripts/validate-workflow-routing-policy.mjs`
+- 整合到 `lobster-factory/scripts/bootstrap-validate.mjs`
+- `lobster-factory/package.json` 新增 `validate:routing`
+- 文件同步：
+  - `lobster-factory/docs/V3_GOVERNANCE_GATES.md`
+  - `lobster-factory/README.md`
+
+### 驗證
+- `npm run validate` PASS（含 `Workflow routing policy validation PASSED`）
+
+## 補充：報表單一路徑收斂（同日）
+
+### 已完成
+- 修正根因：同一組腳本從 `D:\Work\scripts` 入口執行時，root resolve 可能指向 `D:\Work`，導致報表寫到 `Work/reports`。
+- 腳本防呆已加到以下檔案（monorepo guardrail）：
+  - `scripts/system-health-check.ps1`
+  - `scripts/doc-sync-automation.ps1`
+  - `scripts/system-guard.ps1`
+  - `scripts/generate-integrated-status-report.ps1`
+  - `scripts/archive-old-reports.ps1`
+- Git 路徑治理：
+  - `.gitignore` 新增 root `reports/*` 產物忽略規則。
+  - 移除 root `reports` 的歷史產物（closeout/health/status timestamp），避免主線污染。
+- 文件同步：
+  - `reports/status/README.md`：標註 root `reports/` 已退役，只作相容。
+  - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`：將 `Work/reports/status` 標記為退役路徑。
+
+### 驗證
+- 後續以 repo 根腳本入口執行時，報表預期只會寫入 `agency-os/reports/*`。
+
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
@@ -202,10 +266,6 @@
 - No blocking issue detected.
 
 ## 7) WORKLOG.md tail (~60 lines)
-
-### AO-CLOSE（2026-03-27）
-- 已完成收工前進度同步（`TASKS.md`、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-27.md`）。
-- 準備執行 `D:\Work\scripts\ao-close.ps1` 一鍵閘道與推送。
 
 ### 他處電腦開機須知 + 缺席使用者授權之 AO-CLOSE
 - 新增 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（公司機／換機：`git pull`、`verify-build-gates`、`npm ci`、`integrated-status` 路徑說明、與根目錄 `reports/status` 區別）。
@@ -228,6 +288,10 @@
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
+
+
+
 
 
 

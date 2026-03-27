@@ -9,9 +9,22 @@ $ErrorActionPreference = "Stop"
 
 function Resolve-WorkspaceRoot {
     param([string]$InputRoot)
-    if ($InputRoot -and (Test-Path $InputRoot)) { return (Resolve-Path $InputRoot).Path }
-    if ($PSScriptRoot) { return (Resolve-Path (Join-Path $PSScriptRoot "..")).Path }
-    return (Get-Location).Path
+    $resolved = $null
+    if ($InputRoot -and (Test-Path $InputRoot)) {
+        $resolved = (Resolve-Path $InputRoot).Path
+    } elseif ($PSScriptRoot) {
+        $resolved = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+    } else {
+        $resolved = (Get-Location).Path
+    }
+
+    # Monorepo guardrail: if invoked from D:\Work, force canonical agency root.
+    $agencyCandidate = Join-Path $resolved "agency-os"
+    if (Test-Path (Join-Path $agencyCandidate "scripts\archive-old-reports.ps1")) {
+        return (Resolve-Path $agencyCandidate).Path
+    }
+
+    return $resolved
 }
 
 function Ensure-Dir {

@@ -27,6 +27,7 @@
 - [ ] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 - [x] 完成今日 AO-CLOSE 三步收工檢查（doc-sync / health / guard 全 PASS）
 - [x] 完成今日 AO-CLOSE 一鍵閘道與同步推送（verify-build-gates + guard + integrated-status + git push）
+- [x] 報表單一路徑收斂（canonical=`agency-os/reports`，root `reports/` 退役為相容用途）
 - [x] 建立標準 MSA/SOW/CR 文件模板
 - [x] 修復 `AgencyOS-*` 排程路徑到 `D:\Work\agency-os` 並補齊命令引號防呆
 - [x] 建立 reports 歸檔腳本（`scripts/archive-old-reports.ps1`）與 README 操作入口
@@ -72,5 +73,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-27 16:56:54 UTC_
+_Last synced: 2026-03-27 17:25:54 UTC_
 

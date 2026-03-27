@@ -12,13 +12,22 @@ $ErrorActionPreference = "Stop"
 
 function Resolve-WorkspaceRoot {
     param([string]$InputRoot)
+    $resolved = $null
     if ($InputRoot -and (Test-Path $InputRoot)) {
-        return (Resolve-Path $InputRoot).Path
+        $resolved = (Resolve-Path $InputRoot).Path
+    } elseif ($PSScriptRoot) {
+        $resolved = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+    } else {
+        $resolved = (Get-Location).Path
     }
-    if ($PSScriptRoot) {
-        return (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+
+    # Monorepo guardrail: if invoked from D:\Work, force canonical agency root.
+    $agencyCandidate = Join-Path $resolved "agency-os"
+    if (Test-Path (Join-Path $agencyCandidate "scripts\doc-sync-automation.ps1")) {
+        return (Resolve-Path $agencyCandidate).Path
     }
-    return (Get-Location).Path
+
+    return $resolved
 }
 
 function To-RelPath {

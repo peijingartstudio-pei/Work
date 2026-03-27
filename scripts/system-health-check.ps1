@@ -7,9 +7,22 @@ $ErrorActionPreference = "Stop"
 
 function Resolve-WorkspaceRoot {
     param([string]$InputRoot)
-    if ($InputRoot -and (Test-Path $InputRoot)) { return (Resolve-Path $InputRoot).Path }
-    if ($PSScriptRoot) { return (Resolve-Path (Join-Path $PSScriptRoot "..")).Path }
-    return (Get-Location).Path
+    $resolved = $null
+    if ($InputRoot -and (Test-Path $InputRoot)) {
+        $resolved = (Resolve-Path $InputRoot).Path
+    } elseif ($PSScriptRoot) {
+        $resolved = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+    } else {
+        $resolved = (Get-Location).Path
+    }
+
+    # Monorepo guardrail: if invoked from D:\Work, force canonical agency root.
+    $agencyCandidate = Join-Path $resolved "agency-os"
+    if (Test-Path (Join-Path $agencyCandidate "scripts\system-health-check.ps1")) {
+        return (Resolve-Path $agencyCandidate).Path
+    }
+
+    return $resolved
 }
 
 function Read-Json {
@@ -23,14 +36,6 @@ function Ensure-Dir {
 }
 
 $root = Resolve-WorkspaceRoot -InputRoot $WorkspaceRoot
-# Monorepo (e.g. D:\Work): default root is Work/, but tenants + many docs live under agency-os/.
-$nestedAgency = Join-Path $root "agency-os"
-if (
-    (Test-Path (Join-Path $nestedAgency "scripts\system-health-check.ps1")) -and
-    (-not (Test-Path (Join-Path $root "tenants")))
-) {
-    $root = (Resolve-Path $nestedAgency).Path
-}
 $checks = @()
 $criticalFailures = @()
 

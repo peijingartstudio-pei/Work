@@ -94,7 +94,7 @@ git pull origin main
 | 路徑 | 說明 |
 |------|------|
 | **`agency-os/reports/status/`** | **主要**：`generate-integrated-status-report.ps1` 與 **AO-CLOSE** 會更新這裡（內容較完整）。 |
-| **`Work/reports/status/`**（repo 根下） | 若曾從根目錄跑過產報，可能另有**較短**副本；**以 `agency-os/reports/status` 為準**。 |
+| **`Work/reports/status/`**（repo 根下） | **已退役**（僅相容保留，不再作為輸出路徑）；請只看 `agency-os/reports/status`。 |
 
 ## 4) 憑證與不可進庫的檔案
 
