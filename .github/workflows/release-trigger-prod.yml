@@ -1,4 +1,4 @@
-hname: Deploy to Trigger.dev (prod)
+name: Deploy to Trigger.dev (prod)
 on:
   push:
     branches:
