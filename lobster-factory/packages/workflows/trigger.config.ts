@@ -3,6 +3,7 @@ import { defineConfig } from "@trigger.dev/sdk/v3";
 export default defineConfig({
   project: "soulful-expression-Z099",
   dirs: ["./src/trigger"],
+  maxDuration: 300,
   retries: {
     enabledInDev: false,
     default: {
