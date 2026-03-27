@@ -1,5 +1,5 @@
 param(
-    [string]$ProjectRef = "proj_iqykzzwujizcxdzgnedn",
+    [string]$ProjectRef = "proj_rqykzzwujizcxdzgnedn",
     [string]$TokenName = "TRIGGER_ACCESS_TOKEN"
 )
 

@@ -27,7 +27,7 @@ jobs:
     needs: gate
     runs-on: ubuntu-latest
     env:
-      TRIGGER_PROJECT_REF: ${{ vars.TRIGGER_PROJECT_REF || 'proj_iqykzzwujizcxdzgnedn' }}
+      TRIGGER_PROJECT_REF: ${{ vars.TRIGGER_PROJECT_REF || 'proj_rqykzzwujizcxdzgnedn' }}
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js 22.x
