@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v5
         with:
-          node-version: "20.x"
+          node-version: "22.x"
       - name: Install dependencies
         run: npm install
         working-directory: lobster-factory
@@ -26,17 +26,27 @@ jobs:
   deploy:
     needs: gate
     runs-on: ubuntu-latest
+    env:
+      TRIGGER_PROJECT_REF: ${{ vars.TRIGGER_PROJECT_REF || 'proj_iqykzzwujizcxdzgnedn' }}
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v4
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v5
         with:
-          node-version: "20.x"
+          node-version: "22.x"
       - name: Install dependencies
         run: npm install
         working-directory: lobster-factory/packages/workflows
+      - name: Validate Trigger credentials
+        env:
+          TRIGGER_SECRET_KEY: ${{ secrets.TRIGGER_SECRET_KEY }}
+        run: |
+          if [ -z "${TRIGGER_SECRET_KEY}" ]; then
+            echo "Missing Trigger credentials. Set secrets.TRIGGER_SECRET_KEY (prod env key)."
+            exit 1
+          fi
       - name: Deploy Trigger.dev
         env:
-                              TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
-        run: npx trigger.dev@latest deploy
+          TRIGGER_SECRET_KEY: ${{ secrets.TRIGGER_SECRET_KEY }}
+        run: npx trigger.dev@4.4.3 deploy --env prod --project-ref "${TRIGGER_PROJECT_REF}" --log-level debug
         working-directory: lobster-factory/packages/workflows

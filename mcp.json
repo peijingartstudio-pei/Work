@@ -157,6 +157,17 @@
       "headers": {
         "Authorization": "Bearer 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"
       }
+    },
+    "trigger": {
+      "command": "powershell",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\Work\\scripts\\start-trigger-mcp.ps1",
+        "-ProjectRef",
+        "proj_iqykzzwujizcxdzgnedn"
+      ]
     }
   }
 }
