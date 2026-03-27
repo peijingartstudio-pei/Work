@@ -67,7 +67,7 @@
 ### C3. 驗收與可運營
 - [ ] C3-1. 建立一套標準 E2E 測試 payload（真實欄位）
 - [ ] C3-2. 完成一次端到端演練並留存報告
-- [ ] C3-3. 設計 release gate（禁止未過 gate 的變更進主幹）
+- [x] C3-3. 設計 release gate（PR gate：`.github/workflows/release-gate-main.yml` + prod deploy 前 `gate` job）
 
 ### C4. 規格差距補齊（raw spec 對齊）
 - [x] C4-1. 建立 `templates/woocommerce/scripts/install-from-manifest.sh`

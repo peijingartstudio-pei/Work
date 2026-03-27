@@ -37,6 +37,7 @@
 - [x] `lobster-factory` H3 第一批 skeleton sprint（Sales/Marketing/Partner/Media/Decision Engine/Merchandising）
 - [x] `lobster-factory` H4 Decision Engine baseline（recommendations schema + contract）
 - [x] `lobster-factory` H5 CX retention/upsell baseline（workflow_runs 串接骨架）
+- [x] `lobster-factory` C3-3 release gate baseline（PR gate + prod deploy gate）
 - [x] `lobster-factory` C1-2 execute 驗證（`package_install_runs` lifecycle：pending -> running -> completed）
 - [x] `lobster-factory` C1-3 execute 驗證（DB 寫入韌性：retry/compensation/trace）
 - [x] 建立零成本本機 Secrets Vault（Windows DPAPI，`scripts/secrets-vault.ps1`）
@@ -65,5 +66,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-27 10:55:30 UTC_
+_Last synced: 2026-03-27 11:53:02 UTC_
 

@@ -78,7 +78,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-27 10:55:30 UTC_
+_Last synced: 2026-03-27 11:53:02 UTC_
 
 ## 2026-03-20
 
@@ -272,6 +272,16 @@ _Last synced: 2026-03-27 10:55:30 UTC_
 - 已同步勾選：
   - `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md` 的 `H6`
 
+### Lobster Factory - C3-3 release gate baseline 完成
+- 已新增 PR gate workflow：
+  - `.github/workflows/release-gate-main.yml`
+- 已更新 prod deploy workflow（先 gate 再 deploy）：
+  - `.github/workflows/release-trigger-prod.yml`
+  - `deploy` 需通過 `gate` job
+- gate 內容：
+  - 於 `lobster-factory` 執行 `npm run validate`
+  - CI 使用 `LOBSTER_SKIP_AGENCY_CANONICAL=1`（單 repo runner 場景）
+
 ### 他處電腦開機須知 + 缺席使用者授權之 AO-CLOSE
 - 新增 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（公司機／換機：`git pull`、`verify-build-gates`、`npm ci`、`integrated-status` 路徑說明、與根目錄 `reports/status` 區別）。
 - 更新 **`RESUME_AFTER_REBOOT.md`**（區分：同機重開 vs 他處開機）、**`README.md`**、**`EXECUTION_DASHBOARD.md`** 指向該須知。
@@ -293,6 +303,7 @@ _Last synced: 2026-03-27 10:55:30 UTC_
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
 
 
 
