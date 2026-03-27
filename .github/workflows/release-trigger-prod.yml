@@ -48,19 +48,19 @@ jobs:
             echo "Missing Trigger credentials. Set secrets.TRIGGER_ACCESS_TOKEN (PAT, prefix tr_pat_)."
             exit 1
           fi
-       - name: Deploy Trigger.dev
-         env:
-           TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
-         run: |
-           for attempt in {1..3}; do
-             echo "Deployment attempt $attempt of 3..."
-             npx trigger.dev@4.4.3 deploy --env prod --project-ref "${TRIGGER_PROJECT_REF}" --log-level debug && break
-             if [ $attempt -lt 3 ]; then
-               echo "Failed, retrying in 10 seconds..."
-               sleep 10
-             else
-               echo "Deployment failed after 3 attempts"
-               exit 1
-             fi
-           done
-         working-directory: lobster-factory/packages/workflows
+      - name: Deploy Trigger.dev
+        env:
+          TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
+        run: |
+          for attempt in {1..3}; do
+            echo "Deployment attempt $attempt of 3..."
+            npx trigger.dev@4.4.3 deploy --env prod --project-ref "${TRIGGER_PROJECT_REF}" --log-level debug && break
+            if [ $attempt -lt 3 ]; then
+              echo "Failed, retrying in 10 seconds..."
+              sleep 10
+            else
+              echo "Deployment failed after 3 attempts"
+              exit 1
+            fi
+          done
+        working-directory: lobster-factory/packages/workflows
