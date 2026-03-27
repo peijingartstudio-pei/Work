@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-03-28 01:25:55
+- Generated: 2026-03-28 01:29:12
 - agency-os root: `D:\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -153,6 +153,11 @@
 - 已落地 `WORDPRESS_FACTORY_EXECUTION_SPEC.md` 細部規格（固定執行步驟、approval gate、rollback、audit trail）。
 - 已將 WordPress Factory 規範轉為可執行 gate：新增 execution policy JSON + routing validation script，並納入 `bootstrap-validate` 與 `npm validate`。
 
+### Today (2026-03-28) - 報表路徑收斂 + AO-CLOSE
+- 已落地報表單一路徑：所有入口強制寫入 `agency-os/reports/*`，root `reports/*` 退役；commit `5128e7d`（收工腳本會一併 push）。
+- 使用者關切：Cursor `user-copilot` MCP 認證重試迴圈不會等同模型 token 計費，但會耗少量本機資源；可停用該 MCP 項止刷 log。
+- 收工：執行 `AO-CLOSE`（`ao-close.ps1`）完成 verify + guard + integrated status + push。
+
 > Full runbook: see `## Runbook Commands` in the source file.
 
 ## 5) memory/daily/2026-03-28.md
@@ -247,11 +252,23 @@
 ### 驗證
 - 後續以 repo 根腳本入口執行時，報表預期只會寫入 `agency-os/reports/*`。
 
+## AO-CLOSE（2026-03-28 收工）
+
+### 收工前狀態
+- 報表單一路徑收斂已 commit（`5128e7d`，含腳本 monorepo guardrail、`.gitignore`、root `reports` 退役、文件連動）。
+- 下一步：執行 `D:\Work\scripts\ao-close.ps1` 跑完整閘道、`LAST_SYSTEM_STATUS.md`、`integrated-status-LATEST.md`，並 `git push origin main`。
+
+### 收工後補記（由腳本產出後核對）
+- verify-build-gates：待填入 PASS/FAIL
+- system-guard：待填入 PASS/FAIL
+- health score：待填入
+- git push：待填入 commit hash
+
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-03-28 00:24:02`
+- Time: `2026-03-28 01:29:04`
 - Health score: **100%**
 - Threshold: **95%**
 - Health gate exit code: **0**
@@ -259,14 +276,13 @@
 - Result: **PASS**
 
 ## Latest Reports
-- Health: `reports/health/health-20260328-002401.md`
-- Closeout: `reports/closeout/closeout-20260328-002356.md`
+- Health: `reports/health/health-20260328-012904.md`
+- Closeout: `reports/closeout/closeout-20260328-012901.md`
 
 ## Action
 - No blocking issue detected.
 
 ## 7) WORKLOG.md tail (~60 lines)
-
 ### 他處電腦開機須知 + 缺席使用者授權之 AO-CLOSE
 - 新增 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（公司機／換機：`git pull`、`verify-build-gates`、`npm ci`、`integrated-status` 路徑說明、與根目錄 `reports/status` 區別）。
 - 更新 **`RESUME_AFTER_REBOOT.md`**（區分：同機重開 vs 他處開機）、**`README.md`**、**`EXECUTION_DASHBOARD.md`** 指向該須知。
@@ -288,6 +304,7 @@
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
 
 
 

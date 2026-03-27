@@ -232,6 +232,11 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - 已落地 `WORDPRESS_FACTORY_EXECUTION_SPEC.md` 細部規格（固定執行步驟、approval gate、rollback、audit trail）。
 - 已將 WordPress Factory 規範轉為可執行 gate：新增 execution policy JSON + routing validation script，並納入 `bootstrap-validate` 與 `npm validate`。
 
+## Today (2026-03-28) - 報表路徑收斂 + AO-CLOSE
+- 已落地報表單一路徑：所有入口強制寫入 `agency-os/reports/*`，root `reports/*` 退役；commit `5128e7d`（收工腳本會一併 push）。
+- 使用者關切：Cursor `user-copilot` MCP 認證重試迴圈不會等同模型 token 計費，但會耗少量本機資源；可停用該 MCP 項止刷 log。
+- 收工：執行 `AO-CLOSE`（`ao-close.ps1`）完成 verify + guard + integrated status + push。
+
 ## Related Documents (Auto-Synced)
 - `.cursor/rules/00-session-bootstrap.mdc`
 - `.cursor/rules/10-memory-maintenance.mdc`
@@ -239,5 +244,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-27 17:25:54 UTC_
+_Last synced: 2026-03-27 17:29:01 UTC_
 

@@ -78,7 +78,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-27 17:25:54 UTC_
+_Last synced: 2026-03-27 17:29:01 UTC_
 
 ## 2026-03-20
 
@@ -342,6 +342,11 @@ _Last synced: 2026-03-27 17:25:54 UTC_
   - `reports/status/README.md` 明確標註 root `reports/` 已退役。
   - `docs/overview/REMOTE_WORKSTATION_STARTUP.md` 將 `Work/reports/status` 標註為退役路徑。
 
+### AO-CLOSE（2026-03-28）
+- 收工前已更新 `TASKS.md`、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-28.md`。
+- 執行 `D:\Work\scripts\ao-close.ps1`：`verify-build-gates` → `system-guard`（doc-sync + health + guard）→ `generate-integrated-status-report` → **PASS 後** `git commit` / `git push origin main`。
+- 證據與 commit hash：見本節下方執行後補記。
+
 ### AO-CLOSE（2026-03-27）
 - 已完成收工前進度同步（`TASKS.md`、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-27.md`）。
 - 準備執行 `D:\Work\scripts\ao-close.ps1` 一鍵閘道與推送。
@@ -367,6 +372,7 @@ _Last synced: 2026-03-27 17:25:54 UTC_
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
 
 
 

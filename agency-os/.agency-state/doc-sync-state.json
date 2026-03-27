@@ -1,24 +1,14 @@
 ﻿{
-    "last_run_utc":  "2026-03-27T17:25:54.7266508Z",
+    "last_run_utc":  "2026-03-27T17:29:01.4208965Z",
     "changed_files":  [
-                          "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
                           "memory/CONVERSATION_MEMORY.md",
                           "memory/daily/2026-03-28.md",
-                          "scripts/doc-sync-automation.ps1",
-                          "scripts/generate-integrated-status-report.ps1",
-                          "scripts/system-guard.ps1",
-                          "scripts/system-health-check.ps1",
                           "TASKS.md",
                           "WORKLOG.md"
                       ],
     "impacted_files":  [
-                           "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
                            "memory/CONVERSATION_MEMORY.md",
                            "memory/daily/2026-03-28.md",
-                           "scripts/doc-sync-automation.ps1",
-                           "scripts/generate-integrated-status-report.ps1",
-                           "scripts/system-guard.ps1",
-                           "scripts/system-health-check.ps1",
                            "TASKS.md",
                            "WORKLOG.md"
                        ],
