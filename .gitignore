@@ -4,6 +4,7 @@
 
 # --- Dependencies (reinstall with npm ci / npm install) ---
 node_modules/
+lobster-factory/packages/workflows/.trigger/
 
 # --- Environment & keys ---
 .env
