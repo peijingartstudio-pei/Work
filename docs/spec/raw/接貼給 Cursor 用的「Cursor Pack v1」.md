@@ -1788,7 +1788,7 @@ echo "Smoke tests passed for $BASE\_URL"
 
 # **10\. `packages/workflows/src/trigger/create-wp-site.ts`**
 
-import { task, logger } from "@trigger.dev/sdk/v3";  
+import { task, logger } from "@trigger.dev/sdk";  
 import { z } from "zod";
 
 const InputSchema \= z.object({  
@@ -1825,7 +1825,7 @@ export const createWpSite \= task({
 
 # **11\. `packages/workflows/src/trigger/apply-manifest.ts`**
 
-import { task, logger } from "@trigger.dev/sdk/v3";  
+import { task, logger } from "@trigger.dev/sdk";  
 import { z } from "zod";  
 import fs from "node:fs/promises";  
 import path from "node:path";
@@ -4269,7 +4269,7 @@ export async function buildInstallPlan(manifest: unknown) {
 
 # **`070_WORKFLOW_create-wp-site.ts`**
 
-import { task, logger } from "@trigger.dev/sdk/v3";
+import { task, logger } from "@trigger.dev/sdk";
 
 import { z } from "zod";
 
@@ -4315,7 +4315,7 @@ export const createWpSite \= task({
 
 # **`071_WORKFLOW_apply-manifest.ts`**
 
-import { task, logger } from "@trigger.dev/sdk/v3";
+import { task, logger } from "@trigger.dev/sdk";
 
 import { z } from "zod";
 
@@ -6663,7 +6663,7 @@ export async function buildInstallPlan(manifest: unknown) {
 
 FILE: packages/workflows/src/trigger/create-wp-site.ts
 
-import { task, logger } from "@trigger.dev/sdk/v3";
+import { task, logger } from "@trigger.dev/sdk";
 
 import { z } from "zod";
 
@@ -6707,7 +6707,7 @@ export const createWpSite \= task({
 
 FILE: packages/workflows/src/trigger/apply-manifest.ts
 
-import { task, logger } from "@trigger.dev/sdk/v3";
+import { task, logger } from "@trigger.dev/sdk";
 
 import { z } from "zod";
 

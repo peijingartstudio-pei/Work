@@ -1,4 +1,4 @@
-import { task, logger } from "@trigger.dev/sdk/v3";
+import { task, logger } from "@trigger.dev/sdk";
 import { z } from "zod";
 import fs from "node:fs/promises";
 import path from "node:path";
