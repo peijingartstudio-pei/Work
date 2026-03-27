@@ -4,11 +4,13 @@ on:
     branches:
       - main
   workflow_dispatch:
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 jobs:
   gate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Use Node.js 22.x
         uses: actions/setup-node@v5
         with:
@@ -29,7 +31,7 @@ jobs:
     env:
       TRIGGER_PROJECT_REF: ${{ vars.TRIGGER_PROJECT_REF || 'proj_rqykzzwujizcxdzgnedn' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Use Node.js 22.x
         uses: actions/setup-node@v5
         with:
