@@ -13,6 +13,8 @@
 - **綜合報告（單檔拼裝，建議書籤）**：`reports/status/integrated-status-LATEST.md`  
   - 產生方式見 `docs/overview/INTEGRATED_STATUS_REPORT.md`（`scripts/generate-integrated-status-report.ps1`）
 - **邊做邊學／將來自己當家**：`docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`（具體問法、四週路線、每日 15 分鐘、**§17 五連問：注意·推演·為什麼·效益差錯·檢查預防**）
+- **密鑰管理與復原手冊**：`docs/operations/local-secrets-vault-dpapi.md`（新機/重灌/換帳號時必看）
+- **MCP 新增快速手冊（常用）**：`docs/operations/mcp-add-server-quickstart.md`
 
 ## 1) 系統全貌（分層）
 ### A. Agency OS（治理 + 執行 + 證據）
@@ -26,6 +28,7 @@
 - **工程本體**：`<WORK_ROOT>\lobster-factory\`
 - **規格來源**：`<WORK_ROOT>\docs\spec\raw\`
 - **主追蹤清單**：`<WORK_ROOT>\lobster-factory\docs\LOBSTER_FACTORY_MASTER_CHECKLIST.md`
+- **整合路線圖**：`<WORK_ROOT>\lobster-factory\docs\LOBSTER_FACTORY_MASTER_V3_INTEGRATION_PLAN.md`
 
 ## 2) 目前進度（你要掌握的結論版）
 ### 已完成（Phase 1 底座已落地）
@@ -35,10 +38,10 @@
 
 ### 尚未完成（下一段工程主線）
 - 接上 hosting provider adapter + WordPress 真正 provision/shell execution
-- 打通 Supabase 真寫入（預設關閉；先寫 `workflow_runs` 再擴到 `package_install_runs`）
+- 打通 Supabase 真寫入第二階段（`C1-2 package_install_runs lifecycle` + `C1-3 resilience`）
 - 完整 lifecycle：`package_install_runs` 狀態更新 + artifacts/logs ref + rollback 路徑
-- 補齊 raw spec 差距項（installer/smoke test/GitHub workflow/n8n flow/routing matrix）
-- Enterprise 必備工具補強（Sentry/PostHog/Cloudflare/Secrets/Identity）
+- 依 `MASTER_V3` 執行缺口骨架衝刺（Sales/Marketing/Partner/Media/Decision Engine/Merchandising）
+- Enterprise 必備工具補強與正式串接（Sentry/PostHog/Cloudflare/Secrets/Identity）
 
 > 詳細項目以 `TASKS.md` 為準（避免在多處重複維護）。
 
@@ -77,6 +80,11 @@
 4. 綜合狀態以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準（勿與根目錄 `reports/status` 混淆）
 - 手動核銷：仍可依 `docs/operations/end-of-day-checklist.md` 逐項打勾（與 §1b 對齊）。
 
+### 離席會斷網（吃飯前）
+1. 在 `D:\Work` 開終端機
+2. 若只暫停：直接離開，回來執行 `.\scripts\ao-resume.ps1 -AllowUnexpectedDirty`
+3. 若要安全收工再離開：執行 `.\scripts\ao-close.ps1 -SkipPush`
+
 ### 每週（建議固定一天，例如週一）
 - **週期總檢**：`powershell -ExecutionPolicy Bypass -File .\scripts\weekly-system-review.ps1`（於 `agency-os`，或於 `<WORK_ROOT>` 跑 `.\scripts\weekly-system-review.ps1`）
   - 內容：`verify-build-gates.ps1`（龍蝦 bootstrap + 治理 health）→ 重新產生 `reports/status/integrated-status-LATEST.md` → 在 `WORKLOG.md` 附錄**機器產生**的一小節（英文，方便編碼穩定）。
@@ -103,5 +111,5 @@
 - `docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-03-26 16:50:05 UTC_
+_Last synced: 2026-03-27 09:01:45 UTC_
 

@@ -77,6 +77,18 @@ git pull origin main
 - `npm ci` 失敗：刪除 `mcp-local-wrappers\node_modules` 後重試；仍失敗就檢查 Node 版本。
 - `verify-build-gates` 失敗：先修 gate，不要進行大範圍變更或收工 push。
 
+## 2.2 臨時離席／可能斷網（吃飯前 30 秒版）
+
+1. 打開 `D:\Work` 終端機
+2. 貼上：`git status --short`
+3. 如果你只想先暫停，不要自動收工，直接離開即可（回來打 `AO-RESUME`）
+4. 如果你希望離開前做完整安全收工，貼上：`.\scripts\ao-close.ps1 -SkipPush`
+5. 回來後在 `D:\Work` 終端機貼上：`.\scripts\ao-resume.ps1 -AllowUnexpectedDirty`
+
+你會看到什麼（成功判斷）：
+- `ao-close`：會產生 closeout/health/guard 報告
+- `ao-resume`：顯示 preflight completed
+
 ## 3) 兩份「綜合狀態」路徑別搞混
 
 | 路徑 | 說明 |
@@ -89,6 +101,8 @@ git pull origin main
 - **勿**把 `.env`、API key、Claude OAuth 等放進 Git（見 `docs/operations/security-secrets-policy.md`）。
 - `.claude\`、`node_modules\` 已被 `.gitignore`；新機要**各自重新登入** Claude / MCP / GitHub（本機憑證管理員）。
 - MCP 若因換機路徑失效，請只改本機設定（例如 `C:\Users\USER\.cursor\mcp.json`），不要把秘密值提交到 repo。
+- 密鑰庫建置與復原手冊：`docs/operations/local-secrets-vault-dpapi.md`（換機時先照手冊重建 vault）
+- MCP 常用新增流程：`docs/operations/mcp-add-server-quickstart.md`
 
 ## 5) 與「重開機續接」的關係
 

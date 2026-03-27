@@ -10,6 +10,13 @@
 - 憑證需可輪替、可撤銷
 - 生產與測試憑證分離
 - 外包僅給臨時與最小必要權限
+- 本機儲存採「不入庫」策略；預設使用 `scripts/secrets-vault.ps1`（DPAPI）
+
+## Approved Local Storage (Zero Cost)
+- 允許：`%LOCALAPPDATA%\AgencyOS\secrets\vault.json`（DPAPI 加密）
+- 禁止：把機密值放在 repo 內任何可追蹤檔案（含 `mcp.json`、`*.md`、`memory/*`）
+- 執行命令時，優先使用：
+  - `powershell -ExecutionPolicy Bypass -File .\scripts\secrets-vault.ps1 -Action run ...`
 
 ## Rotation Policy
 - 發現明文外洩：立即輪替
@@ -25,5 +32,5 @@
 ## Related Documents (Auto-Synced)
 - `docs/international/global-compliance-baseline.md`
 
-_Last synced: 2026-03-20 04:57:15 UTC_
+_Last synced: 2026-03-27 07:29:27 UTC_
 

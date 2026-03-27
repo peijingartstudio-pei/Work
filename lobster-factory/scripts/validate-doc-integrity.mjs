@@ -91,6 +91,9 @@ function assertCanonical() {
     path.join(lobsterRoot, "README.md"),
     path.join(lobsterRoot, "docs", "LOBSTER_FACTORY_MASTER_CHECKLIST.md"),
     path.join(lobsterRoot, "docs", "C1_EXECUTION_RUNBOOK.md"),
+    path.join(lobsterRoot, "docs", "LOBSTER_FACTORY_COMPLETION_PLAN_V2.md"),
+    path.join(lobsterRoot, "docs", "LOBSTER_FACTORY_MASTER_V3_INTEGRATION_PLAN.md"),
+    path.join(lobsterRoot, "docs", "V3_GOVERNANCE_GATES.md"),
     path.join(lobsterRoot, "docs", "ROUTING_MATRIX.md"),
   ];
   for (const p of required) {

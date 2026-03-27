@@ -25,9 +25,11 @@ const required = [
   "packages/manifests/wc-core.json",
   "packages/agents/src/configs/repair-agent.json",
   "packages/policies/approval/production-deploy-policy.json",
+  "packages/policies/approval/v3-governance-gate-policy.json",
   "packages/policies/tool/repair-agent-policy.json",
   "scripts/validate-manifests.mjs",
   "scripts/validate-governance-configs.mjs",
+  "scripts/run-v3-governance-gates.mjs",
 ];
 
 for (const r of required) assertExists(r);
@@ -40,6 +42,11 @@ execSync(`node "${path.join(repoRoot, "scripts", "validate-manifests.mjs")}"`, {
 
 console.log("Running governance validation...");
 execSync(`node "${path.join(repoRoot, "scripts", "validate-governance-configs.mjs")}"`, {
+  stdio: "inherit",
+});
+
+console.log("Running V3 governance gates...");
+execSync(`node "${path.join(repoRoot, "scripts", "run-v3-governance-gates.mjs")}"`, {
   stdio: "inherit",
 });
 

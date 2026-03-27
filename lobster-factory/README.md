@@ -17,6 +17,9 @@
 ## 全流程進度看板（建議每天先看）
 - `docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`
 - `docs/C1_EXECUTION_RUNBOOK.md`（C1 一次性實戰流程）
+- `docs/LOBSTER_FACTORY_COMPLETION_PLAN_V2.md`（M1~M5 路線圖）
+- `docs/LOBSTER_FACTORY_MASTER_V3_INTEGRATION_PLAN.md`（MASTER_V3 落地整合）
+- `docs/V3_GOVERNANCE_GATES.md`（H6 可執行治理 gate）
 
 ## 建立/驗證（本機可直接跑）
 0. **一鍵全閘道（推薦，含 Lobster + Agency OS health）** — 在 `D:\Work`：
@@ -32,17 +35,19 @@
 3. 只驗 governance configs
    - `node D:\Work\lobster-factory\scripts\validate-governance-configs.mjs`
 
-4. 驗證 `workflow_runs` 寫入（預設 dryrun，不寫 DB）
+4. 跑 V3 治理 gate（H6）
+   - `node D:\Work\lobster-factory\scripts\run-v3-governance-gates.mjs`
+5. 驗證 `workflow_runs` 寫入（預設 dryrun，不寫 DB）
    - `node D:\Work\lobster-factory\scripts\validate-workflow-runs-write.mjs --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444`
    - 真寫入時加 `--execute=1`，並先設好 `LOBSTER_SUPABASE_URL` / `LOBSTER_SUPABASE_SERVICE_ROLE_KEY`
 
-5. 僅 clone `lobster-factory`、沒有同層 `agency-os` 時：doc 檢查可設 `LOBSTER_SKIP_AGENCY_CANONICAL=1` 再跑 `validate-doc-integrity.mjs`（CI 單庫情境）
+6. 僅 clone `lobster-factory`、沒有同層 `agency-os` 時：doc 檢查可設 `LOBSTER_SKIP_AGENCY_CANONICAL=1` 再跑 `validate-doc-integrity.mjs`（CI 單庫情境）
 
-6. 驗證 `package_install_runs` 狀態流（預設 dryrun，不寫 DB）
+7. 驗證 `package_install_runs` 狀態流（預設 dryrun，不寫 DB）
    - `node D:\Work\lobster-factory\scripts\validate-package-install-runs-flow.mjs --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --workflowRunId=66666666-6666-6666-6666-666666666666`
    - 真寫入時加 `--execute=1`（會執行 pending -> running -> completed）
 
-7. 驗證 DB 寫入韌性（重試/補償/可觀測，預設 dryrun）
+8. 驗證 DB 寫入韌性（重試/補償/可觀測，預設 dryrun）
    - `node D:\Work\lobster-factory\scripts\validate-db-write-resilience.mjs`
    - 真寫入時加 `--execute=1`（會帶 `x-lobster-trace-id` 並套用 retry policy）
 

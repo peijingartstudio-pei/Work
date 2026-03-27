@@ -33,6 +33,14 @@
 - [x] Enterprise 工具層選型/安裝完成（Sentry/PostHog/Cloudflare/Clerk；Secrets 先採 env/mcp；輔助：Supabase/Slack）
 - [x] 啟用 Operator Autopilot 規則與 Phase1 自動化腳本（startup preflight / alert auto-repair / closeout optional push / Slack notify）
 - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
+- [x] 整合 `LOBSTER_FACTORY_MASTER_V3` 至系統建置路線（gap map + skeleton sprint + gate 追蹤，H1~H6 baseline 完成）
+- [x] `lobster-factory` H3 第一批 skeleton sprint（Sales/Marketing/Partner/Media/Decision Engine/Merchandising）
+- [x] `lobster-factory` H4 Decision Engine baseline（recommendations schema + contract）
+- [x] `lobster-factory` H5 CX retention/upsell baseline（workflow_runs 串接骨架）
+- [x] `lobster-factory` C1-2 execute 驗證（`package_install_runs` lifecycle：pending -> running -> completed）
+- [x] `lobster-factory` C1-3 execute 驗證（DB 寫入韌性：retry/compensation/trace）
+- [x] 建立零成本本機 Secrets Vault（Windows DPAPI，`scripts/secrets-vault.ps1`）
+- [x] 完成 Secrets Vault 一鍵匯入（`mcp.json` + Lobster/Slack 關鍵值）
 
 ## Backlog
 - [x] 客戶分級與風險評分模型
@@ -57,5 +65,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-26 16:50:05 UTC_
+_Last synced: 2026-03-27 10:55:30 UTC_
 

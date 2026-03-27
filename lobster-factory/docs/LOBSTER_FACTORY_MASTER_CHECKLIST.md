@@ -56,8 +56,8 @@
 ## C) 尚未完成（下一步主線，避免重工）
 ### C1. 寫入鏈路（先小後大）
 - [x] C1-1. 先只開 `LOBSTER_ENABLE_DB_WRITES=true` 驗證 `workflow_runs` 寫入（execute PASS，`insertedId=1e53ec18-1c01-4547-9593-20feee6bdc2c`）
-- [ ] C1-2. 再接 `package_install_runs` 寫入與狀態流（pending/running/completed/failed/rolled_back；已新增 `scripts/validate-package-install-runs-flow.mjs`，待實際 env 執行）
-- [ ] C1-3. 補齊 DB 寫入錯誤處理（重試、補償、可觀測；已新增 `scripts/validate-db-write-resilience.mjs` + `supabaseRestInsert` retry/trace）
+- [x] C1-2. 再接 `package_install_runs` 寫入與狀態流（execute PASS，`installRunId=206bd6ee-f5e0-4b6a-810c-bbb9914844f4`；`pending -> running -> completed`）
+- [x] C1-3. 補齊 DB 寫入錯誤處理（execute PASS，`traceId=resilience-4c1b0ea6-84a3-4a8a-8c01-5ce648dd6099`、`insertedWorkflowRunId=77f43da0-6fc6-4ce6-bc3b-f3d139fc783c`）
 
 ### C2. 執行鏈路（staging-only）
 - [ ] C2-1. hosting adapter（site/env 建立）
@@ -120,6 +120,15 @@ node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=s
 
 ## G) 完工路線圖（v2）
 - 主要執行文件：`docs/LOBSTER_FACTORY_COMPLETION_PLAN_V2.md`
+- V3 整合文件：`docs/LOBSTER_FACTORY_MASTER_V3_INTEGRATION_PLAN.md`
 - 推進原則：依 M1 -> M5 順序，不跳關。
 - 每個 milestone 完成後，回寫 `agency-os/WORKLOG.md` 與 `agency-os/memory/daily/YYYY-MM-DD.md` 證據。
+
+## H) MASTER V3 整合追蹤（2026-03 啟用）
+- [x] H1. 匯入來源文件：`D:\Work\docs\spec\raw\LOBSTER_FACTORY_MASTER_V3.md`
+- [x] H2. 建立整合計畫：`docs/LOBSTER_FACTORY_MASTER_V3_INTEGRATION_PLAN.md`
+- [x] H3. 依 V3 建立缺口模組骨架（Sales/Marketing/Partner/Media/Decision Engine/Merchandising；`0007_v3_skeleton_modules.sql` + `v3-skeleton.ts` + `v3-module-skeleton-workflows.ts` + `V3_MODULE_SKELETONS.md`）
+- [x] H4. 補 Decision Engine baseline（recommendations schema + workflow skeleton；`0008_decision_engine_recommendations.sql` + `decision-engine-baseline.ts`）
+- [x] H5. 補 CX retention/upsell workflow baseline（與 `workflow_runs` 串接；`0009_cx_retention_upsell_baseline.sql` + `cx-retention-upsell-baseline.ts`）
+- [x] H6. 將 V3 合規/治理要求轉為可執行 gate（baseline：`v3-governance-gate-policy.json` + `run-v3-governance-gates.mjs` + bootstrap 整合）
 

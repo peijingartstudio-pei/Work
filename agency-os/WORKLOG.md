@@ -78,7 +78,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-26 16:50:05 UTC_
+_Last synced: 2026-03-27 10:55:30 UTC_
 
 ## 2026-03-20
 
@@ -152,6 +152,126 @@ _Last synced: 2026-03-26 16:50:05 UTC_
 
 ## 2026-03-27
 
+### 匯入新規格：LOBSTER_FACTORY_MASTER_V3
+- 已從 `D:\Work\docs\spec\raw\LOBSTER_FACTORY_MASTER_V3.md` 匯入新資料，並建立落地整合文件：
+  - `D:\Work\lobster-factory\docs\LOBSTER_FACTORY_MASTER_V3_INTEGRATION_PLAN.md`
+- 已更新 `D:\Work\lobster-factory\docs\LOBSTER_FACTORY_MASTER_CHECKLIST.md`，新增 **H) MASTER V3 整合追蹤** 區段。
+- 整合策略：不打斷現行 C1 執行主線，先完成 C1-2/C1-3，再進行 V3 缺口模組骨架衝刺（Sales/Marketing/Partner/Media/Decision Engine/Merchandising）。
+- 已補齊連動：
+  - `lobster-factory/README.md` 增加 V3 整合入口
+  - `lobster-factory/scripts/validate-doc-integrity.mjs` 增加 V3/Completion canonical 檔案驗證
+  - `agency-os/docs/overview/EXECUTION_DASHBOARD.md` 更新 Lobster 尚未完成項，對齊 C1-2/C1-3 + V3 skeleton sprint
+
+### Lobster Factory - C1-2 execute 驗證成功（同日）
+- 已以新專案 URL 執行 `validate-package-install-runs-flow.mjs --execute=1` 並成功：
+  - `installRunId: 206bd6ee-f5e0-4b6a-810c-bbb9914844f4`
+  - lifecycle：`pending -> running -> completed`
+- 先前阻塞（`environment_id` FK 不存在）已解：補入 `environments` fixture（`55555555-5555-5555-5555-555555555555`）並對齊 `workflowRunId`（`a5230339-c820-46ad-9eec-41f1d152c3ad`）後通過。
+- 已同步更新：
+  - `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`（C1-2 勾選完成）
+  - `agency-os/TASKS.md`
+
+### Lobster Factory - C1-3 execute 驗證成功（同日）
+- 已以 vault 自動注入 Supabase 憑證執行：
+  - `.\scripts\secrets-vault.ps1 -Action run -Names LOBSTER_SUPABASE_URL,LOBSTER_SUPABASE_SERVICE_ROLE_KEY -Command "node D:\Work\lobster-factory\scripts\validate-db-write-resilience.mjs --execute=1"`
+- execute 結果：
+  - `ok: true`
+  - `traceId: resilience-4c1b0ea6-84a3-4a8a-8c01-5ce648dd6099`
+  - `insertedWorkflowRunId: 77f43da0-6fc6-4ce6-bc3b-f3d139fc783c`
+- 已同步更新：
+  - `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`（C1-3 勾選完成）
+  - `agency-os/TASKS.md`
+
+### Lobster Factory - H3 skeleton sprint（Batch 1）完成
+- 已落地 V3 缺口模組骨架（Sales/Marketing/Partner/Media/Decision Engine/Merchandising）：
+  - `lobster-factory/packages/db/migrations/0007_v3_skeleton_modules.sql`
+  - `lobster-factory/packages/shared/src/types/v3-skeleton.ts`
+  - `lobster-factory/packages/workflows/src/contracts/v3-module-skeleton-workflows.ts`
+  - `lobster-factory/docs/V3_MODULE_SKELETONS.md`
+- 已同步勾選：
+  - `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md` 的 `H3`
+  - `agency-os/TASKS.md`
+
+### Lobster Factory - H4 Decision Engine baseline 完成
+- 已新增 recommendations baseline schema：
+  - `lobster-factory/packages/db/migrations/0008_decision_engine_recommendations.sql`
+- 已新增 baseline recommendation contract：
+  - `lobster-factory/packages/workflows/src/contracts/decision-engine-baseline.ts`
+- 文件同步：
+  - `lobster-factory/docs/V3_MODULE_SKELETONS.md`
+  - `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`（H4 勾選）
+  - `agency-os/TASKS.md`
+
+### Lobster Factory - H5 CX retention/upsell baseline 完成
+- 已新增 CX baseline schema（workflow_runs 串接）：
+  - `lobster-factory/packages/db/migrations/0009_cx_retention_upsell_baseline.sql`
+- 已新增 CX baseline contract：
+  - `lobster-factory/packages/workflows/src/contracts/cx-retention-upsell-baseline.ts`
+- 文件同步：
+  - `lobster-factory/docs/V3_MODULE_SKELETONS.md`
+  - `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`（H5 勾選）
+  - `agency-os/TASKS.md`
+
+### Secrets 治理（零成本落地）
+- 新增本機加密祕密庫腳本（Windows DPAPI）：
+  - `agency-os/scripts/secrets-vault.ps1`
+  - `scripts/secrets-vault.ps1`（root 入口）
+- 能力：`init / set / set-prompt / list / get(masked) / remove / run(with env)`
+- 新增文件：
+  - `docs/operations/local-secrets-vault-dpapi.md`
+- 已同步更新：
+  - `docs/operations/security-secrets-policy.md`
+  - `docs/operations/mcp-secrets-hardening-runbook.md`
+  - `README.md`（核心文件入口）
+- 已完成 vault 實際初始化與匯入：
+  - `secrets-vault -Action import-mcp -McpPath D:\Work\mcp.json`
+  - 另補 `LOBSTER_SUPABASE_URL`、`LOBSTER_SUPABASE_SERVICE_ROLE_KEY`、`AGENCY_OS_SLACK_WEBHOOK_URL`
+  - 目前可用 key 清單已可由 `secrets-vault -Action list` 查詢（僅顯示名稱與時間，不顯示明文）
+- 已補「操作 + 復原」手冊：
+  - `docs/operations/local-secrets-vault-dpapi.md`（建置架構、換機復原、故障排除）
+  - `EXECUTION_DASHBOARD.md`、`REMOTE_WORKSTATION_STARTUP.md` 已新增揭示入口
+- 已新增高頻操作入口：
+  - `docs/operations/mcp-add-server-quickstart.md`（mcp.json 新增 + vault 匯入一鍵流程）
+  - 已同步揭示到 `README.md`、`EXECUTION_DASHBOARD.md`、`REMOTE_WORKSTATION_STARTUP.md`
+- 已新增「小白操作格式」持久規則：
+  - `AGENTS.md` 補充新手輸出規範（去哪裡 -> 做什麼 -> 看到什麼）
+  - `.cursor/rules/60-beginner-operation-format.mdc`（root + agency-os）
+  - `mcp-add-server-quickstart.md` 已補小白快速版段落
+- 依使用者偏好，已把 `quickstart / 修復 / 重灌` 三段都改為同一種步驟句格式：
+  - `docs/operations/mcp-add-server-quickstart.md`
+  - `docs/operations/local-secrets-vault-dpapi.md`
+  - `docs/operations/mcp-secrets-hardening-runbook.md`
+- 依使用者要求，三份手冊的指令已改為「純貼上內容」：移除 `powershell -ExecutionPolicy ...` 前綴，統一為 `.\scripts\...`。
+
+### Autopilot 可見性修正（同日）
+- 問題：使用者感知「代理停下來」，但實際上代理已完成部分任務，缺少可見進度看板。
+- 修正：
+  - 新增 `AUTOPILOT_PROGRESS.md`（即時進度）
+  - 在 `README.md`、`docs/overview/EXECUTION_DASHBOARD.md` 增加入口
+  - 新增規則：`.cursor/rules/61-autopilot-visibility.mdc`（root + agency-os）
+  - `AGENTS.md` 補充可見性要求
+
+### 長任務呆等防呆（同日強化）
+- 已把「3 層防呆」寫入 `AGENTS.md`（開工先報 / 固定心跳 / 事件即時）
+- 心跳頻率已調整為每 **15 分鐘**
+- 新增規則：
+  - `.cursor/rules/62-progress-heartbeat-15min.mdc`
+  - `agency-os/.cursor/rules/62-progress-heartbeat-15min.mdc`
+
+### Lobster Factory - H6 合規/治理 gate baseline 完成
+- 已新增可執行 gate policy：
+  - `lobster-factory/packages/policies/approval/v3-governance-gate-policy.json`
+- 已新增 gate runner：
+  - `lobster-factory/scripts/run-v3-governance-gates.mjs`
+- 已擴充治理驗證：
+  - `lobster-factory/scripts/validate-governance-configs.mjs`（新增 V3 gate policy schema 檢查）
+- 已整合到 bootstrap：
+  - `lobster-factory/scripts/bootstrap-validate.mjs`（presence + run V3 governance gates）
+- 已新增文件：
+  - `lobster-factory/docs/V3_GOVERNANCE_GATES.md`
+- 已同步勾選：
+  - `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md` 的 `H6`
+
 ### 他處電腦開機須知 + 缺席使用者授權之 AO-CLOSE
 - 新增 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（公司機／換機：`git pull`、`verify-build-gates`、`npm ci`、`integrated-status` 路徑說明、與根目錄 `reports/status` 區別）。
 - 更新 **`RESUME_AFTER_REBOOT.md`**（區分：同機重開 vs 他處開機）、**`README.md`**、**`EXECUTION_DASHBOARD.md`** 指向該須知。
@@ -173,6 +293,23 @@ _Last synced: 2026-03-26 16:50:05 UTC_
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

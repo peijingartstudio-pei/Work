@@ -19,6 +19,8 @@
 - `docs/operations/incident-response-runbook.md`: 資安與故障事件應變
 - `docs/operations/scope-change-policy.md`: 客戶邊界與變更單制度
 - `docs/operations/security-secrets-policy.md`: 憑證與密鑰管理政策
+- `docs/operations/local-secrets-vault-dpapi.md`: 本機免費祕密庫（Windows DPAPI）
+- `docs/operations/mcp-add-server-quickstart.md`: MCP 新增快速手冊（常用）
 - `docs/operations/tools-and-integrations.md`: 整合工具與環境變數規範
 
 ## Docs 分類入口
@@ -156,5 +158,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-03-26 16:50:05 UTC_
+_Last synced: 2026-03-27 08:25:04 UTC_
 

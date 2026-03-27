@@ -20,13 +20,18 @@ function isStringArray(x) {
 }
 
 const errors = [];
+const skipV3PolicyCheck = process.argv.includes("--skip-v3-policy-check");
+
+const governanceFiles = await Promise.all([
+  readJson("packages/agents/src/configs/repair-agent.json"),
+  readJson("packages/policies/approval/production-deploy-policy.json"),
+  readJson("packages/policies/tool/repair-agent-policy.json"),
+  ...(skipV3PolicyCheck ? [] : [readJson("packages/policies/approval/v3-governance-gate-policy.json")]),
+]);
 
 const [{ filePath: repairPath, data: repairAgent }, { filePath: prodPath, data: productionDeploy }, { filePath: repairPolicyPath, data: repairAgentPolicy }] =
-  await Promise.all([
-    readJson("packages/agents/src/configs/repair-agent.json"),
-    readJson("packages/policies/approval/production-deploy-policy.json"),
-    readJson("packages/policies/tool/repair-agent-policy.json"),
-  ]);
+  governanceFiles;
+const v3Policy = skipV3PolicyCheck ? null : governanceFiles[3];
 
 // repair-agent.json
 if (!repairAgent || typeof repairAgent !== "object") errors.push(`${repairPath}: must be an object`);
@@ -82,6 +87,40 @@ if (!repairAgentPolicy?.environmentConstraints || typeof repairAgentPolicy.envir
   }
   if (!isStringArray(repairAgentPolicy.environmentConstraints.blockedEnvironments)) {
     errors.push(`${repairPolicyPath}: environmentConstraints.blockedEnvironments must be string[]`);
+  }
+}
+
+// v3-governance-gate-policy.json
+if (v3Policy) {
+  const { filePath: v3PolicyPath, data: v3GatePolicy } = v3Policy;
+  if (!v3GatePolicy || typeof v3GatePolicy !== "object") {
+    errors.push(`${v3PolicyPath}: must be an object`);
+  } else {
+    if (!isNonEmptyString(v3GatePolicy?.name)) errors.push(`${v3PolicyPath}: name must be string`);
+    if (!isNonEmptyString(v3GatePolicy?.version)) errors.push(`${v3PolicyPath}: version must be string`);
+    if (!isNonEmptyString(v3GatePolicy?.mode)) errors.push(`${v3PolicyPath}: mode must be string`);
+    if (!Array.isArray(v3GatePolicy?.requiredChecks) || v3GatePolicy.requiredChecks.length === 0) {
+      errors.push(`${v3PolicyPath}: requiredChecks must be non-empty array`);
+    } else {
+      const ids = new Set();
+      v3GatePolicy.requiredChecks.forEach((check, i) => {
+        if (!check || typeof check !== "object") return errors.push(`${v3PolicyPath}: requiredChecks[${i}] must be object`);
+        if (!isNonEmptyString(check.id)) {
+          errors.push(`${v3PolicyPath}: requiredChecks[${i}].id must be string`);
+        } else if (ids.has(check.id)) {
+          errors.push(`${v3PolicyPath}: duplicated requiredChecks id "${check.id}"`);
+        } else {
+          ids.add(check.id);
+        }
+        if (!isNonEmptyString(check.description)) errors.push(`${v3PolicyPath}: requiredChecks[${i}].description must be string`);
+        if (!isNonEmptyString(check.command)) {
+          errors.push(`${v3PolicyPath}: requiredChecks[${i}].command must be string`);
+        } else if (!check.command.trim().startsWith("node scripts/")) {
+          errors.push(`${v3PolicyPath}: requiredChecks[${i}].command must start with "node scripts/"`);
+        }
+        if (typeof check.blocking !== "boolean") errors.push(`${v3PolicyPath}: requiredChecks[${i}].blocking must be boolean`);
+      });
+    }
   }
 }
 
