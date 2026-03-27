@@ -78,7 +78,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-27 16:23:56 UTC_
+_Last synced: 2026-03-27 16:56:54 UTC_
 
 ## 2026-03-20
 
@@ -292,6 +292,40 @@ _Last synced: 2026-03-27 16:23:56 UTC_
   - 根因：錯用 `--api-key`（Trigger MCP CLI 不支援）
   - 修正：`C:\Users\user1115\.cursor\mcp.json` 改為呼叫 `scripts/start-trigger-mcp.ps1`，並用 vault 注入 `TRIGGER_ACCESS_TOKEN`
 
+### Tool routing / WordPress Factory 固定通道（同日）
+- 新增工具分工與強制 routing 規格：
+  - `lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`
+- 新增機器可讀風險矩陣：
+  - `lobster-factory/workflow-risk-matrix.json`
+- 連動更新：
+  - `lobster-factory/README.md`（新增規格入口）
+  - `lobster-factory/docs/ROUTING_MATRIX.md`（指向新規格與 JSON policy）
+
+### WordPress Factory 細部執行規格（同日）
+- 已新增可執行細部規格：
+  - `lobster-factory/docs/WORDPRESS_FACTORY_EXECUTION_SPEC.md`
+- 內容包含：
+  - step-by-step 固定通道（staging -> apply -> smoke -> approval -> production）
+  - failure/rollback handling
+  - approval payload 最小欄位
+  - audit trail 強制要求（`workflow_runs` / `approvals` / `incidents` / `artifacts`）
+- 入口同步：
+  - `lobster-factory/README.md`
+
+### WordPress Factory 規範可執行化（同日）
+- 新增 policy JSON：
+  - `lobster-factory/packages/policies/approval/wordpress-factory-execution-policy.json`
+- 新增驗證腳本：
+  - `lobster-factory/scripts/validate-workflow-routing-policy.mjs`
+- 已整合至 bootstrap gate：
+  - `lobster-factory/scripts/bootstrap-validate.mjs`
+  - `lobster-factory/package.json`（`validate:routing`）
+- 文件同步：
+  - `lobster-factory/docs/V3_GOVERNANCE_GATES.md`
+  - `lobster-factory/README.md`
+- 驗證結果：
+  - `npm run validate` PASS（含 `Workflow routing policy validation PASSED`）
+
 ### AO-CLOSE（2026-03-27）
 - 已完成收工前進度同步（`TASKS.md`、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-27.md`）。
 - 準備執行 `D:\Work\scripts\ao-close.ps1` 一鍵閘道與推送。
@@ -317,6 +351,9 @@ _Last synced: 2026-03-27 16:23:56 UTC_
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
+
+
 
 
 

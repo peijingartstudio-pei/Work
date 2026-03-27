@@ -9,6 +9,7 @@
     "validate": "node scripts/bootstrap-validate.mjs",
     "validate:manifest": "node scripts/validate-manifests.mjs",
     "validate:governance": "node scripts/validate-governance-configs.mjs",
+    "validate:routing": "node scripts/validate-workflow-routing-policy.mjs",
     "validate:docs": "node scripts/validate-doc-integrity.mjs"
   }
 }

@@ -26,4 +26,5 @@ Define a deterministic routing policy for Lobster Factory requests so each reque
 
 ## Phase 1 Notes
 - This matrix is the canonical routing policy for current skeleton workflows.
-- Next phase should externalize this matrix to a machine-readable config with tests.
+- Machine-readable policy is now available at `workflow-risk-matrix.json`.
+- Detailed cross-tool routing and boundary rules are documented in `docs/MCP_TOOL_ROUTING_SPEC.md`.

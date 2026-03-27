@@ -26,9 +26,11 @@ const required = [
   "packages/agents/src/configs/repair-agent.json",
   "packages/policies/approval/production-deploy-policy.json",
   "packages/policies/approval/v3-governance-gate-policy.json",
+  "packages/policies/approval/wordpress-factory-execution-policy.json",
   "packages/policies/tool/repair-agent-policy.json",
   "scripts/validate-manifests.mjs",
   "scripts/validate-governance-configs.mjs",
+  "scripts/validate-workflow-routing-policy.mjs",
   "scripts/run-v3-governance-gates.mjs",
 ];
 
@@ -47,6 +49,11 @@ execSync(`node "${path.join(repoRoot, "scripts", "validate-governance-configs.mj
 
 console.log("Running V3 governance gates...");
 execSync(`node "${path.join(repoRoot, "scripts", "run-v3-governance-gates.mjs")}"`, {
+  stdio: "inherit",
+});
+
+console.log("Running workflow routing policy validation...");
+execSync(`node "${path.join(repoRoot, "scripts", "validate-workflow-routing-policy.mjs")}"`, {
   stdio: "inherit",
 });
 
