@@ -1,4 +1,4 @@
-﻿# Conversation Memory
+# Conversation Memory
 
 ## Current Operating Context
 - 你正在建立多客戶網站與系統代營運模式
@@ -244,7 +244,7 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - 閘道：`bootstrap-validate` 與 `validate-workflows-integrations-baseline.mjs` 已納入上述檔案與字串檢查；`npm run validate` PASS。
 
 ## Today (2026-03-28) - AO-CLOSE（晚）
-- 使用者關鍵字 **AO-CLOSE**：已更新四檔並執行 `scripts/ao-close.ps1`（預期 verify-build-gates + system-guard + integrated-status + push）。
+- **AO-CLOSE** 完成：`verify-build-gates` PASS、health **100%**、`system-guard` PASS、integrated-status 已產出；**Git** `e04be6f` 已 **push `main`**。
 
 ## Today (2026-03-28) - A10-2 前置（SOP Step 7 + presign 範例）
 - `NEW_TENANT_ONBOARDING_SOP` Step 7、presign 範例 JSON、`PRESIGN_BROKER_MINIMAL`；operable gate 綁定 monorepo SOP。
