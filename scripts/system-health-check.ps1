@@ -335,7 +335,7 @@ if ($failedItems.Count -eq 0) {
 }
 $lines += ""
 $lines += "## Summary"
-$lines += "- Keep score >= 95% for production-grade operations."
+$lines += "- Keep score at 100% for production-grade operations (aligns with AO-CLOSE default gate)."
 $lines += "- Resolve failed checks before major delivery milestones."
 $lines += "- Critical Gate must be PASS for release readiness."
 

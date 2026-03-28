@@ -65,6 +65,15 @@
 6. 跑系統健康檢查：
    - `powershell -ExecutionPolicy Bypass -File .\scripts\system-health-check.ps1`
 
+## Step 7：WordPress Factory（Lobster）銜接 — A10-2 前置
+
+當該客戶將使用 **龍蝦工廠**（staging manifest、`create-wp-site` / `apply-manifest`）時，在專案內補齊並留證據：
+
+1. **固定營運劇本**（本機可驗證順序 + 證據欄）：[`../../lobster-factory/docs/e2e/OPERABLE_E2E_PLAYBOOK.md`](../../lobster-factory/docs/e2e/OPERABLE_E2E_PLAYBOOK.md)
+2. **Payload 與 UUID 約定**：[`../../lobster-factory/docs/e2e/STAGING_PIPELINE_E2E_PAYLOAD.md`](../../lobster-factory/docs/e2e/STAGING_PIPELINE_E2E_PAYLOAD.md)（測試用固定 UUID；**真客戶**請改為實際 tenant／環境 id，並寫入 `ACCESS_REGISTER` / 專案 `02_EXECUTION_PLAN`）
+3. **Artifacts**：本機 `LOCAL_ARTIFACTS_SINK` 或雲端 `remote_put` + [`PRESIGN_BROKER_MINIMAL`](../../lobster-factory/docs/operations/PRESIGN_BROKER_MINIMAL.md)；留存原則見 [`ARTIFACTS_LIFECYCLE_POLICY`](../../lobster-factory/docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md)
+4. **A10-2 完成定義**：生產 Trigger（或約定之執行環境）跑通一輪 + `agency-os/reports/e2e/` drill 報告已填證據 + `WORKLOG`／`memory` 有 run id／分支／commit
+
 ## 完成檢查清單（Go/No-Go）
 - [ ] 公司骨架與核心檔案（含 1-4 使用指南）齊備
 - [ ] 至少 1 個 site 建立完成且可維護
@@ -73,6 +82,7 @@
 - [ ] 任務板、工作日誌、記憶文件已同步
 - [ ] 每日/每週/每月/不定時任務排程已啟用
 - [ ] 最新健康檢查分數 >= 95%
+- [ ] （若使用 Lobster）已依 Step 7 對齊 `OPERABLE_E2E_PLAYBOOK`，並記錄預計／實際執行證據路徑
 
 ## Related Documents (Auto-Synced)
 - `docs/operations/tenant-scheduling.md`
@@ -89,5 +99,5 @@
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 - `WORKLOG.md`
 
-_Last synced: 2026-03-20 04:57:16 UTC_
+_Last synced: 2026-03-28 11:56:51 UTC_
 

@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-03-28 01:29:12
+- Generated: 2026-03-28 20:18:09
 - agency-os root: `D:\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -21,7 +21,7 @@
 - [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核） - [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager）
 
 ## 3) Lobster Factory Master Checklist - open items (sections A-C, before section D)
-- [ ] A6. 串接 hosting provider adapter（建立 staging site 的實作層） - [ ] A7. 串接 WordPress 真正 provision/shell execution（仍須 guardrails） - [ ] A8. 打通 DB 真寫入完整流程（workflow_runs -> package_install_runs lifecycle） - [ ] A9. 補齊 artifacts/log ref、rollback 路徑、錯誤回復策略 - [ ] A10. 建立最小可運營 E2E（新客戶從建立到驗收）與回歸測試 - [ ] C2-1. hosting adapter（site/env 建立） - [ ] C2-2. WP 實際安裝步驟執行器（對應 manifest steps） - [ ] C2-3. rollback 實作（最少可回復到 snapshot） - [ ] C3-1. 建立一套標準 E2E 測試 payload（真實欄位） - [ ] C3-2. 完成一次端到端演練並留存報告 - [ ] C5-1. Observability：Sentry（錯誤追蹤）+ PostHog（產品分析） - [ ] C5-2. Edge/Security：Cloudflare（WAF/CDN/Rate limit） - [ ] C5-3. Secrets：1Password Secrets Automation（或同級） - [ ] C5-4. Identity/Org：Clerk/WorkOS/Auth0（三選一） - [ ] C5-5. Cost/Decision：成本與決策引擎可觀測化（budget/ROI guardrails） - [ ] C5-6. 後續建議：Langfuse / Upstash / Stripe / Object Storage / Search
+- [ ] A7. 串接 WordPress 真正 provision/shell execution（仍須 guardrails；**manifest 套用 shell 已具備**，全站自動建站仍待 hosting adapter） - [ ] A9. artifacts／rollback／錯誤回復（**技術 baseline**：rollback + DB `failed` + `local`／`remote_put` + `logs_ref` — 見各 SINK 與 REMOTE_PUT；**政策 baseline**：`docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md`；**仍缺**：雲端生命週期規則／IAM／稽核自動化） - [ ] A10-2. **商業閉環**：新客戶從建立→驗收 + 生產 Trigger 全鏈固定證據（對齊 `agency-os/tenants/NEW_TENANT_ONBOARDING_SOP.md` 實跑） - [ ] C5-1. Observability：Sentry（錯誤追蹤）+ PostHog（產品分析） - [ ] C5-2. Edge/Security：Cloudflare（WAF/CDN/Rate limit） - [ ] C5-3. Secrets：1Password Secrets Automation（或同級） - [ ] C5-4. Identity/Org：Clerk/WorkOS/Auth0（三選一） - [ ] C5-5. Cost/Decision：成本與決策引擎可觀測化（budget/ROI guardrails） - [ ] C5-6. 後續建議：Langfuse / Upstash / Stripe / Object Storage / Search
 
 *Checklist path:* `D:\Work\lobster-factory\docs\LOBSTER_FACTORY_MASTER_CHECKLIST.md`
 
@@ -157,6 +157,31 @@
 - 已落地報表單一路徑：所有入口強制寫入 `agency-os/reports/*`，root `reports/*` 退役；commit `5128e7d`（收工腳本會一併 push）。
 - 使用者關切：Cursor `user-copilot` MCP 認證重試迴圈不會等同模型 token 計費，但會耗少量本機資源；可停用該 MCP 項止刷 log。
 - 收工：執行 `AO-CLOSE`（`ao-close.ps1`）完成 verify + guard + integrated status + push。
+- **Git 節奏（使用者共識）**：平常進行中代理**不**主動 `commit`／`push`；**預設**僅 **`AO-CLOSE`**（`ao-close.ps1`）統一做；例外為使用者明確一句話要求。已寫入 `AGENTS.md` 與 `50-operator-autopilot.mdc` §7。
+
+### Today (2026-03-28) - Lobster operator bundle（營運套裝）
+- `lobster-factory`：`npm run operator:sanity`（`validate` + `regression:staging-pipeline`）、`npm run payload:apply-manifest`（`print-apply-manifest-payload.mjs`）。
+- 操作手冊：`lobster-factory/docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md`；README 頂部已掛「營運一鍵」。
+- 閘道：`bootstrap-validate` 與 `validate-workflows-integrations-baseline.mjs` 已納入上述檔案與字串檢查；`npm run validate` PASS。
+
+### Today (2026-03-28) - AO-CLOSE（晚）
+- 使用者關鍵字 **AO-CLOSE**：已更新四檔並執行 `scripts/ao-close.ps1`（預期 verify-build-gates + system-guard + integrated-status + push）。
+
+### Today (2026-03-28) - A10-2 前置（SOP Step 7 + presign 範例）
+- `NEW_TENANT_ONBOARDING_SOP` Step 7、presign 範例 JSON、`PRESIGN_BROKER_MINIMAL`；operable gate 綁定 monorepo SOP。
+
+### Today (2026-03-28) - Lobster A10-1 + A9 policy
+- `OPERABLE_E2E_PLAYBOOK.md`、`validate-operable-e2e-skeleton.mjs`（bootstrap）、`ARTIFACTS_LIFECYCLE_POLICY.md`；`MASTER_CHECKLIST` A10-1/A10-2、A9 更新敘述。
+
+### Today (2026-03-28) - Monorepo spine + dashboard refresh
+- Repo 根 `README.md`（AO + Lobster + `verify-build-gates`）；`EXECUTION_DASHBOARD` §2 去過期；`MASTER_CHECKLIST` A6/B5 對齊 `http_json`／`remote_put`；`verify-build-gates` + doc-sync PASS。
+
+### Today (2026-03-28) - Lobster A9 remote_put artifacts
+- `LOBSTER_ARTIFACTS_MODE=remote_put` + `REMOTE_PUT_ARTIFACTS.md`；presign URL 或 inline JSON；`apply-manifest` 寫 `logs_ref` 行為與 local 一致。
+
+### Today (2026-03-28) - Lobster `http_json` hosting
+- `LOBSTER_HOSTING_ADAPTER=http_json` + `HTTP_JSON_HOSTING_ADAPTER.md`；`provisionHttpJsonStaging`；`create-wp-site` 支援 `vendor_staging_provisioned` 與 `vendorStaging`；`resolveStagingProvisioning` 為 async。
+- **互動偏好**：可驗證範圍內代理自主推進、減少選項式追問；不可逆決策仍單點確認。
 
 > Full runbook: see `## Runbook Commands` in the source file.
 
@@ -258,35 +283,91 @@
 - 報表單一路徑收斂已 commit（`5128e7d`，含腳本 monorepo guardrail、`.gitignore`、root `reports` 退役、文件連動）。
 - 下一步：執行 `D:\Work\scripts\ao-close.ps1` 跑完整閘道、`LAST_SYSTEM_STATUS.md`、`integrated-status-LATEST.md`，並 `git push origin main`。
 
-### 收工後補記（由腳本產出後核對）
-- verify-build-gates：待填入 PASS/FAIL
-- system-guard：待填入 PASS/FAIL
-- health score：待填入
-- git push：待填入 commit hash
+### 收工後補記
+- `verify-build-gates`：**PASS**（lobster `bootstrap-validate` + agency `system-health-check`）
+- `system-guard -Mode manual`：**PASS**
+- `system-health-check`：**100%（269/269）**；報告 `agency-os/reports/health/health-20260328-012900.md`
+- Guard：`agency-os/reports/guard/guard-20260328-012904.md`
+- 綜合狀態：`agency-os/reports/status/integrated-status-LATEST.md`（同次產生 `integrated-status-20260328-012912.md`）
+- `LAST_SYSTEM_STATUS.md`：`agency-os/LAST_SYSTEM_STATUS.md`
+- **Git**：`chore: AO-CLOSE sync 2026-03-28 0129` → `e31966c`；已 `push origin main`（含先前 `5128e7d` 報表收斂與本機進度檔更新）
+
+## 補充：Git `commit`／`push` 政策（同日後續）
+- **約定**：平常進行中代理**不**主動 `git commit`／`git push`；**預設**僅 **`AO-CLOSE`**（`ao-close.ps1`）統一做；**例外**：使用者明確一句話要求立即提交／推送。
+- **落盤**：`AGENTS.md`（§Git 推送節奏）、repo 根與 `agency-os/.cursor/rules/50-operator-autopilot.mdc` §7；本次依使用者要求**未**再 push（待下次 AO-CLOSE 一併提交）。
+
+## 補充：Lobster Factory 營運套裝 wiring（同日後續）
+
+### 已完成
+- `lobster-factory/package.json`：`payload:apply-manifest`、`operator:sanity`。
+- `scripts/bootstrap-validate.mjs`、`scripts/validate-workflows-integrations-baseline.mjs`：納入 `print-apply-manifest-payload.mjs` 與 `LOBSTER_FACTORY_OPERATOR_RUNBOOK.md`。
+- `README.md`、`STAGING_PIPELINE_E2E_PAYLOAD.md`、`LOBSTER_FACTORY_MASTER_CHECKLIST.md`、`agency-os/TASKS.md`、`agency-os/WORKLOG.md` 已連動。
+
+### 驗證
+- `npm run validate`（`lobster-factory`）PASS。
+
+## 補充：http_json hosting 適配器（同日後續）
+
+### 已完成
+- `http_json` 模式、async `resolveStagingProvisioning`、`httpJsonStagingAdapter.ts`、合約文件與 checklist／runbook／閘道連動。
+
+### 互動
+- 使用者偏好：可驗證範圍內代理自主推進、減少選項式追問。
+
+### 驗證
+- `npm run validate` PASS。
+
+## 補充：A9 remote_put artifacts（同日後續）
+
+### 已完成
+- presigned PUT 路徑、合約文件、閘道與 README／runbook／E2E 連動。
+
+### 驗證
+- `npm run validate` PASS。
+
+## 補充：Monorepo 總覽 + 儀表板（同日）
+
+### 已完成
+- 根 `README.md`、`EXECUTION_DASHBOARD` 更新、龍蝦 checklist／README、AO `README`／`AGENTS`；`verify-build-gates` + `doc-sync-automation` PASS。
+
+### 驗證
+- `health-20260328-192715.md` 100%；`closeout-20260328-192729.md`。
+
+## 補充：A10-1 operable E2E + A9 lifecycle policy（同日）
+
+### 已完成
+- `OPERABLE_E2E_PLAYBOOK.md`、`validate-operable-e2e-skeleton.mjs`、`ARTIFACTS_LIFECYCLE_POLICY.md`；checklist A10-1／A10-2、A9 敘述更新。
+
+### 驗證
+- `npm run validate`（lobster-factory）PASS。
+
+## 補充：A10-2 前置 SOP Step 7 + presign（同日）
+
+### 已完成
+- `NEW_TENANT_ONBOARDING_SOP` Step 7、`PRESIGN_BROKER_MINIMAL`、presign example JSON；operable gate 驗 SOP 橋接。
+
+
+_... 11 lines omitted._
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-03-28 01:29:04`
+- Time: `2026-03-28 20:18:01`
 - Health score: **100%**
-- Threshold: **95%**
+- Threshold: **100%**
 - Health gate exit code: **0**
 - Closeout report exists: **YES**
 - Result: **PASS**
 
 ## Latest Reports
-- Health: `reports/health/health-20260328-012904.md`
-- Closeout: `reports/closeout/closeout-20260328-012901.md`
+- Health: `reports/health/health-20260328-201801.md`
+- Closeout: `reports/closeout/closeout-20260328-201758.md`
 
 ## Action
 - No blocking issue detected.
 
 ## 7) WORKLOG.md tail (~60 lines)
-### 他處電腦開機須知 + 缺席使用者授權之 AO-CLOSE
-- 新增 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（公司機／換機：`git pull`、`verify-build-gates`、`npm ci`、`integrated-status` 路徑說明、與根目錄 `reports/status` 區別）。
-- 更新 **`RESUME_AFTER_REBOOT.md`**（區分：同機重開 vs 他處開機）、**`README.md`**、**`EXECUTION_DASHBOARD.md`** 指向該須知。
-- 使用者授權代理於不在現場時執行 **`ao-close.ps1`**（含 push）；證據見本日 `memory/daily/2026-03-27.md`。
 - **AO-CLOSE 產出（agency-os/reports/）**：`health/health-20260326-084302.md`、`guard/guard-20260326-084306.md`、`closeout/closeout-20260326-084303.md`、`status/integrated-status-20260326-084315.md`；**Git**：主提交 `f726ce9`，補登 daily `70114fc`，TASKS 勾選 `5a7841b`（均已 `push origin main`）。
 
 ### Lobster Factory - C1-1 execute 驗證成功
@@ -304,6 +385,10 @@
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
+
+
+
 
 
 

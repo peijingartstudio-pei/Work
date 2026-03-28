@@ -4,7 +4,7 @@
 - [ ] 系統目錄與文件結構說明完成
 - [ ] 自動化腳本可在買方環境成功執行
 - [ ] Scheduled Tasks 註冊與驗證完成
-- [ ] 健康檢查分數 >= 95%
+- [ ] 健康檢查分數 >= 100%（與本 repo AO-CLOSE 預設一致；買方環境若另訂 SLA 可自行調整）
 
 ## B. 流程移交
 - [ ] 新 tenant 導入演練完成
@@ -27,5 +27,5 @@
 ## Related Documents (Auto-Synced)
 - `docs/product/resell-package-blueprint.md`
 
-_Last synced: 2026-03-20 04:57:15 UTC_
+_Last synced: 2026-03-28 11:27:29 UTC_
 

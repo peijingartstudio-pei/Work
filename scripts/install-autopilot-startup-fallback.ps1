@@ -30,10 +30,13 @@ if (-not (Test-Path -LiteralPath $startupDir)) {
     New-Item -ItemType Directory -Path $startupDir -Force | Out-Null
 }
 
+# ao-resume runs every boot; Slack notify only on failure (exit code != 0).
 $startupCmd = @(
     "@echo off",
     "powershell -NoProfile -ExecutionPolicy Bypass -File ""$WorkRoot\scripts\ao-resume.ps1"" -WorkRoot ""$WorkRoot"" -SkipVerify -AllowUnexpectedDirty",
-    "powershell -NoProfile -ExecutionPolicy Bypass -File ""$WorkRoot\scripts\notify-ops.ps1"" -Title ""AO Startup Preflight"" -Message ""Startup preflight triggered from Startup folder."" -Level info"
+    "if errorlevel 1 (",
+    "  powershell -NoProfile -ExecutionPolicy Bypass -File ""$WorkRoot\scripts\notify-ops.ps1"" -Title ""AO Startup Preflight FAIL"" -Message ""Startup preflight failed (ao-resume). Run AO-RESUME manually or check repo sync."" -Level error",
+    ")"
 ) -join "`r`n"
 Set-Content -LiteralPath $startupFile -Value $startupCmd -Encoding ASCII
 

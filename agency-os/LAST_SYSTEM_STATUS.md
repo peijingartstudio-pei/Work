@@ -1,16 +1,16 @@
 ﻿# System Guard Status
 
 - Mode: `manual`
-- Time: `2026-03-28 01:29:04`
+- Time: `2026-03-28 20:18:01`
 - Health score: **100%**
-- Threshold: **95%**
+- Threshold: **100%**
 - Health gate exit code: **0**
 - Closeout report exists: **YES**
 - Result: **PASS**
 
 ## Latest Reports
-- Health: `reports/health/health-20260328-012904.md`
-- Closeout: `reports/closeout/closeout-20260328-012901.md`
+- Health: `reports/health/health-20260328-201801.md`
+- Closeout: `reports/closeout/closeout-20260328-201758.md`
 
 ## Action
 - No blocking issue detected.

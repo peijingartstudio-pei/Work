@@ -9,11 +9,12 @@
 - [x] A3. 建立 manifest 規格與 `wc-core` 範本
 - [x] A4. 建立 durable workflow 骨架（`create-wp-site`、`apply-manifest`）
 - [x] A5. 建立結構驗證與 fail-fast gate（bootstrap/manifests/governance/dryrun validate）
-- [ ] A6. 串接 hosting provider adapter（建立 staging site 的實作層）
-- [ ] A7. 串接 WordPress 真正 provision/shell execution（仍須 guardrails）
-- [ ] A8. 打通 DB 真寫入完整流程（workflow_runs -> package_install_runs lifecycle）
-- [ ] A9. 補齊 artifacts/log ref、rollback 路徑、錯誤回復策略
-- [ ] A10. 建立最小可運營 E2E（新客戶從建立到驗收）與回歸測試
+- [x] A6. 串接 hosting provider adapter（`none` / `mock` / `provider_stub` / **`http_json`**；**專屬 vendor SDK** 仍可待 `providers/<name>.ts`）
+- [ ] A7. 串接 WordPress 真正 provision/shell execution（仍須 guardrails；**manifest 套用 shell 已具備**，全站自動建站仍待 hosting adapter）
+- [x] A8. 打通 DB 真寫入完整流程（`apply-manifest`：`workflow_runs` / `package_install_runs` insert + shell 時 `running`→PATCH 終態；**不含** `create-wp-site` 端到端建站）
+- [ ] A9. artifacts／rollback／錯誤回復（**技術 baseline**：rollback + DB `failed` + `local`／`remote_put` + `logs_ref` — 見各 SINK 與 REMOTE_PUT；**政策 baseline**：`docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md`；**仍缺**：雲端生命週期規則／IAM／稽核自動化）
+- [x] A10-1. E2E **營運劇本 + 結構閘道**（`docs/e2e/OPERABLE_E2E_PLAYBOOK.md` + `scripts/validate-operable-e2e-skeleton.mjs` → `bootstrap-validate`）
+- [ ] A10-2. **商業閉環**：新客戶從建立→驗收 + 生產 Trigger 全鏈固定證據（對齊 `agency-os/tenants/NEW_TENANT_ONBOARDING_SOP.md` 實跑）
 
 ## B) 目前已完成（依現況勾選）
 ### B1. DB / Catalog
@@ -35,7 +36,7 @@
 - [x] `packages/workflows/src/db/catalogIds.ts`
 - [x] `packages/workflows/src/db/sql/workflowRunsSql.ts`
 - [x] `packages/workflows/src/db/sql/packageInstallRunsSql.ts`
-- [x] `packages/workflows/src/db/supabase/supabaseRestInsert.ts`（預設安全，不自動寫入）
+- [x] `packages/workflows/src/db/supabase/supabaseRestInsert.ts`（insert；**PATCH 終態**：同檔 `supabaseRestPatch`）
 
 ### B4. Governance / Agent / Policy
 - [x] `packages/agents/src/configs/repair-agent.json`
@@ -52,6 +53,27 @@
 - [x] `scripts/validate-governance-configs.mjs`
 - [x] `scripts/dryrun-apply-manifest.mjs`
 - [x] `scripts/validate-dryrun-apply-manifest.mjs`（`--mode=strict|fast`）
+- [x] `packages/workflows/src/executor/installManifestStaging.ts`（M3 shell 執行器）
+- [x] `scripts/execute-apply-manifest-staging.mjs`（本機 staging 執行 CLI）
+- [x] `scripts/validate-staging-manifest-executor.mjs`（結構閘道）
+- [x] `templates/woocommerce/scripts/rollback-from-manifest.sh`（C2-3 baseline）
+- [x] `scripts/rollback-apply-manifest-staging.mjs`
+- [x] `supabaseRestPatch`（`package_install_runs` / `workflow_runs` 終態更新）
+- [x] `docs/e2e/STAGING_PIPELINE_E2E_PAYLOAD.md`（C3-1 固定欄位）
+- [x] `scripts/run-staging-pipeline-regression.mjs`（C3-1 可重跑回歸）
+- [x] `scripts/validate-workflows-integrations-baseline.mjs`（hosting 解析 + artifact sink 結構閘道）
+- [x] `docs/hosting/HOSTING_ADAPTER_CONTRACT.md` + `providerStubAdapter` + `resolveStagingProvisioning`
+- [x] `docs/operations/LOCAL_ARTIFACTS_SINK.md` + `localArtifactSink.ts`
+- [x] `docs/operations/REMOTE_PUT_ARTIFACTS.md` + `artifactMode.ts` + `remotePutArtifactSink.ts`
+- [x] `docs/hosting/HTTP_JSON_HOSTING_ADAPTER.md` + `providers/httpJsonStagingAdapter.ts`
+- [x] `packages/workflows/src/hosting/providers/`（`StagingProvisionAdapter` 合約 + README）
+- [x] `scripts/print-create-wp-site-payload.mjs` + `npm run payload:create-wp-site`
+- [x] `scripts/print-apply-manifest-payload.mjs` + `npm run payload:apply-manifest`
+- [x] `npm run operator:sanity` + `docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md`
+- [x] `docs/e2e/OPERABLE_E2E_PLAYBOOK.md` + `scripts/validate-operable-e2e-skeleton.mjs`（A10-1）
+- [x] `docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md`（A9 政策層）
+- [x] `docs/operations/PRESIGN_BROKER_MINIMAL.md` + `templates/lobster/presign-response.success.example.json`（remote_put 整合輔助）
+- [x] `agency-os/tenants/NEW_TENANT_ONBOARDING_SOP.md` Step 7（Lobster／A10-2 銜接）
 
 ## C) 尚未完成（下一步主線，避免重工）
 ### C1. 寫入鏈路（先小後大）
@@ -60,13 +82,13 @@
 - [x] C1-3. 補齊 DB 寫入錯誤處理（execute PASS，`traceId=resilience-4c1b0ea6-84a3-4a8a-8c01-5ce648dd6099`、`insertedWorkflowRunId=77f43da0-6fc6-4ce6-bc3b-f3d139fc783c`）
 
 ### C2. 執行鏈路（staging-only）
-- [ ] C2-1. hosting adapter（site/env 建立）
-- [ ] C2-2. WP 實際安裝步驟執行器（對應 manifest steps）
-- [ ] C2-3. rollback 實作（最少可回復到 snapshot）
+- [x] C2-1. hosting adapter（`resolveStagingProvisioning`：`none`/`mock`/`provider_stub`/`http_json`/未知 blocked + async；`create-wp-site` 回傳 `vendor_staging_provisioned`／`mock_staging_provisioned`；**專屬** vendor SDK 仍可待 `providers/<name>.ts`）
+- [x] C2-2. WP 實際安裝步驟執行器（對應 manifest steps；`install-from-manifest.sh` + `execute-apply-manifest-staging.mjs` + `apply-manifest` 可選 env 串接；預設關閉 shell）
+- [x] C2-3. rollback 實作（baseline：`rollback-from-manifest.sh` + `rollback-apply-manifest-staging.mjs`；plugin 反向 deactivate／可選 uninstall；theme 手動；**完整還原**仍依 hosting snapshot）
 
 ### C3. 驗收與可運營
-- [ ] C3-1. 建立一套標準 E2E 測試 payload（真實欄位）
-- [ ] C3-2. 完成一次端到端演練並留存報告
+- [x] C3-1. 建立一套標準 E2E 測試 payload（真實欄位；`docs/e2e/STAGING_PIPELINE_E2E_PAYLOAD.md` + `npm run regression:staging-pipeline`）
+- [x] C3-2. 完成一次端到端演練並留存報告（**baseline**：`emit-staging-drill-report.mjs` + 模板 + `agency-os/reports/e2e/`；實跑後請補證據欄位與人工 checklist）
 - [x] C3-3. 設計 release gate（PR gate：`.github/workflows/release-gate-main.yml` + prod deploy 前 `gate` job）
 
 ### C4. 規格差距補齊（raw spec 對齊）
@@ -108,6 +130,12 @@ node D:\Work\lobster-factory\scripts\validate-package-install-runs-flow.mjs --or
 node D:\Work\lobster-factory\scripts\validate-db-write-resilience.mjs
 node D:\Work\lobster-factory\scripts\dryrun-apply-manifest.mjs --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
 node D:\Work\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mode=strict --organizationId=11111111-1111-1111-1111-111111111111 --workspaceId=22222222-2222-2222-2222-222222222222 --projectId=33333333-3333-3333-3333-333333333333 --siteId=44444444-4444-4444-4444-444444444444 --environmentId=55555555-5555-5555-5555-555555555555 --wpRootPath="D:\Work\dummy" --environmentType=staging
+node D:\Work\lobster-factory\scripts\run-staging-pipeline-regression.mjs --mode=fast
+node D:\Work\lobster-factory\scripts\emit-staging-drill-report.mjs
+node D:\Work\lobster-factory\scripts\print-create-wp-site-payload.mjs
+node D:\Work\lobster-factory\scripts\print-apply-manifest-payload.mjs
+cd D:\Work\lobster-factory; npm run operator:sanity
+node D:\Work\lobster-factory\scripts\validate-operable-e2e-skeleton.mjs
 ```
 
 ## F) 本次重讀結論（2026-03-25）

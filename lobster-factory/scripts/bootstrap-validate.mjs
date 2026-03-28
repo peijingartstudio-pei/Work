@@ -32,6 +32,39 @@ const required = [
   "scripts/validate-governance-configs.mjs",
   "scripts/validate-workflow-routing-policy.mjs",
   "scripts/run-v3-governance-gates.mjs",
+  "packages/workflows/src/executor/installManifestStaging.ts",
+  "scripts/execute-apply-manifest-staging.mjs",
+  "scripts/rollback-apply-manifest-staging.mjs",
+  "scripts/run-staging-pipeline-regression.mjs",
+  "scripts/validate-staging-manifest-executor.mjs",
+  "templates/woocommerce/scripts/rollback-from-manifest.sh",
+  "docs/e2e/STAGING_PIPELINE_E2E_PAYLOAD.md",
+  "docs/e2e/STAGING_PIPELINE_DRILL_REPORT_TEMPLATE.md",
+  "docs/hosting/MOCK_HOSTING_ADAPTER.md",
+  "packages/workflows/src/hosting/types.ts",
+  "packages/workflows/src/hosting/mockStagingAdapter.ts",
+  "packages/workflows/src/hosting/providerStubAdapter.ts",
+  "packages/workflows/src/hosting/resolveStagingProvisioning.ts",
+  "packages/workflows/src/artifacts/localArtifactSink.ts",
+  "docs/hosting/HOSTING_ADAPTER_CONTRACT.md",
+  "docs/hosting/HTTP_JSON_HOSTING_ADAPTER.md",
+  "packages/workflows/src/hosting/providers/httpJsonStagingAdapter.ts",
+  "docs/operations/LOCAL_ARTIFACTS_SINK.md",
+  "docs/operations/REMOTE_PUT_ARTIFACTS.md",
+  "packages/workflows/src/artifacts/artifactMode.ts",
+  "packages/workflows/src/artifacts/remotePutArtifactSink.ts",
+  "scripts/validate-workflows-integrations-baseline.mjs",
+  "scripts/emit-staging-drill-report.mjs",
+  "scripts/print-create-wp-site-payload.mjs",
+  "packages/workflows/src/hosting/providers/README.md",
+  "packages/workflows/src/hosting/providers/stagingProvisionContract.ts",
+  "scripts/print-apply-manifest-payload.mjs",
+  "docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md",
+  "docs/e2e/OPERABLE_E2E_PLAYBOOK.md",
+  "docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md",
+  "docs/operations/PRESIGN_BROKER_MINIMAL.md",
+  "templates/lobster/presign-response.success.example.json",
+  "scripts/validate-operable-e2e-skeleton.mjs",
 ];
 
 for (const r of required) assertExists(r);
@@ -54,6 +87,21 @@ execSync(`node "${path.join(repoRoot, "scripts", "run-v3-governance-gates.mjs")}
 
 console.log("Running workflow routing policy validation...");
 execSync(`node "${path.join(repoRoot, "scripts", "validate-workflow-routing-policy.mjs")}"`, {
+  stdio: "inherit",
+});
+
+console.log("Running workflows integrations baseline validation...");
+execSync(`node "${path.join(repoRoot, "scripts", "validate-workflows-integrations-baseline.mjs")}"`, {
+  stdio: "inherit",
+});
+
+console.log("Running staging manifest executor structural validation...");
+execSync(`node "${path.join(repoRoot, "scripts", "validate-staging-manifest-executor.mjs")}"`, {
+  stdio: "inherit",
+});
+
+console.log("Running operable E2E skeleton validation...");
+execSync(`node "${path.join(repoRoot, "scripts", "validate-operable-e2e-skeleton.mjs")}"`, {
   stdio: "inherit",
 });
 

@@ -95,6 +95,8 @@ function assertCanonical() {
     path.join(lobsterRoot, "docs", "LOBSTER_FACTORY_MASTER_V3_INTEGRATION_PLAN.md"),
     path.join(lobsterRoot, "docs", "V3_GOVERNANCE_GATES.md"),
     path.join(lobsterRoot, "docs", "ROUTING_MATRIX.md"),
+    path.join(lobsterRoot, "docs", "e2e", "OPERABLE_E2E_PLAYBOOK.md"),
+    path.join(lobsterRoot, "docs", "operations", "ARTIFACTS_LIFECYCLE_POLICY.md"),
   ];
   for (const p of required) {
     if (!fs.existsSync(p)) {

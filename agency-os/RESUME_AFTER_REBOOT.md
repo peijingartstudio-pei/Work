@@ -1,4 +1,4 @@
-# Resume After Reboot
+﻿# Resume After Reboot
 
 ## 同一台電腦 — 重開機後
 
@@ -20,8 +20,6 @@
 
 ## Related Documents (Auto-Synced)
 - `docs/operations/system-guard-and-notification.md`
-- `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
-- `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-20 04:57:16 UTC_
+_Last synced: 2026-03-28 11:27:29 UTC_
 

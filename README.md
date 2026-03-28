@@ -1,2 +1,34 @@
-# soulfulexpression
-website duilding
+# Work — Agency OS + Lobster Factory
+
+本儲存庫收斂兩條主線：**Agency OS**（治理、客戶與營運 SOP、健康檢查）與 **Lobster Factory**（WordPress 工廠、Supabase、Trigger 工作流程、結構閘道）。
+
+## 目錄
+
+| 路徑 | 用途 |
+|------|------|
+| [`agency-os/`](agency-os/) | 任務板、文件、排程、`system-health-check` / `system-guard`、租戶模板 |
+| [`lobster-factory/`](lobster-factory/) | migrations、manifests、`create-wp-site` / `apply-manifest`、`npm run validate` |
+| [`scripts/`](scripts/) | 跨專案腳本：`verify-build-gates.ps1`、`ao-close.ps1` 等 |
+
+## 本機一次驗兩邊（推薦）
+
+在儲存庫根目錄（例如 `D:\Work`）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
+```
+
+僅跑龍蝦閘道、略過 Agency 健檢：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -LobsterOnly
+```
+
+## 從哪讀起
+
+- **龍蝦工廠**：[`lobster-factory/README.md`](lobster-factory/README.md)、[`lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`](lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md)、[`lobster-factory/docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md`](lobster-factory/docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md)、[`lobster-factory/docs/e2e/OPERABLE_E2E_PLAYBOOK.md`](lobster-factory/docs/e2e/OPERABLE_E2E_PLAYBOOK.md)（A10-1 營運劇本）
+- **AO 系統**：[`agency-os/AGENTS.md`](agency-os/AGENTS.md)、[`agency-os/TASKS.md`](agency-os/TASKS.md)、[`agency-os/docs/overview/EXECUTION_DASHBOARD.md`](agency-os/docs/overview/EXECUTION_DASHBOARD.md)
+
+## 收工與同步
+
+- 關鍵字 **`AO-CLOSE`**：依 `.cursor/rules/40-shutdown-closeout.mdc` 執行 `scripts\ao-close.ps1`（閘道、狀態報告、預設含 git 收斂）。

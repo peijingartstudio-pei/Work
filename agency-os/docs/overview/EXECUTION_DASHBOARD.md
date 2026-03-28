@@ -36,14 +36,14 @@
 - 已建立 dry-run + acceptance gate（失敗即停）
 - 已推送 GitHub，跨電腦 `pull` 可取得完整工程內容
 
-### 尚未完成（下一段工程主線）
-- 接上 hosting provider adapter + WordPress 真正 provision/shell execution
-- 打通 Supabase 真寫入第二階段（`C1-2 package_install_runs lifecycle` + `C1-3 resilience`）
-- 完整 lifecycle：`package_install_runs` 狀態更新 + artifacts/logs ref + rollback 路徑
-- 依 `MASTER_V3` 執行缺口骨架衝刺（Sales/Marketing/Partner/Media/Decision Engine/Merchandising）
-- Enterprise 必備工具補強與正式串接（Sentry/PostHog/Cloudflare/Secrets/Identity）
+### 尚未完成（下一段工程主線 — 細項以 `TASKS.md` + 龍蝦 `MASTER_CHECKLIST` 為準）
+- **全自動建站**：真 hosting 長期治理（非僅 `mock` / `http_json` 控制面）、WordPress 從零 install 仍待與 hosting 對齊
+- **A9 治理細節**：artifacts 生命週期、存取控管、長期留存政策（`remote_put` / `local` 已可用）
+- **A10**：可運營 E2E（新客戶到驗收）與固定證據鏈仍待收斂（已有 staging regression + drill 模板）
+- **Enterprise 正式串接**：Clerk / Cloudflare WAF / Sentry ingest / PostHog 等（選型已有，落地見 `TASKS.md` Next）
+- **營運**：用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-> 詳細項目以 `TASKS.md` 為準（避免在多處重複維護）。
+> 已完成摘要（避免本頁過期）：C1 寫入鏈路、`http_json` hosting、`remote_put` artifacts、H3–H6 baseline、C3 release gate、營運 runbook — 見 `WORKLOG.md` 近期條目。
 
 ## 3) 硬性 Gate（避免錯誤擴散）
 ### 工程 Gate（lobster-factory）
@@ -111,5 +111,5 @@
 - `docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-03-27 09:01:45 UTC_
+_Last synced: 2026-03-28 11:27:29 UTC_
 

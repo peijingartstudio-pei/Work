@@ -2,6 +2,8 @@
 
 這是一套給多客戶網站建置、客製系統、維運與行銷整合的營運框架。
 
+與 **Lobster Factory** 同庫時，monorepo 總覽見上層 [`../README.md`](../README.md)（含 `verify-build-gates`、龍蝦 README 入口）。
+
 ## 目標
 - 同時管理多家公司、多網站，不失控
 - 支援 WordPress + Supabase + GitHub + n8n + Replicate + DataForSEO
@@ -80,7 +82,7 @@
 - 停用 Autopilot Phase1：`powershell -ExecutionPolicy Bypass -File .\scripts\register-autopilot-phase1.ps1 -RemoveOnly`
 - 可選：啟用「登出時自動 closeout」：`powershell -ExecutionPolicy Bypass -File .\scripts\register-autopilot-phase1.ps1 -EnableLogoffCloseout`（加 `-EnablePushOnLogoff` 才會 push）
 - 若排程權限受限（無法建立新工作）：安裝 Startup fallback：`powershell -ExecutionPolicy Bypass -File .\scripts\install-autopilot-startup-fallback.ps1`（停用：加 `-RemoveOnly`）
-- Slack 通知：設定環境變數 `AGENCY_OS_SLACK_WEBHOOK_URL` 後，`scripts/notify-ops.ps1` 會自動送出 preflight/告警修復/closeout 結果
+- Slack 通知：設定環境變數 `AGENCY_OS_SLACK_WEBHOOK_URL` 後，`scripts/notify-ops.ps1` 會自動送出 preflight/告警修復/closeout 結果（**開機 Startup 預檢**：僅在 `ao-resume` **失敗**時才送 Slack；成功不再刷屏）
 - 桌面彈窗：PASS/FAIL（含 ALERT 提示）
 - 開機後自動開啟：`LAST_SYSTEM_STATUS.md`（可用 `-NoOpenStatusOnStartup` 關閉）
 - 狀態文件：`LAST_SYSTEM_STATUS.md`
@@ -158,5 +160,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-03-27 08:25:04 UTC_
+_Last synced: 2026-03-28 11:56:51 UTC_
 

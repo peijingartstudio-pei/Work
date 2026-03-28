@@ -27,7 +27,8 @@
 - `powershell -ExecutionPolicy Bypass -File .\scripts\system-guard.ps1 -Mode manual`
 
 ## 判定標準
-- 健康分數 >= 95% 視為 PASS
+- 健康分數 **>= 100%** 視為 PASS（`system-guard.ps1` 預設 `-MinHealthScore 100`；與 **AO-CLOSE** 預設收工門檻一致）
+- 若需放寬（例如本機暫時性噪音）：手動執行時可傳 `-MinHealthScore 95`（不建議用於收工 push 前）
 - Health Critical Gate 必須 PASS（map 連動缺漏或 tenant 必要檔缺漏會直接 FAIL）
 - 低於門檻時建立 `ALERT_REQUIRED.txt` 並要求先修復再發布
 
@@ -38,5 +39,5 @@
 - `RESUME_AFTER_REBOOT.md`
 - `scripts/system-guard.ps1`
 
-_Last synced: 2026-03-20 04:57:15 UTC_
+_Last synced: 2026-03-28 11:27:29 UTC_
 

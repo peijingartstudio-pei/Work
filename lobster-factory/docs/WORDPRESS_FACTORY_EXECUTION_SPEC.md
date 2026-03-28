@@ -69,6 +69,14 @@ Any missing field must fail fast before side effects.
 - Persist package lifecycle status (`pending -> running -> completed|failed`).
 - Capture per-step logs as artifacts reference.
 
+**Implementation (M3 baseline, repo)**
+- Shell executor: `templates/woocommerce/scripts/install-from-manifest.sh` (`DRY_RUN=1` preview vs real `wp` calls).
+- Trigger task `apply-manifest` optional hook: set `LOBSTER_EXECUTE_MANIFEST_STEPS=true` and `LOBSTER_MANIFEST_EXECUTION_MODE=dry_run|apply` (see `lobster-factory/README.md`).
+- Local CLI: `scripts/execute-apply-manifest-staging.mjs` (`--execute=0|1`) with the same manifest guardrails as `dryrun-apply-manifest.mjs`.
+- **M3 + C2-3 baseline**: after successful shell with DB writes, rows are PATCHed to `completed`; on shell failure to `failed` (`supabaseRestPatch`). Rollback script: `rollback-from-manifest.sh` + `rollback-apply-manifest-staging.mjs` (plugin deactivate reverse order; theme manual; full restore = hosting snapshot).
+- **A9 artifacts**: `LOBSTER_ARTIFACTS_MODE=local` → disk under `agency-os/reports/artifacts/lobster/…` (`LOCAL_ARTIFACTS_SINK.md`). `LOBSTER_ARTIFACTS_MODE=remote_put` → presigned HTTP PUT (`REMOTE_PUT_ARTIFACTS.md`). Both set `logs_ref` + `output_snapshot.logsRef` on PATCH when writes enabled.
+- **Hosting contract**: `resolveStagingProvisioning` drives `create-wp-site` (`none` / `mock` / `provider_stub` / `http_json` / unknown blocked) — `docs/hosting/HOSTING_ADAPTER_CONTRACT.md`, `docs/hosting/HTTP_JSON_HOSTING_ADAPTER.md`.
+
 ### Stage D: Smoke Validation
 - Run mandatory smoke test suite:
   - WordPress reachable

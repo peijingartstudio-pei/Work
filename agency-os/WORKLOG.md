@@ -1,4 +1,4 @@
-# Worklog
+﻿# Worklog
 
 ## 2026-02-27
 
@@ -78,7 +78,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-27 17:29:01 UTC_
+_Last synced: 2026-03-28 12:17:58 UTC_
 
 ## 2026-03-20
 
@@ -348,6 +348,74 @@ _Last synced: 2026-03-27 17:29:01 UTC_
 - **證據**：`reports/health/health-20260328-012900.md`、`reports/guard/guard-20260328-012904.md`、`reports/status/integrated-status-20260328-012912.md`、`LAST_SYSTEM_STATUS.md`（皆在 `agency-os/` 下）。
 - **Git**：`e31966c` `chore: AO-CLOSE sync 2026-03-28 0129`（已推送 `main`）。
 
+### Lobster Factory A9 `remote_put` artifacts（2026-03-28）
+- `LOBSTER_ARTIFACTS_MODE=remote_put`：presign POST 或 `LOBSTER_ARTIFACTS_PUT_DESCRIPTOR_JSON`，對 R2/S3 presigned 做 PUT（無 AWS SDK）。
+- 新增 `artifactMode.ts`、`remotePutArtifactSink.ts`、`REMOTE_PUT_ARTIFACTS.md`；`apply-manifest` 成功／失敗路徑皆支援；`npm run validate` PASS。
+
+### Lobster Factory `http_json` hosting adapter（2026-03-28）
+- `LOBSTER_HOSTING_ADAPTER=http_json`：POST 控制面 JSON，回傳 `environmentId`／`wpRootPath`／URLs；`create-wp-site` → `vendor_staging_provisioned`，欄位 `vendorStaging`。
+- 新增 `packages/workflows/src/hosting/providers/httpJsonStagingAdapter.ts`、`docs/hosting/HTTP_JSON_HOSTING_ADAPTER.md`；`resolveStagingProvisioning` 改 **async**；閘道與 `npm run validate` PASS。
+
+### Lobster Factory 營運 Runbook + operator:sanity + apply-manifest payload（2026-03-28）
+- `docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md`（每日檢查、payload、環境變數、排查順序）。
+- `npm run operator:sanity`（validate + regression）；`npm run payload:apply-manifest`；`print-apply-manifest-payload.mjs`。
+- README 頂部「營運一鍵」；E2E payload／MASTER_CHECKLIST／integrations 閘道已連動；`npm run validate` PASS。
+
+### Lobster Factory hosting providers 合約 + create-wp-site payload CLI（2026-03-28）
+- `packages/workflows/src/hosting/providers/stagingProvisionContract.ts`、`README.md`（`StagingProvisionAdapter`；真 vendor 實作入口）。
+- `scripts/print-create-wp-site-payload.mjs`、`npm run payload:create-wp-site`；`STAGING_PIPELINE_E2E_PAYLOAD.md` 補 `create-wp-site` 範例；`HOSTING_ADAPTER_CONTRACT.md` 指向 providers。
+- 結構閘道／bootstrap 已納入；`npm run validate` 預期 PASS。
+
+### Lobster Factory hosting 合約 + A9 local artifacts（2026-03-28）
+- `resolveStagingProvisioning`：`none` / `mock` / `provider_stub`（缺 env 或 Phase1 未實作 → `blocked_hosting_configuration`）／未知 adapter blocked。
+- `create-wp-site` 早退不寫 DB；`HOSTING_ADAPTER_CONTRACT.md`、`providerStubAdapter.ts`。
+- `localArtifactSink`：`LOBSTER_ARTIFACTS_MODE=local` 寫 `agency-os/reports/artifacts/lobster/apply-manifest/<id>/`，PATCH `logs_ref` + `output_snapshot.logsRef`；`LOCAL_ARTIFACTS_SINK.md`、`reports/artifacts/lobster/README.md`。
+- 閘道：`validate-workflows-integrations-baseline.mjs`（取代 mock-only validate）；bootstrap／regression 已接。
+
+### Lobster Factory C2-1 mock hosting + C3-2 drill report（2026-03-28）
+- `LOBSTER_HOSTING_ADAPTER=mock`：`maybeProvisionMockStaging`、`create-wp-site` → `mock_staging_provisioned` + 可傳 `apply-manifest` 的 `environmentId`／`wpRootPath`（合成）。
+- 演練報告：`emit-staging-drill-report.mjs`、`STAGING_PIPELINE_DRILL_REPORT_TEMPLATE.md`、`npm run drill:staging-report` → `agency-os/reports/e2e/`（含 `README.md`）。
+- 回歸腳本增驗 `validate-workflows-integrations-baseline.mjs`；bootstrap 納入；`MASTER_CHECKLIST` 更新 A6／C2-1／C3-2。
+
+### Lobster Factory C3-1（staging 管線回歸 + payload，2026-03-28）
+- 新增 `docs/e2e/STAGING_PIPELINE_E2E_PAYLOAD.md`（固定 tenant UUID、Trigger body 範例、環境變數索引）。
+- 新增 `scripts/run-staging-pipeline-regression.mjs`（結構閘道 + dryrun 合約 + 可選 `execute-apply-manifest-staging --execute=0`）；`npm run regression:staging-pipeline`；bootstrap 納入檔案存在檢查。
+- `MASTER_CHECKLIST`：C3-1、A8 勾選；A7/A9 補註；`TASKS.md` 已勾對應項。
+
+### Lobster Factory M3 + C2-3（staging 執行 + DB 終態 + rollback baseline，2026-03-28）
+- 執行器：`installManifestStaging.ts`、`execute-apply-manifest-staging.mjs`；`apply-manifest` 可選 `LOBSTER_EXECUTE_MANIFEST_STEPS` + `LOBSTER_MANIFEST_EXECUTION_MODE`；回傳 `shellExecution` / `staging_shell_*`。
+- DB：`supabaseRestPatch`；啟用 shell 且寫 DB 時先 insert **`running`**，shell 成功 **PATCH `completed`**（`output_snapshot` / `result_summary`），失敗 **PATCH `failed`**；`writeExecution.patchedFinalStatus`。
+- Rollback：`rollback-from-manifest.sh`、`rollback-apply-manifest-staging.mjs`（反向 deactivate；`ROLLBACK_DEEP` 可 uninstall；theme／完整還原仍快照）。
+- 文件與閘道：`README`、`WORDPRESS_FACTORY_EXECUTION_SPEC`、`MASTER_CHECKLIST`（C2-2／C2-3）、`COMPLETION_PLAN_V2`；`bootstrap-validate` 含結構檢查。
+
+### Git：`commit`／`push` 節奏（政策，2026-03-28）
+- 使用者共識：**平常進行中**代理不主動 `git commit`／`git push`；**預設**僅 **`AO-CLOSE`**（`ao-close.ps1`）統一做 commit + push；**例外**：使用者明確一句話要求立即提交／推送。
+- 已寫入：`AGENTS.md`（§Git 推送節奏）、repo 根 `.cursor/rules/50-operator-autopilot.mdc` §7（並去除該檔先前整段重複貼上）；`agency-os/.cursor/rules/50-operator-autopilot.mdc` 與根規則對齊。
+
+### Lobster A10-2 前置：SOP Step 7 + presign 範例（2026-03-28）
+- `tenants/NEW_TENANT_ONBOARDING_SOP.md`：新增 **Step 7**（Lobster／A10-2）+ Go/No-Go 勾選；連結 `OPERABLE_E2E_PLAYBOOK`、`STAGING_PIPELINE_E2E_PAYLOAD`、PRESIGN／lifecycle。
+- `PRESIGN_BROKER_MINIMAL.md`、`templates/lobster/presign-response.success.example.json`；`REMOTE_PUT` Related 已掛。
+- `validate-operable-e2e-skeleton.mjs`：斷言 SOP 含 Step 7 + `OPERABLE_E2E_PLAYBOOK.md`，並解析 presign example JSON。
+- `npm run validate` PASS。
+
+### Lobster A10-1 operable E2E + A9 lifecycle policy（2026-03-28）
+- `docs/e2e/OPERABLE_E2E_PLAYBOOK.md`：固定步驟（sanity → payload → regression → 可選 DB／artifacts → drill → AO 紀錄）。
+- `docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md`：留存／存取／presign 原則（實作自動化仍 backlog）。
+- `scripts/validate-operable-e2e-skeleton.mjs` + `npm run validate:operable-e2e`；已接入 `bootstrap-validate.mjs`；`validate-doc-integrity` canonical、`validate-workflows-integrations-baseline`、runbook／README／`ARCHITECTURE_CANONICAL_MAP` 已連動。
+- `MASTER_CHECKLIST`：A10 拆 A10-1 ✅／A10-2 ⏳；A9 文案對齊政策層。
+- `npm run validate` PASS。
+
+### Monorepo 總覽 + 儀表板對齊現況（2026-03-28）
+- 新增 repo 根 [`README.md`](../README.md)（`agency-os`／`lobster-factory`／`scripts\verify-build-gates.ps1` 一頁導覽）。
+- 龍蝦：`README.md` 補 `http_json`／`REMOTE_PUT` 連結；`LOBSTER_FACTORY_MASTER_CHECKLIST.md` 修正 A6（含 `http_json`）、B5 列 `remote_put` + `HTTP_JSON` 檔案。
+- AO：`agency-os/README.md` 指向上層 monorepo README；`AGENTS.md` session 啟動補讀 `../README.md`；`docs/overview/EXECUTION_DASHBOARD.md` §2 改為與 `TASKS`/現況一致（避免「C1-2 未完成」等過期敘述）。
+- 驗證：`D:\Work\scripts\verify-build-gates.ps1` **PASS**（bootstrap + health **100%** 269/269，`health-20260328-192715.md`）；`doc-sync-automation -AutoDetect` **PASS**（`reports/closeout/closeout-20260328-192729.md`）。
+
+### AO-CLOSE（2026-03-28 晚）
+- 收工前已更新 `TASKS.md`、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-28.md`。
+- 執行：`powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`（`verify-build-gates` → `system-guard` → `generate-integrated-status-report` → 有變更則 commit + `git push`）。
+- **證據與 Git**：見本節下方「收工後補記」（腳本成功後回填）。
+
 ### AO-CLOSE（2026-03-27）
 - 已完成收工前進度同步（`TASKS.md`、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-27.md`）。
 - 準備執行 `D:\Work\scripts\ao-close.ps1` 一鍵閘道與推送。
@@ -373,6 +441,10 @@ _Last synced: 2026-03-27 17:29:01 UTC_
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 param(
     [string]$WorkspaceRoot = "",
-    [double]$MinHealthScore = 95.0,
+    [double]$MinHealthScore = 100.0,
     [ValidateSet("manual", "daily", "pre_shutdown", "startup")][string]$Mode = "manual",
     [switch]$OpenStatusFile
 )

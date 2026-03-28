@@ -20,6 +20,11 @@ Provide a single source-of-truth map so routing, workflow, and governance rules 
   - `docs/V3_GOVERNANCE_GATES.md`
 - Bootstrap gate runner:
   - `scripts/bootstrap-validate.mjs`
+- Operable E2E playbook (A10-1) + structural gate:
+  - `docs/e2e/OPERABLE_E2E_PLAYBOOK.md`
+  - `scripts/validate-operable-e2e-skeleton.mjs`
+- Artifacts lifecycle policy (A9):
+  - `docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md`
 
 ## Update Rule
 - Any routing/policy change must update:

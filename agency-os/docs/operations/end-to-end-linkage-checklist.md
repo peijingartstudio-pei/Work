@@ -11,7 +11,7 @@
 
 ## B. Operations Linkage
 - [ ] `scripts/system-guard.ps1` runs and writes PASS/FAIL status
-- [ ] `scripts/system-health-check.ps1` score >= 95%
+- [ ] `scripts/system-health-check.ps1` score >= 100%（與 AO-CLOSE 預設一致）
 - [ ] `scripts/system-health-check.ps1` Critical Gate = PASS
 - [ ] `scripts/doc-sync-automation.ps1` latest closeout report exists
 - [ ] Guard schedule registration is up-to-date
@@ -45,5 +45,5 @@
 - `scripts/system-guard.ps1`
 - `scripts/system-health-check.ps1`
 
-_Last synced: 2026-03-20 04:57:15 UTC_
+_Last synced: 2026-03-28 11:27:29 UTC_
 

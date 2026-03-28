@@ -15,7 +15,7 @@
 
 ## Validation
 - [ ] Run health check (`scripts/system-health-check.ps1`)
-- [ ] Health score >= 95%
+- [ ] Health score >= 100%（與 AO-CLOSE / system-guard 預設一致）
 - [ ] Run guard (`scripts/system-guard.ps1 -Mode manual`)
 - [ ] Confirm PASS in `LAST_SYSTEM_STATUS.md`
 - [ ] Confirm no `ALERT_REQUIRED.txt`
@@ -34,5 +34,5 @@
 - `docs/releases/release-notes.md`
 - `docs/releases/upgrade-path.md`
 
-_Last synced: 2026-03-20 04:57:16 UTC_
+_Last synced: 2026-03-28 11:27:29 UTC_
 

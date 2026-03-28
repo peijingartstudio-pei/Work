@@ -44,6 +44,12 @@
 - 重要步驟有 timeout/retry 與錯誤分類。
 - production path 預設禁止、需額外核可才能啟用。
 
+**Repo 落地（2026-03）**
+- Shell：`templates/woocommerce/scripts/install-from-manifest.sh`（`DRY_RUN=1` vs 真 `wp`）。
+- Trigger：`LOBSTER_EXECUTE_MANIFEST_STEPS=true` + `LOBSTER_MANIFEST_EXECUTION_MODE=dry_run|apply`（見 `lobster-factory/README.md`）。
+- 本機 CLI：`scripts/execute-apply-manifest-staging.mjs`（`--execute=0|1`）。
+- **已補（baseline）**：shell 結束後 PostgREST PATCH 終態（`completed` / `failed`）；C2-3 本機 rollback 腳本（plugin 反向 deactivate，可選 `ROLLBACK_DEEP`）。**仍建議**：失敗時由 runbook 觸發 rollback CLI 或還原快照（尚未全自動串進 Trigger）。
+
 **回滾**
 - 一鍵回到 dryrun-only。
 - 停止排程/入口，保留 logs + artifacts。

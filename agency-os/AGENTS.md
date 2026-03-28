@@ -18,7 +18,7 @@
 - 使用者輸入 `進度?` 時，需立即回覆「目前在做什麼 / 有無阻塞 / 下一步」
 
 ## Session 啟動順序（每次都做）
-1. 讀 `README.md`
+1. 讀 `README.md`（本目錄）；若工作區含整個 monorepo，一併讀 `../README.md`（根目錄導覽：龍蝦工廠 + AO + `verify-build-gates`）
 2. 讀 `AGENTS.md`
 3. 讀 `memory/CONVERSATION_MEMORY.md`（長期記憶）
 4. 讀 `memory/daily/` 的今日與昨日筆記（若存在）
@@ -41,6 +41,11 @@
     → 預設依序：`verify-build-gates`（龍蝦 + 治理 health）→ `system-guard`（內含 doc-sync + health + guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`（公司機 `pull` 即完整）。不推：`-SkipPush`；略過龍蝦閘（不建議）：`-SkipVerify`。
   - 預設收工門檻：`system-health-check` **100%**（未達 100% 先修復再收工；僅在使用者明確允許時可放寬）。
   - **或分部手動**（與一鍵擇一）：`doc-sync-automation -AutoDetect` → `system-health-check` → `system-guard -Mode manual` → 再自行 `git push`（見 `docs/operations/end-of-day-checklist.md`）。
+
+## Git 推送節奏（使用者共識）
+- **平常進行中**：代理**不**主動執行 `git commit`／`git push`；以本機改檔、驗證、回寫 `TASKS`／`WORKLOG`／`memory` 為主。
+- **收工**：**`AO-CLOSE`**（建議 `.\scripts\ao-close.ps1`）再統一做 commit + push（或使用者明確要求 `-SkipPush` 時僅收斂本機）。
+- **例外**：使用者**明確一句話**要求立即提交／推送（例如 hotfix、客戶急件）時，可依指示執行。
 
 ## First Run
 - 若有 `BOOTSTRAP.md`，先照檔案完成初始化再開始任務。
@@ -83,5 +88,5 @@
 - `docs/operations/system-guard-and-notification.md`
 - `docs/operations/system-operation-sop.md`
 
-_Last synced: 2026-03-27 10:49:47 UTC_
+_Last synced: 2026-03-28 11:27:29 UTC_
 
