@@ -1,4 +1,4 @@
-﻿# Worklog
+# Worklog
 
 ## 2026-02-27
 
@@ -422,8 +422,10 @@ _Last synced: 2026-03-29 18:43:48 UTC_
 
 ### AO-CLOSE（晚）
 - 收工前更新：`TASKS.md`（明日 **四份 spec 原文整理** 提醒項）、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-30.md`。
-- 執行：`powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`（`verify-build-gates` → `system-guard` → `generate-integrated-status-report` → 通過則 commit + `git push`）。
-- 連動與 Git：見當輪 `reports/health/*.md`、`reports/guard/*.md`、`reports/status/integrated-status-LATEST.md` 與本節補登之 commit。
+- 執行：`powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`；首輪卡於 **Linear 排程推送**；改設 **`AO_SYNC_SCHEDULE_TO_LINEAR=0`** 後重跑完成。
+- **連動檢查**：`verify-build-gates` **PASS**；`system-health-check` **100%（286/286）**（`reports/health/health-20260330-024902.md`）；`system-guard` **PASS**（`reports/guard/guard-20260330-024905.md`）；綜合狀態 `reports/status/integrated-status-20260330-024914.md`、`integrated-status-LATEST.md`；Linear **delta sync** HTTP 400（略過，不阻斷）。
+- **Git**：`chore: AO-CLOSE sync 2026-03-30 0249` → commit **`10fe5df`**；已 **`push origin main`**。
+- **資安後續（同日補救）**：`hostinger-recovery-codes.txt` 曾被 `git add -A` 一併入庫並推送；已 **刪檔 + `.gitignore` + commit `c2bb268` push**。**請使用者至 Hostinger 立即作廢並重新產生復原碼**（歷史提交仍可能含有該檔；若 repo 公開建議評估 history purge）。
 
 ### Company OS 四份原文與導覽（同日）
 - 新增 **`docs/overview/company-os-four-sources-integration.md`**（四檔分工、閱讀順序、與 AO／龍蝦關係）；**`company-os-twenty-modules.md`** 改為 §三跳表並指向整合頁。
