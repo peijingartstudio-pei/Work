@@ -1,17 +1,5 @@
 {
   "mcpServers": {
-    "airtable": {
-      "command": "cmd",
-      "args": [
-        "/c",
-        "npx",
-        "-y",
-        "@loticdigital/airtable-mcp-server"
-      ],
-      "env": {
-        "AIRTABLE_API_KEY": "patVgCIuooi8ZcqUG.317236d18a17ad282d70cee0763b9f53636474d8b832ed897f2fc81d55eafba8"
-      }
-    },
     "wordpress": {
       "command": "cmd",
       "args": [
@@ -167,6 +155,16 @@
         "D:\\Work\\scripts\\start-trigger-mcp.ps1",
         "-ProjectRef",
         "proj_rqykzzwujizcxdzgnedn"
+      ]
+    },
+    "linear": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "mcp-remote",
+        "https://mcp.linear.app/mcp"
       ]
     }
   }

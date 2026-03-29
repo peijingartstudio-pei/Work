@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-03-28 20:18:09
+- Generated: 2026-03-30 02:49:14
 - agency-os root: `D:\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -15,7 +15,7 @@
 - `LAST_SYSTEM_STATUS.md`, `WORKLOG.md`
 
 ## 1) TASKS.md - Next (unchecked)
-- [ ] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md` - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
+- [ ] **（2026-03-31 提醒）** 整理 `docs/spec/raw/` **四份原文**內容（`LOBSTER_FACTORY_MASTER_V3.md`、`LOBSTER_FACTORY_MASTER_SPEC_V1.md`、`ENTERPRISE_BASE_STACK.md`、`CURSOR_PACK_V1.md`）：目錄／摘要／與 [`docs/overview/company-os-four-sources-integration.md`](docs/overview/company-os-four-sources-integration.md) 對齊；避免與 `agency-os`／`lobster-factory` 已落地文件重複維護兩套敘述。 - [ ] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md` - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
 
 ## 2) TASKS.md - Backlog (unchecked)
 - [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核） - [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager）
@@ -164,8 +164,14 @@
 - 操作手冊：`lobster-factory/docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md`；README 頂部已掛「營運一鍵」。
 - 閘道：`bootstrap-validate` 與 `validate-workflows-integrations-baseline.mjs` 已納入上述檔案與字串檢查；`npm run validate` PASS。
 
+### Today (2026-03-29) - 續接驗證
+- 使用者「好」＝執行：`git pull`（up to date）、`verify-build-gates` PASS、health **100%**（`health-20260329-221913.md`）、`npm run operator:sanity` PASS。
+
+### Today (2026-03-29) - PROGRAM_SCHEDULE ↔ Linear（同步＝單向推送 v1）
+- 需求：讓 **`PROGRAM_SCHEDULE.json`** 與 **Linear 看板**對齊；實作 **`push-program-schedule-to-linear.ps1`**（create/update + `reports/linear/linear-schedule-map.json`）；**不**自動把 Linear 寫回 JSON（衝突風險）。稽核鏈仍為 **`sync-linear-delta-to-daily`** → `memory/daily`。Playbook **`linear-repo-sync-playbook.md`** §3 已寫入操作與 env；**DryRun 31/31** 驗證通過。
+
 ### Today (2026-03-28) - AO-CLOSE（晚）
-- 使用者關鍵字 **AO-CLOSE**：已更新四檔並執行 `scripts/ao-close.ps1`（預期 verify-build-gates + system-guard + integrated-status + push）。
+- **AO-CLOSE** 完成：`verify-build-gates` PASS、health **100%**、`system-guard` PASS、integrated-status 已產出；**Git** `e04be6f` 已 **push `main`**。
 
 ### Today (2026-03-28) - A10-2 前置（SOP Step 7 + presign 範例）
 - `NEW_TENANT_ONBOARDING_SOP` Step 7、presign 範例 JSON、`PRESIGN_BROKER_MINIMAL`；operable gate 綁定 monorepo SOP。
@@ -179,181 +185,43 @@
 ### Today (2026-03-28) - Lobster A9 remote_put artifacts
 - `LOBSTER_ARTIFACTS_MODE=remote_put` + `REMOTE_PUT_ARTIFACTS.md`；presign URL 或 inline JSON；`apply-manifest` 寫 `logs_ref` 行為與 local 一致。
 
+### Today（補登）- 規格原文目錄 `docs/spec/raw`
+- 使用者出示 **檔案總管**：`D:\Work\docs\spec\raw\` 內四份 **.md** 為設計**原文**（含 **`LOBSTER_FACTORY_MASTER_V3`** 內 Agency OS **20 個 OS 模組** 圖，即跨國企業級職能拆分來源）。已在 monorepo 根新增 **`docs/spec/README.md`** 索引，並在根 **`README.md`**、**`agency-os/README.md`** 加上導覽；說明其與 **`MCP_TOOL_ROUTING_SPEC`**（少列＝執行閘道）為不同層級。
+
+### Today (2026-03-30) - cursor-mcp inventory：純 Supabase／SoR 敘述
+- `docs/operations/cursor-mcp-and-plugin-inventory.md`：使用者要求 **本檔不出現任何第三方表格式工具名稱**；已刪除該列與所有相關段落／SSOT／Related 連結。**supabase** 兩欄改為**自足**寫法：平台 SoR、RLS／Storage／Webhook、MCP 與 `read_only` 邊界、以及對 [`MCP_TOOL_ROUTING_SPEC`](../../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md) 中 Trigger／n8n 分工的對齊。**`change-impact-map`** 已取消本檔 ↔ migration playbook 的強制連動（health 仍 100%）。
+
 ### Today (2026-03-28) - Lobster `http_json` hosting
 - `LOBSTER_HOSTING_ADAPTER=http_json` + `HTTP_JSON_HOSTING_ADAPTER.md`；`provisionHttpJsonStaging`；`create-wp-site` 支援 `vendor_staging_provisioned` 與 `vendorStaging`；`resolveStagingProvisioning` 為 async。
 - **互動偏好**：可驗證範圍內代理自主推進、減少選項式追問；不可逆決策仍單點確認。
 
 > Full runbook: see `## Runbook Commands` in the source file.
 
-## 5) memory/daily/2026-03-28.md
-# 2026-03-28
+## 5) memory/daily/2026-03-30.md
+# 2026-03-30
 
 ## 背景
-- 使用者要求把 Trigger deploy 與 Cursor `user-trigger` MCP 問題一次修到可用，避免反覆失敗。
+- 使用者執行 **AO-CLOSE**；並要求 **明日提醒**：整理 `docs/spec/raw/` **四份原文**。
 
-## 已完成
-- Trigger GitHub Actions deploy 鏈路修復完成：
-  - 對齊正確 `project ref`：`proj_rqykzzwujizcxdzgnedn`
-  - 補齊缺失檔：`lobster-factory/packages/workflows/src/utils/uid.ts`
-  - `release-trigger-prod.yml` 調整後，`Deploy to Trigger.dev (prod)` 成功（`gate`/`deploy` 皆綠燈）
-- Cursor `user-trigger` MCP 問題修復：
-  - 根因：命令含錯誤參數 `--api-key`
-  - 修正：`C:\Users\user1115\.cursor\mcp.json` 的 `trigger` 改為呼叫 `D:\Work\scripts\start-trigger-mcp.ps1`
-  - 啟動腳本由 vault 注入 `TRIGGER_ACCESS_TOKEN` 並帶正確 `--project-ref`
-- 本機與遠端同步：
-  - 已 pull 並對齊遠端 GitHub AI 直接修改內容
-  - 後續修復提交已 push 至 `main`
+## 已完成（本日文件／治理）
+- Company OS：**四份原文整合閱讀**（`docs/overview/company-os-four-sources-integration.md`）、20 模組頁降級為 V3 §三跳表；`raw/` 內 **ASCII 檔名**（`ENTERPRISE_BASE_STACK.md`、`CURSOR_PACK_V1.md`）；根 `Work-Monorepo.code-workspace`；連結／doc integrity 修復。
+- `TASKS.md` 已列 **明日**：整理四份原文（見 unchecked 項）。
 
 ## 未完成
-- Enterprise 工具層 Phase 1 正式串接（Clerk auth、Cloudflare WAF/rate-limit、Sentry/PostHog/Slack 全鏈路）尚未完成。
-- 新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md` 尚未執行。
+- 四份原文之「內容整理／摘要／去重」尚未執行（刻意排明天）。
 
-## 風險/阻塞
-- `mcp.json`（workspace 與 Cursor user 層）仍包含多組明文金鑰，需安排輪替與去敏。
-- `lobster-factory/packages/workflows/.trigger/` 為本機快取資料夾，會干擾工作樹可讀性（非功能阻塞）。
+## 明日優先
+1. **P1**：整理四份原文（目錄、重複段落標記、與 `company-os-four-sources-integration.md` 對齊要點）。
+2. P2：依進度決定是否開 `AO-RESUME` 續作 Enterprise Phase 1 或其他 `TASKS` 未勾項。
 
-## 下一步
-- 將 Trigger 成功配置沉澱成 runbook（避免下次重踩）。
-- 進入 H6 第二階段（擴充可執行治理 checks）或推進 Enterprise 工具層正式串接。
-- 安排 secrets 去敏與輪替作業。
-
-## 補充：Tool Routing / Factory 通道固定（同日）
-
-### 已完成
-- 新增 `lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`（強制版工具分工、權限邊界、WordPress Factory 固定通道）
-- 新增 `lobster-factory/workflow-risk-matrix.json`（機器可讀風險路由策略）
-- 更新揭示與連動：
-  - `lobster-factory/README.md`
-  - `lobster-factory/docs/ROUTING_MATRIX.md`
-
-### 驗證
-- `validate-doc-integrity.mjs` PASS
-- `system-health-check` PASS（100%）
-
-## 補充：WordPress Factory 細部 runbook（同日）
-
-### 已完成
-- 新增 `lobster-factory/docs/WORDPRESS_FACTORY_EXECUTION_SPEC.md`
-- 規格內容補齊：
-  - 固定執行通道（staging-first）
-  - failure/rollback handling
-  - approval payload template
-  - audit trail 必填要求
-
-### 連動
-- `lobster-factory/README.md` 已新增入口
-
-## 補充：WordPress Factory 規範可執行化（同日）
-
-### 已完成
-- 新增 `lobster-factory/packages/policies/approval/wordpress-factory-execution-policy.json`
-- 新增 `lobster-factory/scripts/validate-workflow-routing-policy.mjs`
-- 整合到 `lobster-factory/scripts/bootstrap-validate.mjs`
-- `lobster-factory/package.json` 新增 `validate:routing`
-- 文件同步：
-  - `lobster-factory/docs/V3_GOVERNANCE_GATES.md`
-  - `lobster-factory/README.md`
-
-### 驗證
-- `npm run validate` PASS（含 `Workflow routing policy validation PASSED`）
-
-## 補充：報表單一路徑收斂（同日）
-
-### 已完成
-- 修正根因：同一組腳本從 `D:\Work\scripts` 入口執行時，root resolve 可能指向 `D:\Work`，導致報表寫到 `Work/reports`。
-- 腳本防呆已加到以下檔案（monorepo guardrail）：
-  - `scripts/system-health-check.ps1`
-  - `scripts/doc-sync-automation.ps1`
-  - `scripts/system-guard.ps1`
-  - `scripts/generate-integrated-status-report.ps1`
-  - `scripts/archive-old-reports.ps1`
-- Git 路徑治理：
-  - `.gitignore` 新增 root `reports/*` 產物忽略規則。
-  - 移除 root `reports` 的歷史產物（closeout/health/status timestamp），避免主線污染。
-- 文件同步：
-  - `reports/status/README.md`：標註 root `reports/` 已退役，只作相容。
-  - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`：將 `Work/reports/status` 標記為退役路徑。
-
-### 驗證
-- 後續以 repo 根腳本入口執行時，報表預期只會寫入 `agency-os/reports/*`。
-
-## AO-CLOSE（2026-03-28 收工）
-
-### 收工前狀態
-- 報表單一路徑收斂已 commit（`5128e7d`，含腳本 monorepo guardrail、`.gitignore`、root `reports` 退役、文件連動）。
-- 下一步：執行 `D:\Work\scripts\ao-close.ps1` 跑完整閘道、`LAST_SYSTEM_STATUS.md`、`integrated-status-LATEST.md`，並 `git push origin main`。
-
-### 收工後補記
-- `verify-build-gates`：**PASS**（lobster `bootstrap-validate` + agency `system-health-check`）
-- `system-guard -Mode manual`：**PASS**
-- `system-health-check`：**100%（269/269）**；報告 `agency-os/reports/health/health-20260328-012900.md`
-- Guard：`agency-os/reports/guard/guard-20260328-012904.md`
-- 綜合狀態：`agency-os/reports/status/integrated-status-LATEST.md`（同次產生 `integrated-status-20260328-012912.md`）
-- `LAST_SYSTEM_STATUS.md`：`agency-os/LAST_SYSTEM_STATUS.md`
-- **Git**：`chore: AO-CLOSE sync 2026-03-28 0129` → `e31966c`；已 `push origin main`（含先前 `5128e7d` 報表收斂與本機進度檔更新）
-
-## 補充：Git `commit`／`push` 政策（同日後續）
-- **約定**：平常進行中代理**不**主動 `git commit`／`git push`；**預設**僅 **`AO-CLOSE`**（`ao-close.ps1`）統一做；**例外**：使用者明確一句話要求立即提交／推送。
-- **落盤**：`AGENTS.md`（§Git 推送節奏）、repo 根與 `agency-os/.cursor/rules/50-operator-autopilot.mdc` §7；本次依使用者要求**未**再 push（待下次 AO-CLOSE 一併提交）。
-
-## 補充：Lobster Factory 營運套裝 wiring（同日後續）
-
-### 已完成
-- `lobster-factory/package.json`：`payload:apply-manifest`、`operator:sanity`。
-- `scripts/bootstrap-validate.mjs`、`scripts/validate-workflows-integrations-baseline.mjs`：納入 `print-apply-manifest-payload.mjs` 與 `LOBSTER_FACTORY_OPERATOR_RUNBOOK.md`。
-- `README.md`、`STAGING_PIPELINE_E2E_PAYLOAD.md`、`LOBSTER_FACTORY_MASTER_CHECKLIST.md`、`agency-os/TASKS.md`、`agency-os/WORKLOG.md` 已連動。
-
-### 驗證
-- `npm run validate`（`lobster-factory`）PASS。
-
-## 補充：http_json hosting 適配器（同日後續）
-
-### 已完成
-- `http_json` 模式、async `resolveStagingProvisioning`、`httpJsonStagingAdapter.ts`、合約文件與 checklist／runbook／閘道連動。
-
-### 互動
-- 使用者偏好：可驗證範圍內代理自主推進、減少選項式追問。
-
-### 驗證
-- `npm run validate` PASS。
-
-## 補充：A9 remote_put artifacts（同日後續）
-
-### 已完成
-- presigned PUT 路徑、合約文件、閘道與 README／runbook／E2E 連動。
-
-### 驗證
-- `npm run validate` PASS。
-
-## 補充：Monorepo 總覽 + 儀表板（同日）
-
-### 已完成
-- 根 `README.md`、`EXECUTION_DASHBOARD` 更新、龍蝦 checklist／README、AO `README`／`AGENTS`；`verify-build-gates` + `doc-sync-automation` PASS。
-
-### 驗證
-- `health-20260328-192715.md` 100%；`closeout-20260328-192729.md`。
-
-## 補充：A10-1 operable E2E + A9 lifecycle policy（同日）
-
-### 已完成
-- `OPERABLE_E2E_PLAYBOOK.md`、`validate-operable-e2e-skeleton.mjs`、`ARTIFACTS_LIFECYCLE_POLICY.md`；checklist A10-1／A10-2、A9 敘述更新。
-
-### 驗證
-- `npm run validate`（lobster-factory）PASS。
-
-## 補充：A10-2 前置 SOP Step 7 + presign（同日）
-
-### 已完成
-- `NEW_TENANT_ONBOARDING_SOP` Step 7、`PRESIGN_BROKER_MINIMAL`、presign example JSON；operable gate 驗 SOP 橋接。
-
-
-_... 11 lines omitted._
+## AO-CLOSE
+- 見本輪 `WORKLOG` 與 `reports/*` 產出（腳本跑完後補登 commit hash）。
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-03-28 20:18:01`
+- Time: `2026-03-30 02:49:05`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
@@ -361,30 +229,30 @@ _... 11 lines omitted._
 - Result: **PASS**
 
 ## Latest Reports
-- Health: `reports/health/health-20260328-201801.md`
-- Closeout: `reports/closeout/closeout-20260328-201758.md`
+- Health: `reports/health/health-20260330-024905.md`
+- Closeout: `reports/closeout/closeout-20260330-024902.md`
 
 ## Action
 - No blocking issue detected.
 
 ## 7) WORKLOG.md tail (~60 lines)
-- **AO-CLOSE 產出（agency-os/reports/）**：`health/health-20260326-084302.md`、`guard/guard-20260326-084306.md`、`closeout/closeout-20260326-084303.md`、`status/integrated-status-20260326-084315.md`；**Git**：主提交 `f726ce9`，補登 daily `70114fc`，TASKS 勾選 `5a7841b`（均已 `push origin main`）。
-
-### Lobster Factory - C1-1 execute 驗證成功
-- Supabase `EdD Art-based` 已完成 `0001_core.sql` ~ `0006_seed_catalog.sql` 套用。
-- `validate-workflow-runs-write.mjs --execute=1` 實跑成功，回傳：`ok: true`、`insertedId: 1e53ec18-1c01-4547-9593-20feee6bdc2c`。
-- 已將 `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md` 的 `C1-1` 由未完成改為完成。
-
-### Enterprise 工具層（C5）落地決策與授權驗收
-- 已安裝與可用：`Cloudflare`、`Sentry`、`PostHog`、`Slack`、`Clerk`（`Supabase` plugin OAuth 仍有 `Unrecognized client_id`，暫用既有 `mcp.json` 連線）。
-- C5 選型定稿：`Identity = Clerk`；`Secrets` 先採 `env/mcp`（`1Password` 因付費方案先不阻塞）。
-- 使用順序定稿：`Clerk + Cloudflare`（先安全）-> `Sentry + PostHog`（可觀測）-> `Slack`（通知）-> `Supabase plugin` 待 OAuth 修復切回官方授權流。
 
 ### Operator Autopilot（Phase 1）完成
 - 新增規則：`.cursor/rules/50-operator-autopilot.mdc`（含 `agency-os/.cursor/rules` 同步副本）。
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
+
+
+
+
+
+
+
+
+
+
 
 
 

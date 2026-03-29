@@ -1,20 +1,10 @@
 ﻿{
-    "last_run_utc":  "2026-03-28T12:17:58.7377409Z",
+    "last_run_utc":  "2026-03-29T18:49:02.8802029Z",
     "changed_files":  [
-                          "memory/CONVERSATION_MEMORY.md",
-                          "memory/daily/2026-03-28.md",
-                          "TASKS.md",
-                          "WORKLOG.md"
+                          "docs/overview/PROGRAM_TIMELINE.md"
                       ],
-    "impacted_files":  [
-                           "memory/CONVERSATION_MEMORY.md",
-                           "memory/daily/2026-03-28.md",
-                           "TASKS.md",
-                           "WORKLOG.md"
-                       ],
-    "auto_updated_files":  [
-                               "memory/CONVERSATION_MEMORY.md",
-                               "TASKS.md",
-                               "WORKLOG.md"
-                           ]
+    "impacted_files":  "docs/overview/PROGRAM_TIMELINE.md",
+    "auto_updated_files":  {
+
+                           }
 }

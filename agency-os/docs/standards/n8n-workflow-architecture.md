@@ -17,8 +17,11 @@
 - 工具與環境變數規範維護於 `docs/operations/tools-and-integrations.md`。
 
 ## Related Documents (Auto-Synced)
+- `docs/operations/airtable-to-supabase-migration-playbook.md`
+- `docs/operations/linear-repo-sync-playbook.md`
 - `docs/operations/tools-and-integrations.md`
 - `README.md`
+- `scripts/sync-linear-delta-to-daily.ps1`
 
-_Last synced: 2026-03-20 04:57:16 UTC_
+_Last synced: 2026-03-29 18:43:48 UTC_
 

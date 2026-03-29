@@ -10,6 +10,7 @@
 - [x] 建立 `lobster-factory` Phase 1 底座骨架（Supabase migrations + wc-core manifest + workflow 安全骨架）
 
 ## Next
+- [ ] **（2026-03-31 提醒）** 整理 `docs/spec/raw/` **四份原文**內容（`LOBSTER_FACTORY_MASTER_V3.md`、`LOBSTER_FACTORY_MASTER_SPEC_V1.md`、`ENTERPRISE_BASE_STACK.md`、`CURSOR_PACK_V1.md`）：目錄／摘要／與 [`docs/overview/company-os-four-sources-integration.md`](docs/overview/company-os-four-sources-integration.md) 對齊；避免與 `agency-os`／`lobster-factory` 已落地文件重複維護兩套敘述。
 - [x] 定義 WordPress 客製系統開發準則（plugin/mu-plugin/資料表策略）
 - [x] 建立 n8n 工作流分層（共用流程 vs 客戶專屬流程）
 - [x] 建立 KPI + 毛利雙儀表板（規格）
@@ -61,6 +62,7 @@
 - [x] `lobster-factory` C1-3 execute 驗證（DB 寫入韌性：retry/compensation/trace）
 - [x] 建立零成本本機 Secrets Vault（Windows DPAPI，`scripts/secrets-vault.ps1`）
 - [x] 完成 Secrets Vault 一鍵匯入（`mcp.json` + Lobster/Slack 關鍵值）
+- [x] `PROGRAM_SCHEDULE.json` → Linear：`push-program-schedule-to-linear.ps1` + playbook §3（單向；稽核仍靠 `sync-linear-delta-to-daily`）
 
 ## Backlog
 - [x] 客戶分級與風險評分模型
@@ -85,5 +87,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-28 12:17:58 UTC_
+_Last synced: 2026-03-29 18:43:48 UTC_
 

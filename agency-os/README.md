@@ -2,7 +2,8 @@
 
 這是一套給多客戶網站建置、客製系統、維運與行銷整合的營運框架。
 
-與 **Lobster Factory** 同庫時，monorepo 總覽見上層 [`../README.md`](../README.md)（含 `verify-build-gates`、龍蝦 README 入口）。
+與 **Lobster Factory** 同庫時，monorepo 總覽見上層 [`../README.md`](../README.md)（含 `verify-build-gates`、龍蝦 README 入口）。  
+**整體公司 OS**：四份規格原文在上層 [`../docs/spec/README.md`](../docs/spec/README.md)；**四份怎麼整合、先讀誰** 見本目錄 [`docs/overview/company-os-four-sources-integration.md`](docs/overview/company-os-four-sources-integration.md)；**V3 §三 跳行表** 見 [`docs/overview/company-os-twenty-modules.md`](docs/overview/company-os-twenty-modules.md)。
 
 ## 目標
 - 同時管理多家公司、多網站，不失控
@@ -23,11 +24,14 @@
 - `docs/operations/security-secrets-policy.md`: 憑證與密鑰管理政策
 - `docs/operations/local-secrets-vault-dpapi.md`: 本機免費祕密庫（Windows DPAPI）
 - `docs/operations/mcp-add-server-quickstart.md`: MCP 新增快速手冊（常用）
+- **`docs/operations/cursor-mcp-and-plugin-inventory.md`**: Cursor **MCP／外掛** 與龍蝦 Routing 對照（**建議與根目錄 `mcp.json` 同步維護**）
+- **`docs/operations/airtable-to-supabase-migration-playbook.md`**: **Airtable 停用後**功能如何落到 **Supabase**（建模、RLS、匯入、n8n 改接）
 - `docs/operations/tools-and-integrations.md`: 整合工具與環境變數規範
 
 ## Docs 分類入口
 - `docs/README.md`: 文件分層總索引
 - `docs/overview/agency-os-complete-system-introduction.md`: 完整系統介紹（總司令/客戶/團隊導讀）
+- **`docs/overview/company-os-twenty-modules.md`**: **Company OS 20 模組**一頁導覽（連到 `docs/spec/raw` 原文 §三；非程式功能，僅文件索引）
 - `docs/CHANGE_IMPACT_MATRIX.md`: 變更連動矩陣（改一份時要同步哪些）
 - `docs/architecture/agency-command-center-v1.md`: 總控中心完整架構
 - `docs/architecture/multi-platform-delivery-architecture.md`: WordPress-first 多平台架構
@@ -140,6 +144,7 @@
 - `docs/international/multi-currency-commercial-policy.md`
 - `docs/metrics/kpi-margin-dashboard-spec.md`
 - `docs/operations/client-risk-scoring-model.md`
+- `docs/operations/cursor-mcp-and-plugin-inventory.md`
 - `docs/operations/end-to-end-linkage-checklist.md`
 - `docs/operations/outsourcing-vendor-scorecard.md`
 - `docs/operations/system-guard-and-notification.md`
@@ -160,5 +165,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-03-28 11:56:51 UTC_
+_Last synced: 2026-03-29 18:43:48 UTC_
 

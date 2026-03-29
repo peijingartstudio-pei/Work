@@ -1,9 +1,11 @@
-# Conversation Memory
+﻿# Conversation Memory
 
 ## Current Operating Context
 - 你正在建立多客戶網站與系統代營運模式
-- 核心平台：WordPress、Supabase、GitHub、n8n、Replicate、DataForSEO
+- 核心平台：WordPress、Supabase、GitHub、**Linear（Cursor 外掛）**、n8n、Replicate、DataForSEO；**Airtable 已淘汰**（2026-03-30），同類資料改 **Supabase**
+- **Linear 與 repo**：AO-RESUME／收工仍以 `TASKS.md`、`WORKLOG`、龍蝦 Checklist、Discovery 為準；僅在 Linear 改狀態時，收工前鏡像到 `WORKLOG` 或 `TASKS`（附 issue key）。詳 `AGENTS.md`「Linear」。
 - 服務線：建置、維運、行銷、自動化、WordPress 客製系統
+- **2026-03-31（明日）**：使用者收工時要求提醒——**整理** `docs/spec/raw/` **四份原文**（V3／SPEC_V1／ENTERPRISE_BASE_STACK／CURSOR_PACK_V1）；入口 **`company-os-four-sources-integration.md`**；未勾項在 **`TASKS.md` → Next 第一列**。
 
 ## Confirmed Priorities
 1. 先建完整可複製框架，不做精簡版
@@ -246,6 +248,9 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 ## Today (2026-03-29) - 續接驗證
 - 使用者「好」＝執行：`git pull`（up to date）、`verify-build-gates` PASS、health **100%**（`health-20260329-221913.md`）、`npm run operator:sanity` PASS。
 
+## Today (2026-03-29) - PROGRAM_SCHEDULE ↔ Linear（同步＝單向推送 v1）
+- 需求：讓 **`PROGRAM_SCHEDULE.json`** 與 **Linear 看板**對齊；實作 **`push-program-schedule-to-linear.ps1`**（create/update + `reports/linear/linear-schedule-map.json`）；**不**自動把 Linear 寫回 JSON（衝突風險）。稽核鏈仍為 **`sync-linear-delta-to-daily`** → `memory/daily`。Playbook **`linear-repo-sync-playbook.md`** §3 已寫入操作與 env；**DryRun 31/31** 驗證通過。
+
 ## Today (2026-03-28) - AO-CLOSE（晚）
 - **AO-CLOSE** 完成：`verify-build-gates` PASS、health **100%**、`system-guard` PASS、integrated-status 已產出；**Git** `e04be6f` 已 **push `main`**。
 
@@ -261,6 +266,12 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 ## Today (2026-03-28) - Lobster A9 remote_put artifacts
 - `LOBSTER_ARTIFACTS_MODE=remote_put` + `REMOTE_PUT_ARTIFACTS.md`；presign URL 或 inline JSON；`apply-manifest` 寫 `logs_ref` 行為與 local 一致。
 
+## Today（補登）- 規格原文目錄 `docs/spec/raw`
+- 使用者出示 **檔案總管**：`D:\Work\docs\spec\raw\` 內四份 **.md** 為設計**原文**（含 **`LOBSTER_FACTORY_MASTER_V3`** 內 Agency OS **20 個 OS 模組** 圖，即跨國企業級職能拆分來源）。已在 monorepo 根新增 **`docs/spec/README.md`** 索引，並在根 **`README.md`**、**`agency-os/README.md`** 加上導覽；說明其與 **`MCP_TOOL_ROUTING_SPEC`**（少列＝執行閘道）為不同層級。
+
+## Today (2026-03-30) - cursor-mcp inventory：純 Supabase／SoR 敘述
+- `docs/operations/cursor-mcp-and-plugin-inventory.md`：使用者要求 **本檔不出現任何第三方表格式工具名稱**；已刪除該列與所有相關段落／SSOT／Related 連結。**supabase** 兩欄改為**自足**寫法：平台 SoR、RLS／Storage／Webhook、MCP 與 `read_only` 邊界、以及對 [`MCP_TOOL_ROUTING_SPEC`](../../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md) 中 Trigger／n8n 分工的對齊。**`change-impact-map`** 已取消本檔 ↔ migration playbook 的強制連動（health 仍 100%）。
+
 ## Today (2026-03-28) - Lobster `http_json` hosting
 - `LOBSTER_HOSTING_ADAPTER=http_json` + `HTTP_JSON_HOSTING_ADAPTER.md`；`provisionHttpJsonStaging`；`create-wp-site` 支援 `vendor_staging_provisioned` 與 `vendorStaging`；`resolveStagingProvisioning` 為 async。
 - **互動偏好**：可驗證範圍內代理自主推進、減少選項式追問；不可逆決策仍單點確認。
@@ -272,5 +283,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-28 12:17:58 UTC_
+_Last synced: 2026-03-29 18:43:48 UTC_
 

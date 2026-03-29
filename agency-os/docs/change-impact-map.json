@@ -18,11 +18,15 @@
     "scripts/doc-sync-automation.ps1",
     "scripts/weekly-system-review.ps1",
     "scripts/generate-integrated-status-report.ps1",
+    "scripts/render-program-timeline-from-schedule.ps1",
+    "docs/overview/PROGRAM_SCHEDULE.json",
     "automation/REGISTER_WEEKLY_SYSTEM_REVIEW_TASK.ps1",
     "docs/operations/finance-operations.md",
     "docs/operations/scope-change-policy.md",
     "docs/operations/security-secrets-policy.md",
-    "docs/operations/tools-and-integrations.md"
+    "docs/operations/tools-and-integrations.md",
+    "docs/operations/cursor-mcp-and-plugin-inventory.md",
+    "docs/operations/airtable-to-supabase-migration-playbook.md"
   ],
   "rules": [
     {
@@ -213,6 +217,8 @@
       "source": "docs/standards/n8n-workflow-architecture.md",
       "targets": [
         "docs/operations/tools-and-integrations.md",
+    "docs/operations/linear-repo-sync-playbook.md",
+    "scripts/sync-linear-delta-to-daily.ps1",
         "README.md"
       ]
     },
@@ -342,6 +348,23 @@
         "scripts/doc-sync-automation.ps1",
         "scripts/system-health-check.ps1",
         "scripts/system-guard.ps1"
+      ]
+    },
+    {
+      "source": "docs/operations/cursor-mcp-and-plugin-inventory.md",
+      "targets": [
+        "docs/operations/tools-and-integrations.md",
+        "AGENTS.md",
+        "README.md",
+        "../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md"
+      ]
+    },
+    {
+      "source": "docs/operations/airtable-to-supabase-migration-playbook.md",
+      "targets": [
+        "docs/operations/tools-and-integrations.md",
+        "WORKLOG.md",
+        "docs/standards/n8n-workflow-architecture.md"
       ]
     }
   ]

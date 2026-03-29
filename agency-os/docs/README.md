@@ -15,7 +15,7 @@
 - `docs/compliance/`：合規檢核與稽核清單
 - `docs/releases/`：版本發布、升級路徑、遷移清單
 - `docs/architecture/`：總控中心與多平台架構設計
-- `docs/overview/`：整體系統介紹與導讀文件
+- `docs/overview/`：整體系統介紹與導讀（含 **四份 spec 原文整合閱讀**：[`docs/overview/company-os-four-sources-integration.md`](overview/company-os-four-sources-integration.md)；**V3 §三 20 模組跳行表**：[`docs/overview/company-os-twenty-modules.md`](overview/company-os-twenty-modules.md)）
 - `docs/CHANGE_IMPACT_MATRIX.md`：文件連動關係
 
 ## 使用規則
@@ -26,5 +26,5 @@
 ## Related Documents (Auto-Synced)
 - `docs/overview/agency-os-complete-system-introduction.md`
 
-_Last synced: 2026-03-20 04:57:16 UTC_
+_Last synced: 2026-03-29 18:43:48 UTC_
 

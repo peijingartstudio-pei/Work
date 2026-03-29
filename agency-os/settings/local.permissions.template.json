@@ -9,7 +9,7 @@
       "Bash(*rm -rf*:* )"
     ],
     "ask": [
-      "Bash(curl *api.airtable.com*)",
+      "Bash(curl *supabase.co*)",
       "Bash(curl *api.github.com*)",
       "Bash(curl *api.dataforseo.com*)",
       "Bash(curl *n8n*api*)"

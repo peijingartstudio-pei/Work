@@ -256,3 +256,36 @@ Set-Content -LiteralPath $latestFile -Value $text -Encoding UTF8
 
 Write-Output ("Integrated status report: reports/status/" + [System.IO.Path]::GetFileName($outFile))
 Write-Output ("Also written to: reports/status/integrated-status-LATEST.md")
+
+$renderTimeline = Join-Path $root "scripts\render-program-timeline-from-schedule.ps1"
+if (Test-Path -LiteralPath $renderTimeline) {
+    Write-Host "== generate-integrated-status-report: render PROGRAM_TIMELINE from PROGRAM_SCHEDULE.json ==" -ForegroundColor Cyan
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $renderTimeline -WorkspaceRoot $root
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "generate-integrated-status-report: render-program-timeline-from-schedule failed (exit $LASTEXITCODE)"
+        exit $LASTEXITCODE
+    }
+}
+
+$linearKeyPresent = -not [string]::IsNullOrWhiteSpace($env:LINEAR_API_KEY)
+
+# PROGRAM_SCHEDULE.json -> Linear issues (same conditions as delta sync). Does not block closeout on API errors.
+$schedulePush = Join-Path $root "scripts\push-program-schedule-to-linear.ps1"
+if ((Test-Path -LiteralPath $schedulePush) -and $linearKeyPresent) {
+    $skipPush = $env:AO_SYNC_SCHEDULE_TO_LINEAR
+    if (-not [string]::IsNullOrWhiteSpace($skipPush) -and ($skipPush.Trim() -eq "0" -or $skipPush.Trim() -ieq "false")) {
+        Write-Host "== generate-integrated-status-report: PROGRAM_SCHEDULE -> Linear skipped (AO_SYNC_SCHEDULE_TO_LINEAR=0) ==" -ForegroundColor Yellow
+    } else {
+        Write-Host "== generate-integrated-status-report: PROGRAM_SCHEDULE.json -> Linear (issue create/update) ==" -ForegroundColor Cyan
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $schedulePush -WorkspaceRoot $root
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warning ("generate-integrated-status-report: push-program-schedule-to-linear exited " + $LASTEXITCODE + " (Linear may be incomplete; integrated report and AO-CLOSE continue).")
+        }
+    }
+}
+
+$linearSync = Join-Path $root "scripts\sync-linear-delta-to-daily.ps1"
+if ((Test-Path -LiteralPath $linearSync) -and $linearKeyPresent) {
+    Write-Host "== generate-integrated-status-report: Linear delta -> memory/daily (optional) ==" -ForegroundColor Cyan
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $linearSync -WorkspaceRoot $root
+}

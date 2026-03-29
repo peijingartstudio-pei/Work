@@ -140,9 +140,9 @@ node D:\Work\lobster-factory\scripts\validate-operable-e2e-skeleton.mjs
 
 ## F) 本次重讀結論（2026-03-25）
 - 已重讀：
-  - `docs/spec/raw/Lobster Factory Master Spec v1 .md`
-  - `docs/spec/raw/接貼給 Cursor 用的「Cursor Pack v1」.md`
-  - `docs/spec/raw/「再加 AI」，而是把你現在這套補成 企業級底座。.md`
+  - `docs/spec/raw/LOBSTER_FACTORY_MASTER_SPEC_V1.md`
+  - `docs/spec/raw/CURSOR_PACK_V1.md`
+  - `docs/spec/raw/ENTERPRISE_BASE_STACK.md`
 - 已確認現況缺口（repo 尚未存在）：
   - （已完成）C4-1~C4-5 raw spec 差距第一輪補齊
 

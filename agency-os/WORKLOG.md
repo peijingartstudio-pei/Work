@@ -1,4 +1,4 @@
-# Worklog
+﻿# Worklog
 
 ## 2026-02-27
 
@@ -74,11 +74,12 @@
 - `.cursor/rules/30-resume-keyword.mdc`
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/metrics/kpi-margin-dashboard-spec.md`
+- `docs/operations/airtable-to-supabase-migration-playbook.md`
 - `docs/operations/system-operation-sop.md`
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-28 12:17:58 UTC_
+_Last synced: 2026-03-29 18:43:48 UTC_
 
 ## 2026-03-20
 
@@ -417,7 +418,40 @@ _Last synced: 2026-03-28 12:17:58 UTC_
 - **連動檢查**：`verify-build-gates` **PASS**；`system-health-check` **100%（269/269）**（`reports/health/health-20260328-201757.md`）；`system-guard` **PASS**（`reports/guard/guard-20260328-201801.md`）；綜合狀態 `reports/status/integrated-status-20260328-201809.md` 與 `integrated-status-LATEST.md`；`LAST_SYSTEM_STATUS.md` 已刷新。
 - **Git**：`chore: AO-CLOSE sync 2026-03-28 2018` → **`e04be6f`**；已 **`push origin main`**。
 
+## 2026-03-30
+
+### AO-CLOSE（晚）
+- 收工前更新：`TASKS.md`（明日 **四份 spec 原文整理** 提醒項）、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-30.md`。
+- 執行：`powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`（`verify-build-gates` → `system-guard` → `generate-integrated-status-report` → 通過則 commit + `git push`）。
+- 連動與 Git：見當輪 `reports/health/*.md`、`reports/guard/*.md`、`reports/status/integrated-status-LATEST.md` 與本節補登之 commit。
+
+### Company OS 四份原文與導覽（同日）
+- 新增 **`docs/overview/company-os-four-sources-integration.md`**（四檔分工、閱讀順序、與 AO／龍蝦關係）；**`company-os-twenty-modules.md`** 改為 §三跳表並指向整合頁。
+- **`docs/spec/raw`**：`ENTERPRISE_BASE_STACK.md`、`CURSOR_PACK_V1.md` 命名；根 **`Work-Monorepo.code-workspace`**；`docs/spec/README.md`、根／AO `README` 連動。
+- **明日排程**：使用者要求順便提醒——**整理四份原文**（已寫入 `TASKS.md` unchecked + 本日 `memory/daily`）。
+
+### Airtable 淘汰 → Supabase
+- 決策：**不再使用 Airtable**／其 MCP；**同一類功能**（表格式營運資料、清單、視圖／自動化）**預設承接至 Supabase**（+ RLS、Storage、Webhook／**n8n**／必要時 **Trigger**）。**拔除 MCP ≠ 已完成資料遷移**。
+- 已從 repo 根 **`mcp.json`**、**`.claude.json`** 移除 **airtable** 伺服器條目；並新增 **`docs/operations/airtable-to-supabase-migration-playbook.md`**（能力對照、執行順序、盤點模板）。
+- 同步更新：`cursor-mcp-and-plugin-inventory.md`、`tools-and-integrations.md`、`mcp-secrets-hardening-runbook.md`、`settings/local.permissions.template.json`。
+- **待辦（本機）**：Cursor 若仍有 **airtable** MCP 請手動刪除；**revoke** 舊 **Airtable PAT**；依 playbook **§5** 填 base／表／n8n 依賴後再開 **Supabase migration**。
+
+### cursor-mcp-and-plugin-inventory：Supabase 自足敘述、零他牌表格式工具字樣
+- `docs/operations/cursor-mcp-and-plugin-inventory.md`：移除一切該類工具名稱與「墓碑」列；**supabase** 單列擴寫 **SoR／RLS／Storage／Webhook、MCP vs 生產寫入、`read_only` 意義**，Routing 對齊 **Trigger** 與 **`crm_sync`／`webhook_ingress`／`notifications`**。§6 SSOT 與 Related 剔除該 migration 檔連結。**`docs/change-impact-map.json`**：inventory 與 **`airtable-to-supabase-migration-playbook`** 不再互為 map target。
+- 驗證：`doc-sync-automation -AutoDetect` → `reports/closeout/closeout-20260330-015915.md`；`system-health-check` **100%（284/284）** → `reports/health/health-20260330-015922.md`。
+
 ## 2026-03-29
+
+### Linear（Cursor 外掛）納入治理
+- **`AGENTS.md`**：新增「Linear」— 定位為議題／sprint 視圖；**不取代** `TASKS`／`WORKLOG`／Checklist／AO-RESUME 拼裝；收工前鏡像 + issue key、憑證不入庫。
+- **`EXECUTION_DASHBOARD.md`** §0、`docs/operations/tools-and-integrations.md`：連動說明。
+- **企業預設同步（模式 A）**：新增 **`docs/operations/linear-repo-sync-playbook.md`**、`scripts/sync-linear-delta-to-daily.ps1`；當 **`LINEAR_API_KEY`** 存在時，`generate-integrated-status-report`／**AO-CLOSE** 會把 Linear 更新摘要 **append** 至 **`memory/daily`**（API 失敗不阻斷收工）。
+
+### 排程單一來源 + AO-CLOSE 聯動甘特
+- **`docs/overview/PROGRAM_SCHEDULE.json`**：三流（AO／LF／PJ）任務與日期；可複製到客戶專案或 `project-kit` 範本。
+- **`scripts/render-program-timeline-from-schedule.ps1`**：UTF-8 JSON → `PROGRAM_TIMELINE.md` 標記區（表 + Mermaid）；腳本本體 **ASCII-only** 以相容 PS 5.1。
+- **`generate-integrated-status-report.ps1`** 末尾**單次**呼叫渲染；**AO-CLOSE** 路徑因此每次收工會重渲時間軸（仍以 TASKS／Checklist／Discovery 為完成真相）。
+- **`scripts/push-program-schedule-to-linear.ps1`**（根目錄 **`D:\Work\scripts`** 亦有相容副本）：**模式 B** 將 JSON 排程 **單向推送** 至 Linear issues；對應表 `reports/linear/linear-schedule-map.json`；`-DryRun` 演練 **31/31** 通過（2026-03-29）。詳 **`docs/operations/linear-repo-sync-playbook.md`** §3。
 
 ### 續接驗證（使用者授權「進行」）
 - `git pull origin main`：**Already up to date**。
@@ -449,6 +483,17 @@ _Last synced: 2026-03-28 12:17:58 UTC_
 - 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
 - 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
 - Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2,12 +2,15 @@
 
 本儲存庫收斂兩條主線：**Agency OS**（治理、客戶與營運 SOP、健康檢查）與 **Lobster Factory**（WordPress 工廠、Supabase、Trigger 工作流程、結構閘道）。
 
+建議用 Cursor／VS Code 開啟 **`Work-Monorepo.code-workspace`**（或直接用 **`D:\Work`** 當工作區根目錄），相對連結才能穩定開啟 `docs/spec/raw/` 內原文。
+
 ## 目錄
 
 | 路徑 | 用途 |
 |------|------|
 | [`agency-os/`](agency-os/) | 任務板、文件、排程、`system-health-check` / `system-guard`、租戶模板 |
 | [`lobster-factory/`](lobster-factory/) | migrations、manifests、`create-wp-site` / `apply-manifest`、`npm run validate` |
+| [`docs/spec/`](docs/spec/) | **規格原文**（長篇藍圖）：含 **20 個 Agency OS 模組**、`Master Spec v1`、企業級底座與 Cursor Pack——見 [`docs/spec/README.md`](docs/spec/README.md) |
 | [`scripts/`](scripts/) | 跨專案腳本：`verify-build-gates.ps1`、`ao-close.ps1` 等 |
 
 ## 本機一次驗兩邊（推薦）
@@ -28,6 +31,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 
 - **龍蝦工廠**：[`lobster-factory/README.md`](lobster-factory/README.md)、[`lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`](lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md)、[`lobster-factory/docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md`](lobster-factory/docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md)、[`lobster-factory/docs/e2e/OPERABLE_E2E_PLAYBOOK.md`](lobster-factory/docs/e2e/OPERABLE_E2E_PLAYBOOK.md)（A10-1 營運劇本）
 - **AO 系統**：[`agency-os/AGENTS.md`](agency-os/AGENTS.md)、[`agency-os/TASKS.md`](agency-os/TASKS.md)、[`agency-os/docs/overview/EXECUTION_DASHBOARD.md`](agency-os/docs/overview/EXECUTION_DASHBOARD.md)
+- **規格原文（長篇藍圖）**：[`docs/spec/README.md`](docs/spec/README.md)；**四份怎麼整合**：[agency-os/docs/overview/company-os-four-sources-integration.md](agency-os/docs/overview/company-os-four-sources-integration.md)
 
 ## 收工與同步
 
