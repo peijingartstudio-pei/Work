@@ -26,7 +26,7 @@
 
 | 檔案 | 說明 |
 |---|---|
-| `00-CORE.md` | 原始核心草案（長輸出模板已收斂至「大型任務再啟用」，見 `63`） |
+| `00-CORE.md` | **完整版 SSOT**（探索／商業思維／PROTOCOL／十一段模板）；執行時與 **`63`** 精簡條搭配 — **衝突以 AO／`AGENTS`／`00`/`30`/`40` 為準** |
 | `01-arch-and-tools.mdc` | 已融入 `64` |
 | `02-build-standards.mdc` | 已融入 `65`（並加上 monorepo 適用範圍） |
 | `03-skills-and-observability.mdc` | 已融入 `66` |
@@ -46,5 +46,5 @@
 - `.cursor/rules/66-skills-observability-protocol.mdc`
 - `docs/operations/cursor-enterprise-rules-index.md`
 
-_Last synced: 2026-03-30 05:38:33 UTC_
+_Last synced: 2026-03-30 05:51:32 UTC_
 

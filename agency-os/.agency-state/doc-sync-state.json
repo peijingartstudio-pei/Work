@@ -1,21 +1,9 @@
 ﻿{
-    "last_run_utc":  "2026-03-30T05:38:34.0682436Z",
+    "last_run_utc":  "2026-03-30T05:51:32.8838994Z",
     "changed_files":  [
                           "../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md",
-                          "../README.md",
-                          ".cursor/rules/README.md",
-                          "AGENTS.md",
-                          "docs/CHANGE_IMPACT_MATRIX.md",
-                          "docs/operations/cursor-enterprise-rules-index.md",
-                          "docs/operations/cursor-mcp-and-plugin-inventory.md",
-                          "docs/operations/end-to-end-linkage-checklist.md",
-                          "docs/operations/new-doc-linkage-checklist.md",
-                          "docs/operations/security-secrets-policy.md",
-                          "docs/operations/tools-and-integrations.md",
-                          "docs/README.md",
-                          "README.md",
-                          "scripts/doc-sync-automation.ps1",
-                          "scripts/system-health-check.ps1"
+                          ".cursor/rules/63-cursor-core-identity-risk.mdc",
+                          "docs/operations/cursor-enterprise-rules-index.md"
                       ],
     "impacted_files":  [
                            "../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md",
@@ -25,24 +13,14 @@
                            ".cursor/rules/64-architecture-mcp-routing.mdc",
                            ".cursor/rules/65-build-standards-data-state.mdc",
                            ".cursor/rules/66-skills-observability-protocol.mdc",
-                           ".cursor/rules/README.md",
                            "AGENTS.md",
                            "docs/CHANGE_IMPACT_MATRIX.md",
                            "docs/change-impact-map.json",
                            "docs/operations/cursor-enterprise-rules-index.md",
                            "docs/operations/cursor-mcp-and-plugin-inventory.md",
-                           "docs/operations/end-to-end-linkage-checklist.md",
                            "docs/operations/new-doc-linkage-checklist.md",
                            "docs/operations/security-secrets-policy.md",
-                           "docs/operations/tools-and-integrations.md",
-                           "docs/overview/EXECUTION_DASHBOARD.md",
-                           "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                           "docs/README.md",
-                           "README.md",
-                           "scripts/doc-sync-automation.ps1",
-                           "scripts/register-new-governance-doc.ps1",
-                           "scripts/system-guard.ps1",
-                           "scripts/system-health-check.ps1"
+                           "docs/README.md"
                        ],
     "auto_updated_files":  [
                                "../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md",
@@ -52,13 +30,8 @@
                                "docs/CHANGE_IMPACT_MATRIX.md",
                                "docs/operations/cursor-enterprise-rules-index.md",
                                "docs/operations/cursor-mcp-and-plugin-inventory.md",
-                               "docs/operations/end-to-end-linkage-checklist.md",
                                "docs/operations/new-doc-linkage-checklist.md",
                                "docs/operations/security-secrets-policy.md",
-                               "docs/operations/tools-and-integrations.md",
-                               "docs/overview/EXECUTION_DASHBOARD.md",
-                               "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                               "docs/README.md",
-                               "README.md"
+                               "docs/README.md"
                            ]
 }
