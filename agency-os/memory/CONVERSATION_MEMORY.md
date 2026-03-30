@@ -1,4 +1,4 @@
-﻿# Conversation Memory
+# Conversation Memory
 
 ## Current Operating Context
 - 你正在建立多客戶網站與系統代營運模式
@@ -103,10 +103,11 @@
   - Enterprise 工具層（Sentry/PostHog/Cloudflare/Secrets/Identity）
 
 ## Remaining - 需要接下來做完的事（依序）
-1. 為 `lobster-factory` 接上「只寫 `workflow_runs`」的真寫入流程（預設關閉寫入，需你提供 Supabase 相關 env）
-2. 接上 `package_install_runs` 的狀態更新（pending -> running -> completed/failed -> rolled_back）與 artifacts/logs ref
-3. 把 `apply-manifest` 的 shell 執行器真正串上（仍需維持 `staging-only` + guardrails），並確保 rollback 可用
-4. 接回 `create-wp-site` 的 staging 環境建立流程（需要後續 hosting provider adapter）
+1. ~~為 `lobster-factory` 接上「只寫 `workflow_runs`」的真寫入流程~~（C1-1 已 execute PASS）
+2. ~~接上 `package_install_runs` 的狀態更新~~（主線 C1-2 PASS：`206bd6ee-f5e0-4b6a-810c-bbb9914844f4`；公司桌機複核：`ae8c6e48-fac9-4ac6-8721-d142c831c620`；failed/rolled_back 產品化仍待補）
+3. ~~C1-3 DB 寫入韌性 execute~~（主線已 PASS，見 checklist）
+4. 把 `apply-manifest` 的 shell 執行器真正串上（仍需維持 `staging-only` + guardrails），並確保 rollback 可用
+5. 接回 `create-wp-site` 的 staging 環境建立流程（需要後續 hosting provider adapter）
 
 ## Tomorrow (2026-03-26) - 建議第一優先
 - 先跑一個 end-to-end「乾跑」payload（不寫 DB），確認回傳的 SQL template + row payload 完整且欄位對齊
@@ -165,6 +166,10 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
   - 未完成
   - 風險
   - 下一步
+
+## Today (2026-03-30) - Lobster C1-2
+- `validate-package-install-runs-flow.mjs --execute=1`：PASS（`installRunId=ae8c6e48-fac9-4ac6-8721-d142c831c620`，`workflowRunId=73c91be3-3663-4977-aa9a-4c2b7e24dd97`，flow pending→running→completed）。
+- `bootstrap-validate.mjs`：PASS。主檢查清單 **C1-2** 已勾選。
 
 ## Today (2026-03-26) - AO-CLOSE
 - **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`ao-close.ps1`**（雙路徑同內容）預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`，讓公司機 **`pull` 即完整**；`-SkipPush`／`-SkipVerify` 為選用。
@@ -283,5 +288,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-29 18:43:48 UTC_
+_Last synced: 2026-03-30 01:49:33 UTC_
 

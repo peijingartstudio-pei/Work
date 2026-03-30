@@ -1,7 +1,7 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-03-30 02:49:14
-- agency-os root: `D:\Work\agency-os`
+- Generated: 2026-03-30 09:53:45
+- agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
 >
@@ -23,7 +23,7 @@
 ## 3) Lobster Factory Master Checklist - open items (sections A-C, before section D)
 - [ ] A7. 串接 WordPress 真正 provision/shell execution（仍須 guardrails；**manifest 套用 shell 已具備**，全站自動建站仍待 hosting adapter） - [ ] A9. artifacts／rollback／錯誤回復（**技術 baseline**：rollback + DB `failed` + `local`／`remote_put` + `logs_ref` — 見各 SINK 與 REMOTE_PUT；**政策 baseline**：`docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md`；**仍缺**：雲端生命週期規則／IAM／稽核自動化） - [ ] A10-2. **商業閉環**：新客戶從建立→驗收 + 生產 Trigger 全鏈固定證據（對齊 `agency-os/tenants/NEW_TENANT_ONBOARDING_SOP.md` 實跑） - [ ] C5-1. Observability：Sentry（錯誤追蹤）+ PostHog（產品分析） - [ ] C5-2. Edge/Security：Cloudflare（WAF/CDN/Rate limit） - [ ] C5-3. Secrets：1Password Secrets Automation（或同級） - [ ] C5-4. Identity/Org：Clerk/WorkOS/Auth0（三選一） - [ ] C5-5. Cost/Decision：成本與決策引擎可觀測化（budget/ROI guardrails） - [ ] C5-6. 後續建議：Langfuse / Upstash / Stripe / Object Storage / Search
 
-*Checklist path:* `D:\Work\lobster-factory\docs\LOBSTER_FACTORY_MASTER_CHECKLIST.md`
+*Checklist path:* `C:\Users\USER\Work\lobster-factory\docs\LOBSTER_FACTORY_MASTER_CHECKLIST.md`
 
 ## 4) memory/CONVERSATION_MEMORY.md (excerpts)
 
@@ -75,15 +75,20 @@
   - Enterprise 工具層（Sentry/PostHog/Cloudflare/Secrets/Identity）
 
 ### Remaining - 需要接下來做完的事（依序）
-1. 為 `lobster-factory` 接上「只寫 `workflow_runs`」的真寫入流程（預設關閉寫入，需你提供 Supabase 相關 env）
-2. 接上 `package_install_runs` 的狀態更新（pending -> running -> completed/failed -> rolled_back）與 artifacts/logs ref
-3. 把 `apply-manifest` 的 shell 執行器真正串上（仍需維持 `staging-only` + guardrails），並確保 rollback 可用
-4. 接回 `create-wp-site` 的 staging 環境建立流程（需要後續 hosting provider adapter）
+1. ~~為 `lobster-factory` 接上「只寫 `workflow_runs`」的真寫入流程~~（C1-1 已 execute PASS）
+2. ~~接上 `package_install_runs` 的狀態更新~~（主線 C1-2 PASS：`206bd6ee-f5e0-4b6a-810c-bbb9914844f4`；公司桌機複核：`ae8c6e48-fac9-4ac6-8721-d142c831c620`；failed/rolled_back 產品化仍待補）
+3. ~~C1-3 DB 寫入韌性 execute~~（主線已 PASS，見 checklist）
+4. 把 `apply-manifest` 的 shell 執行器真正串上（仍需維持 `staging-only` + guardrails），並確保 rollback 可用
+5. 接回 `create-wp-site` 的 staging 環境建立流程（需要後續 hosting provider adapter）
 
 ### Tomorrow (2026-03-26) - 建議第一優先
 - 先跑一個 end-to-end「乾跑」payload（不寫 DB），確認回傳的 SQL template + row payload 完整且欄位對齊
 - 再開啟真寫入一次（建議只開 `LOBSTER_ENABLE_DB_WRITES=true` 並先寫 `workflow_runs`），用你手上的 Supabase UI 查表插入是否正確
 - 把所有「驚險步驟」都留在人機核可/approval 設計裡，不允許 production 自動執行
+
+### Today (2026-03-30) - Lobster C1-2
+- `validate-package-install-runs-flow.mjs --execute=1`：PASS（`installRunId=ae8c6e48-fac9-4ac6-8721-d142c831c620`，`workflowRunId=73c91be3-3663-4977-aa9a-4c2b7e24dd97`，flow pending→running→completed）。
+- `bootstrap-validate.mjs`：PASS。主檢查清單 **C1-2** 已勾選。
 
 ### Today (2026-03-26) - AO-CLOSE
 - **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`ao-close.ps1`**（雙路徑同內容）預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`，讓公司機 **`pull` 即完整**；`-SkipPush`／`-SkipVerify` 為選用。
@@ -201,27 +206,49 @@
 # 2026-03-30
 
 ## 背景
+
 - 使用者執行 **AO-CLOSE**；並要求 **明日提醒**：整理 `docs/spec/raw/` **四份原文**。
+- 公司桌機（`C:\Users\USER\Work`）另補跑 Lobster **C1-2** execute 複核（與主線已紀錄之 `installRunId=206bd6ee-f5e0-4b6a-810c-bbb9914844f4` 並存，供跨機對照）。
 
 ## 已完成（本日文件／治理）
+
 - Company OS：**四份原文整合閱讀**（`docs/overview/company-os-four-sources-integration.md`）、20 模組頁降級為 V3 §三跳表；`raw/` 內 **ASCII 檔名**（`ENTERPRISE_BASE_STACK.md`、`CURSOR_PACK_V1.md`）；根 `Work-Monorepo.code-workspace`；連結／doc integrity 修復。
 - `TASKS.md` 已列 **明日**：整理四份原文（見 unchecked 項）。
 
+## 已完成（本機龍蝦複核）
+
+- `validate-package-install-runs-flow.mjs --execute=1`：PASS（`ok: true`）。
+- `workflowRunId=73c91be3-3663-4977-aa9a-4c2b7e24dd97`，`installRunId=ae8c6e48-fac9-4ac6-8721-d142c831c620`，flow：`pending` → `running` → `completed`。
+- `node lobster-factory\scripts\bootstrap-validate.mjs`（自 `C:\Users\USER\Work`）：Bootstrap validation PASSED。
+
 ## 未完成
+
 - 四份原文之「內容整理／摘要／去重」尚未執行（刻意排明天）。
 
 ## 明日優先
+
 1. **P1**：整理四份原文（目錄、重複段落標記、與 `company-os-four-sources-integration.md` 對齊要點）。
 2. P2：依進度決定是否開 `AO-RESUME` 續作 Enterprise Phase 1 或其他 `TASKS` 未勾項。
 
 ## AO-CLOSE
-- 見本輪 `WORKLOG` 與 `reports/*` 產出（腳本跑完後補登 commit hash）。
+
+- 完成：`verify-build-gates` **PASS**、health **100%（286/286）**、integrated-status 已產出；**推送** `10fe5df`（大量累積變更一併收斂）。
+- 首輪腳本卡 **Linear 排程推送**；重跑時設 **`AO_SYNC_SCHEDULE_TO_LINEAR=0`** 略過；**`sync-linear-delta`** HTTP 400 略過。
+- **資安**：`hostinger-recovery-codes.txt` 曾被納入 **`10fe5df`**；已後續 commit **`c2bb268`**（刪檔 + gitignore）、**`a3b3c30`**（WORKLOG 清理）。**請至 Hostinger 作廢並重產復原碼**；必要時對 **Git 歷史** 做 purge。
+
+## 明日提醒（使用者口述）
+
+- 整理 `docs/spec/raw/` **四份原文**（已列 `TASKS.md` Next 第一項未勾）。
+
+## Git／rebase 補記
+
+- 本機 `ao-close` push 曾因 **遠端超前** 被拒；需 `git pull --rebase origin main` 後再推。若遇合併衝突，以遠端主線為準並保留本檔「本機龍蝦複核」段落。
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-03-30 02:49:05`
+- Time: `2026-03-30 09:49:35`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
@@ -229,19 +256,19 @@
 - Result: **PASS**
 
 ## Latest Reports
-- Health: `reports/health/health-20260330-024905.md`
-- Closeout: `reports/closeout/closeout-20260330-024902.md`
+- Health: `reports/health/health-20260330-094934.md`
+- Closeout: `reports/closeout/closeout-20260330-094933.md`
 
 ## Action
 - No blocking issue detected.
 
 ## 7) WORKLOG.md tail (~60 lines)
+## 2026-03-30
 
-### Operator Autopilot（Phase 1）完成
-- 新增規則：`.cursor/rules/50-operator-autopilot.mdc`（含 `agency-os/.cursor/rules` 同步副本）。
-- 新增腳本：`ao-resume`、`check-three-way-sync`、`autopilot-phase1`、`autopilot-alert-loop`、`notify-ops`、`register-autopilot-phase1`、`install-autopilot-startup-fallback`（root + agency-os 雙路徑）。
-- 啟動策略：優先嘗試排程註冊；若系統拒絕註冊（權限/IT 限制），自動改用 Startup fallback（本機已完成安裝）。
-- Slack：`AGENCY_OS_SLACK_WEBHOOK_URL` 已設置並測試通知成功（建議後續輪替 webhook）。
+### Lobster Factory - 本機複核（公司桌機 `C:\Users\USER\Work`）
+- 主線 C1-2/C1-3 已於 **2026-03-27** WORKLOG 紀錄（見上）；此為桌機再次 execute 複核。
+- `validate-package-install-runs-flow.mjs --execute=1`：PASS（`ok: true`）；`workflowRunId=73c91be3-3663-4977-aa9a-4c2b7e24dd97`、`installRunId=ae8c6e48-fac9-4ac6-8721-d142c831c620`；`bootstrap-validate.mjs`：PASS。
+- **Git**：`git push` 遭拒後需 `git pull --rebase origin main` 合併遠端再推；合併衝突已手動收斂。
 
 
 

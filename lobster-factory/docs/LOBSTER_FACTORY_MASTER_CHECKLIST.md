@@ -78,7 +78,7 @@
 ## C) 尚未完成（下一步主線，避免重工）
 ### C1. 寫入鏈路（先小後大）
 - [x] C1-1. 先只開 `LOBSTER_ENABLE_DB_WRITES=true` 驗證 `workflow_runs` 寫入（execute PASS，`insertedId=1e53ec18-1c01-4547-9593-20feee6bdc2c`）
-- [x] C1-2. 再接 `package_install_runs` 寫入與狀態流（execute PASS，`installRunId=206bd6ee-f5e0-4b6a-810c-bbb9914844f4`；`pending -> running -> completed`）
+- [x] C1-2. 再接 `package_install_runs` 寫入與狀態流（execute PASS，`installRunId=206bd6ee-f5e0-4b6a-810c-bbb9914844f4`；`pending -> running -> completed`；**公司桌機複核**：`installRunId=ae8c6e48-fac9-4ac6-8721-d142c831c620`、`workflowRunId=73c91be3-3663-4977-aa9a-4c2b7e24dd97`）
 - [x] C1-3. 補齊 DB 寫入錯誤處理（execute PASS，`traceId=resilience-4c1b0ea6-84a3-4a8a-8c01-5ce648dd6099`、`insertedWorkflowRunId=77f43da0-6fc6-4ce6-bc3b-f3d139fc783c`）
 
 ### C2. 執行鏈路（staging-only）
