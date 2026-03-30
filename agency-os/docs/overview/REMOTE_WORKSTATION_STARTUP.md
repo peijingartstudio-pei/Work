@@ -1,4 +1,4 @@
-# 他處電腦／公司機 — 開機與首次接線須知
+﻿# 他處電腦／公司機 — 開機與首次接線須知
 
 > **目的**：在家 push 後，到**另一台電腦**（公司機、筆電、新機）能**最快、安全、可驗證**地續接，並把流程收斂為「可重複、可回復、可追蹤」。
 >
@@ -11,7 +11,7 @@
 
 - **Monorepo 根目錄**（含 `agency-os\`、`lobster-factory\`、根目錄 `scripts\`）：請整包 clone，不要只拷子資料夾。
 - **路徑可不同**（例如筆電 `D:\Work`、公司機 `C:\Users\USER\Work`），流程都用**相對路徑**執行，不綁磁碟代號。
-- **Cursor / IDE**：可開 repo 根或 `agency-os`；若規則/連動檢查找不到 `.cursor`，請先確認開啟位置與 `.cursor` 實際存在。
+- **Cursor / IDE**：可開 repo 根或 `agency-os`；若規則/連動檢查找不到 `.cursor`，請先確認開啟位置與 `.cursor` 實際存在。**IDE 行為與 MCP 職責（版控正本）** 見 `docs/operations/cursor-enterprise-rules-index.md`（與本頁 **先 pull 再 AO-RESUME** 無衝突：`AO` 關鍵字流程仍優先）。
 
 ### 0.1 快速確認你在正確根目錄
 
@@ -122,8 +122,7 @@ git pull origin main
 5. **`AO-RESUME` 在 §2 第 1 步之後執行**，回覆可清楚列出「已完成／目前進度／下一步」（含龍蝦 Milestone/DoD/風險，見 `AGENTS.md`）。
 
 ## Related Documents (Auto-Synced)
+- `../README.md`
 
-- `docs/overview/EXECUTION_DASHBOARD.md`
-- `RESUME_AFTER_REBOOT.md`
-- `docs/operations/end-of-day-checklist.md`
-- `AGENTS.md`
+_Last synced: 2026-03-30 05:16:43 UTC_
+

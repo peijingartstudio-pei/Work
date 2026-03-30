@@ -1,4 +1,4 @@
-# Conversation Memory
+﻿# Conversation Memory
 
 ## Current Operating Context
 - 你正在建立多客戶網站與系統代營運模式
@@ -297,5 +297,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-30 01:49:33 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

@@ -204,7 +204,7 @@
 
 ## 16) 你不用我之後，「大師」的一天長什麼樣子（寫實版）
 
-- 早上：開 `EXECUTION_DASHBOARD` → `integrated-status-LATEST` → `TASKS` 選一件主線。  
+- 早上：**monorepo 根**先 **`git pull --ff-only origin main`**（雙機必做；見 `REMOTE_WORKSTATION_STARTUP`）→ 開 `EXECUTION_DASHBOARD` → `integrated-status-LATEST` → `TASKS` 選一件主線 → 打 **`AO-RESUME`**。  
 - 做事：客戶與交付走 `tenants` + 專案慣例；工程變更只進**有 gate** 的流程。  
 - 傍晚：`WORKLOG` 三行；若改 docs 則 doc-sync；health Critical PASS；guard 更新狀態。  
 - 週期性：龍蝦清單勾選與 repo push，確保**另一台電腦 pull 也活得下去**。
@@ -288,5 +288,5 @@
 ## Related Documents (Auto-Synced)
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-29 17:24:24 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

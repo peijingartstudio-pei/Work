@@ -1,4 +1,4 @@
-# Execution Dashboard (Agency OS + Lobster Factory)
+﻿# Execution Dashboard (Agency OS + Lobster Factory)
 
 > 目的：用**一頁**掌握「完整建置系統、目前進度、尚未完成、下一步、硬性 Gate」並降低遺漏與重工。
 >
@@ -16,6 +16,7 @@
 - **邊做邊學／將來自己當家**：`docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`（具體問法、四週路線、每日 15 分鐘、**§17 五連問：注意·推演·為什麼·效益差錯·檢查預防**）
 - **密鑰管理與復原手冊**：`docs/operations/local-secrets-vault-dpapi.md`（新機/重灌/換帳號時必看）
 - **MCP 新增快速手冊（常用）**：`docs/operations/mcp-add-server-quickstart.md`
+- **Cursor 企業級規則（版控、可交付）**：`docs/operations/cursor-enterprise-rules-index.md`（與 `AO` 流程牴觸時以 `agency-os/.cursor/rules/00`／`30`／`40` 為準）
 
 ## 1) 系統全貌（分層）
 ### A. Agency OS（治理 + 執行 + 證據）
@@ -108,11 +109,12 @@
 - **變更一致性檢查**：每次修改前後都要檢查重複、矛盾、舊路徑與跨檔狀態不一致
 
 ## Related Documents (Auto-Synced)
+- `../README.md`
 - `automation/REGISTER_WEEKLY_SYSTEM_REVIEW_TASK.ps1`
 - `docs/operations/end-of-day-checklist.md`
 - `docs/overview/INTEGRATED_STATUS_REPORT.md`
 - `docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-03-29 17:24:24 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

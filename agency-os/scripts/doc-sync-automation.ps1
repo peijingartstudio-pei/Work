@@ -4,7 +4,9 @@ param(
     [switch]$AutoDetect,
     [switch]$Watch,
     [switch]$SkipApply,
-    [switch]$SkipReport
+    [switch]$SkipReport,
+    # When set, only mtime-based detection is used (no git diff-index).
+    [switch]$SkipGitDetect
 )
 
 Set-StrictMode -Version Latest
@@ -49,6 +51,24 @@ function Save-Json {
     Set-Content -Path $Path -Value $json -Encoding UTF8
 }
 
+function Format-RelatedPathsForMonorepoReadme {
+    param([string[]]$Related)
+    # ../README.md lives at repo root; list paths relative to monorepo root (agency-os/...).
+    $out = @()
+    foreach ($it in $Related) {
+        if (-not $it) { continue }
+        $norm = $it.Replace('\', '/').TrimStart('/')
+        if ($norm.StartsWith("../")) {
+            $out += $norm
+        } elseif ($norm.StartsWith("agency-os/", [StringComparison]::OrdinalIgnoreCase)) {
+            $out += $norm
+        } else {
+            $out += ("agency-os/" + $norm)
+        }
+    }
+    return $out
+}
+
 function Upsert-RelatedBlock {
     param(
         [string]$Root,
@@ -58,6 +78,10 @@ function Upsert-RelatedBlock {
     $full = Join-Path $Root $RelativeFile
     if (-not (Test-Path $full)) { return $false }
     if (-not $RelativeFile.EndsWith(".md")) { return $false }
+
+    if ($RelativeFile -eq "../README.md") {
+        $Related = @(Format-RelatedPathsForMonorepoReadme -Related $Related)
+    }
 
     $content = Get-Content -Raw -Path $full -Encoding UTF8
     $suspect = $false
@@ -158,13 +182,74 @@ function Detect-ChangedFiles {
     return @($detected)
 }
 
+function Get-GitDirtyPathsUnderRoot {
+    param(
+        [string]$Root,
+        [switch]$SkipGit
+    )
+    if ($SkipGit) { return @() }
+    $detected = New-Object 'System.Collections.Generic.HashSet[string]' ([StringComparer]::OrdinalIgnoreCase)
+    try {
+        $rootNorm = (Resolve-Path -LiteralPath $Root).Path.TrimEnd('\')
+    } catch {
+        return @()
+    }
+
+    $prevGit = $ErrorActionPreference
+    $ErrorActionPreference = 'SilentlyContinue'
+    $topOut = @(& git -C $rootNorm rev-parse --show-toplevel 2>$null)
+    $ErrorActionPreference = $prevGit
+    if ($LASTEXITCODE -ne 0 -or $topOut.Count -eq 0) {
+        return @()
+    }
+    $topNorm = (Resolve-Path -LiteralPath $topOut[0].Trim()).Path.TrimEnd('\')
+
+    function Add-GitPathIfUnderRoot {
+        param(
+            [string]$Line,
+            [string]$Top,
+            [string]$AgencyRoot,
+            [System.Collections.Generic.HashSet[string]]$Set
+        )
+        if (-not $Line) { return }
+        $relFromTop = $Line.Trim().TrimStart('/').Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+        if (-not $relFromTop) { return }
+        $combined = Join-Path $Top $relFromTop
+        try {
+            $full = [System.IO.Path]::GetFullPath($combined)
+        } catch { return }
+
+        if ($full.Length -le $AgencyRoot.Length) { return }
+        if (-not $full.StartsWith($AgencyRoot, [StringComparison]::OrdinalIgnoreCase)) { return }
+        $suffix = $full.Substring($AgencyRoot.Length).TrimStart([System.IO.Path]::DirectorySeparatorChar)
+        if (-not $suffix) { return }
+        [void]$Set.Add($suffix.Replace('\', '/'))
+    }
+
+    $ErrorActionPreference = 'SilentlyContinue'
+    try {
+        # Tracked files: working tree / index differs from HEAD
+        & git -C $topNorm diff-index --name-only HEAD | ForEach-Object {
+            Add-GitPathIfUnderRoot -Line $_ -Top $topNorm -AgencyRoot $rootNorm -Set $detected
+        }
+        # Untracked + unignored (new files not yet git add)
+        & git -C $topNorm ls-files --others --exclude-standard | ForEach-Object {
+            Add-GitPathIfUnderRoot -Line $_ -Top $topNorm -AgencyRoot $rootNorm -Set $detected
+        }
+    } finally {
+        $ErrorActionPreference = $prevGit
+    }
+    return @($detected)
+}
+
 function Invoke-Once {
     param(
         [string]$Root,
         [string[]]$InputChanged,
         [switch]$UseAutoDetect,
         [switch]$DoApply,
-        [switch]$DoReport
+        [switch]$DoReport,
+        [switch]$SkipGitDetect
     )
     $mapPath = Join-Path $Root "docs/change-impact-map.json"
     if (-not (Test-Path $mapPath)) {
@@ -204,7 +289,13 @@ function Invoke-Once {
 
     $changed = @()
     if ($UseAutoDetect -or $InputChanged.Count -eq 0) {
-        $changed = Detect-ChangedFiles -Root $Root -Map $map -SinceUtc $lastRunUtc
+        # Force arrays: scalar + array in PS can stringify-concat; @( ) avoids that.
+        $byMtime = @(Detect-ChangedFiles -Root $Root -Map $map -SinceUtc $lastRunUtc)
+        $byGit = @(Get-GitDirtyPathsUnderRoot -Root $Root -SkipGit:$SkipGitDetect)
+        $changed = @($byMtime + $byGit | Sort-Object -Unique | Where-Object { $_ -notlike '.agency-state/*' })
+        if ($byGit.Count -gt 0) {
+            Write-Output ("AutoDetect: git dirty under workspace (+ mtime): git count=" + $byGit.Count)
+        }
     } else {
         foreach ($item in $InputChanged) {
             $full = if ([System.IO.Path]::IsPathRooted($item)) { $item } else { Join-Path $Root $item }
@@ -291,9 +382,9 @@ $report = -not $SkipReport
 if ($Watch) {
     Write-Output "Watch mode started. Press Ctrl+C to stop."
     while ($true) {
-        Invoke-Once -Root $root -InputChanged @() -UseAutoDetect -DoApply:$apply -DoReport:$report
+        Invoke-Once -Root $root -InputChanged @() -UseAutoDetect -DoApply:$apply -DoReport:$report -SkipGitDetect:$SkipGitDetect
         Start-Sleep -Seconds 10
     }
 } else {
-    Invoke-Once -Root $root -InputChanged $ChangedFiles -UseAutoDetect:$AutoDetect -DoApply:$apply -DoReport:$report
+    Invoke-Once -Root $root -InputChanged $ChangedFiles -UseAutoDetect:$AutoDetect -DoApply:$apply -DoReport:$report -SkipGitDetect:$SkipGitDetect
 }

@@ -8,7 +8,7 @@
 
 ## During Migration
 - [ ] Apply release files
-- [ ] Update `docs/change-impact-map.json` if new governance docs were added
+- [ ] Update `docs/change-impact-map.json` if new governance docs were added（步驟細項：`docs/operations/new-doc-linkage-checklist.md`）
 - [ ] Update `docs/CHANGE_IMPACT_MATRIX.md` for new dependencies
 - [ ] Update `README.md` and `docs/README.md` indexes
 - [ ] Run document sync (`scripts/doc-sync-automation.ps1 -AutoDetect`)
@@ -34,5 +34,5 @@
 - `docs/releases/release-notes.md`
 - `docs/releases/upgrade-path.md`
 
-_Last synced: 2026-03-28 11:27:29 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

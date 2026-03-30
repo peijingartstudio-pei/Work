@@ -4,6 +4,7 @@
 - Ensure strategy, operations, delivery, automation, and compliance stay fully linked.
 
 ## A. Governance Linkage
+- [ ] **New doc onboarding（新增／大改版治理文件時必跑）**：`docs/operations/new-doc-linkage-checklist.md`（矩陣 + `change-impact-map.json` + 入口 + health）
 - [ ] `README.md` includes all new operational entry points
 - [ ] `docs/README.md` includes all new domain folders
 - [ ] `docs/change-impact-map.json` includes new source/target links
@@ -39,11 +40,12 @@
 
 ## Related Documents (Auto-Synced)
 - `docs/architecture/multi-platform-delivery-architecture.md`
+- `docs/operations/new-doc-linkage-checklist.md`
 - `docs/operations/system-operation-sop.md`
 - `README.md`
 - `scripts/doc-sync-automation.ps1`
 - `scripts/system-guard.ps1`
 - `scripts/system-health-check.ps1`
 
-_Last synced: 2026-03-28 11:27:29 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

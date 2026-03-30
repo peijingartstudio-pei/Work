@@ -81,7 +81,7 @@
 - [ ] 權限與憑證已分離且可輪替
 - [ ] 任務板、工作日誌、記憶文件已同步
 - [ ] 每日/每週/每月/不定時任務排程已啟用
-- [ ] 最新健康檢查分數 >= 95%
+- [ ] 最新健康檢查分數 **100%**（與本 repo `AO-CLOSE`／`AGENTS.md` 預設一致）
 - [ ] （若使用 Lobster）已依 Step 7 對齊 `OPERABLE_E2E_PLAYBOOK`，並記錄預計／實際執行證據路徑
 
 ## Related Documents (Auto-Synced)
@@ -99,5 +99,5 @@
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 - `WORKLOG.md`
 
-_Last synced: 2026-03-28 11:56:51 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

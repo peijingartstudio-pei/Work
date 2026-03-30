@@ -25,6 +25,7 @@
 - `docs/operations/local-secrets-vault-dpapi.md`: 本機免費祕密庫（Windows DPAPI）
 - `docs/operations/mcp-add-server-quickstart.md`: MCP 新增快速手冊（常用）
 - **`docs/operations/cursor-mcp-and-plugin-inventory.md`**: Cursor **MCP／外掛** 與龍蝦 Routing 對照（**建議與根目錄 `mcp.json` 同步維護**）
+- **`docs/operations/cursor-enterprise-rules-index.md`**: **Cursor 企業級 IDE 規則（版控）** — `63`–`66` `.mdc` 與 SSOT 導覽（與 `AO-RESUME`／`AO-CLOSE` 流程衝突時以 `00`／`30`／`40` 規則為準）
 - **`docs/operations/airtable-to-supabase-migration-playbook.md`**: **Airtable 停用後**功能如何落到 **Supabase**（建模、RLS、匯入、n8n 改接）
 - `docs/operations/tools-and-integrations.md`: 整合工具與環境變數規範
 
@@ -72,7 +73,7 @@
 ## 系統健康檢查
 - 執行：`powershell -ExecutionPolicy Bypass -File .\scripts\system-health-check.ps1`
 - 報告：`reports/health/health-*.md`
-- 目標：健康分數維持 95% 以上
+- **目標：與 `AGENTS.md`／`AO-CLOSE` 預設一致——健康分數 100%**（Critical Gate PASS；未達不得視為可收工／可對外宣告整庫完好的狀態；僅在明確授權下放寬）
 - 硬性關卡：`Critical Gate` 必須 PASS（連動 map 缺漏或 tenant package 缺檔會 FAIL）
 
 ## 報告歸檔（避免長期膨脹）
@@ -131,11 +132,13 @@
 8. 若看到 `ALERT_REQUIRED.txt`，先修復再繼續交付
 
 ## Related Documents (Auto-Synced)
+- `../README.md`
 - `.cursor/rules/00-session-bootstrap.mdc`
 - `.cursor/rules/10-memory-maintenance.mdc`
 - `.cursor/rules/20-doc-sync-closeout.mdc`
 - `.cursor/rules/30-resume-keyword.mdc`
 - `.cursor/rules/40-shutdown-closeout.mdc`
+- `AGENTS.md`
 - `docs/architecture/agency-command-center-v1.md`
 - `docs/architecture/multi-platform-delivery-architecture.md`
 - `docs/compliance/leads-and-scraping-checklist.md`
@@ -165,5 +168,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-03-29 18:43:48 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

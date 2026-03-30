@@ -1,4 +1,4 @@
-# Resume After Reboot
+﻿# Resume After Reboot
 
 ## 同一台電腦 — 重開機後
 
@@ -23,5 +23,5 @@
 ## Related Documents (Auto-Synced)
 - `docs/operations/system-guard-and-notification.md`
 
-_Last synced: 2026-03-28 11:27:29 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

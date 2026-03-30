@@ -1,4 +1,4 @@
-# AGENTS.md - Agency Operating Rules
+﻿# AGENTS.md - Agency Operating Rules
 
 ## 語言與輸出
 - 預設使用繁體中文
@@ -87,8 +87,10 @@
 - 里程碑與脈絡更新：`memory/CONVERSATION_MEMORY.md`
 - 當日原始脈絡更新：`memory/daily/YYYY-MM-DD.md`
 - 文件關聯同步：修改治理文件時，必查 `docs/CHANGE_IMPACT_MATRIX.md`
+- **新增或大幅改版「重要 md」（治理／對外／會給客戶看）**：必讀並依序處理 **`docs/operations/new-doc-linkage-checklist.md`**；寫入 **`change-impact-map.json` + 矩陣** 可半自動：`scripts/register-new-governance-doc.ps1`（仍須指定要連動的 `-Targets`；**README 入口與內文語意**無法替你判斷，請補齊後跑 doc-sync / health）。
 
 ## 文件治理規則
+- **Cursor（可賣／可版控）IDE 規則索引**：`docs/operations/cursor-enterprise-rules-index.md`（匯流 `63`–`66` `.mdc`、MCP inventory、龍蝦 `MCP_TOOL_ROUTING_SPEC`；與 `AO-RESUME`／`AO-CLOSE` 衝突時以本 repo 之 **00／30／40** 規則為準）
 - 治理/標準/模板文件優先放 `docs/` 分類目錄
 - 新增文件時必須在 `README.md` 增加入口
 - 任務結束前必做關聯檢查，避免只改單一文件造成不同步
@@ -110,9 +112,15 @@
 - `.cursor/rules/20-doc-sync-closeout.mdc`
 - `.cursor/rules/30-resume-keyword.mdc`
 - `.cursor/rules/40-shutdown-closeout.mdc`
+- `.cursor/rules/63-cursor-core-identity-risk.mdc`
+- `docs/CHANGE_IMPACT_MATRIX.md`
+- `docs/operations/cursor-enterprise-rules-index.md`
 - `docs/operations/cursor-mcp-and-plugin-inventory.md`
+- `docs/operations/new-doc-linkage-checklist.md`
 - `docs/operations/system-guard-and-notification.md`
 - `docs/operations/system-operation-sop.md`
+- `README.md`
+- `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-03-29 18:43:48 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

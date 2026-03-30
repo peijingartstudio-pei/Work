@@ -30,7 +30,9 @@
 3. 記錄於 `docs/operations/incident-response-runbook.md` 事件流程
 
 ## Related Documents (Auto-Synced)
+- `.cursor/rules/64-architecture-mcp-routing.mdc`
 - `docs/international/global-compliance-baseline.md`
+- `docs/operations/cursor-enterprise-rules-index.md`
 
-_Last synced: 2026-03-27 07:29:27 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

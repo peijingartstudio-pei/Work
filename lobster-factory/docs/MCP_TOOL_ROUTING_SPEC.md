@@ -84,7 +84,9 @@ Define enforceable tool routing for Lobster Factory so automation is predictable
 - Browser automation specific runtimes.
 
 ## Related Documents (Auto-Synced)
+- `.cursor/rules/64-architecture-mcp-routing.mdc`
+- `docs/operations/cursor-enterprise-rules-index.md`
 - `docs/operations/cursor-mcp-and-plugin-inventory.md`
 
-_Last synced: 2026-03-29 18:43:48 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

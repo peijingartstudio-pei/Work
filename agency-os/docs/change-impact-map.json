@@ -16,6 +16,7 @@
     "scripts/build-product-bundle.ps1",
     "scripts/system-health-check.ps1",
     "scripts/doc-sync-automation.ps1",
+    "scripts/register-new-governance-doc.ps1",
     "scripts/weekly-system-review.ps1",
     "scripts/generate-integrated-status-report.ps1",
     "scripts/render-program-timeline-from-schedule.ps1",
@@ -26,7 +27,10 @@
     "docs/operations/security-secrets-policy.md",
     "docs/operations/tools-and-integrations.md",
     "docs/operations/cursor-mcp-and-plugin-inventory.md",
-    "docs/operations/airtable-to-supabase-migration-playbook.md"
+    "docs/operations/cursor-enterprise-rules-index.md",
+    "../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md",
+    "docs/operations/airtable-to-supabase-migration-playbook.md",
+    "../README.md"
   ],
   "rules": [
     {
@@ -108,10 +112,43 @@
     {
       "source": "docs/operations/end-to-end-linkage-checklist.md",
       "targets": [
+        "docs/operations/new-doc-linkage-checklist.md",
         "scripts/system-guard.ps1",
         "scripts/system-health-check.ps1",
         "scripts/doc-sync-automation.ps1",
         "README.md"
+      ]
+    },
+    {
+      "source": "docs/operations/new-doc-linkage-checklist.md",
+      "targets": [
+        "docs/operations/end-to-end-linkage-checklist.md",
+        "docs/operations/cursor-enterprise-rules-index.md",
+        "docs/CHANGE_IMPACT_MATRIX.md",
+        "docs/change-impact-map.json",
+        "docs/README.md",
+        "scripts/register-new-governance-doc.ps1",
+        "scripts/doc-sync-automation.ps1",
+        "scripts/system-health-check.ps1"
+      ]
+    },
+    {
+      "source": "AGENTS.md",
+      "targets": [
+        "docs/operations/new-doc-linkage-checklist.md",
+        "docs/operations/cursor-enterprise-rules-index.md",
+        "docs/CHANGE_IMPACT_MATRIX.md",
+        "scripts/register-new-governance-doc.ps1",
+        "README.md"
+      ]
+    },
+    {
+      "source": "scripts/register-new-governance-doc.ps1",
+      "targets": [
+        "docs/operations/new-doc-linkage-checklist.md",
+        "docs/change-impact-map.json",
+        "docs/CHANGE_IMPACT_MATRIX.md",
+        "AGENTS.md"
       ]
     },
     {
@@ -353,10 +390,79 @@
     {
       "source": "docs/operations/cursor-mcp-and-plugin-inventory.md",
       "targets": [
+        "docs/operations/cursor-enterprise-rules-index.md",
         "docs/operations/tools-and-integrations.md",
+        ".cursor/rules/64-architecture-mcp-routing.mdc",
         "AGENTS.md",
         "README.md",
         "../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md"
+      ]
+    },
+    {
+      "source": "../README.md",
+      "targets": [
+        "docs/operations/cursor-enterprise-rules-index.md",
+        "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
+        "docs/overview/EXECUTION_DASHBOARD.md",
+        "README.md"
+      ]
+    },
+    {
+      "source": "docs/operations/cursor-enterprise-rules-index.md",
+      "targets": [
+        "AGENTS.md",
+        "docs/operations/cursor-mcp-and-plugin-inventory.md",
+        "docs/operations/new-doc-linkage-checklist.md",
+        "docs/operations/security-secrets-policy.md",
+        "../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md",
+        ".cursor/rules/63-cursor-core-identity-risk.mdc",
+        ".cursor/rules/64-architecture-mcp-routing.mdc",
+        ".cursor/rules/65-build-standards-data-state.mdc",
+        ".cursor/rules/66-skills-observability-protocol.mdc",
+        "../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md",
+        "docs/CHANGE_IMPACT_MATRIX.md",
+        "docs/change-impact-map.json",
+        "docs/README.md",
+        "../README.md"
+      ]
+    },
+    {
+      "source": ".cursor/rules/63-cursor-core-identity-risk.mdc",
+      "targets": [
+        "docs/operations/cursor-enterprise-rules-index.md",
+        "AGENTS.md"
+      ]
+    },
+    {
+      "source": ".cursor/rules/64-architecture-mcp-routing.mdc",
+      "targets": [
+        "docs/operations/cursor-enterprise-rules-index.md",
+        "docs/operations/cursor-mcp-and-plugin-inventory.md",
+        "../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md",
+        "docs/operations/security-secrets-policy.md"
+      ]
+    },
+    {
+      "source": ".cursor/rules/65-build-standards-data-state.mdc",
+      "targets": [
+        "docs/operations/cursor-enterprise-rules-index.md"
+      ]
+    },
+    {
+      "source": ".cursor/rules/66-skills-observability-protocol.mdc",
+      "targets": [
+        "docs/operations/cursor-enterprise-rules-index.md",
+        ".cursor/rules/62-progress-heartbeat-15min.mdc"
+      ]
+    },
+    {
+      "source": "../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md",
+      "targets": [
+        "docs/operations/cursor-enterprise-rules-index.md",
+        ".cursor/rules/63-cursor-core-identity-risk.mdc",
+        ".cursor/rules/64-architecture-mcp-routing.mdc",
+        ".cursor/rules/65-build-standards-data-state.mdc",
+        ".cursor/rules/66-skills-observability-protocol.mdc"
       ]
     },
     {

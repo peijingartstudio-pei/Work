@@ -4,7 +4,7 @@
 - 集中管理治理文件，避免根目錄文件散落
 
 ## 結構
-- `docs/operations/`：系統操作與執行流程
+- `docs/operations/`：系統操作與執行流程（含 **Cursor 企業級規則索引**：[`operations/cursor-enterprise-rules-index.md`](operations/cursor-enterprise-rules-index.md)）
 - `docs/sales/`：報價與變更核價規則
 - `docs/templates/`：合約與變更模板
 - `docs/standards/`：技術與開發標準
@@ -21,10 +21,13 @@
 ## 使用規則
 1. 先改「主文件」（single source of truth）
 2. 依 `docs/CHANGE_IMPACT_MATRIX.md` 同步更新關聯文件
-3. 完成後更新 `WORKLOG.md` 與 `TASKS.md`
+3. **新增或大幅改版治理／對外文件時**：照 [`docs/operations/new-doc-linkage-checklist.md`](operations/new-doc-linkage-checklist.md)（矩陣 + `change-impact-map.json` + README 入口 + doc-sync／health）
+4. 完成後更新 `WORKLOG.md` 與 `TASKS.md`
 
 ## Related Documents (Auto-Synced)
+- `docs/operations/cursor-enterprise-rules-index.md`
+- `docs/operations/new-doc-linkage-checklist.md`
 - `docs/overview/agency-os-complete-system-introduction.md`
 
-_Last synced: 2026-03-29 18:43:48 UTC_
+_Last synced: 2026-03-30 05:16:43 UTC_
 

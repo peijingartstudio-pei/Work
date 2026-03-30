@@ -1,4 +1,4 @@
-# Change Impact Matrix
+﻿# Change Impact Matrix
 
 ## 使用方式
 - 修改任一主文件時，必須同步檢查對應關聯文件
@@ -11,12 +11,26 @@
 | `docs/architecture/agency-command-center-v1.md` | `docs/architecture/multi-platform-delivery-architecture.md`, `docs/operations/system-operation-sop.md`, `docs/operations/tenant-scheduling.md`, `README.md`, `TASKS.md` |
 | `docs/architecture/multi-platform-delivery-architecture.md` | `docs/standards/wordpress-custom-dev-guidelines.md`, `docs/operations/end-to-end-linkage-checklist.md`, `README.md` |
 | `docs/overview/agency-os-complete-system-introduction.md` | `README.md`, `docs/README.md`, `tenants/company-a/01_COMMANDER_SYSTEM_GUIDE.md`, `tenants/company-a/02_CLIENT_WORKSPACE_GUIDE.md`, `tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md`, `tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md` |
+| `docs/overview/EXECUTION_DASHBOARD.md` | `docs/overview/REMOTE_WORKSTATION_STARTUP.md`, `docs/overview/INTEGRATED_STATUS_REPORT.md`, `docs/operations/end-of-day-checklist.md`, `memory/CONVERSATION_MEMORY.md`, `AGENTS.md`, `RESUME_AFTER_REBOOT.md` |
+| `docs/overview/REMOTE_WORKSTATION_STARTUP.md` | `docs/overview/EXECUTION_DASHBOARD.md`, `docs/overview/INTEGRATED_STATUS_REPORT.md`, `RESUME_AFTER_REBOOT.md`, `docs/operations/end-of-day-checklist.md`, `AGENTS.md` |
+| `docs/overview/INTEGRATED_STATUS_REPORT.md` | `docs/overview/EXECUTION_DASHBOARD.md`, `docs/overview/REMOTE_WORKSTATION_STARTUP.md`, `scripts/generate-integrated-status-report.ps1`, `reports/status/integrated-status-LATEST.md` |
 | `docs/operations/system-operation-sop.md` | `README.md`, `AGENTS.md`, `TASKS.md`, `WORKLOG.md` |
 | `docs/operations/client-risk-scoring-model.md` | `docs/metrics/kpi-margin-dashboard-spec.md`, `docs/product/templates/monthly-report-template-en.md`, `README.md`, `TASKS.md` |
 | `docs/operations/outsourcing-vendor-scorecard.md` | `docs/operations/outsourcing-playbook.md`, `README.md`, `TASKS.md` |
 | `docs/operations/tenant-scheduling.md` | `README.md`, `tenants/README.md`, `tenants/NEW_TENANT_ONBOARDING_SOP.md`, `automation/README.md` |
 | `docs/operations/system-guard-and-notification.md` | `README.md`, `AGENTS.md`, `RESUME_AFTER_REBOOT.md`, `automation/REGISTER_SYSTEM_GUARD_TASKS.ps1`, `scripts/system-guard.ps1` |
-| `docs/operations/end-to-end-linkage-checklist.md` | `scripts/system-guard.ps1`, `scripts/system-health-check.ps1`, `scripts/doc-sync-automation.ps1`, `README.md` |
+| `docs/operations/end-to-end-linkage-checklist.md` | `docs/operations/new-doc-linkage-checklist.md`, `scripts/system-guard.ps1`, `scripts/system-health-check.ps1`, `scripts/doc-sync-automation.ps1`, `README.md` |
+| `docs/operations/new-doc-linkage-checklist.md` | `docs/operations/end-to-end-linkage-checklist.md`, `docs/operations/cursor-enterprise-rules-index.md`, `docs/CHANGE_IMPACT_MATRIX.md`, `docs/change-impact-map.json`, `docs/README.md`, `scripts/register-new-governance-doc.ps1`, `scripts/doc-sync-automation.ps1`, `scripts/system-health-check.ps1` |
+| `AGENTS.md` | `docs/operations/new-doc-linkage-checklist.md`, `docs/operations/cursor-enterprise-rules-index.md`, `docs/CHANGE_IMPACT_MATRIX.md`, `scripts/register-new-governance-doc.ps1`, `README.md` |
+| `scripts/register-new-governance-doc.ps1` | `docs/operations/new-doc-linkage-checklist.md`, `docs/change-impact-map.json`, `docs/CHANGE_IMPACT_MATRIX.md`, `AGENTS.md` |
+| `docs/operations/cursor-enterprise-rules-index.md` | `AGENTS.md`, `docs/operations/cursor-mcp-and-plugin-inventory.md`, `docs/operations/new-doc-linkage-checklist.md`, `docs/operations/security-secrets-policy.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`, `.cursor/rules/63-cursor-core-identity-risk.mdc`, `.cursor/rules/64-architecture-mcp-routing.mdc`, `.cursor/rules/65-build-standards-data-state.mdc`, `.cursor/rules/66-skills-observability-protocol.mdc`, `../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md`, `docs/CHANGE_IMPACT_MATRIX.md`, `docs/change-impact-map.json`, `docs/README.md`, `../README.md` |
+| `../README.md`（monorepo 根） | `docs/operations/cursor-enterprise-rules-index.md`, `agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`, `agency-os/docs/overview/EXECUTION_DASHBOARD.md` |
+| `docs/operations/cursor-mcp-and-plugin-inventory.md` | `docs/operations/cursor-enterprise-rules-index.md`, `docs/operations/tools-and-integrations.md`, `.cursor/rules/64-architecture-mcp-routing.mdc`, `AGENTS.md`, `README.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md` |
+| `.cursor/rules/63-cursor-core-identity-risk.mdc` | `docs/operations/cursor-enterprise-rules-index.md`, `AGENTS.md` |
+| `.cursor/rules/64-architecture-mcp-routing.mdc` | `docs/operations/cursor-enterprise-rules-index.md`, `docs/operations/cursor-mcp-and-plugin-inventory.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`, `docs/operations/security-secrets-policy.md` |
+| `.cursor/rules/65-build-standards-data-state.mdc` | `docs/operations/cursor-enterprise-rules-index.md` |
+| `.cursor/rules/66-skills-observability-protocol.mdc` | `docs/operations/cursor-enterprise-rules-index.md`, `.cursor/rules/62-progress-heartbeat-15min.mdc` |
+| `../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md` | `docs/operations/cursor-enterprise-rules-index.md`, `.cursor/rules/63-cursor-core-identity-risk.mdc`, `.cursor/rules/64-architecture-mcp-routing.mdc`, `.cursor/rules/65-build-standards-data-state.mdc`, `.cursor/rules/66-skills-observability-protocol.mdc` |
 | `docs/international/global-delivery-model.md` | `docs/international/global-compliance-baseline.md`, `docs/international/multi-currency-commercial-policy.md`, `docs/operations/tenant-scheduling.md`, `README.md` |
 | `docs/international/global-compliance-baseline.md` | `docs/operations/security-secrets-policy.md`, `docs/operations/incident-response-runbook.md`, `README.md` |
 | `docs/international/multi-currency-commercial-policy.md` | `docs/operations/finance-operations.md`, `docs/metrics/kpi-margin-dashboard-spec.md`, `README.md` |
@@ -51,3 +65,12 @@
 ## 自動化輸出
 - `reports/closeout/closeout-*.md`：每次自動產生結案檢查報告
 - `.agency-state/doc-sync-state.json`：記錄上次同步時間與受影響文件
+
+## Related Documents (Auto-Synced)
+- `AGENTS.md`
+- `docs/operations/cursor-enterprise-rules-index.md`
+- `docs/operations/new-doc-linkage-checklist.md`
+- `scripts/register-new-governance-doc.ps1`
+
+_Last synced: 2026-03-30 05:16:43 UTC_
+
