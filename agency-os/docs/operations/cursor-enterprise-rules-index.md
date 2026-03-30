@@ -4,6 +4,15 @@
 
 整合多模型產出的 **IDE 行為規範**（身分、風險、架構面、MCP 路由、資料／狀態機紀律、Skill／可觀測性），**以本 repo 為單一真相**，與 **AO 關鍵字、收工閘道、龍蝦 Routing** 對齊，避免「Settings 貼一大段卻沒進 git」的交付風險。
 
+## Settings 畫面 vs 版控（為什麼「沒有幫你填 Cursor 裡的列表」）
+
+| 你看到的 | 實際上是 | Agent 從對話能做的 |
+|----------|----------|-------------------|
+| **Settings → Rules, Skills, Subagents** 裡的條目（含 `10`–`50`、或 Cloudflare／Sentry 等） | 多半在 **本機／帳號／外掛市集**（使用者 rules、`~\.cursor\`、Plugin 自帶 **Skill**），**不會**因為改 repo 就自動變成你截圖上的每一列 | **無法**替你登入 Cursor 帳號、無法遠端點選 UI、也無法改外掛內建的描述文字（例如 Sentry 工具列上像 `name: actions` 的佔位說明常是 **套件自己带的**，不是要你在某表單「填好的欄位」）。 |
+| **`agency-os/.cursor/rules/*.mdc`**（含 `63`–`66`）與 **`00`／`30`／`40`** | **專案版控規則**：用 **monorepo 根或 `agency-os` 當工作區根** 開啟，並讓 Cursor **套用該資料夾的 Project Rules** 即會生效 | **可以**：在 git 裡維護、推送、`doc-sync` 連動（我們已做的是這一層）。 |
+
+**若你希望「畫面上看到的」與公司交付一致**：請以 **開對資料夾**（建議 `Work-Monorepo.code-workspace` 或 repo 根）為主，並以本檔與 `README-部署說明.md` 的 **部署與正本**為準；帳號層全域 rules（截圖中 `30`／`40` 等）屬你本機／團隊同步策略，需在你方 Cursor 環境自行對齊或匯入，**不靠聊天自動完成**。
+
 ## 正本在哪裡？
 
 | 位置 | 用途 |
@@ -26,7 +35,8 @@
 
 1. 改任一份 `.mdc` 或本索引：依 `docs/operations/new-doc-linkage-checklist.md` 更新矩陣／`change-impact-map.json`（或 `register-new-governance-doc.ps1`）。  
 2. 改 **monorepo 根** `README.md` 關於開工／雙機／收工／Cursor 規則時：同步核對本索引、`REMOTE_WORKSTATION_STARTUP`、`EXECUTION_DASHBOARD`，避免敘述分叉。  
-3. 跑 `doc-sync-automation.ps1 -AutoDetect` 與 `system-health-check.ps1`。
+3. 跑 `doc-sync-automation.ps1 -AutoDetect` 與 `system-health-check.ps1`。  
+4. **`63`–`66` 同步到 monorepo 根**：已自動化 — `verify-build-gates.ps1` 與 `doc-sync-automation.ps1`（Apply）會呼叫 **`scripts/sync-enterprise-cursor-rules-to-monorepo-root.ps1`**；健檢會對四檔做 SHA256 比對（見 `README-部署說明.md` § Monorepo 根工作區）。
 
 ## Related Documents (Auto-Synced)
 - `../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md`
@@ -44,5 +54,5 @@
 - `docs/operations/security-secrets-policy.md`
 - `docs/README.md`
 
-_Last synced: 2026-03-30 05:16:43 UTC_
+_Last synced: 2026-03-30 05:38:33 UTC_
 

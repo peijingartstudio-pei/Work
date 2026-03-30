@@ -24,7 +24,8 @@
 - **`66-skills-observability-protocol.mdc`** — **企業級**：Skills、可觀測性、與 62 心跳搭配
 
 **索引頁（給人看／賣方說明）**：`docs/operations/cursor-enterprise-rules-index.md`  
-**溯源包（多模型產出）**：`../docs/spec/raw/Cursor  Rules for AI/`（monorepo 根；請以本目錄 `63`–`66` 為部署正本）
+**溯源包（多模型產出）**：`../docs/spec/raw/Cursor  Rules for AI/`（monorepo 根；請以本目錄 `63`–`66` 為部署正本）  
+**僅開 monorepo 根工作區時**：Cursor 通常只載入 `../.cursor/rules/` — 修改本目錄 `63`–`66` 後請將**同四檔複製覆蓋**至該路徑，與 `README-部署說明.md` § Monorepo 根工作區一致。
 
 ## 每天建議流程
 

@@ -8,18 +8,15 @@
 - 收工：打 `AO-CLOSE`
 - 文件大改後：讓系統跑 `doc-sync + health-check + guard`
 
-## 你現在有的 5 張規則
+## 你現在有的規則（ monorepo 根；與 `agency-os/.cursor/rules` 併用時勿改出兩套敘述）
 
-- `00-session-bootstrap.mdc`
-  - 作用：每次新對話先做「昨日回顧 + 今日計畫 + 優先確認」。
-- `10-memory-maintenance.mdc`
-  - 作用：在里程碑/長對話時，更新長短期記憶檔。
-- `20-doc-sync-closeout.mdc`
-  - 作用：改治理文件時強制做連動同步與健康檢查。
-- `30-resume-keyword.mdc`
-  - 作用：收到 `AO-RESUME` 時，用固定格式快速續接。
-- `40-shutdown-closeout.mdc`
-  - 作用：收到 `AO-CLOSE` 或收工語句時，輸出日結與明日計畫，並驗證連動。
+- `00-session-bootstrap.mdc` — 新對話開場結構。
+- `10-memory-maintenance.mdc` — 長短期記憶維護。
+- `20-doc-sync-closeout.mdc` — 治理文件改動後 doc-sync / health。
+- `30-resume-keyword.mdc` — `AO-RESUME`。
+- `40-shutdown-closeout.mdc` — `AO-CLOSE`。
+- `50-operator-autopilot.mdc`、`60-beginner-operation-format.mdc`、`62-progress-heartbeat-15min.mdc` — 營運／格式／心跳（見各檔 description）。
+- **`63`–`66`（企業級）** — 與 **`agency-os/.cursor/rules` 正本同檔同步複製至此**；索引見 `agency-os/docs/operations/cursor-enterprise-rules-index.md`。更新正本後請覆蓋根目錄這四檔，避免只開 monorepo 根時漏載。
 
 ## 每天建議流程
 

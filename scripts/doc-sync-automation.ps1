@@ -234,6 +234,12 @@ function Invoke-Once {
                 }
             }
         }
+
+        $monoRoot = Split-Path -Path $Root -Parent
+        $syncEnt = Join-Path $monoRoot "scripts\sync-enterprise-cursor-rules-to-monorepo-root.ps1"
+        if (Test-Path -LiteralPath $syncEnt) {
+            & powershell -NoProfile -ExecutionPolicy Bypass -File $syncEnt -MonorepoRoot $monoRoot -Quiet
+        }
     }
 
     if ($DoReport) {
