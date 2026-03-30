@@ -1,4 +1,4 @@
-﻿# AGENTS.md - Agency Operating Rules
+# AGENTS.md - Agency Operating Rules
 
 ## 語言與輸出
 - 預設使用繁體中文
@@ -37,7 +37,8 @@
 
 ## 快速續接關鍵字
 - 使用者輸入 `AO-RESUME` 時，必須先讀取記憶與進度檔後再回覆。
-- 若已啟用 Autopilot Phase1，開機會自動執行 `scripts/ao-resume.ps1 -SkipVerify -AllowUnexpectedDirty`（不阻塞使用者本地未提交工作）。
+- **雙機協作硬性說明**：`AO-RESUME`**不會**自動執行 `git pull`。若另一台已 **AO-CLOSE** 並 `push`，本機必須在 monorepo 根先 **`git fetch origin`**，落後則 **`git pull --ff-only origin main`**（push 曾衝突則 **`git pull --rebase origin main`**），**再**續接讀檔；否則進度檔可能過期、`git push` 會被拒。完整開工順序：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2。
+- 若已啟用 Autopilot Phase1，開機會自動執行 `scripts/ao-resume.ps1 -SkipVerify -AllowUnexpectedDirty`（**不**取代上述 `git pull`；Autopilot 只管本機 preflight，不管遠端是否超前）。
 - 回覆格式固定為：`已完成`、`目前進度`、`下一步`。
 - `目前進度` 必須包含龍蝦工廠欄位：`目前 Milestone`、`今日 DoD`、`阻塞/風險`。
 - 使用者輸入 **`AO-CLOSE`**（關鍵字不變）或明確表達要關機/收工時，必須先執行 **closeout**，再輸出：`今日完成`、`今日未完成`、`連動檢查`、`明日優先`。

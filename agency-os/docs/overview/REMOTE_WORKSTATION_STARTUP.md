@@ -69,7 +69,8 @@ git pull origin main
    - `agency-os\TASKS.md`  
    - `agency-os\reports\status\integrated-status-LATEST.md`  
 
-   在 Cursor 對 AI 輸入 **`AO-RESUME`**，請它依記憶檔回報「已完成／目前進度／下一步」。
+   **至此已完成 Git 同步**後，在 Cursor 對 AI 輸入 **`AO-RESUME`**。  
+   > **重要**：`AO-RESUME` **不會**自動替你執行 §2 第 1 步的 `git pull`；若跳過同步就打關鍵字，讀到的檔案可能仍停留在舊 commit，另一台 push 後你也會遇到 `push rejected (fetch first)`。
 
 ## 2.1 失敗處置（不要硬做）
 
@@ -79,15 +80,15 @@ git pull origin main
 
 ## 2.2 臨時離席／可能斷網（吃飯前 30 秒版）
 
-1. 打開 `D:\Work` 終端機
+1. 在 **monorepo 根** `<WORK_ROOT>` 開終端機（例：`C:\Users\USER\Work` 或 `D:\Work`）
 2. 貼上：`git status --short`
-3. 如果你只想先暫停，不要自動收工，直接離開即可（回來打 `AO-RESUME`）
-4. 如果你希望離開前做完整安全收工，貼上：`.\scripts\ao-close.ps1 -SkipPush`
-5. 回來後在 `D:\Work` 終端機貼上：`.\scripts\ao-resume.ps1 -AllowUnexpectedDirty`
+3. 若只想暫停、不收工：可直接離開；（**回來後**建議先 `git pull --ff-only origin main` 再打 `AO-RESUME`，與 §2 第 1 步一致）
+4. 若希望離開前做完整安全收工：`powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1 -SkipPush`
+5. 回來後在 **同一 repo 根**：可選 `powershell -ExecutionPolicy Bypass -File .\scripts\ao-resume.ps1 -AllowUnexpectedDirty`（Autopilot preflight）；**仍須**自行確認已 `pull` 對齊遠端後再當真開工
 
 你會看到什麼（成功判斷）：
 - `ao-close`：會產生 closeout/health/guard 報告
-- `ao-resume`：顯示 preflight completed
+- `ao-resume.ps1`：顯示 preflight completed（**不**取代 `git pull`）
 
 ## 3) 兩份「綜合狀態」路徑別搞混
 
@@ -114,11 +115,11 @@ git pull origin main
 ## 6) 開工完成判定（Definition of Ready）
 
 符合以下 5 項才算「可安全開工」：
-1. `git pull --ff-only` 成功，且在正確分支。  
+1. `git pull --ff-only`（或等價對齊 `origin/main`）成功，且在正確分支。  
 2. 依賴還原完成（若有 wrappers）。  
 3. `verify-build-gates.ps1` Critical Gate = PASS。  
 4. 已讀 `LAST_SYSTEM_STATUS.md` / `TASKS.md` / `integrated-status-LATEST.md`。  
-5. `AO-RESUME` 回覆可清楚列出「已完成／目前進度／下一步」。
+5. **`AO-RESUME` 在 §2 第 1 步之後執行**，回覆可清楚列出「已完成／目前進度／下一步」（含龍蝦 Milestone/DoD/風險，見 `AGENTS.md`）。
 
 ## Related Documents (Auto-Synced)
 

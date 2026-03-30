@@ -2,7 +2,7 @@
 
 本儲存庫收斂兩條主線：**Agency OS**（治理、客戶與營運 SOP、健康檢查）與 **Lobster Factory**（WordPress 工廠、Supabase、Trigger 工作流程、結構閘道）。
 
-建議用 Cursor／VS Code 開啟 **`Work-Monorepo.code-workspace`**（或直接用 **`D:\Work`** 當工作區根目錄），相對連結才能穩定開啟 `docs/spec/raw/` 內原文。
+建議用 Cursor／VS Code 開啟 **`Work-Monorepo.code-workspace`**（或將 **monorepo 根**當工作區根；路徑可為 `D:\Work`、`C:\Users\USER\Work` 等），相對連結才能穩定開啟 `docs/spec/raw/` 內原文。
 
 ## 目錄
 
@@ -15,7 +15,7 @@
 
 ## 本機一次驗兩邊（推薦）
 
-在儲存庫根目錄（例如 `D:\Work`）：
+在儲存庫根目錄（你的 `<WORK_ROOT>`）：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
@@ -33,6 +33,11 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 - **AO 系統**：[`agency-os/AGENTS.md`](agency-os/AGENTS.md)、[`agency-os/TASKS.md`](agency-os/TASKS.md)、[`agency-os/docs/overview/EXECUTION_DASHBOARD.md`](agency-os/docs/overview/EXECUTION_DASHBOARD.md)
 - **規格原文（長篇藍圖）**：[`docs/spec/README.md`](docs/spec/README.md)；**四份怎麼整合**：[agency-os/docs/overview/company-os-four-sources-integration.md](agency-os/docs/overview/company-os-four-sources-integration.md)
 
+## 開工與雙機同步（AO-RESUME）
+
+- **`AO-RESUME`**：請 Agent 依 `.cursor/rules/30-resume-keyword.mdc` 讀進度檔；**關鍵字本身不會執行 `git pull`**。
+- **另一台已 AO-CLOSE push 時**：在本機 monorepo 根先 **`git fetch origin`**，再 **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），**然後**再打 `AO-RESUME`。完整清單：[`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)。
+
 ## 收工與同步
 
-- 關鍵字 **`AO-CLOSE`**：依 `.cursor/rules/40-shutdown-closeout.mdc` 執行 `scripts\ao-close.ps1`（閘道、狀態報告、預設含 git 收斂）。
+- 關鍵字 **`AO-CLOSE`**：依 `.cursor/rules/40-shutdown-closeout.mdc` 執行 **repo 根** `.\scripts\ao-close.ps1`（閘道、狀態報告、預設含 commit + push）。**勿**在僅 `lobster-factory` 子目錄執行（該路徑無此腳本）。

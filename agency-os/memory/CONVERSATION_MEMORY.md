@@ -118,6 +118,15 @@
 你有兩種模式：`Strict`（安全最大）與 `Fast`（速度優先但仍有門檻）。
 以下命令中的 `<WORK_ROOT>` 請替換為本機實際路徑（例如 `D:\Work` 或 `C:\Users\USER\Work`）。
 
+### 開工前（雙機必做；早於 `AO-RESUME` 讀檔）
+`AO-RESUME` **不會**自動 `git pull`；另一台 **AO-CLOSE** push 後，本機務必先對齊 `origin/main`：
+```
+cd <WORK_ROOT>
+git fetch origin
+git pull --ff-only origin main
+```
+（若 `push` 曾與遠端分叉：`git pull --rebase origin main`。完整說明：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2。）
+
 ### Strict Mode（推薦，確保今天/明天不出問題）
 1. Phase 1 基線健檢
 ```

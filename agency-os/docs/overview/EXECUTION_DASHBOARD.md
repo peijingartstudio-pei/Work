@@ -1,4 +1,4 @@
-﻿# Execution Dashboard (Agency OS + Lobster Factory)
+# Execution Dashboard (Agency OS + Lobster Factory)
 
 > 目的：用**一頁**掌握「完整建置系統、目前進度、尚未完成、下一步、硬性 Gate」並降低遺漏與重工。
 >
@@ -62,9 +62,11 @@
 
 ## 4) 每日 Runbook（最短路徑）
 ### 開工（AO-RESUME）
+0. **monorepo 根**先對齊 Git（**雙機必做**；`AO-RESUME` 不會自動 pull）：`git fetch origin` → `git pull --ff-only origin main`（若 push 曾與遠端分叉則 `git pull --rebase origin main`）。詳見 `docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2。  
 1. 先看 `LAST_SYSTEM_STATUS.md`
 2. 打開 `TASKS.md`，只做 Next/Backlog 最高優先
-3. 需要工程驗收就跑（Strict 或 Fast）：
+3. 在 Cursor 輸入 **`AO-RESUME`**（讀 `AGENTS.md` + 記憶檔 + 龍蝦 checklist／Completion Plan）
+4. 需要工程驗收就跑（Strict 或 Fast）：
    - 參考 `memory/CONVERSATION_MEMORY.md` 的 Runbook Commands
 
 ### 收工（AO-CLOSE）
@@ -82,9 +84,9 @@
 - 手動核銷：仍可依 `docs/operations/end-of-day-checklist.md` 逐項打勾（與 §1b 對齊）。
 
 ### 離席會斷網（吃飯前）
-1. 在 `D:\Work` 開終端機
-2. 若只暫停：直接離開，回來執行 `.\scripts\ao-resume.ps1 -AllowUnexpectedDirty`
-3. 若要安全收工再離開：執行 `.\scripts\ao-close.ps1 -SkipPush`
+1. 在 **monorepo 根** `<WORK_ROOT>` 開終端機
+2. 若只暫停：直接離開；回來先 **`git pull --ff-only`** 對齊再打 `AO-RESUME`（與「開工」§0 一致）
+3. 若要安全收工再離開：`powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1 -SkipPush`
 
 ### 每週（建議固定一天，例如週一）
 - **週期總檢**：`powershell -ExecutionPolicy Bypass -File .\scripts\weekly-system-review.ps1`（於 `agency-os`，或於 `<WORK_ROOT>` 跑 `.\scripts\weekly-system-review.ps1`）

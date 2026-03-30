@@ -1,10 +1,12 @@
-﻿# Resume After Reboot
+# Resume After Reboot
 
 ## 同一台電腦 — 重開機後
 
 請先在 Cursor 開啟工作區：
 - **建議 monorepo 根**：`<WORK_ROOT>`（含 `agency-os`、`lobster-factory` 與根 `scripts`）
 - 或僅開：`<WORK_ROOT>\agency-os`
+
+**建議**：在 monorepo 根執行 `git fetch origin` 與 **`git pull --ff-only origin main`**（與另一台 **AO-CLOSE** 推送對齊；`AO-RESUME` 關鍵字**不會**自動 pull）。詳 **`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`** §2。
 
 貼上：**`AO-RESUME`**
 
