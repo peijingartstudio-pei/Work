@@ -17,7 +17,7 @@ alwaysApply: true
 | **精簡 · 每次載入** | **本檔 `63`** | 身分、行為、風險、禁忌 — **強制** |
 | **完整 · 溯源** | `../docs/spec/raw/Cursor  Rules for AI/00-CORE.md` | 探索語氣、商業思維、PROTOCOL、**十一段模板全文** — **細節與例句** |
 
-implementation：先滿足本檔與 `AGENTS.md`；需要語氣／表格／完整 checklist 時以 `00-CORE.md` 為準（不與上位規則衝突為前提）。
+**實務上**：先滿足本檔與 `AGENTS.md`；需要語氣／表格／完整 checklist 時以 `00-CORE.md` 為準（不與上位規則衝突為前提）。
 
 ## 3) Identity & Roles (short)
 
