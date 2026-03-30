@@ -1,7 +1,9 @@
 # CURSOR CORE RULES（完整版 · 版控溯源）
 
-> **與執行規則的關係**：本檔為**完整長文 SSOT**。IDE 每次對話實際精簡條款見 **`agency-os/.cursor/rules/63-cursor-core-identity-risk.mdc`**（並同步至 monorepo 根 `.cursor/rules/`）。  
-> **衝突時**：以 **`AO-RESUME` / `AO-CLOSE`、`00-session-bootstrap.mdc`、`30-resume-keyword.mdc`、`40-shutdown-closeout.mdc`** 與 **`AGENTS.md`** 為準（開工／收工格式、日常先結論繁中）。  
+> **與執行規則的關係**：本檔是**長文參考／溯源**（討論語氣、PROTOCOL、十一段模板脈絡），**不是**「公司系統實情」的唯一依據。  
+> **IDE 實際載入的強制條款**：**`agency-os/.cursor/rules/63-cursor-core-identity-risk.mdc`**（並同步至 monorepo 根 `.cursor/rules/`）。  
+> **系統落地事實**（選型、路由、閘道、龍蝦治理）：以 **`agency-os/TASKS.md`**、**`lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`**、**`agency-os/docs/operations/tools-and-integrations.md`** 等為準；讀本檔時若與上述衝突，**以上述為準**。  
+> **衝突時（關鍵字／開收工格式等）**：以 **`AO-RESUME` / `AO-CLOSE`、`00-session-bootstrap.mdc`、`30-resume-keyword.mdc`、`40-shutdown-closeout.mdc`** 與 **`AGENTS.md`** 為準。  
 > **選用 Settings**：若仍想在 Cursor → Rules for AI 貼一小段，請只貼「專案規則以 repo 內 `.mdc` 與 `AGENTS.md` 為準」，避免兩套全文打架。
 
 ---

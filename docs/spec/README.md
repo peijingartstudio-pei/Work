@@ -6,6 +6,8 @@
 
 **先看「四份怎麼整合」**（閱讀順序、與 Agency OS／龍蝦的關係）：[`agency-os/docs/overview/company-os-four-sources-integration.md`](../../agency-os/docs/overview/company-os-four-sources-integration.md)。
 
+**維護與大段目錄（P1）**：[`raw/README-four-sources-maintenance.md`](raw/README-four-sources-maintenance.md) — 標明 **勿與 `agency-os`／`lobster-factory` 手抄雙軌** 及各檔對應 SSOT。
+
 ## `raw/` 檔案索引
 
 | 檔案 | 內容摘要 |
@@ -14,6 +16,7 @@
 | [`raw/LOBSTER_FACTORY_MASTER_SPEC_V1.md`](raw/LOBSTER_FACTORY_MASTER_SPEC_V1.md) | **Master Spec v1**：系統目標、邊界、多租戶、權限等長規格（分多段／多主題）。檔名已改為無空格，避免編輯器點連結找不到檔。 |
 | [`raw/ENTERPRISE_BASE_STACK.md`](raw/ENTERPRISE_BASE_STACK.md) | **企業級底座**：在 Cursor / Supabase / n8n / GitHub 之上，建議補齊的觀測、耐用流程、邊界安全、身分與計費等工具分層。 |
 | [`raw/CURSOR_PACK_V1.md`](raw/CURSOR_PACK_V1.md) | **Cursor Pack v1**：分段可貼的 prompt（MASTER_SYSTEM、資料模型、WP Factory 等）。 |
+| [`raw/README-four-sources-maintenance.md`](raw/README-four-sources-maintenance.md) | **四份原文維護索引**：大段錨點、與 monorepo SSOT 對照、變更紀律（**整合頁**仍為 [`company-os-four-sources-integration.md`](../../agency-os/docs/overview/company-os-four-sources-integration.md)）。 |
 | [`raw/Cursor  Rules for AI/README-部署說明.md`](raw/Cursor%20%20Rules%20for%20AI/README-%E9%83%A8%E7%BD%B2%E8%AA%AA%E6%98%8E.md) | **多模型產出的 Cursor 規則溯源包**；**版控與部署正本**在 [`agency-os/docs/operations/cursor-enterprise-rules-index.md`](../../agency-os/docs/operations/cursor-enterprise-rules-index.md)（`agency-os/.cursor/rules/63`–`66`）。 |
 
 ## 20 個模組：**你公司**與**客戶**的關係（以 V3 為準）

@@ -3,6 +3,9 @@ description: Architecture model, stack discipline, and MCP tool routing rules
 alwaysApply: true
 ---
 
+> **非現用 IDE 規則正文**：本檔為 **raw 溯源包**；實際載入與版控正本見 **`agency-os/.cursor/rules/64-architecture-mcp-routing.mdc`**。路由／工具職責以 **`lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`** 與 **`agency-os/docs/operations/cursor-mcp-and-plugin-inventory.md`** 為準。詳見同目錄 **`README-部署說明.md`**。  
+> **表格優先序**：下方 MCP 表為**教學速查**。**`task_type`、核准、staging、禁止短路** 以 **Routing Spec** 為準；**`mcpServers` 鍵名與路徑範圍** 以 **inventory**（含 §work-global）為準。**不得以本檔覆寫 spec。**
+
 # 01 — Architecture & Tool Routing
 
 ## ARCHITECTURE MODEL
@@ -36,12 +39,12 @@ Present alternatives as proposals — not actions.
 
 | Tool | Responsible For | Never Use For |
 |---|---|---|
-| **Trigger.dev** | Long flows: site_provisioning, manifest_apply, deploy_production | Quick glue work |
+| **trigger / Trigger.dev** | **長流程主人**（例：`site_provisioning`、`manifest_apply`、`deploy_production` — **完整列表與 gate 以 Routing Spec 為準**） | 輕量膠水、繞過核准的捷徑 |
 | **Supabase MCP** | IDE schema inspection, docs, debug only | Bypassing approval or production writes |
 | **n8n MCP** | webhook_ingress, crm_sync, notifications | Owning long flows or becoming control plane |
 | **GitHub MCP** | ci_validate, release_tagging, Issues, PRs | Deploying to production directly |
 | **WordPress MCP** | runtime_content_ops | runtime_plugin_change = high-risk, confirm first |
-| **work-global** | Read files under C:\Users or D:\Work | Any production write |
+| **work-global** | 本機檔案系統 MCP：**允許讀取的路徑**依你方 `mcp.json` + **inventory §work-global**（常見為使用者目錄與工作副本根；**勿寫死單一磁碟機代號**） | Any production write |
 | **Perplexity** | Web search and verification | Authoritative system data |
 | **Replicate** | Image generation / inference | Not on critical path |
 | **Linear MCP** | Issue tracking per linear-repo-sync-playbook.md | System-of-record data |
@@ -54,9 +57,9 @@ Present alternatives as proposals — not actions.
 - Production writes must go through: app API → Edge Function → n8n → approved Trigger task
 - `read_only` on MCP does NOT mean whole Supabase project is read-only
 
-**Trigger owns all long flows.**
-`site_provisioning`, `manifest_apply`, `deploy_production` belong to Trigger.dev.
-Persistent state and approval status stored in Supabase.
+**Trigger owns long orchestration (per Routing Spec).**
+例示 `task_type` 名稱如上表；**實際清單、替代路徑與核准**只認 **`MCP_TOOL_ROUTING_SPEC.md`**。
+持久狀態與核准紀錄以 **Supabase（SoR）** 為準（表名以 migrations／spec 為準）。
 
 **n8n stays in its lane.**
 n8n: webhook_ingress, crm_sync, notifications only.

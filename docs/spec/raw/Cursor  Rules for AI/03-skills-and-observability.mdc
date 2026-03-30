@@ -3,6 +3,9 @@ description: Skill file protocol and heartbeat / observability standards
 alwaysApply: true
 ---
 
+> **非現用 IDE 規則正文**：本檔為 **raw 溯源包**；實際載入與版控正本見 **`agency-os/.cursor/rules/66-skills-observability-protocol.mdc`**。與正本衝突以 `.mdc` 為準。詳見同目錄 **`README-部署說明.md`**。  
+> **可觀測性產品與 Phase 節奏**：**`agency-os/TASKS.md`**、**`docs/operations/tools-and-integrations.md`**、**`cursor-enterprise-rules-index`**；下方 Sentry／PostHog／heartbeat 清單為**範本**，**已拍板選型**（如 Clerk／Cloudflare 等）**以 TASKS 為準**。
+
 # 03 — Skills & Observability
 
 ## SKILL FILE PROTOCOL

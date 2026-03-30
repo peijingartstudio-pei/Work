@@ -3,6 +3,9 @@ description: Database design, state machine, project structure, and code quality
 alwaysApply: true
 ---
 
+> **非現用 IDE 規則正文**：本檔為 **raw 溯源包**；實際載入與版控正本見 **`agency-os/.cursor/rules/65-build-standards-data-state.mdc`**。與正本衝突以 `.mdc` 為準。詳見同目錄 **`README-部署說明.md`**。  
+> **Schema／表名／RLS**：以 **`lobster-factory/` 內 migrations 與產品 spec** 為準；下方條列為**範本**，落地前必對照 repo。
+
 # 02 — Build Standards
 
 ## DATABASE DESIGN (The Heart)

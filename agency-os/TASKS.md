@@ -10,7 +10,7 @@
 - [x] 建立 `lobster-factory` Phase 1 底座骨架（Supabase migrations + wc-core manifest + workflow 安全骨架）
 
 ## Next
-- [ ] **（2026-03-31 提醒）** 整理 `docs/spec/raw/` **四份原文**內容（`LOBSTER_FACTORY_MASTER_V3.md`、`LOBSTER_FACTORY_MASTER_SPEC_V1.md`、`ENTERPRISE_BASE_STACK.md`、`CURSOR_PACK_V1.md`）：目錄／摘要／與 [`docs/overview/company-os-four-sources-integration.md`](docs/overview/company-os-four-sources-integration.md) 對齊；避免與 `agency-os`／`lobster-factory` 已落地文件重複維護兩套敘述。
+- [x] **（2026-03-30）** 整理 `docs/spec/raw/` **四份原文**（V3／Spec v1／ENTERPRISE／CURSOR_PACK）：新增 [`docs/spec/raw/README-four-sources-maintenance.md`](../docs/spec/raw/README-four-sources-maintenance.md)（維護索引 + 大段錨點 + SSOT 對照）；各檔首段加維護提示；`company-os-four-sources-integration.md` 與 `docs/spec/README.md` 已連回。
 - [x] 定義 WordPress 客製系統開發準則（plugin/mu-plugin/資料表策略）
 - [x] 建立 n8n 工作流分層（共用流程 vs 客戶專屬流程）
 - [x] 建立 KPI + 毛利雙儀表板（規格）
@@ -63,6 +63,7 @@
 - [x] 建立零成本本機 Secrets Vault（Windows DPAPI，`scripts/secrets-vault.ps1`）
 - [x] 完成 Secrets Vault 一鍵匯入（`mcp.json` + Lobster/Slack 關鍵值）
 - [x] `PROGRAM_SCHEDULE.json` → Linear：`push-program-schedule-to-linear.ps1` + playbook §3（單向；稽核仍靠 `sync-linear-delta-to-daily`）
+- [ ] Linear 雙向同步修復與驗證（`push-program-schedule-to-linear` + `sync-linear-delta-to-daily`）：目前 `LINEAR_API_KEY` 已入本機 vault，但 push 卡在 Linear GraphQL 呼叫；已加 timeout 與錯誤處理，待 AO-RESUME 續測並產生 `agency-os/reports/linear/linear-schedule-map.json` + `memory/daily` 的 `### Linear API sync` 區塊
 
 ## Backlog
 - [x] 客戶分級與風險評分模型
@@ -87,5 +88,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-30 05:16:43 UTC_
+_Last synced: 2026-03-30 09:52:39 UTC_
 

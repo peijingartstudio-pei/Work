@@ -68,7 +68,19 @@ $headers = @{
 }
 
 try {
-    $resp = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $payload -UseBasicParsing
+    $client = New-Object System.Net.Http.HttpClient
+    $client.Timeout = [TimeSpan]::FromSeconds(30)
+
+    $req = New-Object System.Net.Http.HttpRequestMessage([System.Net.Http.HttpMethod]::Post, $uri)
+    $null = $req.Headers.TryAddWithoutValidation("Authorization", $apiKey)
+    $req.Content = New-Object System.Net.Http.StringContent($payload, [System.Text.Encoding]::UTF8, "application/json")
+
+    $httpResp = $client.SendAsync($req).GetAwaiter().GetResult()
+    $text = $httpResp.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+    if (-not $httpResp.IsSuccessStatusCode) {
+        throw ("status=" + [int]$httpResp.StatusCode + " " + $httpResp.ReasonPhrase + " body=" + $text)
+    }
+    $resp = ($text | ConvertFrom-Json)
 } catch {
     Write-Host ("sync-linear-delta: HTTP error (skip): " + $_.Exception.Message) -ForegroundColor Yellow
     exit 0

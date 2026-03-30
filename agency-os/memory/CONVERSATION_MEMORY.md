@@ -290,6 +290,17 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 ## Today (2026-03-30) - cursor-mcp inventory：純 Supabase／SoR 敘述
 - `docs/operations/cursor-mcp-and-plugin-inventory.md`：使用者要求 **本檔不出現任何第三方表格式工具名稱**；已刪除該列與所有相關段落／SSOT／Related 連結。**supabase** 兩欄改為**自足**寫法：平台 SoR、RLS／Storage／Webhook、MCP 與 `read_only` 邊界、以及對 [`MCP_TOOL_ROUTING_SPEC`](../../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md) 中 Trigger／n8n 分工的對齊。**`change-impact-map`** 已取消本檔 ↔ migration playbook 的強制連動（health 仍 100%）。
 
+## Today (2026-03-30) - Linear sync incident (handoff for AO-RESUME)
+- 使用者要求當場完成雙向同步（repo -> Linear、Linear -> repo）。
+- `LINEAR_API_KEY` 初始缺失；後已寫入本機 DPAPI vault（`scripts/secrets-vault.ps1`）。
+- 故障鏈：
+  - `push-program-schedule-to-linear.ps1` 在 StrictMode 讀取不存在的 `Exception.Response` 造成二次拋錯。
+  - GraphQL 呼叫出現長時間無輸出卡住。
+- 已完成修補（root + `agency-os` 兩份腳本同步）：
+  - `push-program-schedule-to-linear.ps1`：安全化 exception handling；改為 `HttpClient`；加入 timeout/cancellation。
+  - `sync-linear-delta-to-daily.ps1`：改為 `HttpClient`；加入 timeout，避免 AO-CLOSE/手動同步掛住。
+- 截至收工：仍未成功產生 `reports/linear/linear-schedule-map.json`，`memory/daily` 未新增新一輪 `### Linear API sync`；需 AO-RESUME 續做 smoke -> full run。
+
 ## Today (2026-03-28) - Lobster `http_json` hosting
 - `LOBSTER_HOSTING_ADAPTER=http_json` + `HTTP_JSON_HOSTING_ADAPTER.md`；`provisionHttpJsonStaging`；`create-wp-site` 支援 `vendor_staging_provisioned` 與 `vendorStaging`；`resolveStagingProvisioning` 為 async。
 - **互動偏好**：可驗證範圍內代理自主推進、減少選項式追問；不可逆決策仍單點確認。
@@ -301,5 +312,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-30 06:08:32 UTC_
+_Last synced: 2026-03-30 09:52:39 UTC_
 

@@ -79,7 +79,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-30 06:08:32 UTC_
+_Last synced: 2026-03-30 09:52:39 UTC_
 
 ## 2026-03-20
 
@@ -498,6 +498,27 @@ _Last synced: 2026-03-30 06:08:32 UTC_
 - **根因**：monorepo 根僅載入 `Work/.cursor/rules`，須與 `agency-os` 正本同步（已文件化於 `README-部署說明`、`cursor-enterprise-rules-index`）。
 - **1Password**：repo 不採用；已刪 **`%USERPROFILE%\.cursor\plugins\cache\cursor-public\1password`**；使用者宜於 Cursor Plugins **關閉**該外掛以免快取再下載。
 - **推送**：`78d836b`…`c27132d`、`d8e1943` 等已於本段對話期間 `push origin main`（詳 Git 日誌）。
+
+### P1：`docs/spec/raw` 四份原文維護索引（對齊四源整合頁）
+- 新增 `docs/spec/raw/README-four-sources-maintenance.md`（分工表、大段錨點、SSOT 對照、勿雙軌手抄）。
+- 四檔首段加維護區塊（V3／Spec v1／ENTERPRISE／CURSOR_PACK）；`docs/spec/README.md` 與 `agency-os/docs/overview/company-os-four-sources-integration.md` 連回維護索引；`TASKS.md` 勾選完成。
+
+### Linear 雙向同步排錯（收工前，待 AO-RESUME 續跑）
+- 使用者要求「兩邊同步」：`PROGRAM_SCHEDULE.json -> Linear` + `Linear -> memory/daily`。
+- 現場事實：
+  - 本機起初 `LINEAR_API_KEY` 缺失（Process/User/Machine 皆空）；後續已由使用者透過 `scripts/secrets-vault.ps1 -Action set-prompt -Name LINEAR_API_KEY` 寫入 DPAPI vault。
+  - `push-program-schedule-to-linear.ps1` 在 StrictMode 下遇特定 HTTP 例外時讀 `Exception.Response` 會再拋錯（PropertyNotFound），導致提前 crash；已修正為安全存取。
+  - 既有 `Invoke-RestMethod` 路徑出現長時間無輸出卡住；已改為 `HttpClient` 並加入 30 秒 timeout + cancellation token，避免無限等待。
+  - `sync-linear-delta-to-daily.ps1` 同步改為 `HttpClient + timeout`，避免同類網路掛住。
+- 目前結果（收工時）：
+  - 尚未產生 `agency-os/reports/linear/linear-schedule-map.json`。
+  - `agency-os/memory/daily/2026-03-30.md` 尚未出現新一輪 `### Linear API sync` 區塊。
+- AO-RESUME 首要續測建議：
+  1) `secrets-vault.ps1 -Action run -Names LINEAR_API_KEY` 包裹執行 `push-program-schedule-to-linear.ps1 -MaxTasks 1`（先 smoke）。
+  2) 成功後確認 `reports/linear/linear-schedule-map.json` 出現，再跑全量（不帶 `-MaxTasks`）。
+  3) 執行 `sync-linear-delta-to-daily.ps1`，確認 daily 新增 `### Linear API sync (...)`。
+  4) 若仍卡住，優先檢查公司網路對 `https://api.linear.app/graphql` 出站策略/代理限制與 Linear Team 權限。
+
 
 
 

@@ -8,6 +8,13 @@
 
 ---
 
+> **📌 規格原文維護（勿與 repo 他處手抄雙軌）**  
+> **四份整合入口**：[`company-os-four-sources-integration.md`](../../../agency-os/docs/overview/company-os-four-sources-integration.md)｜**本目錄索引**：[`README-four-sources-maintenance.md`](README-four-sources-maintenance.md)  
+> **工程閘道**：[`MCP_TOOL_ROUTING_SPEC.md`](../../../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md)｜**V3 落地映射**：[`LOBSTER_FACTORY_MASTER_V3_INTEGRATION_PLAN.md`](../../../lobster-factory/docs/LOBSTER_FACTORY_MASTER_V3_INTEGRATION_PLAN.md)｜**§三 20 模組表**：[`company-os-twenty-modules.md`](../../../agency-os/docs/overview/company-os-twenty-modules.md)  
+> **本檔大段**：§0 → §一 CURSOR BUILD MODE → **§三 OS 01–20** → §四 Schema → §七 連動地圖 → §八 Workflow 包 → §九 技術棧 → §十 Gap／路線圖 → §十一 原則。
+
+---
+
 # ▌ 0. 你在做什麼？先搞清楚
 
 你不是在做：

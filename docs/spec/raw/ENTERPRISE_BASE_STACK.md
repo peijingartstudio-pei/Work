@@ -1,3 +1,10 @@
+> **📌 規格原文維護**  
+> **四份整合入口**：[`company-os-four-sources-integration.md`](../../../agency-os/docs/overview/company-os-four-sources-integration.md)｜[`README-four-sources-maintenance.md`](README-four-sources-maintenance.md)  
+> **已拍板選型（不必與下文每個商標一致）**：[`TASKS.md`](../../../agency-os/TASKS.md)、[`tools-and-integrations.md`](../../../agency-os/docs/operations/tools-and-integrations.md) — 例：Secrets 可先 **env/mcp／DPAPI vault**，不強制文內單一方案。  
+> **本檔大段**：必補 6 → 強烈建議 5 → 視需求 → 實際清單 → 判斷句。
+
+---
+
 「再加 AI」，而是把你現在這套補成 **企業級底座**。
 
 你目前有的：

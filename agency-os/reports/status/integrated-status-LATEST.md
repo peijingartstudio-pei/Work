@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-03-30 14:08:36
+- Generated: 2026-03-30 17:52:44
 - agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -15,7 +15,7 @@
 - `LAST_SYSTEM_STATUS.md`, `WORKLOG.md`
 
 ## 1) TASKS.md - Next (unchecked)
-- [ ] **（2026-03-31 提醒）** 整理 `docs/spec/raw/` **四份原文**內容（`LOBSTER_FACTORY_MASTER_V3.md`、`LOBSTER_FACTORY_MASTER_SPEC_V1.md`、`ENTERPRISE_BASE_STACK.md`、`CURSOR_PACK_V1.md`）：目錄／摘要／與 [`docs/overview/company-os-four-sources-integration.md`](docs/overview/company-os-four-sources-integration.md) 對齊；避免與 `agency-os`／`lobster-factory` 已落地文件重複維護兩套敘述。 - [ ] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md` - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
+- [ ] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md` - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts） - [ ] Linear 雙向同步修復與驗證（`push-program-schedule-to-linear` + `sync-linear-delta-to-daily`）：目前 `LINEAR_API_KEY` 已入本機 vault，但 push 卡在 Linear GraphQL 呼叫；已加 timeout 與錯誤處理，待 AO-RESUME 續測並產生 `agency-os/reports/linear/linear-schedule-map.json` + `memory/daily` 的 `### Linear API sync` 區塊
 
 ## 2) TASKS.md - Backlog (unchecked)
 - [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核） - [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager）
@@ -200,6 +200,17 @@
 ### Today (2026-03-30) - cursor-mcp inventory：純 Supabase／SoR 敘述
 - `docs/operations/cursor-mcp-and-plugin-inventory.md`：使用者要求 **本檔不出現任何第三方表格式工具名稱**；已刪除該列與所有相關段落／SSOT／Related 連結。**supabase** 兩欄改為**自足**寫法：平台 SoR、RLS／Storage／Webhook、MCP 與 `read_only` 邊界、以及對 [`MCP_TOOL_ROUTING_SPEC`](../../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md) 中 Trigger／n8n 分工的對齊。**`change-impact-map`** 已取消本檔 ↔ migration playbook 的強制連動（health 仍 100%）。
 
+### Today (2026-03-30) - Linear sync incident (handoff for AO-RESUME)
+- 使用者要求當場完成雙向同步（repo -> Linear、Linear -> repo）。
+- `LINEAR_API_KEY` 初始缺失；後已寫入本機 DPAPI vault（`scripts/secrets-vault.ps1`）。
+- 故障鏈：
+  - `push-program-schedule-to-linear.ps1` 在 StrictMode 讀取不存在的 `Exception.Response` 造成二次拋錯。
+  - GraphQL 呼叫出現長時間無輸出卡住。
+- 已完成修補（root + `agency-os` 兩份腳本同步）：
+  - `push-program-schedule-to-linear.ps1`：安全化 exception handling；改為 `HttpClient`；加入 timeout/cancellation。
+  - `sync-linear-delta-to-daily.ps1`：改為 `HttpClient`；加入 timeout，避免 AO-CLOSE/手動同步掛住。
+- 截至收工：仍未成功產生 `reports/linear/linear-schedule-map.json`，`memory/daily` 未新增新一輪 `### Linear API sync`；需 AO-RESUME 續做 smoke -> full run。
+
 ### Today (2026-03-28) - Lobster `http_json` hosting
 - `LOBSTER_HOSTING_ADAPTER=http_json` + `HTTP_JSON_HOSTING_ADAPTER.md`；`provisionHttpJsonStaging`；`create-wp-site` 支援 `vendor_staging_provisioned` 與 `vendorStaging`；`resolveStagingProvisioning` 為 async。
 - **互動偏好**：可驗證範圍內代理自主推進、減少選項式追問；不可逆決策仍單點確認。
@@ -265,13 +276,50 @@
 
 ## AO-CLOSE（第二輪 · 2026-03-30 晚）
 
-- 見下：執行 `ao-close.ps1` 後本段補 **連動檢查／commit hash**。
+- **連動**：`verify-build-gates` **PASS**；`system-health-check` **100%（343/343）**（`reports/health/health-20260330-140830.md`）；`system-guard` **PASS**（`reports/guard/guard-20260330-140834.md`）；綜合狀態 `integrated-status-20260330-140836.md`、`integrated-status-LATEST.md`。
+- **環境**：`AO_SYNC_SCHEDULE_TO_LINEAR=0`（略過排程推送）。
+- **Git**：`chore: AO-CLOSE sync 2026-03-30 1408` → **`92c600e`**；已 **`push origin main`**。
+
+---
+
+## Linear 雙向同步排錯（晚間追加，供 AO-RESUME 接手）
+
+### 背景
+- 使用者要求「現在就處理好」：要看到 `PROGRAM_SCHEDULE.json -> Linear` 與 `Linear -> repo` 兩邊同步。
+- 初始觀察：Linear UI 僅 onboarding 項目；repo 內沒有 `agency-os/reports/linear/linear-schedule-map.json`。
+
+### 已完成
+- 已確認 `LINEAR_API_KEY` 最初為 missing；後由使用者寫入本機 vault（`scripts/secrets-vault.ps1 -Action set-prompt -Name LINEAR_API_KEY`）。
+- 已嘗試多次 push/sync，定位到關鍵故障：
+  - `push-program-schedule-to-linear.ps1` 在 StrictMode 下讀 `Exception.Response` 造成二次拋錯（PropertyNotFound）。
+  - GraphQL 呼叫存在「長時間無輸出卡住」現象。
+- 已做程式修補（root + `agency-os` 相容副本同步）：
+  - `push-program-schedule-to-linear.ps1`：錯誤處理防呆 + 改 `HttpClient` + timeout/cancellation。
+  - `sync-linear-delta-to-daily.ps1`：改 `HttpClient` + timeout。
+
+### 目前狀態（收工時）
+- 仍未產生 `agency-os/reports/linear/linear-schedule-map.json`。
+- 本檔尚未新增新一輪 `### Linear API sync (...)` 區塊。
+- 代表「雙向同步」尚未完成，需要 AO-RESUME 續跑驗證。
+
+### AO-RESUME 接手步驟（照這段跑）
+1. 先 smoke（1 筆）：
+   - `powershell -ExecutionPolicy Bypass -File .\scripts\secrets-vault.ps1 -Action run -Names LINEAR_API_KEY -Command "powershell -NoProfile -ExecutionPolicy Bypass -File '.\agency-os\scripts\push-program-schedule-to-linear.ps1' -WorkspaceRoot '.\agency-os' -MaxTasks 1"`
+2. 若成功，確認：
+   - `agency-os/reports/linear/linear-schedule-map.json` 已出現且有 `ids` 內容。
+3. 再全量：
+   - 同上指令移除 `-MaxTasks 1`。
+4. 最後回寫 daily：
+   - `powershell -ExecutionPolicy Bypass -File .\scripts\secrets-vault.ps1 -Action run -Names LINEAR_API_KEY -Command "powershell -NoProfile -ExecutionPolicy Bypass -File '.\agency-os\scripts\sync-linear-delta-to-daily.ps1' -WorkspaceRoot '.\agency-os' -SinceHours 72 -First 100"`
+5. 驗證：
+   - 本檔出現 `### Linear API sync (...)` 新區塊。
+   - 如仍失敗，優先檢查公司網路對 `https://api.linear.app/graphql` 出站策略與 Linear team 權限。
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-03-30 14:08:34`
+- Time: `2026-03-30 17:52:42`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
@@ -279,17 +327,17 @@
 - Result: **PASS**
 
 ## Latest Reports
-- Health: `reports/health/health-20260330-140834.md`
-- Closeout: `reports/closeout/closeout-20260330-140832.md`
+- Health: `reports/health/health-20260330-175242.md`
+- Closeout: `reports/closeout/closeout-20260330-175240.md`
 
 ## Action
 - No blocking issue detected.
 
 ## 7) WORKLOG.md tail (~60 lines)
-- **`docs/spec/raw/.../00-CORE.md`**：完整版 SSOT（含 Downloads 長文）；**`63-cursor-core-identity-risk.mdc`**：精簡 alwaysApply，與 AO／`AGENTS`／十一段輸出分工；**`sync-enterprise-cursor-rules-to-monorepo-root.ps1`**：`verify-build-gates`／`doc-sync` Apply 時自動鏡像 `63–66`；**`system-health-check`** 增 SHA256 對齊檢查（343 項）。
-- **根因**：monorepo 根僅載入 `Work/.cursor/rules`，須與 `agency-os` 正本同步（已文件化於 `README-部署說明`、`cursor-enterprise-rules-index`）。
-- **1Password**：repo 不採用；已刪 **`%USERPROFILE%\.cursor\plugins\cache\cursor-public\1password`**；使用者宜於 Cursor Plugins **關閉**該外掛以免快取再下載。
-- **推送**：`78d836b`…`c27132d`、`d8e1943` 等已於本段對話期間 `push origin main`（詳 Git 日誌）。
+  2) 成功後確認 `reports/linear/linear-schedule-map.json` 出現，再跑全量（不帶 `-MaxTasks`）。
+  3) 執行 `sync-linear-delta-to-daily.ps1`，確認 daily 新增 `### Linear API sync (...)`。
+  4) 若仍卡住，優先檢查公司網路對 `https://api.linear.app/graphql` 出站策略/代理限制與 Linear Team 權限。
+
 
 
 

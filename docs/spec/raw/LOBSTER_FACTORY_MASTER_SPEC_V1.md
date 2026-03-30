@@ -18,6 +18,13 @@
 
 ---
 
+> **📌 規格原文維護**  
+> **四份整合入口**：[`company-os-four-sources-integration.md`](../../../agency-os/docs/overview/company-os-four-sources-integration.md)｜[`README-four-sources-maintenance.md`](README-four-sources-maintenance.md)  
+> **按需對照**：系統介紹 [`agency-os-complete-system-introduction.md`](../../../agency-os/docs/overview/agency-os-complete-system-introduction.md)｜總控 [`agency-command-center-v1.md`](../../../agency-os/docs/architecture/agency-command-center-v1.md)｜龍蝦 routing [`MCP_TOOL_ROUTING_SPEC.md`](../../../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md)  
+> **本檔大段（第 1 部分）**：§0 定義 → §1 總目標 → §2 邊界 → §3 三 OS → §4–5 架構 → §6 多租戶 → §7 權限 → §8 自動化等級 → §9 HITL → §10 技術棧…（後續章請於檔內搜尋標題）
+
+---
+
 # **0\. 先定義：你不是在做自動化，你是在做一間可複製的公司**
 
 你要建的，不是單純「自動化很多事」的系統。  

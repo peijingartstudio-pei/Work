@@ -17,7 +17,7 @@
 
 | 位置 | 用途 |
 |---|---|
-| **`agency-os/.cursor/rules/63-cursor-core-identity-risk.mdc`** | **精簡強制條款**（每次載入）：身分、主動偵測、商業視角、溝通／衝突／情境、風險分級、輸出分工；**完整長文與十一段模板**在 **`../docs/spec/raw/Cursor  Rules for AI/00-CORE.md`**（與 `00/30/40`／`AGENTS` 衝突時以上位為準） |
+| **`agency-os/.cursor/rules/63-cursor-core-identity-risk.mdc`** | **精簡強制條款**（每次載入）：身分、主動偵測、商業視角、溝通／衝突／情境、風險分級、輸出分工；**完整長文與十一段模板脈絡**在 **`../docs/spec/raw/Cursor  Rules for AI/00-CORE.md`**（**長文參考／溯源**，非全系統實情 SSOT；與 `00/30/40`／`AGENTS`／`TASKS`／路由規格衝突時以上位與營運 SSOT 為準） |
 | **`agency-os/.cursor/rules/64-architecture-mcp-routing.mdc`** | 架構分層、MCP／工具職責（**細節以下方 SSOT 為準**） |
 | **`agency-os/.cursor/rules/65-build-standards-data-state.mdc`** | DB／狀態機／專案結構（**僅在對應 globs 下啟用**） |
 | **`agency-os/.cursor/rules/66-skills-observability-protocol.mdc`** | Skill 協議、可觀測性與 Phase 節奏 |
@@ -54,5 +54,5 @@
 - `docs/operations/security-secrets-policy.md`
 - `docs/README.md`
 
-_Last synced: 2026-03-30 06:08:32 UTC_
+_Last synced: 2026-03-30 09:52:39 UTC_
 

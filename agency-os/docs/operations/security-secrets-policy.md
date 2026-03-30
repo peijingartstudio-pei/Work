@@ -34,5 +34,5 @@
 - `docs/international/global-compliance-baseline.md`
 - `docs/operations/cursor-enterprise-rules-index.md`
 
-_Last synced: 2026-03-30 05:51:32 UTC_
+_Last synced: 2026-03-30 09:52:39 UTC_
 

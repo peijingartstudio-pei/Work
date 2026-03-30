@@ -15,6 +15,8 @@
 | [ENTERPRISE_BASE_STACK.md](../../../docs/spec/raw/ENTERPRISE_BASE_STACK.md) | **工具棧剛性**：必補／建議／視需求的觀測、耐用流程、邊界、身分、計費等 | **對照**現有選型與 [`tools-and-integrations.md`](../operations/tools-and-integrations.md)、`TASKS.md` |
 | [CURSOR_PACK_V1.md](../../../docs/spec/raw/CURSOR_PACK_V1.md) | **施工 prompt**：分段貼給 Cursor 的執行指令 | **開工／衝刺**時用；**不作 SSOT**，與 V3／Spec／已落地程式衝突時以後者為準 |
 
+**維護索引（目錄速查／誰別重複寫）**：[README-four-sources-maintenance.md](../../../docs/spec/raw/README-four-sources-maintenance.md)（P1：四份原文對齊本檔 + `docs/spec/README`）。
+
 ## 建議閱讀順序（整合心智模型）
 
 1. **V3**：§0 兩棵樹（Agency / Client）→ §一流程 → **§三**你要交付或對客戶承諾的模組。  

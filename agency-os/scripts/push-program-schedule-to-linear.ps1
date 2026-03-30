@@ -41,21 +41,27 @@ function Invoke-LinearGraphQL {
         $payloadObj.variables = $Variables
     }
     $payload = $payloadObj | ConvertTo-Json -Depth 12 -Compress
-    $headers = @{
-        Authorization  = $ApiKey
-        "Content-Type" = "application/json"
-    }
     try {
-        return Invoke-RestMethod -Uri "https://api.linear.app/graphql" -Method Post -Headers $headers -Body $payload -UseBasicParsing
+        # Use HttpClient with a hard timeout to avoid indefinite hangs.
+        $client = New-Object System.Net.Http.HttpClient
+        $client.Timeout = [TimeSpan]::FromSeconds(30)
+        $cts = New-Object System.Threading.CancellationTokenSource
+        $cts.CancelAfter([TimeSpan]::FromSeconds(30))
+
+        $req = New-Object System.Net.Http.HttpRequestMessage([System.Net.Http.HttpMethod]::Post, "https://api.linear.app/graphql")
+        $null = $req.Headers.TryAddWithoutValidation("Authorization", $ApiKey)
+        $req.Content = New-Object System.Net.Http.StringContent($payload, [System.Text.Encoding]::UTF8, "application/json")
+
+        $resp = $client.SendAsync($req, $cts.Token).GetAwaiter().GetResult()
+        $text = $resp.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+
+        if (-not $resp.IsSuccessStatusCode) {
+            throw ("status=" + [int]$resp.StatusCode + " " + $resp.ReasonPhrase + " body=" + $text)
+        }
+
+        return ($text | ConvertFrom-Json)
     } catch {
         $detail = $_.Exception.Message
-        $resp = $_.Exception.Response
-        if ($resp -and $resp.GetResponseStream) {
-            try {
-                $sr = New-Object System.IO.StreamReader($resp.GetResponseStream())
-                $detail = $detail + " | " + $sr.ReadToEnd()
-            } catch {}
-        }
         throw ("Linear HTTP error: " + $detail)
     }
 }
