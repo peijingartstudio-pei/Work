@@ -55,6 +55,10 @@
 - 已新增 `scripts/archive-old-reports.ps1`，建立 reports 保留與歸檔機制
 - 已修正 `RESUME_AFTER_REBOOT.md` 路徑與續接流程（統一 `AO-RESUME`）
 
+## Today (2026-03-30 晚) — Cursor 規則與外掛
+- 落地 **`00-CORE.md`（完整）+ `63.mdc`（精簡 alwaysApply）**；**`sync-enterprise-cursor-rules-to-monorepo-root.ps1`** 掛入 **`verify-build-gates`** 與 **`doc-sync`**；health **343** 檔包含 monorepo 根 **`63–66`** SHA256 對齊。
+- **1Password**：專案採 **DPAPI vault + env/mcp**；已刪 Cursor **`plugins/cache/.../1password`**；請於 IDE **停用**外掛免再載入。
+
 ## Next Step
 - 與客戶確認 `2026-001` Discovery 阻塞項（決策者/窗口、品牌定位、CR 估價基準、權限交付）
 - 以新客戶實跑一次 `NEW_TENANT_ONBOARDING_SOP` 並微調
@@ -297,5 +301,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-30 05:16:43 UTC_
+_Last synced: 2026-03-30 06:08:32 UTC_
 

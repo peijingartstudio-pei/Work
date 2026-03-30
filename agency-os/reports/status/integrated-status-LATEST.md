@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-03-30 13:21:36
+- Generated: 2026-03-30 14:08:36
 - agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -26,6 +26,10 @@
 *Checklist path:* `C:\Users\USER\Work\lobster-factory\docs\LOBSTER_FACTORY_MASTER_CHECKLIST.md`
 
 ## 4) memory/CONVERSATION_MEMORY.md (excerpts)
+
+### Today (2026-03-30 晚) — Cursor 規則與外掛
+- 落地 **`00-CORE.md`（完整）+ `63.mdc`（精簡 alwaysApply）**；**`sync-enterprise-cursor-rules-to-monorepo-root.ps1`** 掛入 **`verify-build-gates`** 與 **`doc-sync`**；health **343** 檔包含 monorepo 根 **`63–66`** SHA256 對齊。
+- **1Password**：專案採 **DPAPI vault + env/mcp**；已刪 Cursor **`plugins/cache/.../1password`**；請於 IDE **停用**外掛免再載入。
 
 ### Next Step
 - 與客戶確認 `2026-001` Discovery 阻塞項（決策者/窗口、品牌定位、CR 估價基準、權限交付）
@@ -244,11 +248,30 @@
 
 - 本機 `ao-close` push 曾因 **遠端超前** 被拒；需 `git pull --rebase origin main` 後再推。若遇合併衝突，以遠端主線為準並保留本檔「本機龍蝦複核」段落。
 
+---
+
+## 晚間續作（Cursor 規則／外掛）
+
+### 已完成
+
+- `00-CORE.md` 完整版 + `63.mdc` 精簡版與衝突優先順序；企業規則 **自動鏡像** 至 monorepo 根 + **health 對檔**。
+- 使用者問答：Settings 規則 vs 版控三層；**1Password** 非專案依賴；已刪外掛快取目錄。
+
+### 未完成（維持）
+
+- 四份 spec 原文整理（仍排 **明日 P1**）。
+- Cursor UI 內若仍啟用 1Password 外掛請手動關閉。
+- `docs/spec/README` 內編碼連結未逐一人工點驗（低優先）。
+
+## AO-CLOSE（第二輪 · 2026-03-30 晚）
+
+- 見下：執行 `ao-close.ps1` 後本段補 **連動檢查／commit hash**。
+
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-03-30 09:49:35`
+- Time: `2026-03-30 14:08:34`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
@@ -256,17 +279,17 @@
 - Result: **PASS**
 
 ## Latest Reports
-- Health: `reports/health/health-20260330-094934.md`
-- Closeout: `reports/closeout/closeout-20260330-094933.md`
+- Health: `reports/health/health-20260330-140834.md`
+- Closeout: `reports/closeout/closeout-20260330-140832.md`
 
 ## Action
 - No blocking issue detected.
 
 ## 7) WORKLOG.md tail (~60 lines)
-### Lobster Factory - 本機複核（公司桌機 `C:\Users\USER\Work`）
-- 主線 C1-2/C1-3 已於 **2026-03-27** WORKLOG 紀錄（見上）；此為桌機再次 execute 複核。
-- `validate-package-install-runs-flow.mjs --execute=1`：PASS（`ok: true`）；`workflowRunId=73c91be3-3663-4977-aa9a-4c2b7e24dd97`、`installRunId=ae8c6e48-fac9-4ac6-8721-d142c831c620`；`bootstrap-validate.mjs`：PASS。
-- **Git**：`git push` 遭拒後需 `git pull --rebase origin main` 合併遠端再推；合併衝突已手動收斂。
+- **`docs/spec/raw/.../00-CORE.md`**：完整版 SSOT（含 Downloads 長文）；**`63-cursor-core-identity-risk.mdc`**：精簡 alwaysApply，與 AO／`AGENTS`／十一段輸出分工；**`sync-enterprise-cursor-rules-to-monorepo-root.ps1`**：`verify-build-gates`／`doc-sync` Apply 時自動鏡像 `63–66`；**`system-health-check`** 增 SHA256 對齊檢查（343 項）。
+- **根因**：monorepo 根僅載入 `Work/.cursor/rules`，須與 `agency-os` 正本同步（已文件化於 `README-部署說明`、`cursor-enterprise-rules-index`）。
+- **1Password**：repo 不採用；已刪 **`%USERPROFILE%\.cursor\plugins\cache\cursor-public\1password`**；使用者宜於 Cursor Plugins **關閉**該外掛以免快取再下載。
+- **推送**：`78d836b`…`c27132d`、`d8e1943` 等已於本段對話期間 `push origin main`（詳 Git 日誌）。
 
 
 
