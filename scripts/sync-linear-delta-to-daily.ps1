@@ -33,14 +33,16 @@ if ([string]::IsNullOrWhiteSpace($apiKey)) {
     Write-Host "sync-linear-delta: LINEAR_API_KEY not set; skip." -ForegroundColor Yellow
     exit 0
 }
+$apiKey = ([string]$apiKey) -replace "[\u0000-\u001F\u007F]", ""
+$apiKey = $apiKey.Trim()
 
 $since = (Get-Date).ToUniversalTime().AddHours(-1 * [Math]::Max(1, $SinceHours))
 $sinceIso = $since.ToString("yyyy-MM-ddTHH:mm:ss.fff") + "Z"
 
 # orderBy omitted for broader API compatibility across Linear schema versions.
 $query = @'
-query($since: DateTime!, $first: Int!) {
-  issues(filter: { updatedAt: { gte: $since } }, first: $first) {
+query($first: Int!) {
+  issues(first: $first) {
     nodes {
       identifier
       title
@@ -55,7 +57,6 @@ query($since: DateTime!, $first: Int!) {
 $payloadObj = [ordered]@{
     query     = $query
     variables = [ordered]@{
-        since = $sinceIso
         first = $First
     }
 }
@@ -68,26 +69,14 @@ $headers = @{
 }
 
 try {
-    $client = New-Object System.Net.Http.HttpClient
-    $client.Timeout = [TimeSpan]::FromSeconds(30)
-
-    $req = New-Object System.Net.Http.HttpRequestMessage([System.Net.Http.HttpMethod]::Post, $uri)
-    $null = $req.Headers.TryAddWithoutValidation("Authorization", $apiKey)
-    $req.Content = New-Object System.Net.Http.StringContent($payload, [System.Text.Encoding]::UTF8, "application/json")
-
-    $httpResp = $client.SendAsync($req).GetAwaiter().GetResult()
-    $text = $httpResp.Content.ReadAsStringAsync().GetAwaiter().GetResult()
-    if (-not $httpResp.IsSuccessStatusCode) {
-        throw ("status=" + [int]$httpResp.StatusCode + " " + $httpResp.ReasonPhrase + " body=" + $text)
-    }
-    $resp = ($text | ConvertFrom-Json)
+    $resp = Invoke-RestMethod -Uri $uri -Method Post -Headers $headers -Body $payload -UseBasicParsing -TimeoutSec 30
 } catch {
     Write-Host ("sync-linear-delta: HTTP error (skip): " + $_.Exception.Message) -ForegroundColor Yellow
     exit 0
 }
 
-if ($resp.errors) {
-    $msg = ($resp.errors | ForEach-Object { $_.message }) -join "; "
+if ($resp.PSObject.Properties['errors'] -and $resp.errors) {
+    $msg = (@($resp.errors) | ForEach-Object { $_.message }) -join "; "
     Write-Host ("sync-linear-delta: GraphQL errors (skip): " + $msg) -ForegroundColor Yellow
     exit 0
 }

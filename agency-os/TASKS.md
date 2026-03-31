@@ -64,6 +64,7 @@
 - [x] 完成 Secrets Vault 一鍵匯入（`mcp.json` + Lobster/Slack 關鍵值）
 - [x] `PROGRAM_SCHEDULE.json` → Linear：`push-program-schedule-to-linear.ps1` + playbook §3（單向；稽核仍靠 `sync-linear-delta-to-daily`）
 - [ ] Linear 雙向同步修復與驗證（`push-program-schedule-to-linear` + `sync-linear-delta-to-daily`）：目前 `LINEAR_API_KEY` 已入本機 vault，但 push 卡在 Linear GraphQL 呼叫；已加 timeout 與錯誤處理，待 AO-RESUME 續測並產生 `agency-os/reports/linear/linear-schedule-map.json` + `memory/daily` 的 `### Linear API sync` 區塊
+- [x] Linear 雙向同步修復與驗證完成（2026-03-31）：`reports/linear/linear-schedule-map.json` 已產生且 31 筆對照；`memory/daily/2026-03-31.md` 已落 `### Linear API sync`。已加一鍵 `scripts/linear-sync-all.ps1`，並支援分流 project env：`LINEAR_PROJECT_ID_AO/LF/PJ`。
 
 ## Backlog
 - [x] 客戶分級與風險評分模型
@@ -88,5 +89,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-30 09:52:39 UTC_
+_Last synced: 2026-03-31 10:06:12 UTC_
 

@@ -301,6 +301,13 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
   - `sync-linear-delta-to-daily.ps1`：改為 `HttpClient`；加入 timeout，避免 AO-CLOSE/手動同步掛住。
 - 截至收工：仍未成功產生 `reports/linear/linear-schedule-map.json`，`memory/daily` 未新增新一輪 `### Linear API sync`；需 AO-RESUME 續做 smoke -> full run。
 
+## Today (2026-03-31) - Linear sync resolved + auto flow
+- 問題已收斂：`LINEAR_API_KEY` 有效、viewer 查詢通過；`push-program-schedule-to-linear` 完成 smoke 與 full（31 筆）。
+- 成果：`agency-os/reports/linear/linear-schedule-map.json` 建立；`memory/daily/2026-03-31.md` 成功 append `### Linear API sync`。
+- 修補：StrictMode `.errors/.Count` 防呆、projectId UUID 驗證、同步腳本相容性修復（root + agency-os 同步）。
+- 自動化：新增 `scripts/linear-sync-all.ps1`（push + delta 一鍵）；支援分流 project env `LINEAR_PROJECT_ID_AO/LF/PJ`。
+- 管理策略：預設不再全流綁單一 project；AO 已綁定 `ffe9e2b5-55ee-4cbb-baa6-7479cbf10f49`，LF/PJ 待指定。
+
 ## Today (2026-03-28) - Lobster `http_json` hosting
 - `LOBSTER_HOSTING_ADAPTER=http_json` + `HTTP_JSON_HOSTING_ADAPTER.md`；`provisionHttpJsonStaging`；`create-wp-site` 支援 `vendor_staging_provisioned` 與 `vendorStaging`；`resolveStagingProvisioning` 為 async。
 - **互動偏好**：可驗證範圍內代理自主推進、減少選項式追問；不可逆決策仍單點確認。
@@ -312,5 +319,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-30 09:52:39 UTC_
+_Last synced: 2026-03-31 10:06:12 UTC_
 

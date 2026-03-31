@@ -80,6 +80,9 @@
 - **腳本**：`agency-os/scripts/push-program-schedule-to-linear.ps1`（repo 根亦有 **`scripts/push-program-schedule-to-linear.ps1`** 相容入口，解析規則相同）。
 - **來源**：`docs/overview/PROGRAM_SCHEDULE.json`（可用 `-SchedulePath` 覆寫；`-WorkspaceRoot` 指向 `agency-os` 根目錄時最直覺）。
 - **認證**：**`LINEAR_API_KEY`**（**正式推送必填**；不入庫）。**`-DryRun` 可不設**（僅本地預覽，**Linear 上完全不會變**）。**`LINEAR_TEAM_ID`** 可省略（多 team 時會警告並用第一個）。**`LINEAR_PROJECT_ID`** 可選，問題會掛到該 **Project**。
+- **`LINEAR_PROJECT_ID` 格式**：必須是 **UUID**（例如 `ffe9e2b5-55ee-4cbb-baa6-7479cbf10f49`）。若填錯格式，推送腳本會警告並忽略 project 綁定（不阻塞整批同步）。
+- **預設建議**：`LINEAR_PROJECT_ID` 保持未設定（避免一次把整份排程綁進單一 Project）；需要時再臨時設定或只對特定批次指定。
+- **分流綁定（推薦）**：可分別設定 `LINEAR_PROJECT_ID_AO`、`LINEAR_PROJECT_ID_LF`、`LINEAR_PROJECT_ID_PJ`（皆 UUID）。腳本會優先用分流值，無分流才回退 `LINEAR_PROJECT_ID`。
 - **行為**：依 `streams[].tasks[]` 建立或更新 issue（標題含 `[streamKey taskId]`；描述內含 HTML comment `<!-- agency-os-schedule v1 ... -->` 供穩定對應）；**`dueDate`** 來自 `end`；**`crit`** → Linear **Urgent**（priority 1）。
 - **對應表**（create/update）：`reports/linear/linear-schedule-map.json`（**task.id** → issue id / identifier / url）。刪除此檔會在下次執行時**重新建立** issue（可能重複），請保留或手動合併。
 - **演練**：`-DryRun` 僅印出將執行之 create/update，**不呼叫** API → **因此在 Linear 裡看不到任何新資料是正常的**。
@@ -94,6 +97,12 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\agency-os\scripts\push-pro
 powershell -NoProfile -ExecutionPolicy Bypass -File .\agency-os\scripts\push-program-schedule-to-linear.ps1 -WorkspaceRoot .\agency-os -MaxTasks 1
 # 或同線設定（避免 $env 在巢狀 powershell 被吃掉時）：
 # cmd /c "set LINEAR_API_KEY=lin_api_xxxx&& powershell -NoProfile -ExecutionPolicy Bypass -File .\agency-os\scripts\push-program-schedule-to-linear.ps1 -WorkspaceRoot .\agency-os -MaxTasks 1"
+
+# 一鍵（push + delta）：先設好 LINEAR_API_KEY，再跑
+powershell -NoProfile -ExecutionPolicy Bypass -File .\agency-os\scripts\linear-sync-all.ps1 -WorkspaceRoot .\agency-os
+
+# 清理（把 map 內既有 issues 從當前 project 解除綁定，不刪 issue）
+powershell -NoProfile -ExecutionPolicy Bypass -File .\agency-os\scripts\linear-unassign-project-from-map.ps1 -WorkspaceRoot .\agency-os
 ```
 
 ### 3.2 若在 Linear 看不到新議題
@@ -127,5 +136,5 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\agency-os\scripts\push-pro
 ## Related Documents (Auto-Synced)
 - `docs/standards/n8n-workflow-architecture.md`
 
-_Last synced: 2026-03-29 17:24:24 UTC_
+_Last synced: 2026-03-31 10:06:12 UTC_
 

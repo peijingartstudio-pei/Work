@@ -41,29 +41,25 @@ function Invoke-LinearGraphQL {
         $payloadObj.variables = $Variables
     }
     $payload = $payloadObj | ConvertTo-Json -Depth 12 -Compress
+    $headers = @{
+        Authorization  = $ApiKey
+        "Content-Type" = "application/json"
+    }
     try {
-        # Use HttpClient with a hard timeout to avoid indefinite hangs.
-        $client = New-Object System.Net.Http.HttpClient
-        $client.Timeout = [TimeSpan]::FromSeconds(30)
-        $cts = New-Object System.Threading.CancellationTokenSource
-        $cts.CancelAfter([TimeSpan]::FromSeconds(30))
-
-        $req = New-Object System.Net.Http.HttpRequestMessage([System.Net.Http.HttpMethod]::Post, "https://api.linear.app/graphql")
-        $null = $req.Headers.TryAddWithoutValidation("Authorization", $ApiKey)
-        $req.Content = New-Object System.Net.Http.StringContent($payload, [System.Text.Encoding]::UTF8, "application/json")
-
-        $resp = $client.SendAsync($req, $cts.Token).GetAwaiter().GetResult()
-        $text = $resp.Content.ReadAsStringAsync().GetAwaiter().GetResult()
-
-        if (-not $resp.IsSuccessStatusCode) {
-            throw ("status=" + [int]$resp.StatusCode + " " + $resp.ReasonPhrase + " body=" + $text)
-        }
-
-        return ($text | ConvertFrom-Json)
+        return Invoke-RestMethod -Uri "https://api.linear.app/graphql" -Method Post -Headers $headers -Body $payload -UseBasicParsing -TimeoutSec 30
     } catch {
         $detail = $_.Exception.Message
         throw ("Linear HTTP error: " + $detail)
     }
+}
+
+function Get-GraphQLErrors {
+    param([object]$Response)
+    if ($null -eq $Response) { return @() }
+    if (-not $Response.PSObject.Properties['errors']) { return @() }
+    $errs = $Response.errors
+    if ($null -eq $errs) { return @() }
+    return @($errs)
 }
 
 function Get-LinearTeamContext {
@@ -77,8 +73,9 @@ function Get-LinearTeamContext {
     }
     $q = 'query { teams(first: 30) { nodes { id name key } pageInfo { hasNextPage } } }'
     $r = Invoke-LinearGraphQL -Query $q -Variables @{} -ApiKey $ApiKey
-    if ($r.errors) {
-        throw ("teams query failed: " + (($r.errors | ForEach-Object { $_.message }) -join "; "))
+    $teamErrors = @(Get-GraphQLErrors -Response $r)
+    if ($teamErrors.Count -gt 0) {
+        throw ("teams query failed: " + (($teamErrors | ForEach-Object { $_.message }) -join "; "))
     }
     $nodes = @($r.data.teams.nodes)
     if ($nodes.Count -eq 0) { throw "Linear: no teams visible for this API key." }
@@ -114,6 +111,8 @@ if ([string]::IsNullOrWhiteSpace($apiKey)) {
         exit 1
     }
 }
+$apiKey = ([string]$apiKey) -replace "[\u0000-\u001F\u007F]", ""
+$apiKey = $apiKey.Trim()
 
 if (-not $DryRun) {
     Write-Host "LIVE: Creating/updating Linear issues; map file: reports\linear\linear-schedule-map.json" -ForegroundColor Cyan
@@ -163,8 +162,26 @@ if ($DryRun) {
     $teamCtx = Get-LinearTeamContext -ApiKey $apiKey
     $teamId = $teamCtx.Id
 }
-$projectId = $env:LINEAR_PROJECT_ID
-if ([string]::IsNullOrWhiteSpace($projectId)) { $projectId = $null }
+function Normalize-ProjectIdOrNull {
+    param(
+        [string]$Raw,
+        [string]$Label
+    )
+    if ([string]::IsNullOrWhiteSpace($Raw)) { return $null }
+    $v = $Raw.Trim()
+    if ($v -notmatch '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$') {
+        Write-Warning ("push-program-schedule-to-linear: " + $Label + " is not UUID, ignore: " + $v)
+        return $null
+    }
+    return $v
+}
+
+$defaultProjectId = Normalize-ProjectIdOrNull -Raw $env:LINEAR_PROJECT_ID -Label "LINEAR_PROJECT_ID"
+$projectByStream = @{
+    AO = Normalize-ProjectIdOrNull -Raw $env:LINEAR_PROJECT_ID_AO -Label "LINEAR_PROJECT_ID_AO"
+    LF = Normalize-ProjectIdOrNull -Raw $env:LINEAR_PROJECT_ID_LF -Label "LINEAR_PROJECT_ID_LF"
+    PJ = Normalize-ProjectIdOrNull -Raw $env:LINEAR_PROJECT_ID_PJ -Label "LINEAR_PROJECT_ID_PJ"
+}
 
 $createMutation = @'
 mutation($input: IssueCreateInput!) {
@@ -191,6 +208,12 @@ $taskSlot = 0
 foreach ($stream in $schedule.streams) {
     if ($MaxTasks -gt 0 -and $taskSlot -ge $MaxTasks) { break }
     $sk = $stream.key
+    $streamProjectId = $null
+    if ($projectByStream.ContainsKey($sk) -and $projectByStream[$sk]) {
+        $streamProjectId = $projectByStream[$sk]
+    } else {
+        $streamProjectId = $defaultProjectId
+    }
     foreach ($task in $stream.tasks) {
         $tid = $task.id
         if ([string]::IsNullOrWhiteSpace($tid)) { continue }
@@ -223,7 +246,7 @@ foreach ($stream in $schedule.streams) {
             title       = $title
             description = $desc
         }
-        if ($projectId) { $input.projectId = $projectId }
+        if ($streamProjectId) { $input.projectId = $streamProjectId }
         if (($task.end) -and -not [string]::IsNullOrWhiteSpace("$($task.end)")) {
             $input.dueDate = "$($task.end)"
         }
@@ -248,14 +271,14 @@ foreach ($stream in $schedule.streams) {
                     title       = $title
                     description = $desc
                 }
+                if ($streamProjectId) { $upd.projectId = $streamProjectId }
                 if (($task.end) -and -not [string]::IsNullOrWhiteSpace("$($task.end)")) {
                     $upd.dueDate = "$($task.end)"
                 }
                 if ($priority -gt 0) { $upd.priority = $priority }
                 $vars = @{ id = $existingIssueId; input = $upd }
                 $r2 = Invoke-LinearGraphQL -Query $updateMutation -Variables $vars -ApiKey $apiKey
-                $gqlE = @()
-                if ($null -ne $r2.errors) { $gqlE = @($r2.errors) }
+                $gqlE = @(Get-GraphQLErrors -Response $r2)
                 $updOk = $false
                 if ($gqlE.Count -eq 0 -and $r2.data -and $r2.data.issueUpdate) { $updOk = [bool]$r2.data.issueUpdate.success }
                 if ($gqlE.Count -gt 0) {
@@ -277,8 +300,7 @@ foreach ($stream in $schedule.streams) {
             } else {
                 $vars = @{ input = $input }
                 $r2 = Invoke-LinearGraphQL -Query $createMutation -Variables $vars -ApiKey $apiKey
-                $gqlC = @()
-                if ($null -ne $r2.errors) { $gqlC = @($r2.errors) }
+                $gqlC = @(Get-GraphQLErrors -Response $r2)
                 $crOk = $false
                 if ($gqlC.Count -eq 0 -and $r2.data -and $r2.data.issueCreate) { $crOk = [bool]$r2.data.issueCreate.success }
                 if ($gqlC.Count -gt 0) {

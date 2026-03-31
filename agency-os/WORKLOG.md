@@ -79,7 +79,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-30 09:52:39 UTC_
+_Last synced: 2026-03-31 10:06:12 UTC_
 
 ## 2026-03-20
 
@@ -518,6 +518,14 @@ _Last synced: 2026-03-30 09:52:39 UTC_
   2) 成功後確認 `reports/linear/linear-schedule-map.json` 出現，再跑全量（不帶 `-MaxTasks`）。
   3) 執行 `sync-linear-delta-to-daily.ps1`，確認 daily 新增 `### Linear API sync (...)`。
   4) 若仍卡住，優先檢查公司網路對 `https://api.linear.app/graphql` 出站策略/代理限制與 Linear Team 權限。
+
+### Linear 同步修復完成（2026-03-31）
+- 授權與連線驗證完成：以 `viewer` 查詢確認 API 可用；`push-program-schedule-to-linear` smoke + full 成功。
+- 產物落地：`agency-os/reports/linear/linear-schedule-map.json` 已建立並寫入 31 筆 issue 對照（`SOU-11`~`SOU-41`）。
+- 稽核落盤：`sync-linear-delta-to-daily.ps1` 成功 append，`memory/daily/2026-03-31.md` 已有 `### Linear API sync (...)` 區塊。
+- 腳本穩定化：修正 StrictMode 下 `.errors/.Count` 例外、防呆 `LINEAR_PROJECT_ID` UUID、補一鍵 `scripts/linear-sync-all.ps1`。
+- 專案管理分流：已改為支援 `LINEAR_PROJECT_ID_AO/LF/PJ`；目前 AO 綁定 `ffe9e2b5-55ee-4cbb-baa6-7479cbf10f49`，預設 `LINEAR_PROJECT_ID` 已清除避免全流誤綁。
+
 
 
 

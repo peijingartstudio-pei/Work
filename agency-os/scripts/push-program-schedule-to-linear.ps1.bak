@@ -1,4 +1,4 @@
-# Push docs/overview/PROGRAM_SCHEDULE.json tasks to Linear as issues (create or update).
+﻿# Push docs/overview/PROGRAM_SCHEDULE.json tasks to Linear as issues (create or update).
 # Uses LINEAR_API_KEY, LINEAR_TEAM_ID (optional if only one team), optional LINEAR_PROJECT_ID.
 # Persists issue id map at reports/linear/linear-schedule-map.json for stable updates.
 # ASCII-only. Planning SSOT remains JSON; re-run after editing JSON to refresh Linear.
@@ -162,26 +162,8 @@ if ($DryRun) {
     $teamCtx = Get-LinearTeamContext -ApiKey $apiKey
     $teamId = $teamCtx.Id
 }
-function Normalize-ProjectIdOrNull {
-    param(
-        [string]$Raw,
-        [string]$Label
-    )
-    if ([string]::IsNullOrWhiteSpace($Raw)) { return $null }
-    $v = $Raw.Trim()
-    if ($v -notmatch '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$') {
-        Write-Warning ("push-program-schedule-to-linear: " + $Label + " is not UUID, ignore: " + $v)
-        return $null
-    }
-    return $v
-}
-
-$defaultProjectId = Normalize-ProjectIdOrNull -Raw $env:LINEAR_PROJECT_ID -Label "LINEAR_PROJECT_ID"
-$projectByStream = @{
-    AO = Normalize-ProjectIdOrNull -Raw $env:LINEAR_PROJECT_ID_AO -Label "LINEAR_PROJECT_ID_AO"
-    LF = Normalize-ProjectIdOrNull -Raw $env:LINEAR_PROJECT_ID_LF -Label "LINEAR_PROJECT_ID_LF"
-    PJ = Normalize-ProjectIdOrNull -Raw $env:LINEAR_PROJECT_ID_PJ -Label "LINEAR_PROJECT_ID_PJ"
-}
+$projectId = $env:LINEAR_PROJECT_ID
+if ([string]::IsNullOrWhiteSpace($projectId)) { $projectId = $null }
 
 $createMutation = @'
 mutation($input: IssueCreateInput!) {
@@ -208,12 +190,6 @@ $taskSlot = 0
 foreach ($stream in $schedule.streams) {
     if ($MaxTasks -gt 0 -and $taskSlot -ge $MaxTasks) { break }
     $sk = $stream.key
-    $streamProjectId = $null
-    if ($projectByStream.ContainsKey($sk) -and $projectByStream[$sk]) {
-        $streamProjectId = $projectByStream[$sk]
-    } else {
-        $streamProjectId = $defaultProjectId
-    }
     foreach ($task in $stream.tasks) {
         $tid = $task.id
         if ([string]::IsNullOrWhiteSpace($tid)) { continue }
@@ -246,7 +222,7 @@ foreach ($stream in $schedule.streams) {
             title       = $title
             description = $desc
         }
-        if ($streamProjectId) { $input.projectId = $streamProjectId }
+        if ($projectId) { $input.projectId = $projectId }
         if (($task.end) -and -not [string]::IsNullOrWhiteSpace("$($task.end)")) {
             $input.dueDate = "$($task.end)"
         }
@@ -271,14 +247,14 @@ foreach ($stream in $schedule.streams) {
                     title       = $title
                     description = $desc
                 }
-                if ($streamProjectId) { $upd.projectId = $streamProjectId }
                 if (($task.end) -and -not [string]::IsNullOrWhiteSpace("$($task.end)")) {
                     $upd.dueDate = "$($task.end)"
                 }
                 if ($priority -gt 0) { $upd.priority = $priority }
                 $vars = @{ id = $existingIssueId; input = $upd }
                 $r2 = Invoke-LinearGraphQL -Query $updateMutation -Variables $vars -ApiKey $apiKey
-                $gqlE = @(Get-GraphQLErrors -Response $r2)
+                $gqlE = @()
+                $gqlE = Get-GraphQLErrors -Response $r2
                 $updOk = $false
                 if ($gqlE.Count -eq 0 -and $r2.data -and $r2.data.issueUpdate) { $updOk = [bool]$r2.data.issueUpdate.success }
                 if ($gqlE.Count -gt 0) {
@@ -300,7 +276,8 @@ foreach ($stream in $schedule.streams) {
             } else {
                 $vars = @{ input = $input }
                 $r2 = Invoke-LinearGraphQL -Query $createMutation -Variables $vars -ApiKey $apiKey
-                $gqlC = @(Get-GraphQLErrors -Response $r2)
+                $gqlC = @()
+                $gqlC = Get-GraphQLErrors -Response $r2
                 $crOk = $false
                 if ($gqlC.Count -eq 0 -and $r2.data -and $r2.data.issueCreate) { $crOk = [bool]$r2.data.issueCreate.success }
                 if ($gqlC.Count -gt 0) {
@@ -340,3 +317,4 @@ if (-not $DryRun) {
 
 Write-Host ("push-program-schedule-to-linear: processed=" + $processed + " failed=" + $failed + " map=" + $mapPath) -ForegroundColor $(if ($failed -gt 0) { "Yellow" } else { "Green" })
 exit $(if ($failed -gt 0) { 1 } else { 0 })
+
