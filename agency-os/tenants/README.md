@@ -4,7 +4,7 @@
 
 ## 結構
 - `templates/`: 建立新 tenant 或新 site 時複製的範本
-- `company-a/`: 目前啟用中的公司資料夾
+- `company-p1-pilot/`: 目前啟用中的公司資料夾
 
 ## 規則
 - 每家公司資料、憑證、排程、報表必須隔離
@@ -39,5 +39,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-03-30 05:16:43 UTC_
+_Last synced: 2026-03-31 14:15:52 UTC_
 

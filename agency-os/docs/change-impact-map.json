@@ -49,8 +49,8 @@
       "targets": [
         "README.md",
         "docs/README.md",
-        "tenants/company-a/01_COMMANDER_SYSTEM_GUIDE.md",
-        "tenants/company-a/02_CLIENT_WORKSPACE_GUIDE.md",
+        "tenants/company-p1-pilot/01_COMMANDER_SYSTEM_GUIDE.md",
+        "tenants/company-p1-pilot/02_CLIENT_WORKSPACE_GUIDE.md",
         "tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md",
         "tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md"
       ]
@@ -275,10 +275,10 @@
         "tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md",
         "tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md",
         "tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md",
-        "tenants/company-a/01_COMMANDER_SYSTEM_GUIDE.md",
-        "tenants/company-a/02_CLIENT_WORKSPACE_GUIDE.md",
-        "tenants/company-a/03_TOOLS_CONFIGURATION_GUIDE.md",
-        "tenants/company-a/04_OPERATIONS_AUTOMATION_GUIDE.md",
+        "tenants/company-p1-pilot/01_COMMANDER_SYSTEM_GUIDE.md",
+        "tenants/company-p1-pilot/02_CLIENT_WORKSPACE_GUIDE.md",
+        "tenants/company-p1-pilot/03_TOOLS_CONFIGURATION_GUIDE.md",
+        "tenants/company-p1-pilot/04_OPERATIONS_AUTOMATION_GUIDE.md",
         "README.md",
         "TASKS.md",
         "WORKLOG.md"
@@ -287,7 +287,7 @@
     {
       "source": "tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md",
       "targets": [
-        "tenants/company-a/01_COMMANDER_SYSTEM_GUIDE.md",
+        "tenants/company-p1-pilot/01_COMMANDER_SYSTEM_GUIDE.md",
         "tenants/README.md",
         "README.md"
       ]
@@ -295,7 +295,7 @@
     {
       "source": "tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md",
       "targets": [
-        "tenants/company-a/02_CLIENT_WORKSPACE_GUIDE.md",
+        "tenants/company-p1-pilot/02_CLIENT_WORKSPACE_GUIDE.md",
         "tenants/README.md",
         "README.md"
       ]
@@ -303,7 +303,7 @@
     {
       "source": "tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md",
       "targets": [
-        "tenants/company-a/03_TOOLS_CONFIGURATION_GUIDE.md",
+        "tenants/company-p1-pilot/03_TOOLS_CONFIGURATION_GUIDE.md",
         "tenants/README.md",
         "README.md",
         "docs/operations/tools-and-integrations.md"
@@ -312,7 +312,7 @@
     {
       "source": "tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md",
       "targets": [
-        "tenants/company-a/04_OPERATIONS_AUTOMATION_GUIDE.md",
+        "tenants/company-p1-pilot/04_OPERATIONS_AUTOMATION_GUIDE.md",
         "tenants/README.md",
         "README.md",
         "docs/operations/tenant-scheduling.md",

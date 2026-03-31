@@ -1,5 +1,56 @@
 ﻿# Worklog
 
+> Historical snapshot note: this file records decisions/events by date. For current operating rules and commands, use the event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (startup/AO-RESUME) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (shutdown/AO-CLOSE).
+
+## 2026-03-31
+
+### Linear source cleanup hardening
+- 修復 Linear title 生成防呆：`push-program-schedule-to-linear.ps1` 改為 `"$($task.name)"`，避免把整個 task object 序列化成 `@{id=...}` 汙染 issue title。
+- 來源修復已執行：全量 push update 成功（31 筆，failed=0），既有 polluted issue title 已回寫為乾淨格式。
+- 日誌防呆已補上：`sync-linear-delta-to-daily.ps1` 新增 `Normalize-LinearTitleForDaily`，避免 control chars/異常 payload 汙染 daily。
+- 歷史亂碼區塊已從 `memory/daily/2026-03-31.md` 清理，並完成重跑驗證。
+
+### AO + Lobster event flow diagram landed
+- 已將 AO + Lobster 事件流 Mermaid 圖落地到 `docs/overview/ao-lobster-operating-model.md`，作為「開工 -> 執行 -> 收工 -> 他機續接」單一視覺化流程。
+- `TASKS.md` 對應待辦已標記完成，避免口頭承諾與任務板狀態不一致。
+
+### Single Owner policy hardened
+- 將「除非必要，一份內容只能有一個主人（Owner File）」提升為最高執行原則：寫入 `.cursor/rules/63-cursor-core-identity-risk.mdc`（含 `agency-os/.cursor/rules` 鏡像）與 `AGENTS.md`。
+- `README.md` 取消複製 AO+Lobster 圖內容，改為只保留 SSOT 入口連結。
+- `scripts/doc-sync-automation.ps1` 新增 Single Owner 檢查機制；規則由 `docs/operations/single-owner-registry.json` 管理，檢出重複即在 closeout 報告標示並阻擋流程。
+- 第 2 階段擴充 registry：新增 AO-RESUME 主流程、AO-RESUME 30 秒自檢、AO-CLOSE 硬性 Gate 三條 owner 規則，避免開工/收工關鍵段落回流到索引頁。
+
+### Lobster A9 governance baseline completed
+- 新增 A9 IAM 邊界文件：`lobster-factory/docs/operations/ARTIFACTS_IAM_BOUNDARY.md`。
+- 新增可機器驗證政策：`lobster-factory/policies/artifacts/artifacts-governance-baseline.json`。
+- 新增治理腳本：`lobster-factory/scripts/validate-artifacts-governance.mjs`（gate）與 `lobster-factory/scripts/audit-artifacts-governance.mjs`（報告）。
+- `bootstrap-validate.mjs` 已納入 A9 治理驗證；`package.json` 新增 `validate:artifacts-governance` / `audit:artifacts-governance`。
+
+### A9 provider strategy locked (AWS-ready, no lock-in)
+- A9 政策已升級為「portable single provider」：目前主路徑 Cloudflare R2、相容 AWS S3，契約統一為 `presigned_put_http`。
+- 已更新 policy / docs / validator / audit，確保未來切換供應商只需改 broker + IaC，不改 workflow payload contract。
+
+### R2 -> S3 migration runbook landed
+- 新增 `lobster-factory/docs/operations/R2_TO_S3_MIGRATION_RUNBOOK.md`，涵蓋 preflight、切換步驟、驗證、回滾與 post-cutover hardening。
+- `validate-artifacts-governance` 與 `bootstrap-validate` 已納入 runbook 存在/關鍵章節檢查，避免策略有寫但無可執行遷移路徑。
+
+### P1/P2 acceleration runway completed
+- 新增 `docs/operations/ONBOARDING_A10_2_RUN_ID_TRACEABILITY_SPEC.md`，統一 tenant/project/workflow/package/logs_ref/commit 的證據對照欄位。
+- 新增 `scripts/preflight-onboarding-a10-2-readiness.ps1`，會先驗證 onboarding/A10-2 必要文件與 Lobster gate（bootstrap + artifacts governance）。
+- 新增 `scripts/init-onboarding-a10-2-evidence-skeleton.ps1`，可一鍵建立 onboarding/A10-2 證據骨架。
+- 舊名稱（`p1-p2-*` 與 `P1_P2_*`）保留為相容入口，避免既有指令中斷。
+
+### P1 minimum real drill completed
+- 依使用者要求先清除舊客戶與不適用證據：`tenants/company-a/**` 與舊版 onboarding evidence 目錄已刪除。
+- 新建實跑租戶：`tenants/company-p1-pilot/`（含 site/project/core guides/schedule/queue）。
+- 修復一處舊路徑連結：`docs/overview/PROGRAM_TIMELINE.md` 客戶 Discovery 連結已改到新實跑專案。
+- P1 證據已落地：`reports/e2e/onboarding-a10-2/20260331-215507-company-p1-pilot-2026-010-p1-pilot/01-onboarding-evidence.md`。
+
+### 30-minute closeout-ready update
+- 已補齊本輪 onboarding evidence checklist 與 run-id map（status=completed，A10-2 欄位標註待下一輪填入）。
+- 已再次執行 `scripts/preflight-onboarding-a10-2-readiness.ps1`，結果 PASS，可直接銜接下一步 A10-2。
+- 已預填 `02-a10-2-evidence.md` 的執行步驟與必填證據欄位，下一輪可直接按表執行並回填 run IDs。
+
 ## 2026-02-27
 
 ### 今日建立
@@ -79,7 +130,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-31 10:06:12 UTC_
+_Last synced: 2026-03-31 14:15:52 UTC_
 
 ## 2026-03-20
 
@@ -525,6 +576,14 @@ _Last synced: 2026-03-31 10:06:12 UTC_
 - 稽核落盤：`sync-linear-delta-to-daily.ps1` 成功 append，`memory/daily/2026-03-31.md` 已有 `### Linear API sync (...)` 區塊。
 - 腳本穩定化：修正 StrictMode 下 `.errors/.Count` 例外、防呆 `LINEAR_PROJECT_ID` UUID、補一鍵 `scripts/linear-sync-all.ps1`。
 - 專案管理分流：已改為支援 `LINEAR_PROJECT_ID_AO/LF/PJ`；目前 AO 綁定 `ffe9e2b5-55ee-4cbb-baa6-7479cbf10f49`，預設 `LINEAR_PROJECT_ID` 已清除避免全流誤綁。
+
+
+
+
+
+
+
+
 
 
 

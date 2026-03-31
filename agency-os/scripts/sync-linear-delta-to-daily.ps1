@@ -86,6 +86,18 @@ if ($resp.data -and $resp.data.issues -and $resp.data.issues.nodes) {
     $nodes = @($resp.data.issues.nodes)
 }
 
+function Normalize-LinearTitleForDaily {
+    param([string]$Title)
+    if ([string]::IsNullOrWhiteSpace($Title)) { return "(no title)" }
+    $t = $Title -replace "[\u0000-\u001F\u007F]", " "
+    $t = $t -replace "\s{2,}", " "
+    $t = $t.Trim()
+    if ($t -match "@\{id=.*") {
+        return "(corrupted title payload; run push-program-schedule-to-linear.ps1 to repair source issue title)"
+    }
+    return $t
+}
+
 $dailyName = (Get-Date).ToString("yyyy-MM-dd")
 $dailyDir = Join-Path $root "memory\daily"
 if (-not (Test-Path -LiteralPath $dailyDir)) {
@@ -107,7 +119,7 @@ if ($nodes.Count -eq 0) {
 } else {
     foreach ($n in $nodes) {
         $id = $n.identifier
-        $ti = $n.title
+        $ti = Normalize-LinearTitleForDaily -Title "$($n.title)"
         $st = $n.state.name
         $u = $n.url
         [void]$sb.AppendLine("- ``" + $id + "`` **" + $st + "** — " + $ti + " — [" + "open" + "](" + $u + ")")

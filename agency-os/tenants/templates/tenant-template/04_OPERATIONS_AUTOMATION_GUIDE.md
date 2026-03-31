@@ -30,9 +30,9 @@
 - `automation/README.md`
 - `docs/operations/tenant-scheduling.md`
 - `README.md`
-- `tenants/company-a/04_OPERATIONS_AUTOMATION_GUIDE.md`
+- `tenants/company-p1-pilot/04_OPERATIONS_AUTOMATION_GUIDE.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 - `tenants/README.md`
 
-_Last synced: 2026-03-30 05:16:43 UTC_
+_Last synced: 2026-03-31 14:15:52 UTC_
 

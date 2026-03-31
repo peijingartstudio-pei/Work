@@ -1,7 +1,7 @@
 # Lobster Factory Master Checklist
 
 > 用途：集中追蹤「一人跨國公司底座」的完整建置流程、目前進度、未完成項目，避免遺漏與重工。  
-> 單一真實來源：本檔 + `D:\Work\agency-os\TASKS.md`（跨系統任務板）。
+> 單一真實來源：本檔 + [`agency-os/TASKS.md`](../../agency-os/TASKS.md)（跨系統任務板）。
 
 ## A) 全流程總覽（由上到下）
 - [x] A1. 定義 Phase 1 範圍（先安全可驗證，再逐步開啟真寫入）
@@ -12,7 +12,7 @@
 - [x] A6. 串接 hosting provider adapter（`none` / `mock` / `provider_stub` / **`http_json`**；**專屬 vendor SDK** 仍可待 `providers/<name>.ts`）
 - [ ] A7. 串接 WordPress 真正 provision/shell execution（仍須 guardrails；**manifest 套用 shell 已具備**，全站自動建站仍待 hosting adapter）
 - [x] A8. 打通 DB 真寫入完整流程（`apply-manifest`：`workflow_runs` / `package_install_runs` insert + shell 時 `running`→PATCH 終態；**不含** `create-wp-site` 端到端建站）
-- [ ] A9. artifacts／rollback／錯誤回復（**技術 baseline**：rollback + DB `failed` + `local`／`remote_put` + `logs_ref` — 見各 SINK 與 REMOTE_PUT；**政策 baseline**：`docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md`；**仍缺**：雲端生命週期規則／IAM／稽核自動化）
+- [x] A9. artifacts／rollback／錯誤回復（**技術 baseline**：rollback + DB `failed` + `local`／`remote_put` + `logs_ref`；**治理 baseline**：`ARTIFACTS_LIFECYCLE_POLICY` + `ARTIFACTS_IAM_BOUNDARY` + `validate/audit-artifacts-governance`；雲廠商實際 bucket/IaC 可在後續迭代）
 - [x] A10-1. E2E **營運劇本 + 結構閘道**（`docs/e2e/OPERABLE_E2E_PLAYBOOK.md` + `scripts/validate-operable-e2e-skeleton.mjs` → `bootstrap-validate`）
 - [ ] A10-2. **商業閉環**：新客戶從建立→驗收 + 生產 Trigger 全鏈固定證據（對齊 `agency-os/tenants/NEW_TENANT_ONBOARDING_SOP.md` 實跑）
 
@@ -72,6 +72,8 @@
 - [x] `npm run operator:sanity` + `docs/operations/LOBSTER_FACTORY_OPERATOR_RUNBOOK.md`
 - [x] `docs/e2e/OPERABLE_E2E_PLAYBOOK.md` + `scripts/validate-operable-e2e-skeleton.mjs`（A10-1）
 - [x] `docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md`（A9 政策層）
+- [x] `docs/operations/ARTIFACTS_IAM_BOUNDARY.md` + `policies/artifacts/artifacts-governance-baseline.json`
+- [x] `scripts/validate-artifacts-governance.mjs` + `scripts/audit-artifacts-governance.mjs`
 - [x] `docs/operations/PRESIGN_BROKER_MINIMAL.md` + `templates/lobster/presign-response.success.example.json`（remote_put 整合輔助）
 - [x] `agency-os/tenants/NEW_TENANT_ONBOARDING_SOP.md` Step 7（Lobster／A10-2 銜接）
 
@@ -107,6 +109,8 @@
 - [ ] C5-6. 後續建議：Langfuse / Upstash / Stripe / Object Storage / Search
 
 ## D) 每次開工/收工要看什麼
+> 事件流程單一真相：開工以 `agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` 為準；收工以 `agency-os/docs/operations/end-of-day-checklist.md` + `agency-os/.cursor/rules/40-shutdown-closeout.mdc` 為準。
+
 ### 開工（AO-RESUME 後）
 - [ ] 先看本檔 C 區（尚未完成）只挑 1 條主線
 - [ ] 對照 `agency-os/TASKS.md` 是否已有相同任務，避免重開重做

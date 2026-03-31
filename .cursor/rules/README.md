@@ -8,15 +8,24 @@
 - 收工：打 `AO-CLOSE`
 - 文件大改後：讓系統跑 `doc-sync + health-check + guard`
 
-## 你現在有的規則（ monorepo 根；與 `agency-os/.cursor/rules` 併用時勿改出兩套敘述）
+## 你現在有的規則（精簡索引）
 
-- `00-session-bootstrap.mdc` — 新對話開場結構。
-- `10-memory-maintenance.mdc` — 長短期記憶維護。
-- `20-doc-sync-closeout.mdc` — 治理文件改動後 doc-sync / health。
-- `30-resume-keyword.mdc` — `AO-RESUME`。
-- `40-shutdown-closeout.mdc` — `AO-CLOSE`。
-- `50-operator-autopilot.mdc`、`60-beginner-operation-format.mdc`、`62-progress-heartbeat-15min.mdc` — 營運／格式／心跳（見各檔 description）。
-- **`63`–`66`（企業級）** — 與 **`agency-os/.cursor/rules` 正本同檔同步複製至此**；索引見 `agency-os/docs/operations/cursor-enterprise-rules-index.md`。更新正本後請覆蓋根目錄這四檔，避免只開 monorepo 根時漏載。
+- `00-session-bootstrap.mdc` — 新對話：昨日回顧 + 今日計畫 + 確認事項
+- `10-memory-maintenance.mdc` — 里程碑／長對話：寫回 `memory`
+- `20-doc-sync-closeout.mdc` — 改治理文件：doc-sync + health
+- `30-resume-keyword.mdc` — `AO-RESUME`：讀檔 + 固定續接格式
+- `40-shutdown-closeout.mdc` — `AO-CLOSE`：收工 + 閘道 + 日結格式
+- `50-operator-autopilot.mdc` — Autopilot 模式約定
+- `60-beginner-operation-format.mdc` — 小白操作（路徑／動作／預期）
+- `62-progress-heartbeat-15min.mdc` — 長任務 15 分鐘心跳
+- **`63-cursor-core-identity-risk.mdc`** — **企業級**：身分、風險分級、紅線（與 AO／00／30／40 衝突時以後者為準）
+- **`64-architecture-mcp-routing.mdc`** — **企業級**：架構分層、MCP 路由（細節以 `MCP_TOOL_ROUTING_SPEC` + `cursor-mcp-and-plugin-inventory` 為準）
+- **`65-build-standards-data-state.mdc`** — **企業級**：DB／狀態機／結構（**globs**：supabase、sql、migrations、apps、packages）
+- **`66-skills-observability-protocol.mdc`** — **企業級**：Skills、可觀測性、與 62 心跳搭配
+
+**索引頁（給人看／賣方說明）**：`docs/operations/cursor-enterprise-rules-index.md`  
+**溯源包（多模型產出）**：`../docs/spec/raw/Cursor  Rules for AI/`（monorepo 根；請以本目錄 `63`–`66` 為部署正本）  
+**僅開 monorepo 根工作區時**：Cursor 通常只載入 `../.cursor/rules/` — 修改本目錄 `63`–`66` 後請將**同四檔複製覆蓋**至該路徑，與 `README-部署說明.md` § Monorepo 根工作區一致。
 
 ## 每天建議流程
 

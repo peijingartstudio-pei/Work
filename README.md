@@ -47,18 +47,24 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 
 ## 開工與雙機同步（AO-RESUME）
 
-- **`AO-RESUME`**：請 Agent 依 **`agency-os/.cursor/rules/30-resume-keyword.mdc`**（若工作區根僅為 `agency-os` 則為該目錄下 `.cursor/rules`）讀進度檔；**關鍵字本身不會執行 `git pull`**。
+- **`AO-RESUME`**：請 Agent 依 **`agency-os/.cursor/rules/30-resume-keyword.mdc`**（若工作區根僅為 `agency-os` 則為該目錄下 `.cursor/rules`）讀進度檔；關鍵字會先檢查並嘗試 `git pull --ff-only`，但建議先手動完成 Git 對齊。
 - **另一台已 AO-CLOSE push 時**：在本機 monorepo 根先 **`git fetch origin`**，再 **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），**然後**再打 `AO-RESUME`。完整清單：[`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)。
+
+## 事件流程單一真相
+
+- 開工（AO-RESUME）：[`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)
+- 收工（AO-CLOSE）：[`agency-os/docs/operations/end-of-day-checklist.md`](agency-os/docs/operations/end-of-day-checklist.md) + [`agency-os/.cursor/rules/40-shutdown-closeout.mdc`](agency-os/.cursor/rules/40-shutdown-closeout.mdc)
+- 其餘文件僅保留入口摘要，避免重複維護多套命令
 
 ## 收工與同步
 
 - 關鍵字 **`AO-CLOSE`**：依 **`agency-os/.cursor/rules/40-shutdown-closeout.mdc`** 執行 **repo 根** `.\scripts\ao-close.ps1`（閘道、狀態報告、預設含 commit + push；**`system-health-check` 預設須 100%** 與 `AGENTS.md` 一致）。**勿**在僅 `lobster-factory` 子目錄執行（該路徑無此腳本）。
 
 ## Related Documents (Auto-Synced)
-- `agency-os/docs/operations/cursor-enterprise-rules-index.md`
-- `agency-os/docs/overview/EXECUTION_DASHBOARD.md`
-- `agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`
-- `agency-os/README.md`
+- `docs/operations/cursor-enterprise-rules-index.md`
+- `docs/overview/EXECUTION_DASHBOARD.md`
+- `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
+- `README.md`
 
-_Last synced: 2026-03-30 09:52:39 UTC_
+_Last synced: 2026-03-31 12:06:18 UTC_
 

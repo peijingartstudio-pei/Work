@@ -1,4 +1,4 @@
-﻿# AGENTS.md - Agency Operating Rules
+# AGENTS.md - Agency Operating Rules
 
 ## 語言與輸出
 - 預設使用繁體中文
@@ -36,8 +36,9 @@
    - `Confirm`：「今天先做哪一項？」
 
 ## 快速續接關鍵字
+- 跨系統運作模型（AO 治理 + 龍蝦執行）：`docs/overview/ao-lobster-operating-model.md`（作為事件節奏與責任分工的總入口）。
 - 使用者輸入 `AO-RESUME` 時，必須先讀取記憶與進度檔後再回覆。
-- **雙機協作硬性說明**：`AO-RESUME`**不會**自動執行 `git pull`。若另一台已 **AO-CLOSE** 並 `push`，本機必須在 monorepo 根先 **`git fetch origin`**，落後則 **`git pull --ff-only origin main`**（push 曾衝突則 **`git pull --rebase origin main`**），**再**續接讀檔；否則進度檔可能過期、`git push` 會被拒。完整開工順序：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2。
+- **雙機協作硬性說明**：`AO-RESUME` 會先檢查並嘗試 `git pull --ff-only`，但遇到本機未提交變更/衝突仍可能失敗；因此實務上仍建議先在 monorepo 根手動 **`git fetch origin`** + **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），再續接讀檔。完整開工順序與 30 秒自檢以 `docs/overview/REMOTE_WORKSTATION_STARTUP.md` 為準。
 - 若已啟用 Autopilot Phase1，開機會自動執行 `scripts/ao-resume.ps1 -SkipVerify -AllowUnexpectedDirty`（**不**取代上述 `git pull`；Autopilot 只管本機 preflight，不管遠端是否超前）。
 - 回覆格式固定為：`已完成`、`目前進度`、`下一步`。
 - `目前進度` 必須包含龍蝦工廠欄位：`目前 Milestone`、`今日 DoD`、`阻塞/風險`。
@@ -45,6 +46,7 @@
   - **建議一鍵**（更新 `TASKS` / `WORKLOG` / `memory/**` 後）：`.\scripts\ao-close.ps1`（repo 根）或 `.\agency-os\scripts\ao-close.ps1`（fallback；**同邏輯雙複本**，請保持內容一致）  
     → 預設依序：`verify-build-gates`（龍蝦 + 治理 health）→ `system-guard`（內含 doc-sync + health + guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`（公司機 `pull` 即完整）。不推：`-SkipPush`；略過龍蝦閘（不建議）：`-SkipVerify`。
   - 預設收工門檻：`system-health-check` **100%**（未達 100% 先修復再收工；僅在使用者明確允許時可放寬）。
+  - **單一真相**：AO-CLOSE 的操作步驟以 `docs/operations/end-of-day-checklist.md` 為準，關鍵字行為以 `.cursor/rules/40-shutdown-closeout.mdc` 為準。
   - **或分部手動**（與一鍵擇一）：`doc-sync-automation -AutoDetect` → `system-health-check` → `system-guard -Mode manual` → 再自行 `git push`（見 `docs/operations/end-of-day-checklist.md`）。
 
 ## Git 推送節奏（使用者共識）
@@ -90,6 +92,9 @@
 - **新增或大幅改版「重要 md」（治理／對外／會給客戶看）**：必讀並依序處理 **`docs/operations/new-doc-linkage-checklist.md`**；寫入 **`change-impact-map.json` + 矩陣** 可半自動：`scripts/register-new-governance-doc.ps1`（仍須指定要連動的 `-Targets`；**README 入口與內文語意**無法替你判斷，請補齊後跑 doc-sync / health）。
 
 ## 文件治理規則
+- **最高原則（除非必要）**：**一份內容只能有一個主人（Owner File）**。
+- 非 Owner 檔案只放「一句摘要 + 連結」，不得複製完整內容（尤其流程圖、SOP 指令塊、規格正文）。
+- 必要副本（法遵/審計/對外交付）必須在檔頭標註原因與 Owner 路徑，並指定同步責任人。
 - **Cursor（可賣／可版控）IDE 規則索引**：`docs/operations/cursor-enterprise-rules-index.md`（匯流 `63`–`66` `.mdc`、MCP inventory、龍蝦 `MCP_TOOL_ROUTING_SPEC`；與 `AO-RESUME`／`AO-CLOSE` 衝突時以本 repo 之 **00／30／40** 規則為準）
 - 治理/標準/模板文件優先放 `docs/` 分類目錄
 - 新增文件時必須在 `README.md` 增加入口
@@ -122,5 +127,5 @@
 - `README.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-03-30 09:52:39 UTC_
+_Last synced: 2026-03-31 12:08:52 UTC_
 

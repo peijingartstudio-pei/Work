@@ -63,7 +63,7 @@
 
 ## 4) 每日 Runbook（最短路徑）
 ### 開工（AO-RESUME）
-0. **monorepo 根**先對齊 Git（**雙機必做**；`AO-RESUME` 不會自動 pull）：`git fetch origin` → `git pull --ff-only origin main`（若 push 曾與遠端分叉則 `git pull --rebase origin main`）。詳見 `docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2。  
+0. **單一真相**：開工流程與 30 秒自檢統一看 `docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2、§2.3（本頁不重複維護第二套命令）。  
 1. 先看 `LAST_SYSTEM_STATUS.md`
 2. 打開 `TASKS.md`，只做 Next/Backlog 最高優先
 3. 在 Cursor 輸入 **`AO-RESUME`**（讀 `AGENTS.md` + 記憶檔 + 龍蝦 checklist／Completion Plan）
@@ -71,10 +71,7 @@
    - 參考 `memory/CONVERSATION_MEMORY.md` 的 Runbook Commands
 
 ### 收工（AO-CLOSE）
-- **一鍵（建議）**：先更新 `TASKS.md` / `WORKLOG.md` / `memory/**`，再執行（擇一，**同一份腳本邏輯**，請保持兩路徑檔案內容一致）：  
-  - `powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`  
-  - 或於 `agency-os`：`powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`  
-  → 預設依序：**`verify-build-gates`**（龍蝦 bootstrap + Agency health）→ **`system-guard`**（doc-sync + health + guard）→ **`generate-integrated-status-report`**（`reports/status/integrated-status-LATEST.md`）→ **PASS 後** `git commit` + `git push`（**公司機 `git pull` 即與你收工快照一致**）。**FAIL 不 push。** `-SkipPush`：仍跑閘道與產報，不推遠端。`-SkipVerify`：略過龍蝦閘（收工要跨機完整時**不建議**）。
+- **單一真相**：收工流程統一看 `docs/operations/end-of-day-checklist.md`（操作）與 `.cursor/rules/40-shutdown-closeout.mdc`（關鍵字規則）。本頁僅保留入口，不再重複維護整段命令細節。
 
 ### 公司機／他處電腦（pull 後）
 **完整清單請固定看：`docs/overview/REMOTE_WORKSTATION_STARTUP.md`。** 摘要：
@@ -116,5 +113,5 @@
 - `docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-03-30 05:38:33 UTC_
+_Last synced: 2026-03-31 12:06:18 UTC_
 

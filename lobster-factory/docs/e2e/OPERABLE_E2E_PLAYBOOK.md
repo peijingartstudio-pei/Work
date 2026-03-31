@@ -77,7 +77,7 @@ npm run drill:staging-report
 ## 7) 收斂到 AO
 
 - 將本輪 **證據路徑 / commit / 分支** 寫入 `agency-os/WORKLOG.md` 與 `memory/daily/YYYY-MM-DD.md`。
-- 收工：`AO-CLOSE` → `scripts\ao-close.ps1`（見 `agency-os/AGENTS.md`）。
+- 收工：`AO-CLOSE` → `scripts\ao-close.ps1`（以 `agency-os/docs/operations/end-of-day-checklist.md` + `agency-os/.cursor/rules/40-shutdown-closeout.mdc` 為單一真相）。
 
 ## 相關文件
 

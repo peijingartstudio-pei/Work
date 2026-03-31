@@ -4,9 +4,7 @@ param(
     [switch]$AutoDetect,
     [switch]$Watch,
     [switch]$SkipApply,
-    [switch]$SkipReport,
-    # When set, only mtime-based detection is used (no git diff-index).
-    [switch]$SkipGitDetect
+    [switch]$SkipReport
 )
 
 Set-StrictMode -Version Latest
@@ -51,24 +49,6 @@ function Save-Json {
     Set-Content -Path $Path -Value $json -Encoding UTF8
 }
 
-function Format-RelatedPathsForMonorepoReadme {
-    param([string[]]$Related)
-    # ../README.md lives at repo root; list paths relative to monorepo root (agency-os/...).
-    $out = @()
-    foreach ($it in $Related) {
-        if (-not $it) { continue }
-        $norm = $it.Replace('\', '/').TrimStart('/')
-        if ($norm.StartsWith("../")) {
-            $out += $norm
-        } elseif ($norm.StartsWith("agency-os/", [StringComparison]::OrdinalIgnoreCase)) {
-            $out += $norm
-        } else {
-            $out += ("agency-os/" + $norm)
-        }
-    }
-    return $out
-}
-
 function Upsert-RelatedBlock {
     param(
         [string]$Root,
@@ -78,10 +58,6 @@ function Upsert-RelatedBlock {
     $full = Join-Path $Root $RelativeFile
     if (-not (Test-Path $full)) { return $false }
     if (-not $RelativeFile.EndsWith(".md")) { return $false }
-
-    if ($RelativeFile -eq "../README.md") {
-        $Related = @(Format-RelatedPathsForMonorepoReadme -Related $Related)
-    }
 
     $content = Get-Content -Raw -Path $full -Encoding UTF8
     $suspect = $false
@@ -155,6 +131,57 @@ function Build-RelatedMap {
     return $dict
 }
 
+function Load-SingleOwnerRegistry {
+    param([string]$Root)
+    $path = Join-Path $Root "docs/operations/single-owner-registry.json"
+    if (-not (Test-Path -LiteralPath $path)) { return $null }
+    try {
+        return (Load-Json -Path $path)
+    } catch {
+        throw "Invalid single-owner registry JSON: $path"
+    }
+}
+
+function Test-SingleOwnerViolations {
+    param(
+        [string]$Root,
+        [object]$Registry
+    )
+    $violations = @()
+    if (-not $Registry -or -not $Registry.rules) { return $violations }
+
+    $allMd = Get-ChildItem -Path $Root -Recurse -File -Filter *.md | ForEach-Object {
+        To-RelPath -Root $Root -PathValue $_.FullName
+    }
+
+    foreach ($rule in $Registry.rules) {
+        if (-not $rule.owner -or -not $rule.marker) { continue }
+        $owner = "$($rule.owner)"
+        $marker = "$($rule.marker)"
+        $scanSet = @()
+        if ($rule.scan_files) {
+            $scanSet = @($rule.scan_files | ForEach-Object { "$($_)".Replace('\', '/') })
+        } else {
+            $scanSet = @($allMd)
+        }
+        foreach ($rel in $scanSet) {
+            if ($rel -ieq $owner) { continue }
+            $full = Join-Path $Root $rel
+            if (-not (Test-Path -LiteralPath $full)) { continue }
+            $content = Get-Content -Raw -Path $full -Encoding UTF8
+            if ($content -like ("*" + $marker + "*")) {
+                $violations += [ordered]@{
+                    rule_id = "$($rule.id)"
+                    owner = $owner
+                    marker = $marker
+                    file = $rel
+                }
+            }
+        }
+    }
+    return $violations
+}
+
 function Detect-ChangedFiles {
     param(
         [string]$Root,
@@ -182,74 +209,13 @@ function Detect-ChangedFiles {
     return @($detected)
 }
 
-function Get-GitDirtyPathsUnderRoot {
-    param(
-        [string]$Root,
-        [switch]$SkipGit
-    )
-    if ($SkipGit) { return @() }
-    $detected = New-Object 'System.Collections.Generic.HashSet[string]' ([StringComparer]::OrdinalIgnoreCase)
-    try {
-        $rootNorm = (Resolve-Path -LiteralPath $Root).Path.TrimEnd('\')
-    } catch {
-        return @()
-    }
-
-    $prevGit = $ErrorActionPreference
-    $ErrorActionPreference = 'SilentlyContinue'
-    $topOut = @(& git -C $rootNorm rev-parse --show-toplevel 2>$null)
-    $ErrorActionPreference = $prevGit
-    if ($LASTEXITCODE -ne 0 -or $topOut.Count -eq 0) {
-        return @()
-    }
-    $topNorm = (Resolve-Path -LiteralPath $topOut[0].Trim()).Path.TrimEnd('\')
-
-    function Add-GitPathIfUnderRoot {
-        param(
-            [string]$Line,
-            [string]$Top,
-            [string]$AgencyRoot,
-            [System.Collections.Generic.HashSet[string]]$Set
-        )
-        if (-not $Line) { return }
-        $relFromTop = $Line.Trim().TrimStart('/').Replace('/', [System.IO.Path]::DirectorySeparatorChar)
-        if (-not $relFromTop) { return }
-        $combined = Join-Path $Top $relFromTop
-        try {
-            $full = [System.IO.Path]::GetFullPath($combined)
-        } catch { return }
-
-        if ($full.Length -le $AgencyRoot.Length) { return }
-        if (-not $full.StartsWith($AgencyRoot, [StringComparison]::OrdinalIgnoreCase)) { return }
-        $suffix = $full.Substring($AgencyRoot.Length).TrimStart([System.IO.Path]::DirectorySeparatorChar)
-        if (-not $suffix) { return }
-        [void]$Set.Add($suffix.Replace('\', '/'))
-    }
-
-    $ErrorActionPreference = 'SilentlyContinue'
-    try {
-        # Tracked files: working tree / index differs from HEAD
-        & git -C $topNorm diff-index --name-only HEAD | ForEach-Object {
-            Add-GitPathIfUnderRoot -Line $_ -Top $topNorm -AgencyRoot $rootNorm -Set $detected
-        }
-        # Untracked + unignored (new files not yet git add)
-        & git -C $topNorm ls-files --others --exclude-standard | ForEach-Object {
-            Add-GitPathIfUnderRoot -Line $_ -Top $topNorm -AgencyRoot $rootNorm -Set $detected
-        }
-    } finally {
-        $ErrorActionPreference = $prevGit
-    }
-    return @($detected)
-}
-
 function Invoke-Once {
     param(
         [string]$Root,
         [string[]]$InputChanged,
         [switch]$UseAutoDetect,
         [switch]$DoApply,
-        [switch]$DoReport,
-        [switch]$SkipGitDetect
+        [switch]$DoReport
     )
     $mapPath = Join-Path $Root "docs/change-impact-map.json"
     if (-not (Test-Path $mapPath)) {
@@ -289,13 +255,7 @@ function Invoke-Once {
 
     $changed = @()
     if ($UseAutoDetect -or $InputChanged.Count -eq 0) {
-        # Force arrays: scalar + array in PS can stringify-concat; @( ) avoids that.
-        $byMtime = @(Detect-ChangedFiles -Root $Root -Map $map -SinceUtc $lastRunUtc)
-        $byGit = @(Get-GitDirtyPathsUnderRoot -Root $Root -SkipGit:$SkipGitDetect)
-        $changed = @($byMtime + $byGit | Sort-Object -Unique | Where-Object { $_ -notlike '.agency-state/*' })
-        if ($byGit.Count -gt 0) {
-            Write-Output ("AutoDetect: git dirty under workspace (+ mtime): git count=" + $byGit.Count)
-        }
+        $changed = Detect-ChangedFiles -Root $Root -Map $map -SinceUtc $lastRunUtc
     } else {
         foreach ($item in $InputChanged) {
             $full = if ([System.IO.Path]::IsPathRooted($item)) { $item } else { Join-Path $Root $item }
@@ -326,12 +286,17 @@ function Invoke-Once {
             }
         }
 
-        # Mirror enterprise .mdc (63-66) to monorepo root so Project Rules load when opening Work/.
         $monoRoot = Split-Path -Path $Root -Parent
         $syncEnt = Join-Path $monoRoot "scripts\sync-enterprise-cursor-rules-to-monorepo-root.ps1"
         if (Test-Path -LiteralPath $syncEnt) {
             & powershell -NoProfile -ExecutionPolicy Bypass -File $syncEnt -MonorepoRoot $monoRoot -Quiet
         }
+    }
+
+    $singleOwnerViolations = @()
+    $singleOwnerRegistry = Load-SingleOwnerRegistry -Root $Root
+    if ($singleOwnerRegistry) {
+        $singleOwnerViolations = @(Test-SingleOwnerViolations -Root $Root -Registry $singleOwnerRegistry)
     }
 
     if ($DoReport) {
@@ -365,8 +330,25 @@ function Invoke-Once {
         $report += "- [ ] Verify business logic consistency for impacted docs."
         $report += '- [ ] Update `WORKLOG.md` decision entries if policy changed.'
         $report += '- [ ] Update `TASKS.md` status if scope or priority changed.'
+        $report += ""
+        $report += "## Single Owner Policy Check"
+        if ($singleOwnerViolations.Count -eq 0) {
+            $report += "- PASS: no duplicated owner-marked content detected."
+        } else {
+            foreach ($v in $singleOwnerViolations) {
+                $report += ('- FAIL: `{0}` duplicates owner marker from `{1}` (rule: `{2}`)' -f $v.file, $v.owner, $v.rule_id)
+            }
+        }
         Set-Content -Path $reportPath -Value ($report -join "`r`n") -Encoding UTF8
         Write-Output ("Checklist report: " + (To-RelPath -Root $Root -PathValue $reportPath))
+    }
+
+    if ($singleOwnerViolations.Count -gt 0) {
+        $msg = @("Single Owner policy violation detected:")
+        foreach ($v in $singleOwnerViolations) {
+            $msg += ("- " + $v.file + " duplicates owner content marker from " + $v.owner + " (" + $v.rule_id + ")")
+        }
+        throw ($msg -join "`n")
     }
 
     $newState = [ordered]@{
@@ -389,9 +371,9 @@ $report = -not $SkipReport
 if ($Watch) {
     Write-Output "Watch mode started. Press Ctrl+C to stop."
     while ($true) {
-        Invoke-Once -Root $root -InputChanged @() -UseAutoDetect -DoApply:$apply -DoReport:$report -SkipGitDetect:$SkipGitDetect
+        Invoke-Once -Root $root -InputChanged @() -UseAutoDetect -DoApply:$apply -DoReport:$report
         Start-Sleep -Seconds 10
     }
 } else {
-    Invoke-Once -Root $root -InputChanged $ChangedFiles -UseAutoDetect:$AutoDetect -DoApply:$apply -DoReport:$report -SkipGitDetect:$SkipGitDetect
+    Invoke-Once -Root $root -InputChanged $ChangedFiles -UseAutoDetect:$AutoDetect -DoApply:$apply -DoReport:$report
 }

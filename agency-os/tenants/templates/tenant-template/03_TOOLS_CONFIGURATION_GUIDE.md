@@ -33,9 +33,9 @@
 ## Related Documents (Auto-Synced)
 - `docs/operations/tools-and-integrations.md`
 - `README.md`
-- `tenants/company-a/03_TOOLS_CONFIGURATION_GUIDE.md`
+- `tenants/company-p1-pilot/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 - `tenants/README.md`
 
-_Last synced: 2026-03-30 05:16:43 UTC_
+_Last synced: 2026-03-31 14:15:52 UTC_
 

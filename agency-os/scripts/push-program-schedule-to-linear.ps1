@@ -220,7 +220,8 @@ foreach ($stream in $schedule.streams) {
         if ($MaxTasks -gt 0 -and $taskSlot -ge $MaxTasks) { break }
         $taskSlot++
 
-        $tname = "$task.name"
+        # Use subexpression to avoid serializing full object text (e.g. "@{id=...}").
+        $tname = "$($task.name)"
         if ($tname.Length -gt 160) { $tname = $tname.Substring(0, 157) + "..." }
         $title = ("[" + $sk + " " + $tid + "] " + $tname).Trim()
         if ($title.Length -gt 240) { $title = $title.Substring(0, 237) + "..." }

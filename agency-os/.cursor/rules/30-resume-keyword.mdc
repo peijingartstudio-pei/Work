@@ -7,25 +7,26 @@ alwaysApply: true
 
 When the user message contains `AO-RESUME`, before proposing any new implementation:
 
-1. **Git 對齊（雙機／每日開工必做；AO-RESUME 不會自動替你 pull）**  
-   - `AO-RESUME` 只觸發 Agent **讀檔與回覆**；**不**等於已執行 `git pull`。另一台若已 **AO-CLOSE** push，本機 `memory`／`TASKS` 可能落後遠端。  
+1. **Git 對齊（雙機／每日開工必做）**  
    - **Agent 必做**：在可執行終端時，於 **monorepo 根**（`git rev-parse --show-toplevel`）執行 `git fetch origin`，再以 `git status -sb`（或 `git rev-list --left-right --count HEAD...origin/main`）檢查是否 **behind** `origin/main`。  
-   - **若 behind**：先請使用者完成 **`git pull --ff-only origin main`**（失敗則依 `git status` 處理未提交變更；曾發生 push 被拒且需接遠端時用 **`git pull --rebase origin main`**），**再**進行下列讀檔。若無法執行終端，**必須在回覆開頭**提醒使用者先手動 pull，並說明理由。  
-   - **完整開機 runbook**：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2。
+   - **若 behind**：Agent 應先直接執行 **`git pull --ff-only origin main`**；若 pull 失敗，先用 `git status` 判斷是否有本機未提交/衝突，再請使用者決策（必要時改 **`git pull --rebase origin main`**）。  
+   - **AO-RESUME 後 30 秒自檢（必做）**：執行 `git status -sb` + `git rev-list --left-right --count HEAD...origin/main`；若工作樹 dirty（`M`/`??`）或非 `0 0`，必須先明確標示風險，不得直接宣告「已完全對齊」。
+   - **Preventive gate**：當日第一次 AO-RESUME，需建議執行 `.\scripts\verify-build-gates.ps1`（至少 daily baseline 一次）以降低「版本對齊但邏輯行為漂移」風險。  
+   - **僅在無法執行終端**時，才於回覆開頭提醒使用者手動 pull 並說明理由。  
+   - **完整開機 runbook**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2。
 
 2. Read these files in order:
-- `README.md`
-- `AGENTS.md`
-- `memory/CONVERSATION_MEMORY.md`
-- `memory/daily/` today and yesterday notes if present
-- `TASKS.md`
-- `WORKLOG.md`
-- `LAST_SYSTEM_STATUS.md` (if exists)
+- `README.md`（根或 `agency-os` 視工作區而定）
+- `agency-os/AGENTS.md`
+- `agency-os/memory/CONVERSATION_MEMORY.md`
+- `agency-os/memory/daily/` today and yesterday notes if present
+- `agency-os/TASKS.md`
+- `agency-os/WORKLOG.md`
+- `agency-os/LAST_SYSTEM_STATUS.md` (if exists)
 - `lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md` (if exists)
 - `lobster-factory/docs/LOBSTER_FACTORY_COMPLETION_PLAN_V2.md` (if exists)
 
-If those files are not found in the current opened folder, retry under `agency-os/`
-with the same filenames (and `lobster-factory/` paths as `../lobster-factory/docs/...`) before continuing.
+If opened folder is `agency-os` only, use paths as above; lobster paths are `../lobster-factory/docs/...`.
 
 3. Respond with a concise startup brief in this exact structure:
 - 已完成
@@ -33,10 +34,10 @@ with the same filenames (and `lobster-factory/` paths as `../lobster-factory/doc
 - 下一步
 
 4. In `目前進度`, always include **龍蝦工廠**欄位：
-   - **目前 Milestone**（M1~M5，對照 `LOBSTER_FACTORY_COMPLETION_PLAN_V2.md`）
-   - **今日 DoD**（Definition of Done；一句話）
+   - **目前 Milestone**（M1~M5）
+   - **今日 DoD**
    - **阻塞／風險**（無則寫「無」）
 
-5. In `已完成` 或 `目前進度` 中，若剛才 Git 檢查有執行，可一句話標註 **Git 已對齊 origin/main** 或 **提醒使用者先 pull**（讓雙機不漏接）。
+5. In `已完成` 或 `目前進度` 中，若剛才 Git 檢查有執行，可一句話標註 **Git 已對齊 origin/main** 或 **提醒使用者先 pull**。
 
 6. Ask one focused confirmation question only if a blocker or ambiguity exists.

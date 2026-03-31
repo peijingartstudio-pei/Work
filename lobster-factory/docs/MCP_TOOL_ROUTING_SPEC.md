@@ -1,4 +1,4 @@
-﻿# MCP Tool Routing Spec
+# MCP Tool Routing Spec
 
 ## Purpose
 Define enforceable tool routing for Lobster Factory so automation is predictable, staging-first, and approval-gated for production.
@@ -78,6 +78,7 @@ Define enforceable tool routing for Lobster Factory so automation is predictable
 ## Cursor IDE MCP layer (non-enforced)
 - **Agency OS** maintains a separate inventory of **Cursor `mcp.json` servers and extensions**: `agency-os/docs/operations/cursor-mcp-and-plugin-inventory.md`.
 - That document does **not** override this spec for **Lobster production/staging orchestration**; it explains what each IDE MCP is *for* so agents do not route durable workflows through the wrong tool.
+- Cross-system operating cadence (AO events + Lobster execution): `../agency-os/docs/overview/ao-lobster-operating-model.md`.
 
 ## Out of Scope (for now)
 - Additional durable engines (Inngest, Temporal).

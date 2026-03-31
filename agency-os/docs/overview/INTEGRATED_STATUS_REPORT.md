@@ -41,7 +41,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\generate-integrated-status-re
 ## 與其他「一頁」的關係
 
 - **`docs/overview/EXECUTION_DASHBOARD.md`**：儀表板與 Gate、每日路徑（仍建議每天先掃一眼）。
-- **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：雙機／換機開工順序（**先 `git pull` 再 `AO-RESUME`**，與儀表板 §4 開工 §0 一致）。
+- **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：雙機／換機開工順序與 AO-RESUME 30 秒自檢（開工事件單一真相）。
+- **`docs/operations/end-of-day-checklist.md`**：AO-CLOSE 收工流程（收工事件單一真相）。
 - **本頁 + `integrated-status-LATEST.md`**：要把「待辦 + 工廠 + 記憶 + 今日」**塞進同一視窗**時用。
 
 ## Related
@@ -56,5 +57,5 @@ _Last updated: manual doc; report body is script-generated._
 - `automation/REGISTER_WEEKLY_SYSTEM_REVIEW_TASK.ps1`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-30 05:16:43 UTC_
+_Last synced: 2026-03-31 12:06:18 UTC_
 

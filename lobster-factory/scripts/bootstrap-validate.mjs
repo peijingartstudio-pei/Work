@@ -65,6 +65,11 @@ const required = [
   "docs/operations/PRESIGN_BROKER_MINIMAL.md",
   "templates/lobster/presign-response.success.example.json",
   "scripts/validate-operable-e2e-skeleton.mjs",
+  "scripts/validate-artifacts-governance.mjs",
+  "scripts/audit-artifacts-governance.mjs",
+  "docs/operations/ARTIFACTS_IAM_BOUNDARY.md",
+  "docs/operations/R2_TO_S3_MIGRATION_RUNBOOK.md",
+  "policies/artifacts/artifacts-governance-baseline.json",
 ];
 
 for (const r of required) assertExists(r);
@@ -102,6 +107,11 @@ execSync(`node "${path.join(repoRoot, "scripts", "validate-staging-manifest-exec
 
 console.log("Running operable E2E skeleton validation...");
 execSync(`node "${path.join(repoRoot, "scripts", "validate-operable-e2e-skeleton.mjs")}"`, {
+  stdio: "inherit",
+});
+
+console.log("Running artifacts governance validation...");
+execSync(`node "${path.join(repoRoot, "scripts", "validate-artifacts-governance.mjs")}"`, {
   stdio: "inherit",
 });
 

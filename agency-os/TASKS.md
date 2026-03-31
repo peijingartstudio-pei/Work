@@ -25,7 +25,10 @@
 - [x] 建立對外販售打包腳本（`scripts/build-product-bundle.ps1`）
 - [x] 建立總控中心架構與多平台（WordPress-first）連動設計
 - [x] AO-CLOSE 預設 100% health 閘道已落地（規則/文件/腳本三層）
-- [ ] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md`
+- [x] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md`（`company-p1-pilot` 最小實跑完成，證據：`reports/e2e/onboarding-a10-2/20260331-214650-company-p1-pilot-2026-010-p1-pilot/`）
+- [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈）
+- [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端）
+- [x] `lobster-factory` A9 雲端 artifacts 治理補齊 baseline（生命周期規則/IAM/稽核自動化：policy + validator + audit report）
 - [x] 完成今日 AO-CLOSE 三步收工檢查（doc-sync / health / guard 全 PASS）
 - [x] 完成今日 AO-CLOSE 一鍵閘道與同步推送（verify-build-gates + guard + integrated-status + git push；**2026-03-28 晚** 再跑一輪以收斂 A10／SOP／presign 等本機變更）
 - [x] 報表單一路徑收斂（canonical=`agency-os/reports`，root `reports/` 退役為相容用途）
@@ -36,6 +39,11 @@
 - [x] Enterprise 工具層選型/安裝完成（Sentry/PostHog/Cloudflare/Clerk；Secrets 先採 env/mcp；輔助：Supabase/Slack）
 - [x] 啟用 Operator Autopilot 規則與 Phase1 自動化腳本（startup preflight / alert auto-repair / closeout optional push / Slack notify）
 - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
+- [x] AO + Lobster 事件流圖（Mermaid）已落地到 `docs/overview/ao-lobster-operating-model.md`
+- [x] 落地「Single Owner 最高原則」：核心規則/`AGENTS.md` 已寫入；`doc-sync-automation.ps1` 新增 owner 重複內容檢查（registry 驅動）
+- [x] Single Owner 第 2 階段：registry 擴充 AO-RESUME 主流程、30 秒自檢、AO-CLOSE 硬性 Gate（避免關鍵流程多處複製）
+- [x] Linear 同步品質收斂：已修復 Linear source title 生成邏輯、重跑 push（31 筆 update 全成功）、清理 `memory/daily/2026-03-31.md` 歷史亂碼區塊並完成重跑驗證
+- [x] P1/P2 跑道加速：新增 preflight（`scripts/preflight-onboarding-a10-2-readiness.ps1`）、證據骨架初始化（`scripts/init-onboarding-a10-2-evidence-skeleton.ps1`）、Run ID 對照規格（`docs/operations/ONBOARDING_A10_2_RUN_ID_TRACEABILITY_SPEC.md`）
 - [x] 整合 `LOBSTER_FACTORY_MASTER_V3` 至系統建置路線（gap map + skeleton sprint + gate 追蹤，H1~H6 baseline 完成）
 - [x] `lobster-factory` H3 第一批 skeleton sprint（Sales/Marketing/Partner/Media/Decision Engine/Merchandising）
 - [x] `lobster-factory` H4 Decision Engine baseline（recommendations schema + contract）
@@ -63,7 +71,7 @@
 - [x] 建立零成本本機 Secrets Vault（Windows DPAPI，`scripts/secrets-vault.ps1`）
 - [x] 完成 Secrets Vault 一鍵匯入（`mcp.json` + Lobster/Slack 關鍵值）
 - [x] `PROGRAM_SCHEDULE.json` → Linear：`push-program-schedule-to-linear.ps1` + playbook §3（單向；稽核仍靠 `sync-linear-delta-to-daily`）
-- [ ] Linear 雙向同步修復與驗證（`push-program-schedule-to-linear` + `sync-linear-delta-to-daily`）：目前 `LINEAR_API_KEY` 已入本機 vault，但 push 卡在 Linear GraphQL 呼叫；已加 timeout 與錯誤處理，待 AO-RESUME 續測並產生 `agency-os/reports/linear/linear-schedule-map.json` + `memory/daily` 的 `### Linear API sync` 區塊
+- [x] Linear 雙向同步修復與驗證（舊阻塞項結案）：先前 GraphQL timeout/錯誤處理阻塞已排除；輸出已收斂到 `agency-os/reports/linear/linear-schedule-map.json` 與 `memory/daily` 的 `### Linear API sync` 區塊（詳見下一列完成證據）
 - [x] Linear 雙向同步修復與驗證完成（2026-03-31）：`reports/linear/linear-schedule-map.json` 已產生且 31 筆對照；`memory/daily/2026-03-31.md` 已落 `### Linear API sync`。已加一鍵 `scripts/linear-sync-all.ps1`，並支援分流 project env：`LINEAR_PROJECT_ID_AO/LF/PJ`。
 
 ## Backlog
@@ -89,5 +97,5 @@
 - `docs/operations/system-operation-sop.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-31 10:06:12 UTC_
+_Last synced: 2026-03-31 14:15:52 UTC_
 

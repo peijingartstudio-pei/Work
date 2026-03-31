@@ -30,7 +30,7 @@ When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
    - Execute from a folder that is the git repository root (or contains `agency-os/`).
 3. Confirm：`verify-build-gates` 與 guard 路徑皆 **PASS**，且 push 成功（或依使用者要求正確使用 `-SkipPush`）。
 
-**公司機／另一台續接**：`AO-CLOSE` push 成功後，他處開工請 **先** `git pull --ff-only origin main`（見 `agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2），**再**打 **`AO-RESUME`**（`AO-RESUME` 不會自動 pull）。pull 後建議在 repo 根執行一次 `.\scripts\verify-build-gates.ps1`；若使用 `mcp-local-wrappers`，於該目錄 `npm ci`（或 `npm install`）還原依賴（`node_modules` 不入庫）。
+**公司機／另一台續接**：`AO-CLOSE` push 成功後，他處開工請 **先** `git pull --ff-only origin main`（見 `docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2），**再**打 **`AO-RESUME`**（`AO-RESUME` 會檢查是否落後並嘗試 `git pull --ff-only`；若 pull 失敗再提示人工處理）。pull 後建議在 repo 根執行一次 `.\scripts\verify-build-gates.ps1`；若使用 `mcp-local-wrappers`，於該目錄 `npm ci`（或 `npm install`）還原依賴（`node_modules` 不入庫）。
 
 **若 `git push` 被拒（遠端超前）**：在 repo 根執行 `git pull --rebase origin main`，解決衝突後 `git rebase --continue`，再推送。
 

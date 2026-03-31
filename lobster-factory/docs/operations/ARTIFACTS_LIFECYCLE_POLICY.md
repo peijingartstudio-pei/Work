@@ -1,7 +1,7 @@
 # Artifacts lifecycle policy（Lobster Factory — Phase 1）
 
 > **A9 補強（政策層）**：與技術實作 [`LOCAL_ARTIFACTS_SINK.md`](LOCAL_ARTIFACTS_SINK.md)、[`REMOTE_PUT_ARTIFACTS.md`](REMOTE_PUT_ARTIFACTS.md) 搭配。  
-> **尚未自動化**：bucket 生命週期規則、跨租戶 IAM、稽核專用 log 串流等仍待依你的雲廠商落地。
+> IAM 邊界見 [`ARTIFACTS_IAM_BOUNDARY.md`](ARTIFACTS_IAM_BOUNDARY.md)；機器可驗證 baseline 見 `policies/artifacts/artifacts-governance-baseline.json`。
 
 ## 1) 我們在存什麼
 
@@ -38,3 +38,17 @@
 - Bucket lifecycle 規則（Cloudflare R2 / AWS S3）與 IaC 註解。
 - 多租戶 prefix 強制（`orgId/runId/`）與 presign broker 驗證。
 - 可選：將 `logs_ref` 與內部 ticket 單號綁定，便於搜尋。
+
+## 7) 自動檢查與稽核（A9 baseline）
+
+- 結構與政策驗證：
+  - `node scripts/validate-artifacts-governance.mjs`
+- 稽核報告產生（落到 `agency-os/reports/operations/`）：
+  - `node scripts/audit-artifacts-governance.mjs`
+
+## 8) 供應商策略（避免早鎖死）
+
+- 目前採 **portable single provider**：主供應商 `cloudflare_r2`，相容 `aws_s3`。
+- 判斷原則：先維持單一路徑降維運成本；若客戶或合規要求再切換 broker + IaC。
+- 規格固定於：`policies/artifacts/artifacts-governance-baseline.json`。
+- 轉換手冊：`docs/operations/R2_TO_S3_MIGRATION_RUNBOOK.md`（AWS-ready，切換不改 workflow contract）。

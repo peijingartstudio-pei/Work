@@ -131,6 +131,57 @@ function Build-RelatedMap {
     return $dict
 }
 
+function Load-SingleOwnerRegistry {
+    param([string]$Root)
+    $path = Join-Path $Root "docs/operations/single-owner-registry.json"
+    if (-not (Test-Path -LiteralPath $path)) { return $null }
+    try {
+        return (Load-Json -Path $path)
+    } catch {
+        throw "Invalid single-owner registry JSON: $path"
+    }
+}
+
+function Test-SingleOwnerViolations {
+    param(
+        [string]$Root,
+        [object]$Registry
+    )
+    $violations = @()
+    if (-not $Registry -or -not $Registry.rules) { return $violations }
+
+    $allMd = Get-ChildItem -Path $Root -Recurse -File -Filter *.md | ForEach-Object {
+        To-RelPath -Root $Root -PathValue $_.FullName
+    }
+
+    foreach ($rule in $Registry.rules) {
+        if (-not $rule.owner -or -not $rule.marker) { continue }
+        $owner = "$($rule.owner)"
+        $marker = "$($rule.marker)"
+        $scanSet = @()
+        if ($rule.scan_files) {
+            $scanSet = @($rule.scan_files | ForEach-Object { "$($_)".Replace('\', '/') })
+        } else {
+            $scanSet = @($allMd)
+        }
+        foreach ($rel in $scanSet) {
+            if ($rel -ieq $owner) { continue }
+            $full = Join-Path $Root $rel
+            if (-not (Test-Path -LiteralPath $full)) { continue }
+            $content = Get-Content -Raw -Path $full -Encoding UTF8
+            if ($content -like ("*" + $marker + "*")) {
+                $violations += [ordered]@{
+                    rule_id = "$($rule.id)"
+                    owner = $owner
+                    marker = $marker
+                    file = $rel
+                }
+            }
+        }
+    }
+    return $violations
+}
+
 function Detect-ChangedFiles {
     param(
         [string]$Root,
@@ -242,6 +293,12 @@ function Invoke-Once {
         }
     }
 
+    $singleOwnerViolations = @()
+    $singleOwnerRegistry = Load-SingleOwnerRegistry -Root $Root
+    if ($singleOwnerRegistry) {
+        $singleOwnerViolations = @(Test-SingleOwnerViolations -Root $Root -Registry $singleOwnerRegistry)
+    }
+
     if ($DoReport) {
         $reportDir = Join-Path $Root "reports/closeout"
         if (-not (Test-Path $reportDir)) {
@@ -273,8 +330,25 @@ function Invoke-Once {
         $report += "- [ ] Verify business logic consistency for impacted docs."
         $report += '- [ ] Update `WORKLOG.md` decision entries if policy changed.'
         $report += '- [ ] Update `TASKS.md` status if scope or priority changed.'
+        $report += ""
+        $report += "## Single Owner Policy Check"
+        if ($singleOwnerViolations.Count -eq 0) {
+            $report += "- PASS: no duplicated owner-marked content detected."
+        } else {
+            foreach ($v in $singleOwnerViolations) {
+                $report += ('- FAIL: `{0}` duplicates owner marker from `{1}` (rule: `{2}`)' -f $v.file, $v.owner, $v.rule_id)
+            }
+        }
         Set-Content -Path $reportPath -Value ($report -join "`r`n") -Encoding UTF8
         Write-Output ("Checklist report: " + (To-RelPath -Root $Root -PathValue $reportPath))
+    }
+
+    if ($singleOwnerViolations.Count -gt 0) {
+        $msg = @("Single Owner policy violation detected:")
+        foreach ($v in $singleOwnerViolations) {
+            $msg += ("- " + $v.file + " duplicates owner content marker from " + $v.owner + " (" + $v.rule_id + ")")
+        }
+        throw ($msg -join "`n")
     }
 
     $newState = [ordered]@{

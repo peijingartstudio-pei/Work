@@ -70,13 +70,28 @@ git pull origin main
    - `agency-os\reports\status\integrated-status-LATEST.md`  
 
    **至此已完成 Git 同步**後，在 Cursor 對 AI 輸入 **`AO-RESUME`**。  
-   > **重要**：`AO-RESUME` **不會**自動替你執行 §2 第 1 步的 `git pull`；若跳過同步就打關鍵字，讀到的檔案可能仍停留在舊 commit，另一台 push 後你也會遇到 `push rejected (fetch first)`。
+   > **重要**：`AO-RESUME` 會先檢查並嘗試 `git pull --ff-only`；但若你本機已有未提交變更/衝突，pull 仍可能失敗。為了穩定，建議先手動完成 §2 第 1 步，再打 `AO-RESUME`。
 
 ## 2.1 失敗處置（不要硬做）
 
 - `git pull --ff-only` 失敗：先 `git status`，整理本機變更後再 pull，避免強制覆蓋。
 - `npm ci` 失敗：刪除 `mcp-local-wrappers\node_modules` 後重試；仍失敗就檢查 Node 版本。
 - `verify-build-gates` 失敗：先修 gate，不要進行大範圍變更或收工 push。
+
+## 2.3 AO-RESUME 後 30 秒自檢（預防 dirty 與邏輯漂移）
+
+在 monorepo 根執行：
+
+```powershell
+git status -sb
+git rev-list --left-right --count HEAD...origin/main
+powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
+```
+
+判讀重點：
+- `git status -sb` 只看到 `## main...origin/main` 才是乾淨工作樹（有 `M`/`??` 就是 dirty）。
+- `HEAD...origin/main` 應為 `0 0`（非 `0 0` 代表尚未完全對齊）。
+- `verify-build-gates` 要 PASS（避免「版本對齊但行為錯」的邏輯 bug 持續擴散）。
 
 ## 2.2 臨時離席／可能斷網（吃飯前 30 秒版）
 
@@ -124,5 +139,5 @@ git pull origin main
 ## Related Documents (Auto-Synced)
 - `../README.md`
 
-_Last synced: 2026-03-30 05:38:33 UTC_
+_Last synced: 2026-03-31 12:06:18 UTC_
 

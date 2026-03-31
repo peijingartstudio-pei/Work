@@ -24,7 +24,7 @@
 |----|------------|------------|
 | 營運 | [`TASKS.md`](../../TASKS.md) | [`integrated-status-LATEST.md`](../../reports/status/integrated-status-LATEST.md) §1–2 |
 | 龍蝦 | [`LOBSTER_FACTORY_MASTER_CHECKLIST.md`](../../../lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md) | 同上 §3 |
-| 客戶 | [`10_DISCOVERY.md`](../../tenants/company-a/projects/2026-001-website-system/10_DISCOVERY.md) 等 | 專案資料夾；並列 [`PROGRAM_SCHEDULE.json`](PROGRAM_SCHEDULE.json) **客戶流**（可複製到專案內維護） |
+| 客戶 | [`10_DISCOVERY.md`](../../tenants/company-p1-pilot/projects/2026-010-p1-pilot/10_DISCOVERY.md) 等 | 專案資料夾；並列 [`PROGRAM_SCHEDULE.json`](PROGRAM_SCHEDULE.json) **客戶流**（可複製到專案內維護） |
 
 ---
 

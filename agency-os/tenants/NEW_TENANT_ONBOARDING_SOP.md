@@ -73,6 +73,10 @@
 2. **Payload 與 UUID 約定**：[`../../lobster-factory/docs/e2e/STAGING_PIPELINE_E2E_PAYLOAD.md`](../../lobster-factory/docs/e2e/STAGING_PIPELINE_E2E_PAYLOAD.md)（測試用固定 UUID；**真客戶**請改為實際 tenant／環境 id，並寫入 `ACCESS_REGISTER` / 專案 `02_EXECUTION_PLAN`）
 3. **Artifacts**：本機 `LOCAL_ARTIFACTS_SINK` 或雲端 `remote_put` + [`PRESIGN_BROKER_MINIMAL`](../../lobster-factory/docs/operations/PRESIGN_BROKER_MINIMAL.md)；留存原則見 [`ARTIFACTS_LIFECYCLE_POLICY`](../../lobster-factory/docs/operations/ARTIFACTS_LIFECYCLE_POLICY.md)
 4. **A10-2 完成定義**：生產 Trigger（或約定之執行環境）跑通一輪 + `agency-os/reports/e2e/` drill 報告已填證據 + `WORKLOG`／`memory` 有 run id／分支／commit
+5. **Run ID 對照規格**：`docs/operations/ONBOARDING_A10_2_RUN_ID_TRACEABILITY_SPEC.md`（workflow run、package run、logs_ref、commit 必須對齊）
+6. **預檢與證據骨架**（建議先跑）：
+   - `powershell -ExecutionPolicy Bypass -File .\scripts\preflight-onboarding-a10-2-readiness.ps1`
+   - `powershell -ExecutionPolicy Bypass -File .\scripts\init-onboarding-a10-2-evidence-skeleton.ps1 -TenantSlug <company-slug> -ProjectSlug <YYYY-NNN-project-slug>`
 
 ## 完成檢查清單（Go/No-Go）
 - [ ] 公司骨架與核心檔案（含 1-4 使用指南）齊備
@@ -88,10 +92,10 @@
 - `docs/operations/tenant-scheduling.md`
 - `README.md`
 - `TASKS.md`
-- `tenants/company-a/01_COMMANDER_SYSTEM_GUIDE.md`
-- `tenants/company-a/02_CLIENT_WORKSPACE_GUIDE.md`
-- `tenants/company-a/03_TOOLS_CONFIGURATION_GUIDE.md`
-- `tenants/company-a/04_OPERATIONS_AUTOMATION_GUIDE.md`
+- `tenants/company-p1-pilot/01_COMMANDER_SYSTEM_GUIDE.md`
+- `tenants/company-p1-pilot/02_CLIENT_WORKSPACE_GUIDE.md`
+- `tenants/company-p1-pilot/03_TOOLS_CONFIGURATION_GUIDE.md`
+- `tenants/company-p1-pilot/04_OPERATIONS_AUTOMATION_GUIDE.md`
 - `tenants/README.md`
 - `tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md`
 - `tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md`
@@ -99,5 +103,5 @@
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 - `WORKLOG.md`
 
-_Last synced: 2026-03-30 05:16:43 UTC_
+_Last synced: 2026-03-31 14:15:52 UTC_
 

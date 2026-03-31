@@ -1,11 +1,22 @@
 ﻿# Conversation Memory
 
+> Historical snapshot note: this file preserves cross-session context and may include decisions from older process versions. For current operating rules, use event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (AO-RESUME/startup) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (AO-CLOSE/shutdown).
+
 ## Current Operating Context
 - 你正在建立多客戶網站與系統代營運模式
 - 核心平台：WordPress、Supabase、GitHub、**Linear（Cursor 外掛）**、n8n、Replicate、DataForSEO；**Airtable 已淘汰**（2026-03-30），同類資料改 **Supabase**
 - **Linear 與 repo**：AO-RESUME／收工仍以 `TASKS.md`、`WORKLOG`、龍蝦 Checklist、Discovery 為準；僅在 Linear 改狀態時，收工前鏡像到 `WORKLOG` 或 `TASKS`（附 issue key）。詳 `AGENTS.md`「Linear」。
 - 服務線：建置、維運、行銷、自動化、WordPress 客製系統
-- **2026-03-31（明日）**：使用者收工時要求提醒——**整理** `docs/spec/raw/` **四份原文**（V3／SPEC_V1／ENTERPRISE_BASE_STACK／CURSOR_PACK_V1）；入口 **`company-os-four-sources-integration.md`**；未勾項在 **`TASKS.md` → Next 第一列**。
+- **2026-03-31 更新**：`docs/spec/raw/` 四份原文維護索引與整合入口已完成；後續重點改為 A10-2 實跑、A7/A9 補齊、Linear 同步品質收斂與 AO+Lobster 事件流圖落地（見 `TASKS.md` 未勾項）。
+- **2026-03-31 補充**：Linear 汙染來源已修復（title 組字防呆 + source issue 回寫 + daily 同步正規化）；`TASKS.md` 的「Linear 同步品質收斂」已結案。
+- **2026-03-31 補充**：已確立「Single Owner」為最高執行原則（除非必要，一份內容只允許一個 Owner File）；並新增 `doc-sync` 自動檢查（registry: `docs/operations/single-owner-registry.json`）避免重複內容回流。
+- **2026-03-31 補充**：Single Owner registry 已擴充到開工/收工關鍵段落（AO-RESUME 主流程、30 秒自檢、AO-CLOSE 硬性 Gate），改由 closeout 自動檢查重複。
+- **2026-03-31 補充**：`lobster-factory` A9 baseline 已完成（lifecycle + IAM + audit automation），並接入 bootstrap gate。
+- **2026-03-31 補充**：A9 供應商策略已鎖定為 AWS-ready（R2 primary + S3 compatible，presigned PUT 單一契約），避免早期綁死供應商。
+- **2026-03-31 補充**：已新增 `R2_TO_S3_MIGRATION_RUNBOOK` 並接入 A9 驗證，確保日後轉 AWS 有標準步驟與回滾，不需重做 workflow。
+- **2026-03-31 補充**：已完成 P1/P2 跑道加速（Run ID 對照規格 + preflight 腳本 + 證據骨架初始化），可直接進入實跑。
+- **2026-03-31 補充**：P1 最小實跑已完成：舊 `company-a` 示範資料與舊骨架已清除，改用 `company-p1-pilot` 建立新 tenant/site/project，並產生新證據路徑 `reports/e2e/onboarding-a10-2/20260331-214650-company-p1-pilot-2026-010-p1-pilot/`。
+- **AO-RESUME 明日必回報提醒**：開場必先提醒並檢查 `reports/e2e/onboarding-a10-2/20260331-215507-company-p1-pilot-2026-010-p1-pilot/02-a10-2-evidence.md` 與同目錄 `03-run-id-map.md`（A10-2 pending 列），再決定是否直接啟動 A10-2。
 
 ## Confirmed Priorities
 1. 先建完整可複製框架，不做精簡版
@@ -123,7 +134,7 @@
 以下命令中的 `<WORK_ROOT>` 請替換為本機實際路徑（例如 `D:\Work` 或 `C:\Users\USER\Work`）。
 
 ### 開工前（雙機必做；早於 `AO-RESUME` 讀檔）
-`AO-RESUME` **不會**自動 `git pull`；另一台 **AO-CLOSE** push 後，本機務必先對齊 `origin/main`：
+`AO-RESUME` 會先檢查並嘗試 `git pull --ff-only`，但若本機有未提交變更/衝突仍可能失敗；為求穩定，另一台 **AO-CLOSE** push 後本機仍建議先手動對齊 `origin/main`：
 ```
 cd <WORK_ROOT>
 git fetch origin
@@ -319,5 +330,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-03-31 10:06:12 UTC_
+_Last synced: 2026-03-31 14:15:52 UTC_
 

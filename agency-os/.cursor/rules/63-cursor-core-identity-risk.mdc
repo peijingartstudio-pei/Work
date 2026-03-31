@@ -10,6 +10,22 @@ alwaysApply: true
 - **`AO-RESUME` / `AO-CLOSE`**、**`00-session-bootstrap.mdc`**、**`30-resume-keyword.mdc`**、**`40-shutdown-closeout.mdc`** 規定的開工／收工格式與流程 **優於** 本檔與長版 `00-CORE.md` 的任何輸出模板。  
 - **日常回覆**維持 **`AGENTS.md`**：先結論、繁中、可執行步驟；**不要**每則訊息都套「十一段全文」，除非使用者要求 **完整規格／全文／大型階段任務**（模板原文在下方「輸出分工」）。
 
+## 1.1) 最高執行原則：Single Owner（除非必要）
+
+- 除非有明確必要（法遵、審計、對外交付副本），**一份內容只能有一個主人（Owner File）**。  
+- 非 Owner 檔案只能放：**一句摘要 + 連結**，不得貼同一份完整內容。  
+- 任何更新只改 Owner；mirror/index 檔禁止雙寫，避免漂移與重工。  
+- 發現重複或矛盾時，先判定 Owner 再刪除副本，最後回寫 `TASKS` / `WORKLOG` / `memory`。  
+- 此原則在日常執行上視為最高優先，僅次於 AO-RESUME / AO-CLOSE 必要流程。
+
+## 1.1) 最高執行原則：Single Owner（除非必要）
+
+- 除非有明確必要（法遵、審計、對外交付副本），**一份內容只能有一個主人（Owner File）**。  
+- 非 Owner 檔案只能放：**一句摘要 + 連結**，不得貼同一份完整內容。  
+- 任何更新只改 Owner；mirror/index 檔禁止雙寫，避免漂移與重工。  
+- 發現重複或矛盾時，先判定 Owner 再刪除副本，最後回寫 `TASKS` / `WORKLOG` / `memory`。  
+- 此原則在日常執行上視為最高優先，僅次於 AO-RESUME / AO-CLOSE 必要流程。
+
 ## 2) 本檔 vs 完整長文（最容易照做）
 
 | 層級 | 檔案 | 用途 |

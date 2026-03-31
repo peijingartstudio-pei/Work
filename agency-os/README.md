@@ -5,6 +5,19 @@
 與 **Lobster Factory** 同庫時，monorepo 總覽見上層 [`../README.md`](../README.md)（含 `verify-build-gates`、龍蝦 README 入口）。  
 **整體公司 OS**：四份規格原文在上層 [`../docs/spec/README.md`](../docs/spec/README.md)；**四份怎麼整合、先讀誰** 見本目錄 [`docs/overview/company-os-four-sources-integration.md`](docs/overview/company-os-four-sources-integration.md)；**V3 §三 跳行表** 見 [`docs/overview/company-os-twenty-modules.md`](docs/overview/company-os-twenty-modules.md)。
 
+## 每天開工必看（固定開工卡）
+- **總入口**：`docs/overview/ao-lobster-operating-model.md`
+- **開工事件 SSOT**：`docs/overview/REMOTE_WORKSTATION_STARTUP.md`
+- **收工事件 SSOT**：`docs/operations/end-of-day-checklist.md`
+- **關鍵字規則**：`.cursor/rules/30-resume-keyword.mdc`、`.cursor/rules/40-shutdown-closeout.mdc`
+- **今日主線真相**：`TASKS.md`
+- **統整報告**：`reports/status/integrated-status-LATEST.md`（說明：`docs/overview/INTEGRATED_STATUS_REPORT.md`）
+
+## AO + 龍蝦工程圖（首頁）
+
+- 單一真相（SSOT）：`docs/overview/ao-lobster-operating-model.md#4-ao--lobster-event-flow-mermaid`
+- 首頁只放入口，不複製圖內容，避免多版本漂移與重工。
+
 ## 目標
 - 同時管理多家公司、多網站，不失控
 - 支援 WordPress + Supabase + GitHub + n8n + Replicate + DataForSEO
@@ -28,6 +41,12 @@
 - **`docs/operations/cursor-enterprise-rules-index.md`**: **Cursor 企業級 IDE 規則（版控）** — `63`–`66` `.mdc` 與 SSOT 導覽（與 `AO-RESUME`／`AO-CLOSE` 流程衝突時以 `00`／`30`／`40` 規則為準）
 - **`docs/operations/airtable-to-supabase-migration-playbook.md`**: **Airtable 停用後**功能如何落到 **Supabase**（建模、RLS、匯入、n8n 改接）
 - `docs/operations/tools-and-integrations.md`: 整合工具與環境變數規範
+
+## 事件流程單一真相（避免重複維護）
+- **開工事件（AO-RESUME）**：`docs/overview/REMOTE_WORKSTATION_STARTUP.md`（含 Git 對齊 + 30 秒自檢）
+- **收工事件（AO-CLOSE）**：`docs/operations/end-of-day-checklist.md`（操作） + `.cursor/rules/40-shutdown-closeout.mdc`（規則）
+- **原則**：其他文件只放入口連結與一句摘要，不再維護第二套完整命令
+- **跨系統運作模型（AO + 龍蝦）**：`docs/overview/ao-lobster-operating-model.md`
 
 ## Docs 分類入口
 - `docs/README.md`: 文件分層總索引
@@ -168,5 +187,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-03-30 09:52:39 UTC_
+_Last synced: 2026-03-31 14:15:52 UTC_
 

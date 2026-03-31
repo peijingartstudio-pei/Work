@@ -19,6 +19,7 @@
   - governance config（agent/policy JSON）驗證
 
 ## 全流程進度看板（建議每天先看）
+- `../agency-os/docs/overview/ao-lobster-operating-model.md`（AO + 龍蝦跨系統運作模型，事件節奏單一入口）
 - `docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`
 - `docs/e2e/STAGING_PIPELINE_E2E_PAYLOAD.md`（C3-1 標準 E2E payload）
 - `docs/e2e/OPERABLE_E2E_PLAYBOOK.md`（A10-1 營運劇本與證據順序）
