@@ -1,8 +1,11 @@
-﻿# Worklog
+# Worklog
 
 > Historical snapshot note: this file records decisions/events by date. For current operating rules and commands, use the event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (startup/AO-RESUME) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (shutdown/AO-CLOSE).
 
 ## 2026-04-01
+
+### AO-RESUME：雙機 §1.5 + audit 強制口頭提醒
+- 使用者要求在未完成另一台 §1.5 與 `machine-environment-audit.ps1 -FetchOrigin` PASS 前，**每次** `AO-RESUME` 的「下一步」須提醒；已寫入 `memory/CONVERSATION_MEMORY.md` 與 **`.cursor/rules/30-resume-keyword.mdc` 第 7 點**（根目錄規則檔同步）。
 
 ### 環境「完美」可驗證定義 + 稽核腳本
 - 新增 `scripts/machine-environment-audit.ps1`：檢查 monorepo 結構、Git main／乾淨度／與 origin 對齊（可 `-FetchOrigin`）、Node／npm、`lobster-factory\packages\workflows` 的 `node_modules`（與實際 lockfile 位置一致）、可選 `mcp-local-wrappers`、`gh` 登入占位、DPAPI vault／Cursor `mcp.json` 是否存在（不讀密鑰）。可選 `-RunVerifyGates`、`-Strict`。
