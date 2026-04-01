@@ -17,7 +17,7 @@
 - **2026-03-31 補充**：已完成 P1/P2 跑道加速（Run ID 對照規格 + preflight 腳本 + 證據骨架初始化），可直接進入實跑。
 - **2026-03-31 補充**：P1 最小實跑已完成：舊 `company-a` 示範資料與舊骨架已清除，改用 `company-p1-pilot` 建立新 tenant/site/project，並產生新證據路徑 `reports/e2e/onboarding-a10-2/20260331-214650-company-p1-pilot-2026-010-p1-pilot/`。
 - **AO-RESUME 明日必回報提醒**：開場必先提醒並檢查 `reports/e2e/onboarding-a10-2/20260331-215507-company-p1-pilot-2026-010-p1-pilot/02-a10-2-evidence.md` 與同目錄 `03-run-id-map.md`（A10-2 pending 列），再決定是否直接啟動 A10-2。
-- **AO-RESUME 固定提醒（直到勾選）**：使用者要求兩台電腦執行與功能一致——見 **`TASKS.md` → Next** 第一則未勾項 **「（AO-RESUME 提醒）雙機環境對齊」**；Agent 在回覆 `AO-RESUME` 時應**口頭列出該待辦**，並對照 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：**§1.5**、**§2**；含 `gh`、vault／MCP 每台重設。
+- **AO-RESUME 雙機提醒（使用者明示 + 未勾 `TASKS` 前持續報）**：**另一台電腦**須跑完 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §1.5**，然後在 **monorepo 根**執行 `powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1 -FetchOrigin` 至 **PASS（無 WARN）**，再勾 **`TASKS.md` → Next**「（AO-RESUME 提醒）雙機環境對齊」。在該項**仍未勾選**期間，每次 `AO-RESUME` 回覆的 **「下一步」**（必要時 **「目前進度」**）**必含一行專門口頭提醒**上述 §1.5 + audit（見 `.cursor/rules/30-resume-keyword.mdc` 第 7 點）。要點仍含：`gh`、vault／MCP 每台重設、**§2** 例行節奏。
 - **2026-04-01 補充（環境 SSOT）**：「可驗證的完美環境」定義與指令見 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §6.2**；稽核腳本 **`scripts/machine-environment-audit.ps1`**（`-FetchOrigin`、選用 `-RunVerifyGates`、`-Strict`）。例行 **`npm ci` 目錄為 `lobster-factory\packages\workflows`**（根目錄無 package-lock，舊文件寫「在 lobster-factory 根 npm ci」為誤）。
 
 ## Confirmed Priorities
