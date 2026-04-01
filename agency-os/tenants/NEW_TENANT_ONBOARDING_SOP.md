@@ -21,15 +21,24 @@
    - `02_CLIENT_WORKSPACE_GUIDE.md`
    - `03_TOOLS_CONFIGURATION_GUIDE.md`
    - `04_OPERATIONS_AUTOMATION_GUIDE.md`
+4. 從 `tenants/templates/core/` 複製以下必填控制文件到 `tenants/company-<slug>/core/`：
+   - `ENVIRONMENT_REGISTRY.md`
+   - `RELEASE_GATES_CHECKLIST.md`
+   - `BACKUP_RESTORE_PROOF.md`
+5. 依產業複製 Overlay 到 `tenants/company-<slug>/industry/`：
+   - 旅遊業：`tenants/templates/industry/travel/*`
+   - 療癒/治療服務：`tenants/templates/industry/therapy/*`
 
 ## Step 2：填寫公司主檔
 1. 更新 `PROFILE.md`：公司名稱、窗口、狀態、合作起始日
 2. 更新 `SERVICE_CATALOG.md`：已購服務與不含項目
-3. 更新 `SITES_INDEX.md`：至少新增 1 個站點規劃
+3. 更新 `SITES_INDEX.md`：至少新增 1 個站點規劃，補上 staging/prod URL 與備份日期欄位
 4. 初始化 `FINANCIAL_LEDGER.md`：付款節點與條件
-5. 初始化 `ACCESS_REGISTER.md`：系統/環境/權限 Owner
-6. 建立 `OPERATIONS_SCHEDULE.json` 與 `OPS_QUEUE.json`
+5. 初始化 `ACCESS_REGISTER.md`：補齊 MFA、Secret Location、Rotation Due、Approver、Audit Evidence
+6. 建立 `OPERATIONS_SCHEDULE.json` 與 `OPS_QUEUE.json`（含 owner/retry/timeout/evidence_output）
 7. 填寫 1-4 使用指南，對齊該客戶的角色、流程、工具與排程
+8. 填寫 `core/ENVIRONMENT_REGISTRY.md`（staging/prod 必填）
+9. 預先建立 `core/RELEASE_GATES_CHECKLIST.md` 與 `core/BACKUP_RESTORE_PROOF.md` 第一版
 
 ## Step 3：建立第一個站點
 1. 於 `tenants/company-<slug>/sites/` 建立 `<site-slug>/`
@@ -83,6 +92,10 @@
 - [ ] 至少 1 個 site 建立完成且可維護
 - [ ] 第 1 個專案已開立並有 Discovery 初版
 - [ ] 權限與憑證已分離且可輪替
+- [ ] `core/ENVIRONMENT_REGISTRY.md` 已填妥 staging/prod、備份、回滾責任人
+- [ ] `core/RELEASE_GATES_CHECKLIST.md` 已建立首版（含 GO/NO-GO 欄位）
+- [ ] `core/BACKUP_RESTORE_PROOF.md` 已建立首版（至少有備份紀錄）
+- [ ] 已套用至少 1 組產業 Overlay（`industry/*`）並完成必填 QA 場景
 - [ ] 任務板、工作日誌、記憶文件已同步
 - [ ] 每日/每週/每月/不定時任務排程已啟用
 - [ ] 最新健康檢查分數 **100%**（與本 repo `AO-CLOSE`／`AGENTS.md` 預設一致）
@@ -103,5 +116,5 @@
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 - `WORKLOG.md`
 
-_Last synced: 2026-04-01 02:31:21 UTC_
+_Last synced: 2026-04-01 07:42:46 UTC_
 

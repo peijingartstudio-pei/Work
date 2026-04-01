@@ -37,6 +37,8 @@
 - `docs/operations/security-secrets-policy.md`: 憑證與密鑰管理政策
 - `docs/operations/local-secrets-vault-dpapi.md`: 本機免費祕密庫（Windows DPAPI）
 - `docs/operations/mcp-add-server-quickstart.md`: MCP 新增快速手冊（常用）
+- `docs/operations/WORDPRESS_CLIENT_DELIVERY_MODELS.md`: WordPress **雙模式交付 SOP**（既有站接手 + 新站從零，雲端 staging 優先）
+- `docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`: Next-Gen 升級藍圖（M1/M2/M3、驗收標準、風險對策）
 - **`docs/operations/cursor-mcp-and-plugin-inventory.md`**: Cursor **MCP／外掛** 與龍蝦 Routing 對照（**建議與根目錄 `mcp.json` 同步維護**）
 - **`docs/operations/cursor-enterprise-rules-index.md`**: **Cursor 企業級 IDE 規則（版控）** — `63`–`66` `.mdc` 與 SSOT 導覽（與 `AO-RESUME`／`AO-CLOSE` 流程衝突時以 `00`／`30`／`40` 規則為準）
 - **`docs/operations/airtable-to-supabase-migration-playbook.md`**: **Airtable 停用後**功能如何落到 **Supabase**（建模、RLS、匯入、n8n 改接）
@@ -187,5 +189,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-04-01 02:31:21 UTC_
+_Last synced: 2026-04-01 07:42:46 UTC_
 

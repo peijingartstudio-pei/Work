@@ -92,6 +92,7 @@
 - **新增或大幅改版「重要 md」（治理／對外／會給客戶看）**：必讀並依序處理 **`docs/operations/new-doc-linkage-checklist.md`**；寫入 **`change-impact-map.json` + 矩陣** 可半自動：`scripts/register-new-governance-doc.ps1`（仍須指定要連動的 `-Targets`；**README 入口與內文語意**無法替你判斷，請補齊後跑 doc-sync / health）。
 
 ## 文件治理規則
+- **檔名可讀性規範（強制）**：檔名必須讓人一眼看出用途，建議結構為 `TYPE_SCOPE_PURPOSE[_CLIENT/PROJECT].md`（例：`PRODUCTION_RUNBOOK_PILOT_A_EXISTING_SITE_SOULFUL_EXPRESSION.md`）。禁止 `new.md`、`temp.md`、`v2-final-final.md` 這類不具語意命名。
 - **最高原則（除非必要）**：**一份內容只能有一個主人（Owner File）**。
 - 非 Owner 檔案只放「一句摘要 + 連結」，不得複製完整內容（尤其流程圖、SOP 指令塊、規格正文）。
 - 必要副本（法遵/審計/對外交付）必須在檔頭標註原因與 Owner 路徑，並指定同步責任人。
@@ -128,5 +129,5 @@
 - `README.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-04-01 02:31:21 UTC_
+_Last synced: 2026-04-01 07:06:27 UTC_
 

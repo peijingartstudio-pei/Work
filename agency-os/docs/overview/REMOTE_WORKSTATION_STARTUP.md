@@ -93,6 +93,35 @@ if (Test-Path .\mcp-local-wrappers) {
 powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 ```
 
+### 1.5.1 Windows：本機 WordPress 棧（筆電與公司桌機對齊｜**非 MCP**）
+
+> **為什麼要裝？** 龍蝦 staging／`regression:staging-pipeline` 在傳入真實 `--wpRootPath` 時，需要本機 **WordPress + 可連線的 MySQL 相容資料庫**。**Supabase = Postgres（平台 SoR）**；**WordPress 核心只吃 MySQL／MariaDB**，兩者職責不同、**並存**，不是「多一個 Supabase」。
+
+> **正本（操作步驟與疑難）**：`lobster-factory/docs/operations/LOCAL_WORDPRESS_WINDOWS.md`  
+> **一鍵（DB 起來 + 建庫 + `.scratch` 下裝 WP）**：repo 根 `scripts/bootstrap-local-wordpress-windows.ps1`
+> **多機同步策略（公司桌機/筆電/新機）**：`docs/operations/MARIADB_MULTI_MACHINE_SYNC.md`
+
+**筆電若與公司桌機對齊「真 wp」能力**，在 monorepo 根依序執行（可複製整段；路徑與桌機磁碟代號無關）：
+
+```powershell
+Set-Location <你的 Work 根路徑>
+# MySQL 相容（winget 套件名稱以當下 store 為準，常見為 MariaDB.Server）
+winget install --id MariaDB.Server -e --accept-package-agreements
+# PHP（WP-CLI 需要；建議與文件一致）
+winget install --id PHP.PHP.NTS.8.4 -e --accept-package-agreements
+```
+
+關閉並重開終端機（或刷新 `Machine`+`User` 的 `PATH`）後：
+
+```powershell
+Set-Location <你的 Work 根路徑>
+powershell -ExecutionPolicy Bypass -File .\scripts\setup-wp-cli-windows.ps1
+# 依腳本提示將 %LOCALAPPDATA%\Programs\wp-cli 加進「使用者 PATH」後再開一個終端機
+powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni
+```
+
+`-EnsurePhpIni` 會在 `php.exe` 同目錄建立／調整本機 `php.ini`（`extension_dir`、`curl`/`openssl`/`mysqli`、`memory_limit`），避免 `wp core download`／DB 連線失敗。**憑證與 DB root 密碼不入庫**；本機開發僅限自用。
+
 ### 憑證（無法一鍵複製：每台各做一次）
 
 - **DPAPI vault**（Linear、Trigger 等腳本用）：`scripts/secrets-vault.ps1` — 手冊 **`docs/operations/local-secrets-vault-dpapi.md`**。  
@@ -226,6 +255,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 | **乾淨工作樹** | `git status` 無未提交變更再宣告環境穩定（避免與 pull/rebase 拉扯）。 |
 | **DPAPI vault** | `%LOCALAPPDATA%\AgencyOS\secrets\vault.json` 已依手冊建立，且含腳本所需鍵名（見 `agency-os/docs/operations/local-secrets-vault-dpapi.md`）。 |
 | **Cursor MCP** | `%USERPROFILE%\.cursor\mcp.json` 存在；token／OAuth 仅存本機（見 `agency-os/docs/operations/mcp-add-server-quickstart.md`）。 |
+| **（僅 Windows）本機 WP 真路徑** | 若需與他機一致跑 **真 `wp`**：已依 **§1.5.1** 安裝 **MariaDB + PHP + WP-CLI**，並能成功執行 `bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni`；詳 `lobster-factory/docs/operations/LOCAL_WORDPRESS_WINDOWS.md`（**與 Supabase 分工不同**）。 |
 
 **一鍵稽核**（不讀取密鑰內容；可加上 `-FetchOrigin` 讓 ahead/behind 較準）：
 
@@ -252,5 +282,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-01 02:31:21 UTC_
+_Last synced: 2026-04-01 06:39:13 UTC_
 

@@ -14,7 +14,11 @@
         "title": "Run documentation auto-sync",
         "type": "command",
         "enabled": true,
-        "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\doc-sync-automation.ps1 -AutoDetect"
+        "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\doc-sync-automation.ps1 -AutoDetect",
+        "owner": "ops-owner",
+        "timeout_minutes": 15,
+        "retry_policy": "1x-immediate-retry",
+        "evidence_output": "reports/closeout/closeout-*.md"
       }
     ],
     "weekly": [
@@ -23,7 +27,11 @@
         "title": "Generate weekly status report",
         "type": "command",
         "enabled": true,
-        "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\doc-sync-automation.ps1 -AutoDetect"
+        "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\doc-sync-automation.ps1 -AutoDetect",
+        "owner": "ops-owner",
+        "timeout_minutes": 20,
+        "retry_policy": "1x-immediate-retry",
+        "evidence_output": "reports/closeout/closeout-*.md"
       }
     ],
     "monthly": [
@@ -32,7 +40,11 @@
         "title": "Run monthly governance consistency check",
         "type": "command",
         "enabled": true,
-        "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\doc-sync-automation.ps1 -AutoDetect"
+        "command": "powershell -ExecutionPolicy Bypass -File .\\scripts\\doc-sync-automation.ps1 -AutoDetect",
+        "owner": "governance-owner",
+        "timeout_minutes": 30,
+        "retry_policy": "2x-with-backoff",
+        "evidence_output": "reports/closeout/closeout-*.md"
       }
     ]
   }

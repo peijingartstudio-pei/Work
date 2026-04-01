@@ -1,4 +1,4 @@
-# Global Task Board
+﻿# Global Task Board
 
 ## In Progress
 - [x] 建立多租戶案場資料夾結構（company -> site -> project）
@@ -10,7 +10,16 @@
 - [x] 建立 `lobster-factory` Phase 1 底座骨架（Supabase migrations + wc-core manifest + workflow 安全骨架）
 
 ## Next
-- [ ] **（AO-RESUME 提醒）雙機環境對齊（桌機＋筆電）**：兩台執行與功能一致——**新機／筆電首次**只跟 [`docs/overview/REMOTE_WORKSTATION_STARTUP.md`](docs/overview/REMOTE_WORKSTATION_STARTUP.md) **§1.5**；**之後每次開工**跟同檔 **§2**（`git pull`、`lobster-factory\packages\workflows` 之 `npm ci`、可選 wrappers、`verify-build-gates`、再 **`AO-RESUME`**）。要點：筆電安裝 **GitHub CLI**（`winget install --id GitHub.cli`；裝完重開終端或刷新 `PATH`）並 **`gh auth login`**；**Node** 大版本與桌機／CI 一致；**`scripts/secrets-vault.ps1`（DPAPI）與 Cursor `mcp.json`／MCP 為每台各自設定**（勿假設會跟著 `git pull`）。完成後勾選本項。
+- [ ] **（AO-RESUME 提醒）雙機環境對齊（桌機＋筆電）**：兩台執行與功能一致——**新機／筆電首次**只跟 [`docs/overview/REMOTE_WORKSTATION_STARTUP.md`](docs/overview/REMOTE_WORKSTATION_STARTUP.md) **§1.5**（含 **§1.5.1**：Windows 本機 **MariaDB + PHP + WP-CLI** + `scripts/bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni`；與 **Supabase／MCP** 分列，WordPress 仍需 MySQL 相容庫）；**之後每次開工**跟同檔 **§2**（`git pull`、`lobster-factory\packages\workflows` 之 `npm ci`、可選 wrappers、`verify-build-gates`、再 **`AO-RESUME`**）。要點：筆電安裝 **GitHub CLI**（`winget install --id GitHub.cli`；裝完重開終端或刷新 `PATH`）並 **`gh auth login`**；**Node** 大版本與桌機／CI 一致；**`scripts/secrets-vault.ps1`（DPAPI）與 Cursor `mcp.json`／MCP 為每台各自設定**（勿假設會跟著 `git pull`）。完成後勾選本項。
+- [x] 建立 WordPress 客戶交付「雙模式 SOP」（既有站接手 + 新站從零）並明確雲端 staging 優先，避免跨機重工：`docs/operations/WORDPRESS_CLIENT_DELIVERY_MODELS.md`
+- [ ] 啟動 Next-Gen 升級藍圖 v1（M1→M3）：`docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`（先選 2 個試點：1 既有站接手 + 1 新站建置）
+- [ ] **既有站接手（Soulful Expression Art Therapy）**：完成 M1 台帳（staging/prod、備份策略、維護窗、baseline 外掛/版本）
+- [ ] **新站建置（Scenery Travel Mongolia）**：完成 M1 啟動（tenant/site/project + 雲端 staging 可用 + Discovery 國際需求補齊）
+- [ ] **既有站接手 Day 1（Soulful Expression）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_A_EXISTING_SITE_SOULFUL_EXPRESSION.md` 第 1~2 節，輸出權限與基線盤點
+- [x] **既有站接手 Day 1（Soulful Expression）前置實填完成**：已建立 `tenants/company-soulful-expression/` 基本台帳（`PROFILE.md`、`SITES_INDEX.md`、`core/ENVIRONMENT_REGISTRY.md`、therapy QA、專案 brief），未知欄位標記 `待補` 待權限盤點後回填
+- [ ] **新站建置 Day 1（Scenery Travel Mongolia）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_B_NEW_SITE_SCENERY_TRAVEL_MONGOLIA.md` 第 1~2 節，完成新站 staging 啟動條件
+- [x] **Phase 1 模板硬化（Core）**：新增 `tenants/templates/core/ENVIRONMENT_REGISTRY.md`、`RELEASE_GATES_CHECKLIST.md`、`BACKUP_RESTORE_PROOF.md`，並升級 `ACCESS_REGISTER.md`、`SITES_INDEX.md`、`OPERATIONS_SCHEDULE.json`、`NEW_TENANT_ONBOARDING_SOP.md`
+- [x] **Phase 1.5 產業 Overlay（首批）**：新增 `tenants/templates/industry/travel/*` 與 `tenants/templates/industry/therapy/*`，並接入 `tenants/README.md`、`NEW_TENANT_ONBOARDING_SOP.md`、`NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`
 - [x] **（2026-03-30）** 整理 `docs/spec/raw/` **四份原文**（V3／Spec v1／ENTERPRISE／CURSOR_PACK）：新增 [`docs/spec/raw/README-four-sources-maintenance.md`](../docs/spec/raw/README-four-sources-maintenance.md)（維護索引 + 大段錨點 + SSOT 對照）；各檔首段加維護提示；`company-os-four-sources-integration.md` 與 `docs/spec/README.md` 已連回。
 - [x] 定義 WordPress 客製系統開發準則（plugin/mu-plugin/資料表策略）
 - [x] 建立 n8n 工作流分層（共用流程 vs 客戶專屬流程）
@@ -28,6 +37,7 @@
 - [x] AO-CLOSE 預設 100% health 閘道已落地（規則/文件/腳本三層）
 - [x] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md`（`company-p1-pilot` 最小實跑完成，證據：`reports/e2e/onboarding-a10-2/20260331-214650-company-p1-pilot-2026-010-p1-pilot/`）
 - [ ] 明日待做：全面檢查並升級 `tenants/templates/`（目前過於簡陋），補齊「17-20 部門企業交付」所需模板欄位、流程與財務/支付治理內容
+- [ ] （Next-Gen 對齊）將 M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位（避免 Pilot 成果與跨國企業目標脫鉤）
 - [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈）
 - [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端）
 - [x] `lobster-factory` A9 雲端 artifacts 治理補齊 baseline（生命周期規則/IAM/稽核自動化：policy + validator + audit report）
@@ -100,5 +110,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-01（Backlog：`packages/workflows` npm audit 追蹤，不 force fix）_
+_Last synced: 2026-04-01 07:50:53 UTC_
 

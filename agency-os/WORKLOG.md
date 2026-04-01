@@ -1,8 +1,68 @@
-# Worklog
+﻿# Worklog
 
 > Historical snapshot note: this file records decisions/events by date. For current operating rules and commands, use the event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (startup/AO-RESUME) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (shutdown/AO-CLOSE).
 
 ## 2026-04-01
+
+### Next-Gen 升級藍圖 v1 已落地（使用者同意直接衝高階版）
+- 新增 `docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`，定義 3 里程碑（M1 環境標準化、M2 gate/回滾自動化、M3 控制台化）與 2-4 週節奏。
+- 文件包含：建議改動檔案、腳本清單、DoD 驗收標準、風險對策與本週啟動順序。
+- `README.md`、`TASKS.md` 已新增入口/待辦，供 AO-RESUME 與每日執行直接引用。
+
+### Next-Gen M1 試點名單已鎖定
+- **既有站接手**：Soulful Expression Art Therapy（台灣辦公，既有網站運行中，規劃跨國）。
+- **新站建置**：Scenery Travel Mongolia（蒙古在地團隊，國際客群，目前僅 IG）。
+- 已把兩案寫入 `NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`（第 6 節）與 `TASKS.md`（M1 待辦），下次 AO-RESUME 可直接沿試點推進而不重判定。
+
+### 使用者確認：17/20 部門跨國企業目標不可丟
+- 已在 `NEXT_GEN_DELIVERY_BLUEPRINT_V1.md` 新增「1.1 對齊說明」：M1/M2/M3 與 17/20 部門目標為同一路徑，不是降級目標。
+- `TASKS.md` 已新增對齊待辦：M3 控制台輸出需映射到 17/20 部門責任矩陣與模板欄位。
+
+### 使用者要求改為「上線版」與「檔名可讀性」
+- 已建立兩份 production-ready runbook（檔名可直接看懂用途）：
+  - `docs/operations/PRODUCTION_RUNBOOK_PILOT_A_EXISTING_SITE_SOULFUL_EXPRESSION.md`
+  - `docs/operations/PRODUCTION_RUNBOOK_PILOT_B_NEW_SITE_SCENERY_TRAVEL_MONGOLIA.md`
+- `AGENTS.md` 已新增檔名規範：使用語意化命名（`TYPE_SCOPE_PURPOSE[_CLIENT/PROJECT].md`），禁止無語意檔名。
+- `TASKS.md` 已新增兩個「上線版 Day 1」可執行待辦，後續 AO-RESUME 可直接接續實作。
+
+### Phase 1 直接落地：模板硬化（從陽春升級到可上線控制）
+- 新增 Core 模板（tenant 必填控制文件）：
+  - `tenants/templates/core/ENVIRONMENT_REGISTRY.md`
+  - `tenants/templates/core/RELEASE_GATES_CHECKLIST.md`
+  - `tenants/templates/core/BACKUP_RESTORE_PROOF.md`
+- 升級既有模板：
+  - `tenants/templates/tenant-template/ACCESS_REGISTER.md`（MFA/Secret Location/Rotation Due/Approver/Audit Evidence）
+  - `tenants/templates/tenant-template/SITES_INDEX.md`（staging/prod URL、備份與還原測試欄位）
+  - `tenants/templates/tenant-template/OPERATIONS_SCHEDULE.json`（owner/retry/timeout/evidence_output）
+- 升級 onboarding SOP：
+  - `tenants/NEW_TENANT_ONBOARDING_SOP.md` 改為強制複製與填寫 `core/*` 控制文件，並納入完成檢查清單。
+
+### Phase 1.5 直接落地：產業 Overlay（travel + therapy）
+- 新增旅遊產業模板：
+  - `tenants/templates/industry/travel/REGULATORY_AND_OPERATIONAL_REQUIREMENTS.md`
+  - `tenants/templates/industry/travel/MANDATORY_QA_SCENARIOS.md`
+- 新增療癒/治療服務模板：
+  - `tenants/templates/industry/therapy/REGULATORY_AND_TRUST_REQUIREMENTS.md`
+  - `tenants/templates/industry/therapy/MANDATORY_QA_SCENARIOS.md`
+- 已接入：
+  - `tenants/README.md`（結構與新增流程）
+  - `tenants/NEW_TENANT_ONBOARDING_SOP.md`（強制套用至少一組 overlay）
+  - `docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`（M1 交付物/DoD 補齊）
+
+### Pilot A 實填啟動：Soulful Expression（既有站接手）
+- 已建立實際 tenant 工作目錄：`tenants/company-soulful-expression/`
+- 已落地首批實填檔案（非空白模板）：
+  - `PROFILE.md`
+  - `SITES_INDEX.md`
+  - `core/ENVIRONMENT_REGISTRY.md`
+  - `industry/therapy/MANDATORY_QA_SCENARIOS.md`
+  - `projects/2026-011-existing-site-handover-soulful/00_PROJECT_BRIEF.md`
+- 未知資訊統一標記 `待補`，等待 Day 1 權限盤點（Hostinger/DNS/WP admin/backup）後回填。
+
+### WordPress 雲端優先交付 SOP（既有站 + 新站）落地
+- 新增 `docs/operations/WORDPRESS_CLIENT_DELIVERY_MODELS.md`：統一兩種業務模式（既有站接手 / 新站從零），以「**雲端 Staging 優先**、Production 受控變更、跨機同一真相」為核心。
+- 文檔包含：分流決策樹、Staging -> Production gate、回滾準則、跨機同步原則（流程同步優先、非 DB 檔案直拷）、AO-RESUME/AO-CLOSE 操作準則與 DoD。
+- `README.md`、`docs/operations/tools-and-integrations.md`、`docs/overview/REMOTE_WORKSTATION_STARTUP.md` 已新增入口連結，避免之後每案重複口頭說明。
 
 ### A10-2 本機 staging 管線 4/4（DRY）+ 可重現性修復
 - **Preflight**：修正 monorepo 根執行時 `agency-os` 解析（`scripts/preflight-onboarding-a10-2-readiness.ps1`；`agency-os/scripts` 鏡像一併防呆）。
@@ -148,7 +208,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-01 02:31:21 UTC_
+_Last synced: 2026-04-01 07:50:53 UTC_
 
 ## 2026-03-20
 
@@ -601,6 +661,16 @@ _Last synced: 2026-04-01 02:31:21 UTC_
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
+
+
+
+
+
+
+
+
+
 
 
 

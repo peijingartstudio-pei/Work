@@ -30,6 +30,8 @@
 - `DATAFORSEO_PASSWORD`
 
 ## Operational Notes
+- **Windows 本機 WordPress（MariaDB／PHP／WP-CLI）**：給龍蝦／WP-CLI **真本機站台**用（**MySQL 相容**）；**不是** MCP 項目，也**不**取代 **Supabase（Postgres）** 平台職責。雙機／筆電對齊見 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §1.5.1**；與 MCP 表分界見 **`docs/operations/cursor-mcp-and-plugin-inventory.md` §4**；逐步操作見 **`lobster-factory/docs/operations/LOCAL_WORDPRESS_WINDOWS.md`**。
+- **WordPress 客戶交付模式（建議主流程）**：以 **雲端 staging 優先**統一「既有站接手」與「新站從零」兩種業務型態，詳 **`docs/operations/WORDPRESS_CLIENT_DELIVERY_MODELS.md`**（跨機一致、上線 gate、回滾策略）。
 - **MCP 清單與分工**：見 **`docs/operations/cursor-mcp-and-plugin-inventory.md`**；連線步驟見 **`docs/operations/mcp-add-server-quickstart.md`**（若日後另有 `mcp/CONNECTORS.md` 可併列入口，非必填）。
 - 每次整合異動都需記錄於 `WORKLOG.md`。
 - **Linear**：API key／token **不入庫**；以 Cursor 設定或組織核准的 secrets 注入為主；跨機續接以 **`TASKS` + `WORKLOG` + issue key** 對照，避免只靠雲端板。
@@ -40,5 +42,5 @@
 - `docs/standards/n8n-workflow-architecture.md`
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 
-_Last synced: 2026-04-01 02:31:21 UTC_
+_Last synced: 2026-04-01 06:39:13 UTC_
 

@@ -1,7 +1,7 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-03-31 22:24:45
-- agency-os root: `D:\Work\agency-os`
+- Generated: 2026-04-01 15:55:38
+- agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
 >
@@ -15,15 +15,15 @@
 - `LAST_SYSTEM_STATUS.md`, `WORKLOG.md`
 
 ## 1) TASKS.md - Next (unchecked)
-- [ ] 明日待做：全面檢查並升級 `tenants/templates/`（目前過於簡陋），補齊「17-20 部門企業交付」所需模板欄位、流程與財務/支付治理內容 - [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈） - [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端） - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
+- [ ] **（AO-RESUME 提醒）雙機環境對齊（桌機＋筆電）**：兩台執行與功能一致——**新機／筆電首次**只跟 [`docs/overview/REMOTE_WORKSTATION_STARTUP.md`](docs/overview/REMOTE_WORKSTATION_STARTUP.md) **§1.5**（含 **§1.5.1**：Windows 本機 **MariaDB + PHP + WP-CLI** + `scripts/bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni`；與 **Supabase／MCP** 分列，WordPress 仍需 MySQL 相容庫）；**之後每次開工**跟同檔 **§2**（`git pull`、`lobster-factory\packages\workflows` 之 `npm ci`、可選 wrappers、`verify-build-gates`、再 **`AO-RESUME`**）。要點：筆電安裝 **GitHub CLI**（`winget install --id GitHub.cli`；裝完重開終端或刷新 `PATH`）並 **`gh auth login`**；**Node** 大版本與桌機／CI 一致；**`scripts/secrets-vault.ps1`（DPAPI）與 Cursor `mcp.json`／MCP 為每台各自設定**（勿假設會跟著 `git pull`）。完成後勾選本項。 - [ ] 啟動 Next-Gen 升級藍圖 v1（M1→M3）：`docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`（先選 2 個試點：1 既有站接手 + 1 新站建置） - [ ] **既有站接手（Soulful Expression Art Therapy）**：完成 M1 台帳（staging/prod、備份策略、維護窗、baseline 外掛/版本） - [ ] **新站建置（Scenery Travel Mongolia）**：完成 M1 啟動（tenant/site/project + 雲端 staging 可用 + Discovery 國際需求補齊） - [ ] **既有站接手 Day 1（Soulful Expression）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_A_EXISTING_SITE_SOULFUL_EXPRESSION.md` 第 1~2 節，輸出權限與基線盤點 - [ ] **新站建置 Day 1（Scenery Travel Mongolia）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_B_NEW_SITE_SCENERY_TRAVEL_MONGOLIA.md` 第 1~2 節，完成新站 staging 啟動條件 - [ ] 明日待做：全面檢查並升級 `tenants/templates/`（目前過於簡陋），補齊「17-20 部門企業交付」所需模板欄位、流程與財務/支付治理內容 - [ ] （Next-Gen 對齊）將 M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位（避免 Pilot 成果與跨國企業目標脫鉤） - [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈） - [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端） - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
 
 ## 2) TASKS.md - Backlog (unchecked)
-- [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核） - [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager）
+- [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核） - [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager） - [ ] **`lobster-factory/packages/workflows` `npm audit`**（2026-04-01）：16 筆多為 **Trigger.dev CLI／`@trigger.dev/core` 傳遞依賴**（socket.io／cookie、esbuild dev、tar、giget、systeminformation 等）。**勿**對本目錄跑 `npm audit fix --force`（會把人帶到不相容 Trigger 版本）。**對策**：等官方 `@trigger.dev/sdk`／`trigger.dev` 小版修 upstream；或 Trigger 釋出安全修補後再 `npm update` + 回歸；本機勿將 Trigger **dev** 伺服器暴露公網。
 
 ## 3) Lobster Factory Master Checklist - open items (sections A-C, before section D)
 - [ ] A7. 串接 WordPress 真正 provision/shell execution（仍須 guardrails；**manifest 套用 shell 已具備**，全站自動建站仍待 hosting adapter） - [ ] A10-2. **商業閉環**：新客戶從建立→驗收 + 生產 Trigger 全鏈固定證據（對齊 `agency-os/tenants/NEW_TENANT_ONBOARDING_SOP.md` 實跑） - [ ] C5-1. Observability：Sentry（錯誤追蹤）+ PostHog（產品分析） - [ ] C5-2. Edge/Security：Cloudflare（WAF/CDN/Rate limit） - [ ] C5-3. Secrets：1Password Secrets Automation（或同級） - [ ] C5-4. Identity/Org：Clerk/WorkOS/Auth0（三選一） - [ ] C5-5. Cost/Decision：成本與決策引擎可觀測化（budget/ROI guardrails） - [ ] C5-6. 後續建議：Langfuse / Upstash / Stripe / Object Storage / Search
 
-*Checklist path:* `D:\Work\lobster-factory\docs\LOBSTER_FACTORY_MASTER_CHECKLIST.md`
+*Checklist path:* `C:\Users\USER\Work\lobster-factory\docs\LOBSTER_FACTORY_MASTER_CHECKLIST.md`
 
 ## 4) memory/CONVERSATION_MEMORY.md (excerpts)
 
@@ -97,7 +97,7 @@
 ### Today (2026-03-26) - AO-CLOSE
 - **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`ao-close.ps1`**（雙路徑同內容）預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`，讓公司機 **`pull` 即完整**；`-SkipPush`／`-SkipVerify` 為選用。
 - AO-CLOSE 預設新增硬門檻：`system-health-check` 分數需為 **100%**，未達 100% 直接視為收工未完成（需修復或經使用者明確授權才可放寬）。
-- **他處電腦開機**：固定閱讀 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（與 `RESUME_AFTER_REBOOT.md` 分機情境）；綜合報告以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準。
+- **他處電腦開機**：固定閱讀 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（**§1.5** 新機、**§2** 例行；與 `RESUME_AFTER_REBOOT.md` 分機情境）；綜合報告以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準。
 - **報表路徑收斂**：腳本已加 monorepo guardrail，從 repo 根執行也會強制寫入 `agency-os/reports/*`；root `reports/*` 已退役為相容用途。
 - **2026-03-27**：使用者授權代理於不在現場時執行完整 AO-CLOSE（含 push），並落地上述須知文件。
 - **Enterprise 工具層（C5）決策**：`Identity = Clerk`；`Secrets` 先採 `env/mcp`（1Password 因付費方案暫不採用）。
@@ -224,145 +224,14 @@
 
 > Full runbook: see `## Runbook Commands` in the source file.
 
-## 5) memory/daily/2026-03-31.md
-# Daily notes - 2026-03-31
-
-> Historical snapshot note: this daily log is an audit trail. For current operating rules, use `docs/overview/REMOTE_WORKSTATION_STARTUP.md` and `docs/operations/end-of-day-checklist.md`.
-
-## Closeout note
-- Linear sync mainline completed previously: `push-program-schedule-to-linear` full success (31 items), and `reports/linear/linear-schedule-map.json` generated.
-- Added one-click `scripts/linear-sync-all.ps1` (push + delta), with stream-specific project env support: `LINEAR_PROJECT_ID_AO/LF/PJ`.
-- AO project mapping in use: `ffe9e2b5-55ee-4cbb-baa6-7479cbf10f49`; default global `LINEAR_PROJECT_ID` intentionally cleared to avoid accidental cross-stream mapping.
-
-## Cleanup note
-- Rebuilt this daily file to remove corrupted/repeated Linear sync blocks from earlier runs.
-- A fresh `### Linear API sync` block should be appended by `scripts/sync-linear-delta-to-daily.ps1`.
-- Re-run attempt at 2026-03-31 got `401 Unauthorized`; requires valid `LINEAR_API_KEY` in current shell/session before appending.
-- Follow-up run succeeded after refreshing process env from user env; new `### Linear API sync` block appended at `2026-03-31T12:35:04Z`.
-
-### Linear API sync (2026-03-31T12:35:04Z)
-
-> since UTC (GraphQL): 2026-03-28T12:35:03.556Z | window hours: 72 | script: sync-linear-delta-to-daily.ps1
-
-- Historical corrupted payload block removed after source-title repair; use the newer sync block below.
-
-
-
-### Linear API sync (2026-03-31T12:40:09Z)
-
-> since UTC (GraphQL): 2026-03-30T12:40:09.067Z | window hours: 24 | script: sync-linear-delta-to-daily.ps1
-
-- `SOU-41` **Backlog** ??[PJ PJ-S3] **UAT / ??/????** ??[open](https://linear.app/soulful-expression/issue/SOU-41/pj-pj-s3-uat)
-- `SOU-40` **Backlog** ??[PJ PJ-S2] **??/??**(???;??????) ??[open](https://linear.app/soulful-expression/issue/SOU-40/pj-pj-s2)
-- `SOU-39` **Backlog** ??[PJ PJ-S1] **Scope ??**(????/????) ??[open](https://linear.app/soulful-expression/issue/SOU-39/pj-pj-s1-scope)
-- `SOU-38` **Backlog** ??[PJ PJ-D5] Discovery:**CR ????**(??/??) ??[open](https://linear.app/soulful-expression/issue/SOU-38/pj-pj-d5-discoverycr)
-- `SOU-37` **Backlog** ??[PJ PJ-D4] Discovery:**?????**(??/??/??)?????? ??[open](https://linear.app/soulful-expression/issue/SOU-37/pj-pj-d4-discovery)
-- `SOU-36` **Backlog** ??[PJ PJ-D3] Discovery:**??????????**?? ??[open](https://linear.app/soulful-expression/issue/SOU-36/pj-pj-d3-discovery)
-- `SOU-35` **Backlog** ??[PJ PJ-D2] Discovery:**???/??/??** ??[open](https://linear.app/soulful-expression/issue/SOU-35/pj-pj-d2-discovery)
-- `SOU-34` **Backlog** ??[PJ PJ-D1] Discovery:**????/??**?? ??[open](https://linear.app/soulful-expression/issue/SOU-34/pj-pj-d1-discovery)
-- `SOU-33` **Backlog** ??[LF LF-C56] **C5-6** ????(Langfuse ?)???? ??[open](https://linear.app/soulful-expression/issue/SOU-33/lf-lf-c56-c5-6-langfuse)
-- `SOU-32` **Backlog** ??[LF LF-C55] **C5-5** Cost/Decision ??? ??[open](https://linear.app/soulful-expression/issue/SOU-32/lf-lf-c55-c5-5-costdecision)
-- `SOU-31` **Backlog** ??[LF LF-C54] **C5-4** Identity(Clerk ??)- ? org/RBAC ?? ??[open](https://linear.app/soulful-expression/issue/SOU-31/lf-lf-c54-c5-4-identityclerk-orgrbac)
-- `SOU-30` **Backlog** ??[LF LF-C53] **C5-3** Secrets manager(1Password ???)??? ??[open](https://linear.app/soulful-expression/issue/SOU-30/lf-lf-c53-c5-3-secrets-manager1password)
-- `SOU-29` **Backlog** ??[LF LF-C52] **C5-2** Cloudflare ???(? OP-4) ??[open](https://linear.app/soulful-expression/issue/SOU-29/lf-lf-c52-c5-2-cloudflare-op-4)
-- `SOU-28` **Backlog** ??[LF LF-C51] **C5-1** Sentry + PostHog(? OP-5/6 ??;???**???**??) ??[open](https://linear.app/soulful-expression/issue/SOU-28/lf-lf-c51-c5-1-sentry-posthog-op-56)
-- `SOU-27` **Backlog** ??[LF LF-A102b] **A10-2**:??/Handover ? `TASKS` ???? ??[open](https://linear.app/soulful-expression/issue/SOU-27/lf-lf-a102b-a10-2handover-tasks)
-- `SOU-26` **Backlog** ??[LF LF-A102a] **A10-2**:?????? Lobster workflow **??**??(???) ??[open](https://linear.app/soulful-expression/issue/SOU-26/lf-lf-a102a-a10-2-lobster-workflow)
-- `SOU-25` **Backlog** ??[LF LF-A9c] **??**:?????/??(?????) ??[open](https://linear.app/soulful-expression/issue/SOU-25/lf-lf-a9c)
-- `SOU-24` **Backlog** ??[LF LF-A9b] **IAM**:??????/???? ??[open](https://linear.app/soulful-expression/issue/SOU-24/lf-lf-a9b-iam)
-- `SOU-23` **Backlog** ??[LF LF-A9a] **Artifacts**:????**????**(??/??/??)???? ??[open](https://linear.app/soulful-expression/issue/SOU-23/lf-lf-a9a-artifacts)
-- `SOU-22` **Backlog** ??[LF LF-A7c] **Shell**:??? guardrails + ? `apply-manifest` ?????? ??[open](https://linear.app/soulful-expression/issue/SOU-22/lf-lf-a7c-shell-guardrails-apply-manifest)
-- `SOU-21` **Backlog** ??[LF LF-A7b] **create-wp-site**:???????(staging)+ ???? ??[open](https://linear.app/soulful-expression/issue/SOU-21/lf-lf-a7b-create-wp-sitestaging)
-- `SOU-20` **Backlog** ??[LF LF-A7a] **Hosting**:?? vendor/adapter ? `resolveStagingProvisioning` ??(?? stub) ??[open](https://linear.app/soulful-expression/issue/SOU-20/lf-lf-a7a-hosting-vendoradapter-resolvestagingprovisioning-stub)
-- `SOU-19` **Backlog** ??[AO OP-9] Backlog:?? Enterprise ????(? C5 ??) ??[open](https://linear.app/soulful-expression/issue/SOU-19/ao-op-9-backlog-enterprise-c5)
-- `SOU-18` **Backlog** ??[AO OP-8] Backlog:???????**??**???? ??[open](https://linear.app/soulful-expression/issue/SOU-18/ao-op-8-backlog)
-- `SOU-17` **Backlog** ??[AO OP-7] Enterprise P1:**Slack** alerts(???+??) ??[open](https://linear.app/soulful-expression/issue/SOU-17/ao-op-7-enterprise-p1slack-alerts)
-- `SOU-16` **Backlog** ??[AO OP-6] Enterprise P1:**PostHog** core events ??[open](https://linear.app/soulful-expression/issue/SOU-16/ao-op-6-enterprise-p1posthog-core-events)
-- `SOU-15` **Backlog** ??[AO OP-5] Enterprise P1:**Sentry** error ingest ??[open](https://linear.app/soulful-expression/issue/SOU-15/ao-op-5-enterprise-p1sentry-error-ingest)
-- `SOU-14` **Backlog** ??[AO OP-4] Enterprise P1:**Cloudflare** WAF/rate-limit ??? ??[open](https://linear.app/soulful-expression/issue/SOU-14/ao-op-4-enterprise-p1cloudflare-wafrate-limit)
-- `SOU-13` **Backlog** ??[AO OP-3] Enterprise P1:**env/mcp secrets** ??(??/????) ??[open](https://linear.app/soulful-expression/issue/SOU-13/ao-op-3-enterprise-p1envmcp-secrets)
-- `SOU-12` **Backlog** ??[AO OP-2] Enterprise P1:**Clerk** auth ????? ??[open](https://linear.app/soulful-expression/issue/SOU-12/ao-op-2-enterprise-p1clerk-auth)
-- `SOU-11` **Backlog** ??[AO OP-1] ? 1 ?????? `NEW_TENANT_ONBOARDING_SOP.md` ??[open](https://linear.app/soulful-expression/issue/SOU-11/ao-op-1-1-new-tenant-onboarding-sopmd)
-- `SOU-10` **Backlog** ??【整合M4】設定 Slack 官方 App + n8n Web【整合M4】設定 Slack 官方 App + n8n Webhook 分層架構（#linear-activity vs #ao-gates）hook 分層架構 ??[open](https://linear.app/soulful-expression/issue/SOU-10/整合m4設定-slack-官方-app-n8n-web整合m4設定-slack-官方-app-n8n-webhook-分層架構linear)
-- `SOU-9` **Backlog** ??【整合M4】Cursor MCP OAuth 首次登入授權（Linear 官方端點） ??[open](https://linear.app/soulful-expression/issue/SOU-9/整合m4cursor-mcp-oauth-首次登入授權linear-官方端點)
-- `SOU-8` **Backlog** ??驗證 daily 報告目錄正確產出 ??[open](https://linear.app/soulful-expression/issue/SOU-8/驗證-daily-報告目錄正確產出)
-- `SOU-7` **Backlog** ??驗證產出 agency-os/reports/linear/linear-schedule-map.json ??[open](https://linear.app/soulful-expression/issue/SOU-7/驗證產出-agency-osreportslinearlinear-schedule-mapjson)
-- `SOU-6` **Backlog** ??驗證 Linear GraphQL 連線與 Team 權限 ??[open](https://linear.app/soulful-expression/issue/SOU-6/驗證-linear-graphql-連線與-team-權限)
-- `SOU-5` **Backlog** ??【前置】本機還原 LINEAR_API_KEY 至 vault ??[open](https://linear.app/soulful-expression/issue/SOU-5/前置本機還原-linear-api-key-至-vault)
-- `SOU-2` **Todo** ??Set up your teams ??[open](https://linear.app/soulful-expression/issue/SOU-2/set-up-your-teams)
-- `SOU-1` **Todo** ??Get familiar with Linear ??[open](https://linear.app/soulful-expression/issue/SOU-1/get-familiar-with-linear)
-- `SOU-4` **Todo** ??Import your data ??[open](https://linear.app/soulful-expression/issue/SOU-4/import-your-data)
-- `SOU-3` **Todo** ??Connect your tools ??[open](https://linear.app/soulful-expression/issue/SOU-3/connect-your-tools)
-
-
-## P1 minimum drill update
-- Removed obsolete tenant/example data: `tenants/company-a/**`.
-- Removed obsolete evidence skeleton from legacy naming path.
-- Created new P1 tenant: `tenants/company-p1-pilot/` with site/project baseline.
-- Fixed one broken legacy link in `docs/overview/PROGRAM_TIMELINE.md` to new project discovery path.
-- Ran onboarding/A10-2 preflight successfully after cleanup.
-- New evidence skeleton created under onboarding/A10-2 naming.
-- Filename clarity upgrade: switched to explicit naming (`onboarding-a10-2`, `preflight-onboarding-a10-2-readiness.ps1`, `init-onboarding-a10-2-evidence-skeleton.ps1`).
-- New clear-named evidence path: `reports/e2e/onboarding-a10-2/20260331-214650-company-p1-pilot-2026-010-p1-pilot/`.
-- AO-RESUME tomorrow must first call out: `02-a10-2-evidence.md` + `03-run-id-map.md` in `reports/e2e/onboarding-a10-2/20260331-215507-company-p1-pilot-2026-010-p1-pilot/`.
-
-## 明日待做（新增）
-- 檢查 `tenants/templates/` 全部模板，從「最小骨架」升級為「17-20 部門企業級模板」。
-- 補齊跨部門職責、交付物、審批鏈、SOP 銜接，以及財務/支付（紙錢）與法遵欄位，避免新租戶初始化過度簡陋。
-
-### Linear API sync (2026-03-31T14:23:14Z)
-
-> since UTC (GraphQL): 2026-03-28T14:23:13.952Z | window hours: 72 | script: sync-linear-delta-to-daily.ps1
-
-- `SOU-41` **Backlog** ??[PJ PJ-S3] **UAT / ??/????** ??[open](https://linear.app/soulful-expression/issue/SOU-41/pj-pj-s3-uat)
-- `SOU-40` **Backlog** ??[PJ PJ-S2] **??/??**(???;??????) ??[open](https://linear.app/soulful-expression/issue/SOU-40/pj-pj-s2)
-- `SOU-39` **Backlog** ??[PJ PJ-S1] **Scope ??**(????/????) ??[open](https://linear.app/soulful-expression/issue/SOU-39/pj-pj-s1-scope)
-- `SOU-38` **Backlog** ??[PJ PJ-D5] Discovery:**CR ????**(??/??) ??[open](https://linear.app/soulful-expression/issue/SOU-38/pj-pj-d5-discoverycr)
-- `SOU-37` **Backlog** ??[PJ PJ-D4] Discovery:**?????**(??/??/??)?????? ??[open](https://linear.app/soulful-expression/issue/SOU-37/pj-pj-d4-discovery)
-- `SOU-36` **Backlog** ??[PJ PJ-D3] Discovery:**??????????**?? ??[open](https://linear.app/soulful-expression/issue/SOU-36/pj-pj-d3-discovery)
-- `SOU-35` **Backlog** ??[PJ PJ-D2] Discovery:**???/??/??** ??[open](https://linear.app/soulful-expression/issue/SOU-35/pj-pj-d2-discovery)
-- `SOU-34` **Backlog** ??[PJ PJ-D1] Discovery:**????/??**?? ??[open](https://linear.app/soulful-expression/issue/SOU-34/pj-pj-d1-discovery)
-- `SOU-33` **Backlog** ??[LF LF-C56] **C5-6** ????(Langfuse ?)???? ??[open](https://linear.app/soulful-expression/issue/SOU-33/lf-lf-c56-c5-6-langfuse)
-- `SOU-32` **Backlog** ??[LF LF-C55] **C5-5** Cost/Decision ??? ??[open](https://linear.app/soulful-expression/issue/SOU-32/lf-lf-c55-c5-5-costdecision)
-- `SOU-31` **Backlog** ??[LF LF-C54] **C5-4** Identity(Clerk ??)- ? org/RBAC ?? ??[open](https://linear.app/soulful-expression/issue/SOU-31/lf-lf-c54-c5-4-identityclerk-orgrbac)
-- `SOU-30` **Backlog** ??[LF LF-C53] **C5-3** Secrets manager(1Password ???)??? ??[open](https://linear.app/soulful-expression/issue/SOU-30/lf-lf-c53-c5-3-secrets-manager1password)
-- `SOU-29` **Backlog** ??[LF LF-C52] **C5-2** Cloudflare ???(? OP-4) ??[open](https://linear.app/soulful-expression/issue/SOU-29/lf-lf-c52-c5-2-cloudflare-op-4)
-- `SOU-28` **Backlog** ??[LF LF-C51] **C5-1** Sentry + PostHog(? OP-5/6 ??;???**???**??) ??[open](https://linear.app/soulful-expression/issue/SOU-28/lf-lf-c51-c5-1-sentry-posthog-op-56)
-- `SOU-27` **Backlog** ??[LF LF-A102b] **A10-2**:??/Handover ? `TASKS` ???? ??[open](https://linear.app/soulful-expression/issue/SOU-27/lf-lf-a102b-a10-2handover-tasks)
-- `SOU-26` **Backlog** ??[LF LF-A102a] **A10-2**:?????? Lobster workflow **??**??(???) ??[open](https://linear.app/soulful-expression/issue/SOU-26/lf-lf-a102a-a10-2-lobster-workflow)
-- `SOU-25` **Backlog** ??[LF LF-A9c] **??**:?????/??(?????) ??[open](https://linear.app/soulful-expression/issue/SOU-25/lf-lf-a9c)
-- `SOU-24` **Backlog** ??[LF LF-A9b] **IAM**:??????/???? ??[open](https://linear.app/soulful-expression/issue/SOU-24/lf-lf-a9b-iam)
-- `SOU-23` **Backlog** ??[LF LF-A9a] **Artifacts**:????**????**(??/??/??)???? ??[open](https://linear.app/soulful-expression/issue/SOU-23/lf-lf-a9a-artifacts)
-- `SOU-22` **Backlog** ??[LF LF-A7c] **Shell**:??? guardrails + ? `apply-manifest` ?????? ??[open](https://linear.app/soulful-expression/issue/SOU-22/lf-lf-a7c-shell-guardrails-apply-manifest)
-- `SOU-21` **Backlog** ??[LF LF-A7b] **create-wp-site**:???????(staging)+ ???? ??[open](https://linear.app/soulful-expression/issue/SOU-21/lf-lf-a7b-create-wp-sitestaging)
-- `SOU-20` **Backlog** ??[LF LF-A7a] **Hosting**:?? vendor/adapter ? `resolveStagingProvisioning` ??(?? stub) ??[open](https://linear.app/soulful-expression/issue/SOU-20/lf-lf-a7a-hosting-vendoradapter-resolvestagingprovisioning-stub)
-- `SOU-19` **Backlog** ??[AO OP-9] Backlog:?? Enterprise ????(? C5 ??) ??[open](https://linear.app/soulful-expression/issue/SOU-19/ao-op-9-backlog-enterprise-c5)
-- `SOU-18` **Backlog** ??[AO OP-8] Backlog:???????**??**???? ??[open](https://linear.app/soulful-expression/issue/SOU-18/ao-op-8-backlog)
-- `SOU-17` **Backlog** ??[AO OP-7] Enterprise P1:**Slack** alerts(???+??) ??[open](https://linear.app/soulful-expression/issue/SOU-17/ao-op-7-enterprise-p1slack-alerts)
-- `SOU-16` **Backlog** ??[AO OP-6] Enterprise P1:**PostHog** core events ??[open](https://linear.app/soulful-expression/issue/SOU-16/ao-op-6-enterprise-p1posthog-core-events)
-- `SOU-15` **Backlog** ??[AO OP-5] Enterprise P1:**Sentry** error ingest ??[open](https://linear.app/soulful-expression/issue/SOU-15/ao-op-5-enterprise-p1sentry-error-ingest)
-- `SOU-14` **Backlog** ??[AO OP-4] Enterprise P1:**Cloudflare** WAF/rate-limit ??? ??[open](https://linear.app/soulful-expression/issue/SOU-14/ao-op-4-enterprise-p1cloudflare-wafrate-limit)
-- `SOU-13` **Backlog** ??[AO OP-3] Enterprise P1:**env/mcp secrets** ??(??/????) ??[open](https://linear.app/soulful-expression/issue/SOU-13/ao-op-3-enterprise-p1envmcp-secrets)
-- `SOU-12` **Backlog** ??[AO OP-2] Enterprise P1:**Clerk** auth ????? ??[open](https://linear.app/soulful-expression/issue/SOU-12/ao-op-2-enterprise-p1clerk-auth)
-- `SOU-11` **Backlog** ??[AO OP-1] ? 1 ?????? `NEW_TENANT_ONBOARDING_SOP.md` ??[open](https://linear.app/soulful-expression/issue/SOU-11/ao-op-1-1-new-tenant-onboarding-sopmd)
-- `SOU-10` **Backlog** ??【整合M4】設定 Slack 官方 App + n8n Web【整合M4】設定 Slack 官方 App + n8n Webhook 分層架構（#linear-activity vs #ao-gates）hook 分層架構 ??[open](https://linear.app/soulful-expression/issue/SOU-10/整合m4設定-slack-官方-app-n8n-web整合m4設定-slack-官方-app-n8n-webhook-分層架構linear)
-- `SOU-9` **Backlog** ??【整合M4】Cursor MCP OAuth 首次登入授權（Linear 官方端點） ??[open](https://linear.app/soulful-expression/issue/SOU-9/整合m4cursor-mcp-oauth-首次登入授權linear-官方端點)
-- `SOU-8` **Backlog** ??驗證 daily 報告目錄正確產出 ??[open](https://linear.app/soulful-expression/issue/SOU-8/驗證-daily-報告目錄正確產出)
-- `SOU-7` **Backlog** ??驗證產出 agency-os/reports/linear/linear-schedule-map.json ??[open](https://linear.app/soulful-expression/issue/SOU-7/驗證產出-agency-osreportslinearlinear-schedule-mapjson)
-- `SOU-6` **Backlog** ??驗證 Linear GraphQL 連線與 Team 權限 ??[open](https://linear.app/soulful-expression/issue/SOU-6/驗證-linear-graphql-連線與-team-權限)
-- `SOU-5` **Backlog** ??【前置】本機還原 LINEAR_API_KEY 至 vault ??[open](https://linear.app/soulful-expression/issue/SOU-5/前置本機還原-linear-api-key-至-vault)
-- `SOU-2` **Todo** ??Set up your teams ??[open](https://linear.app/soulful-expression/issue/SOU-2/set-up-your-teams)
-- `SOU-1` **Todo** ??Get familiar with Linear ??[open](https://linear.app/soulful-expression/issue/SOU-1/get-familiar-with-linear)
-- `SOU-4` **Todo** ??Import your data ??[open](https://linear.app/soulful-expression/issue/SOU-4/import-your-data)
-- `SOU-3` **Todo** ??Connect your tools ??[open](https://linear.app/soulful-expression/issue/SOU-3/connect-your-tools)
-
-
+## 5) memory/daily/2026-04-01.md
+_no file for today yet._
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-03-31 22:24:43`
+- Time: `2026-04-01 15:55:30`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
@@ -370,8 +239,8 @@
 - Result: **PASS**
 
 ## Latest Reports
-- Health: `reports/health/health-20260331-222442.md`
-- Closeout: `reports/closeout/closeout-20260331-222439.md`
+- Health: `reports/health/health-20260401-155530.md`
+- Closeout: `reports/closeout/closeout-20260401-155528.md`
 
 ## Action
 - No blocking issue detected.
