@@ -1,4 +1,4 @@
-# Work — Agency OS + Lobster Factory
+﻿# Work — Agency OS + Lobster Factory
 
 本儲存庫收斂兩條主線：**Agency OS**（治理、客戶與營運 SOP、健康檢查）與 **Lobster Factory**（WordPress 工廠、Supabase、Trigger 工作流程、結構閘道）。
 
@@ -66,5 +66,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `README.md`
 
-_Last synced: 2026-04-01（雙機 §1.5／§2 + AO-RESUME／pull 說明合併）_
+_Last synced: 2026-04-01 02:31:21 UTC_
 

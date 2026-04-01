@@ -1,4 +1,4 @@
-# 他處電腦／公司機 — 開機與首次接線須知
+﻿# 他處電腦／公司機 — 開機與首次接線須知
 
 > **目的**：在家 push 後，到**另一台電腦**（公司機、筆電、新機）能**最快、安全、可驗證**地續接，並把流程收斂為「可重複、可回復、可追蹤」。
 >
@@ -77,10 +77,10 @@ gh auth login
 ```powershell
 Set-Location <你的 Work 根路徑>
 
-# 龍蝦工廠依賴（bootstrap / validate 需要）
-Set-Location .\lobster-factory
+# 龍蝦工廠依賴（lockfile 在 workflows 套件；bootstrap 腳本為純 Node，但本機開發／Trigger 依賴在此）
+Set-Location .\lobster-factory\packages\workflows
 npm ci
-Set-Location ..
+Set-Location ..\..\..
 
 # 若你有使用本機 MCP wrappers（可選）
 if (Test-Path .\mcp-local-wrappers) {
@@ -108,7 +108,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 
 ## 2) 開機後必做四件事（約 5–15 分鐘）
 
-> **與 §1.5 的關係**：若你為 **新機** 且尚未跑過 §1.5 的「工具與依賴」區塊，請 **先完成 §1.5**，再視 §2 為**之後每次**的節奏。若 `lobster-factory\package-lock.json` 有更新，務必在 `lobster-factory` **再執行** `npm ci`。
+> **與 §1.5 的關係**：若你為 **新機** 且尚未跑過 §1.5 的「工具與依賴」區塊，請 **先完成 §1.5**，再視 §2 為**之後每次**的節奏。若 `lobster-factory\packages\workflows\package-lock.json` 有更新，務必在該目錄 **再執行** `npm ci`。
 
 1. **同步主線（先收斂到遠端真相）**  
    ```powershell
@@ -119,12 +119,13 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
    若失敗，先處理本機未提交或衝突，再往下走。
 
 2. **依賴還原（`node_modules` 不入庫）**  
-   - **龍蝦工廠**（`verify-build-gates`／bootstrap 需要）：  
+   - **龍蝦 workflows 套件**（`packages/workflows` 具 `package-lock.json`；Trigger／zod 等依賴在此）：  
      ```powershell
-     cd lobster-factory
+     cd lobster-factory\packages\workflows
      npm ci
-     cd ..
+     cd ..\..\..
      ```
+   - （若日後 `lobster-factory` **根目錄**新增 `package-lock.json`，再在該層補一次 `npm ci`。）
    - **可選**：若使用本機 MCP wrappers：  
      ```powershell
      cd mcp-local-wrappers
@@ -150,7 +151,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 ## 2.1 失敗處置（不要硬做）
 
 - `git pull --ff-only` 失敗：先 `git status`，整理本機變更後再 pull，避免強制覆蓋。
-- `lobster-factory` 的 `npm ci` 失敗：刪除 `lobster-factory\node_modules` 後重試；仍失敗就檢查 Node 版本與 lockfile 是否與遠端一致。
+- `packages\workflows` 的 `npm ci` 失敗：刪除 `lobster-factory\packages\workflows\node_modules` 後重試；仍失敗就檢查 Node 版本與 lockfile 是否與遠端一致。
 - `mcp-local-wrappers` 的 `npm ci` 失敗：刪除 `mcp-local-wrappers\node_modules` 後重試。
 - `verify-build-gates` 失敗：先修 gate，不要進行大範圍變更或收工 push。
 
@@ -205,15 +206,51 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 
 ## 6) 開工完成判定（Definition of Ready）
 
+### 6.1 可安全開工（最低標）
+
 符合以下 5 項才算「可安全開工」：
 1. `git pull --ff-only origin main`（或等價對齊 `origin/main`）成功，且在正確分支。  
-2. **`lobster-factory` 已執行** `npm ci`；若有 `mcp-local-wrappers` 則一併 `npm ci`。  
+2. **`lobster-factory\packages\workflows` 已執行** `npm ci`（該處為目前唯一 lockfile）；若有 `mcp-local-wrappers` 則一併 `npm ci`。  
 3. `verify-build-gates.ps1` Critical Gate = PASS。  
 4. 已讀 `LAST_SYSTEM_STATUS.md` / `TASKS.md` / `integrated-status-LATEST.md`。  
 5. **`AO-RESUME` 在 Git 同步與閘道之後執行**（例行流程即 §2；新機第一次即 §1.5），回覆可清楚列出「已完成／目前進度／下一步」（含龍蝦 Milestone/DoD/風險，見 `AGENTS.md`）。
 
+### 6.2 「完美」環境（建議標：可重現、雙機一致、與 CI 對齊）
+
+在 **§6.1** 之上，建議再加：
+
+| 項 | 說明 |
+|----|------|
+| **Node 與 CI 一致** | `lobster-factory` 要求 **>=18**；GitHub Actions 目前為 **22.x**（見 `.github/workflows/*.yml`）。本機用 **Node 22** 可最大程度避免「本機綠、CI 紅」。 |
+| **GitHub CLI** | `gh` 已安裝並 `gh auth login`（雙機各自一次）。 |
+| **乾淨工作樹** | `git status` 無未提交變更再宣告環境穩定（避免與 pull/rebase 拉扯）。 |
+| **DPAPI vault** | `%LOCALAPPDATA%\AgencyOS\secrets\vault.json` 已依手冊建立，且含腳本所需鍵名（見 `agency-os/docs/operations/local-secrets-vault-dpapi.md`）。 |
+| **Cursor MCP** | `%USERPROFILE%\.cursor\mcp.json` 存在；token／OAuth 仅存本機（見 `agency-os/docs/operations/mcp-add-server-quickstart.md`）。 |
+
+**一鍵稽核**（不讀取密鑰內容；可加上 `-FetchOrigin` 讓 ahead/behind 較準）：
+
+```powershell
+# 快速：結構 + Git + Node + node_modules + gh / vault / mcp 占位
+powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1 -FetchOrigin
+
+# 最嚴格：上述通過後再跑 verify-build-gates，且把「建議項」也當失敗
+powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1 -FetchOrigin -RunVerifyGates -Strict
+```
+
+新機／第二台電腦在 §1.5 收尾時，建議至少跑 **第一段**；上線前或大改版前可跑 **第二段**。
+
 ## Related Documents (Auto-Synced)
 - `../README.md`
+- `.cursor/rules/00-session-bootstrap.mdc`
+- `.cursor/rules/30-resume-keyword.mdc`
+- `.cursor/rules/40-shutdown-closeout.mdc`
+- `AGENTS.md`
+- `docs/operations/end-of-day-checklist.md`
+- `docs/overview/EXECUTION_DASHBOARD.md`
+- `docs/overview/INTEGRATED_STATUS_REPORT.md`
+- `memory/CONVERSATION_MEMORY.md`
+- `RESUME_AFTER_REBOOT.md`
+- `TASKS.md`
 
-_Last synced: 2026-04-01（§1／§1.5／§2 分工與依賴含 `lobster-factory`；doc-sync 錨點曾於 2026-03-31 UTC）_
+_Last synced: 2026-04-01 02:31:21 UTC_
 

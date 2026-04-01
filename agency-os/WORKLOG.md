@@ -1,6 +1,14 @@
-# Worklog
+﻿# Worklog
 
 > Historical snapshot note: this file records decisions/events by date. For current operating rules and commands, use the event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (startup/AO-RESUME) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (shutdown/AO-CLOSE).
+
+## 2026-04-01
+
+### 環境「完美」可驗證定義 + 稽核腳本
+- 新增 `scripts/machine-environment-audit.ps1`：檢查 monorepo 結構、Git main／乾淨度／與 origin 對齊（可 `-FetchOrigin`）、Node／npm、`lobster-factory\packages\workflows` 的 `node_modules`（與實際 lockfile 位置一致）、可選 `mcp-local-wrappers`、`gh` 登入占位、DPAPI vault／Cursor `mcp.json` 是否存在（不讀密鑰）。可選 `-RunVerifyGates`、`-Strict`。
+- `REMOTE_WORKSTATION_STARTUP.md` 新增 **§6.2**（完美環境表 + 稽核命令）；修正 §1.5／§2／§6.1：依賴還原改為 **`packages\workflows` `npm ci`**（根目錄無 lockfile 之實情）。
+- 對齊 **EXECUTION_DASHBOARD**、**INTEGRATED_STATUS_REPORT**、**AGENTS**、**TASKS**、**RESUME_AFTER_REBOOT**、**40-shutdown-closeout**（根與 agency-os）之敘述，避免「錯目錄 npm ci」。
+- 本機已執行 `packages\workflows` 之 `npm ci` 以補齊 Trigger 依賴目錄。
 
 ## 2026-03-31
 
@@ -130,7 +138,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-03-31 14:15:52 UTC_
+_Last synced: 2026-04-01 02:31:21 UTC_
 
 ## 2026-03-20
 
@@ -580,9 +588,10 @@ _Last synced: 2026-03-31 14:15:52 UTC_
 ### 雙機環境對齊（待辦；AO-RESUME 口頭提醒）
 - 使用者要求桌機與筆電「執行與功能一致」。
 - 已入 **`TASKS.md` → Next** 第一則未勾項 **「（AO-RESUME 提醒）雙機環境對齊」**；並在 **`memory/CONVERSATION_MEMORY.md` → Current Operating Context** 註明：之後每次 **`AO-RESUME`** Agent 須列出該待辦，直到勾選完成。
-- 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
+- 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
-- **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`lobster-factory npm ci`**（與閘道一致）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+- **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
 
 
 

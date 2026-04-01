@@ -1,4 +1,4 @@
-# Global Task Board
+﻿# Global Task Board
 
 ## In Progress
 - [x] 建立多租戶案場資料夾結構（company -> site -> project）
@@ -10,7 +10,7 @@
 - [x] 建立 `lobster-factory` Phase 1 底座骨架（Supabase migrations + wc-core manifest + workflow 安全骨架）
 
 ## Next
-- [ ] **（AO-RESUME 提醒）雙機環境對齊（桌機＋筆電）**：兩台執行與功能一致——**新機／筆電首次**只跟 [`docs/overview/REMOTE_WORKSTATION_STARTUP.md`](docs/overview/REMOTE_WORKSTATION_STARTUP.md) **§1.5**；**之後每次開工**跟同檔 **§2**（`git pull`、`lobster-factory npm ci`、可選 wrappers、`verify-build-gates`、再 **`AO-RESUME`**）。要點：筆電安裝 **GitHub CLI**（`winget install --id GitHub.cli`；裝完重開終端或刷新 `PATH`）並 **`gh auth login`**；**Node** 大版本與桌機／CI 一致；**`scripts/secrets-vault.ps1`（DPAPI）與 Cursor `mcp.json`／MCP 為每台各自設定**（勿假設會跟著 `git pull`）。完成後勾選本項。
+- [ ] **（AO-RESUME 提醒）雙機環境對齊（桌機＋筆電）**：兩台執行與功能一致——**新機／筆電首次**只跟 [`docs/overview/REMOTE_WORKSTATION_STARTUP.md`](docs/overview/REMOTE_WORKSTATION_STARTUP.md) **§1.5**；**之後每次開工**跟同檔 **§2**（`git pull`、`lobster-factory\packages\workflows` 之 `npm ci`、可選 wrappers、`verify-build-gates`、再 **`AO-RESUME`**）。要點：筆電安裝 **GitHub CLI**（`winget install --id GitHub.cli`；裝完重開終端或刷新 `PATH`）並 **`gh auth login`**；**Node** 大版本與桌機／CI 一致；**`scripts/secrets-vault.ps1`（DPAPI）與 Cursor `mcp.json`／MCP 為每台各自設定**（勿假設會跟著 `git pull`）。完成後勾選本項。
 - [x] **（2026-03-30）** 整理 `docs/spec/raw/` **四份原文**（V3／Spec v1／ENTERPRISE／CURSOR_PACK）：新增 [`docs/spec/raw/README-four-sources-maintenance.md`](../docs/spec/raw/README-four-sources-maintenance.md)（維護索引 + 大段錨點 + SSOT 對照）；各檔首段加維護提示；`company-os-four-sources-integration.md` 與 `docs/spec/README.md` 已連回。
 - [x] 定義 WordPress 客製系統開發準則（plugin/mu-plugin/資料表策略）
 - [x] 建立 n8n 工作流分層（共用流程 vs 客戶專屬流程）
@@ -96,7 +96,8 @@
 - `docs/operations/client-risk-scoring-model.md`
 - `docs/operations/outsourcing-vendor-scorecard.md`
 - `docs/operations/system-operation-sop.md`
+- `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-01（雙機待辦、Linear 列整併、REMOTE §1.5／§2 對齊）_
+_Last synced: 2026-04-01 02:31:21 UTC_
 

@@ -1,4 +1,4 @@
-# Execution Dashboard (Agency OS + Lobster Factory)
+﻿# Execution Dashboard (Agency OS + Lobster Factory)
 
 > 目的：用**一頁**掌握「完整建置系統、目前進度、尚未完成、下一步、硬性 Gate」並降低遺漏與重工。
 >
@@ -77,7 +77,7 @@
 ### 公司機／他處電腦（pull 後）
 **完整清單請固定看：`docs/overview/REMOTE_WORKSTATION_STARTUP.md`。** **新機／筆電第一次**用該檔 **§1.5**；**之後每次**用 **§2**。摘要（與 §2 一致）：
 1. monorepo 根：`git pull --ff-only origin main`（或先 `fetch`）
-2. `lobster-factory`：`npm ci`
+2. `lobster-factory\packages\workflows`：`npm ci`（目前 lockfile 所在；見 `REMOTE_WORKSTATION_STARTUP` §2）
 3. 可選：`mcp-local-wrappers` → `npm ci`
 4. `powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1`
 5. 綜合狀態以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準（勿與根目錄 `reports/status` 混淆）
@@ -113,7 +113,8 @@
 - `docs/operations/end-of-day-checklist.md`
 - `docs/overview/INTEGRATED_STATUS_REPORT.md`
 - `docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`
+- `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-04-01（§4 與 REMOTE §2／§2.3 一致；含 `lobster-factory npm ci`；上游 2026-03-31 12:06:18 UTC）_
+_Last synced: 2026-04-01 02:31:21 UTC_
 

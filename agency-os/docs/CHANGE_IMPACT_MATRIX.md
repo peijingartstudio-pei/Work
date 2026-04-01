@@ -1,4 +1,4 @@
-# Change Impact Matrix
+﻿# Change Impact Matrix
 
 ## 使用方式
 - 修改任一主文件時，必須同步檢查對應關聯文件
@@ -72,5 +72,5 @@
 - `docs/operations/new-doc-linkage-checklist.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-04-01（REMOTE 列補 EXECUTION_DASHBOARD／rules／TASKS／memory／根 README；上游 2026-03-31 12:08:52 UTC）_
+_Last synced: 2026-04-01 02:31:21 UTC_
 

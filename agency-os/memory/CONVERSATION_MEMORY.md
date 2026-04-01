@@ -18,6 +18,7 @@
 - **2026-03-31 補充**：P1 最小實跑已完成：舊 `company-a` 示範資料與舊骨架已清除，改用 `company-p1-pilot` 建立新 tenant/site/project，並產生新證據路徑 `reports/e2e/onboarding-a10-2/20260331-214650-company-p1-pilot-2026-010-p1-pilot/`。
 - **AO-RESUME 明日必回報提醒**：開場必先提醒並檢查 `reports/e2e/onboarding-a10-2/20260331-215507-company-p1-pilot-2026-010-p1-pilot/02-a10-2-evidence.md` 與同目錄 `03-run-id-map.md`（A10-2 pending 列），再決定是否直接啟動 A10-2。
 - **AO-RESUME 固定提醒（直到勾選）**：使用者要求兩台電腦執行與功能一致——見 **`TASKS.md` → Next** 第一則未勾項 **「（AO-RESUME 提醒）雙機環境對齊」**；Agent 在回覆 `AO-RESUME` 時應**口頭列出該待辦**，並對照 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：**§1.5**、**§2**；含 `gh`、vault／MCP 每台重設。
+- **2026-04-01 補充（環境 SSOT）**：「可驗證的完美環境」定義與指令見 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §6.2**；稽核腳本 **`scripts/machine-environment-audit.ps1`**（`-FetchOrigin`、選用 `-RunVerifyGates`、`-Strict`）。例行 **`npm ci` 目錄為 `lobster-factory\packages\workflows`**（根目錄無 package-lock，舊文件寫「在 lobster-factory 根 npm ci」為誤）。
 
 ## Confirmed Priorities
 1. 先建完整可複製框架，不做精簡版
@@ -330,6 +331,7 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `.cursor/rules/30-resume-keyword.mdc`
 - `.cursor/rules/40-shutdown-closeout.mdc`
 - `docs/overview/EXECUTION_DASHBOARD.md`
+- `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-03-31 14:15:52 UTC_
+_Last synced: 2026-04-01 02:31:21 UTC_
 
