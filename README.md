@@ -1,4 +1,4 @@
-﻿# Work — Agency OS + Lobster Factory
+# Work — Agency OS + Lobster Factory
 
 本儲存庫收斂兩條主線：**Agency OS**（治理、客戶與營運 SOP、健康檢查）與 **Lobster Factory**（WordPress 工廠、Supabase、Trigger 工作流程、結構閘道）。
 
@@ -33,7 +33,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 下列順序假設你已開在 **monorepo 根**（含 `agency-os`、`lobster-factory`、根 `scripts`）。若只開 `agency-os` 子資料夾，請先用相對連結回到本頁與 `docs/spec`。
 
 1. **本頁** — 結構、`verify-build-gates`、雙機與收工關鍵字。  
-2. **他機／首次接線** — [`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)（**先 `git pull` 再 `AO-RESUME`**）。  
+2. **他機／首次接線** — [`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)（**先 `git pull` 再 `AO-RESUME`**；**筆電／新機最短指令見該檔 §1.5**）。  
 3. **每日儀表板** — [`agency-os/docs/overview/EXECUTION_DASHBOARD.md`](agency-os/docs/overview/EXECUTION_DASHBOARD.md)（`TASKS` / 綜合狀態 / Gate）。  
 4. **人＋代理總則** — [`agency-os/AGENTS.md`](agency-os/AGENTS.md)（`AO-RESUME`／`AO-CLOSE`、MCP 清單入口）。  
 5. **Cursor 企業規則（版控）** — [`agency-os/docs/operations/cursor-enterprise-rules-index.md`](agency-os/docs/operations/cursor-enterprise-rules-index.md)（**若與 AO 關鍵字流程衝突，以 `agency-os/.cursor/rules` 之 `00`／`30`／`40` 為準**）。  
@@ -47,8 +47,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 
 ## 開工與雙機同步（AO-RESUME）
 
-- **`AO-RESUME`**：請 Agent 依 **`agency-os/.cursor/rules/30-resume-keyword.mdc`**（若工作區根僅為 `agency-os` 則為該目錄下 `.cursor/rules`）讀進度檔；關鍵字會先檢查並嘗試 `git pull --ff-only`，但建議先手動完成 Git 對齊。
-- **另一台已 AO-CLOSE push 時**：在本機 monorepo 根先 **`git fetch origin`**，再 **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），**然後**再打 `AO-RESUME`。完整清單：[`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)。
+- **`AO-RESUME`**：請 Agent 依 **`agency-os/.cursor/rules/30-resume-keyword.mdc`**（若工作區根僅為 `agency-os` 則為該目錄下 `.cursor/rules`）讀進度檔；流程上會先檢查遠端並**嘗試** `git pull --ff-only`（遇未提交變更／衝突仍可能失敗），**實務上建議**你先在 monorepo 根手動 **`git fetch`** + **`git pull --ff-only origin main`** 再開工。
+- **另一台已 AO-CLOSE push 時**：在本機 monorepo 根先 **`git fetch origin`**，再 **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），**然後**再打 `AO-RESUME`。完整清單：[`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)（**§1.5** 新機、**§2** 例行）。
 
 ## 事件流程單一真相
 
@@ -66,5 +66,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `README.md`
 
-_Last synced: 2026-03-31 12:06:18 UTC_
+_Last synced: 2026-04-01（雙機 §1.5／§2 + AO-RESUME／pull 說明合併）_
 

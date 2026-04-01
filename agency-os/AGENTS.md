@@ -38,7 +38,7 @@
 ## 快速續接關鍵字
 - 跨系統運作模型（AO 治理 + 龍蝦執行）：`docs/overview/ao-lobster-operating-model.md`（作為事件節奏與責任分工的總入口）。
 - 使用者輸入 `AO-RESUME` 時，必須先讀取記憶與進度檔後再回覆。
-- **雙機協作硬性說明**：`AO-RESUME` 會先檢查並嘗試 `git pull --ff-only`，但遇到本機未提交變更/衝突仍可能失敗；因此實務上仍建議先在 monorepo 根手動 **`git fetch origin`** + **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），再續接讀檔。完整開工順序與 30 秒自檢以 `docs/overview/REMOTE_WORKSTATION_STARTUP.md` 為準。
+- **雙機協作硬性說明**：`AO-RESUME` 會先檢查遠端並**嘗試** `git pull --ff-only`；遇本機未提交變更／衝突仍可能失敗，**實務上建議**先在 monorepo 根手動 **`git fetch origin`** + **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），再續接讀檔；否則進度檔可能過期、`git push` 會被拒。完整開工順序、30 秒自檢：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` — **新機 §1.5**、**例行 §2**（含 `lobster-factory npm ci` 與閘道）。
 - 若已啟用 Autopilot Phase1，開機會自動執行 `scripts/ao-resume.ps1 -SkipVerify -AllowUnexpectedDirty`（**不**取代上述 `git pull`；Autopilot 只管本機 preflight，不管遠端是否超前）。
 - 回覆格式固定為：`已完成`、`目前進度`、`下一步`。
 - `目前進度` 必須包含龍蝦工廠欄位：`目前 Milestone`、`今日 DoD`、`阻塞/風險`。

@@ -1,4 +1,4 @@
-﻿# Conversation Memory
+# Conversation Memory
 
 > Historical snapshot note: this file preserves cross-session context and may include decisions from older process versions. For current operating rules, use event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (AO-RESUME/startup) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (AO-CLOSE/shutdown).
 
@@ -17,6 +17,7 @@
 - **2026-03-31 補充**：已完成 P1/P2 跑道加速（Run ID 對照規格 + preflight 腳本 + 證據骨架初始化），可直接進入實跑。
 - **2026-03-31 補充**：P1 最小實跑已完成：舊 `company-a` 示範資料與舊骨架已清除，改用 `company-p1-pilot` 建立新 tenant/site/project，並產生新證據路徑 `reports/e2e/onboarding-a10-2/20260331-214650-company-p1-pilot-2026-010-p1-pilot/`。
 - **AO-RESUME 明日必回報提醒**：開場必先提醒並檢查 `reports/e2e/onboarding-a10-2/20260331-215507-company-p1-pilot-2026-010-p1-pilot/02-a10-2-evidence.md` 與同目錄 `03-run-id-map.md`（A10-2 pending 列），再決定是否直接啟動 A10-2。
+- **AO-RESUME 固定提醒（直到勾選）**：使用者要求兩台電腦執行與功能一致——見 **`TASKS.md` → Next** 第一則未勾項 **「（AO-RESUME 提醒）雙機環境對齊」**；Agent 在回覆 `AO-RESUME` 時應**口頭列出該待辦**，並對照 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：**§1.5**、**§2**；含 `gh`、vault／MCP 每台重設。
 
 ## Confirmed Priorities
 1. 先建完整可複製框架，不做精簡版
@@ -140,7 +141,7 @@ cd <WORK_ROOT>
 git fetch origin
 git pull --ff-only origin main
 ```
-（若 `push` 曾與遠端分叉：`git pull --rebase origin main`。完整說明：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2。）
+（若 `push` 曾與遠端分叉：`git pull --rebase origin main`。完整說明：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` — **新機 §1.5**、**例行 §2**。）
 
 ### Strict Mode（推薦，確保今天/明天不出問題）
 1. Phase 1 基線健檢
@@ -198,7 +199,7 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 ## Today (2026-03-26) - AO-CLOSE
 - **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`ao-close.ps1`**（雙路徑同內容）預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`，讓公司機 **`pull` 即完整**；`-SkipPush`／`-SkipVerify` 為選用。
 - AO-CLOSE 預設新增硬門檻：`system-health-check` 分數需為 **100%**，未達 100% 直接視為收工未完成（需修復或經使用者明確授權才可放寬）。
-- **他處電腦開機**：固定閱讀 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（與 `RESUME_AFTER_REBOOT.md` 分機情境）；綜合報告以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準。
+- **他處電腦開機**：固定閱讀 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（**§1.5** 新機、**§2** 例行；與 `RESUME_AFTER_REBOOT.md` 分機情境）；綜合報告以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準。
 - **報表路徑收斂**：腳本已加 monorepo guardrail，從 repo 根執行也會強制寫入 `agency-os/reports/*`；root `reports/*` 已退役為相容用途。
 - **2026-03-27**：使用者授權代理於不在現場時執行完整 AO-CLOSE（含 push），並落地上述須知文件。
 - **Enterprise 工具層（C5）決策**：`Identity = Clerk`；`Secrets` 先採 `env/mcp`（1Password 因付費方案暫不採用）。

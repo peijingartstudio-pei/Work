@@ -1,4 +1,4 @@
-﻿# Change Impact Matrix
+# Change Impact Matrix
 
 ## 使用方式
 - 修改任一主文件時，必須同步檢查對應關聯文件
@@ -12,7 +12,7 @@
 | `docs/architecture/multi-platform-delivery-architecture.md` | `docs/standards/wordpress-custom-dev-guidelines.md`, `docs/operations/end-to-end-linkage-checklist.md`, `README.md` |
 | `docs/overview/agency-os-complete-system-introduction.md` | `README.md`, `docs/README.md`, `tenants/company-a/01_COMMANDER_SYSTEM_GUIDE.md`, `tenants/company-a/02_CLIENT_WORKSPACE_GUIDE.md`, `tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md`, `tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md` |
 | `docs/overview/EXECUTION_DASHBOARD.md` | `docs/overview/REMOTE_WORKSTATION_STARTUP.md`, `docs/overview/INTEGRATED_STATUS_REPORT.md`, `docs/operations/end-of-day-checklist.md`, `memory/CONVERSATION_MEMORY.md`, `AGENTS.md`, `RESUME_AFTER_REBOOT.md` |
-| `docs/overview/REMOTE_WORKSTATION_STARTUP.md` | `docs/overview/EXECUTION_DASHBOARD.md`, `docs/overview/INTEGRATED_STATUS_REPORT.md`, `RESUME_AFTER_REBOOT.md`, `docs/operations/end-of-day-checklist.md`, `AGENTS.md` |
+| `docs/overview/REMOTE_WORKSTATION_STARTUP.md` | `docs/overview/EXECUTION_DASHBOARD.md`, `docs/overview/INTEGRATED_STATUS_REPORT.md`, `RESUME_AFTER_REBOOT.md`, `docs/operations/end-of-day-checklist.md`, `AGENTS.md`, `memory/CONVERSATION_MEMORY.md`, `TASKS.md`, `../README.md`（monorepo 根；§1.5／§2／雙機敘述變更時必查）, `.cursor/rules/00-session-bootstrap.mdc`, `.cursor/rules/30-resume-keyword.mdc`, `.cursor/rules/40-shutdown-closeout.mdc`（**改 REMOTE 的開收工順序／§ 分工時必查**；並與 monorepo 根 `../.cursor/rules/` **同名檔鏡像對齊**，避免根與 `agency-os` 載入規則分叉） |
 | `docs/overview/INTEGRATED_STATUS_REPORT.md` | `docs/overview/EXECUTION_DASHBOARD.md`, `docs/overview/REMOTE_WORKSTATION_STARTUP.md`, `scripts/generate-integrated-status-report.ps1`, `reports/status/integrated-status-LATEST.md` |
 | `docs/operations/system-operation-sop.md` | `README.md`, `AGENTS.md`, `TASKS.md`, `WORKLOG.md` |
 | `docs/operations/client-risk-scoring-model.md` | `docs/metrics/kpi-margin-dashboard-spec.md`, `docs/product/templates/monthly-report-template-en.md`, `README.md`, `TASKS.md` |
@@ -72,5 +72,5 @@
 - `docs/operations/new-doc-linkage-checklist.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-03-31 12:08:52 UTC_
+_Last synced: 2026-04-01（REMOTE 列補 EXECUTION_DASHBOARD／rules／TASKS／memory／根 README；上游 2026-03-31 12:08:52 UTC）_
 

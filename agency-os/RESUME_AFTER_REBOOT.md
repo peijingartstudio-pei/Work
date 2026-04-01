@@ -16,12 +16,12 @@
 
 ## 他處電腦／公司機 — 第一次或換機
 
-請改看：**`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（`git pull`、`verify-build-gates`、`npm ci`、狀態檔路徑）。
+請改看：**`docs/overview/REMOTE_WORKSTATION_STARTUP.md`** — **新機／筆電第一次**依 **§1.5**（最短複製貼上序列）；之後每次開工依 **§2**（`git pull`、`lobster-factory`／wrappers 之 `npm ci`、`verify-build-gates`、狀態檔路徑）。
 
 > `<WORK_ROOT>` 例子：筆電可能是 `D:\Work`；公司桌機可能是 `C:\Users\USER\Work`。
 
 ## Related Documents (Auto-Synced)
 - `docs/operations/system-guard-and-notification.md`
 
-_Last synced: 2026-03-30 05:16:43 UTC_
+_Last synced: 2026-04-01（換機段指向 REMOTE §1.5／§2）_
 

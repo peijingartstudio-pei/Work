@@ -1,4 +1,4 @@
-﻿# Execution Dashboard (Agency OS + Lobster Factory)
+# Execution Dashboard (Agency OS + Lobster Factory)
 
 > 目的：用**一頁**掌握「完整建置系統、目前進度、尚未完成、下一步、硬性 Gate」並降低遺漏與重工。
 >
@@ -63,7 +63,8 @@
 
 ## 4) 每日 Runbook（最短路徑）
 ### 開工（AO-RESUME）
-0. **單一真相**：開工流程與 30 秒自檢統一看 `docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2、§2.3（本頁不重複維護第二套命令）。  
+0. **單一真相**：開工流程與 30 秒自檢統一看 `docs/overview/REMOTE_WORKSTATION_STARTUP.md` — **新機 §1.5**、**例行 §2**、§2.3（本頁不重複維護第二套命令）。  
+   **雙機必做**：在 monorepo 根先 `git fetch origin` → `git pull --ff-only origin main`（若 push 曾與遠端分叉則 `git pull --rebase origin main`）。
 1. 先看 `LAST_SYSTEM_STATUS.md`
 2. 打開 `TASKS.md`，只做 Next/Backlog 最高優先
 3. 在 Cursor 輸入 **`AO-RESUME`**（讀 `AGENTS.md` + 記憶檔 + 龍蝦 checklist／Completion Plan）
@@ -74,11 +75,12 @@
 - **單一真相**：收工流程統一看 `docs/operations/end-of-day-checklist.md`（操作）與 `.cursor/rules/40-shutdown-closeout.mdc`（關鍵字規則）。本頁僅保留入口，不再重複維護整段命令細節。
 
 ### 公司機／他處電腦（pull 後）
-**完整清單請固定看：`docs/overview/REMOTE_WORKSTATION_STARTUP.md`。** 摘要：
-1. monorepo 根 `git pull`
-2. `powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1`
-3. `mcp-local-wrappers`：`npm ci`
-4. 綜合狀態以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準（勿與根目錄 `reports/status` 混淆）
+**完整清單請固定看：`docs/overview/REMOTE_WORKSTATION_STARTUP.md`。** **新機／筆電第一次**用該檔 **§1.5**；**之後每次**用 **§2**。摘要（與 §2 一致）：
+1. monorepo 根：`git pull --ff-only origin main`（或先 `fetch`）
+2. `lobster-factory`：`npm ci`
+3. 可選：`mcp-local-wrappers` → `npm ci`
+4. `powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1`
+5. 綜合狀態以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準（勿與根目錄 `reports/status` 混淆）
 - 手動核銷：仍可依 `docs/operations/end-of-day-checklist.md` 逐項打勾（與 §1b 對齊）。
 
 ### 離席會斷網（吃飯前）
@@ -113,5 +115,5 @@
 - `docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-03-31 12:06:18 UTC_
+_Last synced: 2026-04-01（§4 與 REMOTE §2／§2.3 一致；含 `lobster-factory npm ci`；上游 2026-03-31 12:06:18 UTC）_
 

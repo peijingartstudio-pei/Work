@@ -368,6 +368,22 @@
       ]
     },
     {
+      "source": "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
+      "targets": [
+        "docs/overview/EXECUTION_DASHBOARD.md",
+        "docs/overview/INTEGRATED_STATUS_REPORT.md",
+        "RESUME_AFTER_REBOOT.md",
+        "docs/operations/end-of-day-checklist.md",
+        "AGENTS.md",
+        "memory/CONVERSATION_MEMORY.md",
+        "TASKS.md",
+        "../README.md",
+        ".cursor/rules/00-session-bootstrap.mdc",
+        ".cursor/rules/30-resume-keyword.mdc",
+        ".cursor/rules/40-shutdown-closeout.mdc"
+      ]
+    },
+    {
       "source": "automation/REGISTER_WEEKLY_SYSTEM_REVIEW_TASK.ps1",
       "targets": [
         "docs/overview/EXECUTION_DASHBOARD.md",

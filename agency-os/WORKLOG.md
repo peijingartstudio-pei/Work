@@ -1,4 +1,4 @@
-﻿# Worklog
+# Worklog
 
 > Historical snapshot note: this file records decisions/events by date. For current operating rules and commands, use the event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (startup/AO-RESUME) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (shutdown/AO-CLOSE).
 
@@ -576,6 +576,13 @@ _Last synced: 2026-03-31 14:15:52 UTC_
 - 稽核落盤：`sync-linear-delta-to-daily.ps1` 成功 append，`memory/daily/2026-03-31.md` 已有 `### Linear API sync (...)` 區塊。
 - 腳本穩定化：修正 StrictMode 下 `.errors/.Count` 例外、防呆 `LINEAR_PROJECT_ID` UUID、補一鍵 `scripts/linear-sync-all.ps1`。
 - 專案管理分流：已改為支援 `LINEAR_PROJECT_ID_AO/LF/PJ`；目前 AO 綁定 `ffe9e2b5-55ee-4cbb-baa6-7479cbf10f49`，預設 `LINEAR_PROJECT_ID` 已清除避免全流誤綁。
+
+### 雙機環境對齊（待辦；AO-RESUME 口頭提醒）
+- 使用者要求桌機與筆電「執行與功能一致」。
+- 已入 **`TASKS.md` → Next** 第一則未勾項 **「（AO-RESUME 提醒）雙機環境對齊」**；並在 **`memory/CONVERSATION_MEMORY.md` → Current Operating Context** 註明：之後每次 **`AO-RESUME`** Agent 須列出該待辦，直到勾選完成。
+- 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
+- **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
+- **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`lobster-factory npm ci`**（與閘道一致）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
 
 
 

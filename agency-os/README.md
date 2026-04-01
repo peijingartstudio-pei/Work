@@ -1,4 +1,4 @@
-﻿# Agency OS v1
+# Agency OS v1
 
 這是一套給多客戶網站建置、客製系統、維運與行銷整合的營運框架。
 
@@ -25,7 +25,7 @@
 - 讓 AI 每次會話都先讀記憶，不從空白開始
 
 ## 核心文件
-- **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：**他處電腦／公司機開機與 pull 後須知**（與 `RESUME_AFTER_REBOOT.md` 同列必讀）
+- **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：**他處電腦／公司機開機與 pull 後須知**（**§1.5** 新機最短序列、**§2** 例行；與 `RESUME_AFTER_REBOOT.md` 同列必讀）
 - `AGENTS.md`: AI 協作規則
 - `BOOTSTRAP.md`: 新環境初始化清單
 - `TASKS.md`: 全域任務看板
@@ -187,5 +187,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-03-31 14:15:52 UTC_
+_Last synced: 2026-04-01（REMOTE §1.5／§2；上游 2026-03-31 14:15:52 UTC）_
 

@@ -1,4 +1,4 @@
-﻿# 他處電腦／公司機 — 開機與首次接線須知
+# 他處電腦／公司機 — 開機與首次接線須知
 
 > **目的**：在家 push 後，到**另一台電腦**（公司機、筆電、新機）能**最快、安全、可驗證**地續接，並把流程收斂為「可重複、可回復、可追蹤」。
 >
@@ -26,36 +26,111 @@ git branch --show-current
 
 ## 1) 第一次或換電腦：取得程式碼
 
+**新機／筆電第一次 clone**：請**只**依 **§1.5**（自 `git clone` 起之「最短序列」正本），**不要**再與本節重複貼上 clone 區塊。
+
+**已 clone 過**（僅對齊 `origin/main`），在 **monorepo 根**：
+
+```powershell
+cd <你的 Work 根路徑>
+git fetch origin
+git checkout main
+git pull --ff-only origin main
+```
+
+（與 **§2 第 1 步**相同；之後依 §2 其餘步驟即可。）
+
+## 1.5) 筆電／新機：首次開機最短指令序列（複製貼上）
+
+> **角色分工**：**§1.5**＝新機／筆電首次（含 `clone`、工具、`lobster-factory` 依賴、閘道）；**§2**＝之後每次開機的**例行**流程（會再 `pull`、`npm ci`、閘道）。  
+> **連動**：`TASKS.md` → Next「（AO-RESUME 提醒）雙機環境對齊」、根 `README.md`「他機／首次接線」均指向本節。  
+> **前置**：已安裝 **Git**、**Node.js**（建議與桌機／CI 同大版本）；可選 **winget**（裝 `gh` 用）。
+
+### 從零 clone（這台從未載過 repo）
+
+在**自選父目錄**開 PowerShell（路徑可與桌機不同，例如 `D:\Work`、`C:\Users\USER\Work`）：
+
 ```powershell
 git clone https://github.com/peijingartstudio-pei/Work.git
 cd Work
 git checkout main
-git pull
+git pull --ff-only origin main
 ```
 
-已 clone 過則在 repo 根：
+### 工具與依賴（與桌機「能跑的指令」對齊）
+
+以下一律在 **monorepo 根**執行（該層目錄需同時有 `agency-os`、`lobster-factory`、`scripts`）：
 
 ```powershell
-cd <你的 Work 路徑>
-git pull origin main
+Set-Location <你的 Work 根路徑>
+git rev-parse --show-toplevel
 ```
 
+```powershell
+# GitHub CLI（可選；要與桌機一樣用 gh 管理 Actions 時再裝）
+winget install --id GitHub.cli
+# 關閉終端機再開，或刷新 PATH 後：
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+gh --version
+gh auth login
+```
+
+```powershell
+Set-Location <你的 Work 根路徑>
+
+# 龍蝦工廠依賴（bootstrap / validate 需要）
+Set-Location .\lobster-factory
+npm ci
+Set-Location ..
+
+# 若你有使用本機 MCP wrappers（可選）
+if (Test-Path .\mcp-local-wrappers) {
+  Set-Location .\mcp-local-wrappers
+  npm ci
+  Set-Location ..
+}
+
+# 一次閘道（通過再開工大改）
+powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
+```
+
+### 憑證（無法一鍵複製：每台各做一次）
+
+- **DPAPI vault**（Linear、Trigger 等腳本用）：`scripts/secrets-vault.ps1` — 手冊 **`docs/operations/local-secrets-vault-dpapi.md`**。  
+- **Cursor MCP／`mcp.json`**：只存在本機，換機後依 **`docs/operations/mcp-add-server-quickstart.md`** 重建；**勿**把 token 提交進 repo。
+
+### 做完後
+
+1. 讀 `agency-os\LAST_SYSTEM_STATUS.md`、`agency-os\TASKS.md`、`agency-os\reports\status\integrated-status-LATEST.md`。  
+2. 在 Cursor 輸入 **`AO-RESUME`**（且 **已**完成本節的 `git pull` 與閘道）。  
+3. **下一趟起**：換機以外的**日常開機**請改依 **§2**（不必重跑 §1.5 全段；除非重新 clone、換機、或依賴損毀需重建）。
+
+---
+
 ## 2) 開機後必做四件事（約 5–15 分鐘）
+
+> **與 §1.5 的關係**：若你為 **新機** 且尚未跑過 §1.5 的「工具與依賴」區塊，請 **先完成 §1.5**，再視 §2 為**之後每次**的節奏。若 `lobster-factory\package-lock.json` 有更新，務必在 `lobster-factory` **再執行** `npm ci`。
 
 1. **同步主線（先收斂到遠端真相）**  
    ```powershell
    git fetch origin
    git checkout main
-   git pull --ff-only
+   git pull --ff-only origin main
    ```
    若失敗，先處理本機未提交或衝突，再往下走。
 
-2. **依賴（若你用 MCP 本機 wrappers）**  
-   ```powershell
-   cd mcp-local-wrappers
-   npm ci
-   ```
-   `node_modules` **不在** Git 裡，一定要在本機還原。
+2. **依賴還原（`node_modules` 不入庫）**  
+   - **龍蝦工廠**（`verify-build-gates`／bootstrap 需要）：  
+     ```powershell
+     cd lobster-factory
+     npm ci
+     cd ..
+     ```
+   - **可選**：若使用本機 MCP wrappers：  
+     ```powershell
+     cd mcp-local-wrappers
+     npm ci
+     cd ..
+     ```
 
 3. **一次跑滿「工程 + 治理」閘道（強烈建議）**  
    在 **monorepo 根**：
@@ -75,7 +150,8 @@ git pull origin main
 ## 2.1 失敗處置（不要硬做）
 
 - `git pull --ff-only` 失敗：先 `git status`，整理本機變更後再 pull，避免強制覆蓋。
-- `npm ci` 失敗：刪除 `mcp-local-wrappers\node_modules` 後重試；仍失敗就檢查 Node 版本。
+- `lobster-factory` 的 `npm ci` 失敗：刪除 `lobster-factory\node_modules` 後重試；仍失敗就檢查 Node 版本與 lockfile 是否與遠端一致。
+- `mcp-local-wrappers` 的 `npm ci` 失敗：刪除 `mcp-local-wrappers\node_modules` 後重試。
 - `verify-build-gates` 失敗：先修 gate，不要進行大範圍變更或收工 push。
 
 ## 2.3 AO-RESUME 後 30 秒自檢（預防 dirty 與邏輯漂移）
@@ -124,20 +200,20 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 
 ## 5) 與「重開機續接」的關係
 
-- 同一台電腦重開：見 repo 根的 **`RESUME_AFTER_REBOOT.md`**（貼 **`AO-RESUME`**）。
-- **換電腦**：以**本文件**為準，做完 §2 再在 Cursor 用 **`AO-RESUME`**。
+- 同一台電腦重開：見 repo 根的 **`RESUME_AFTER_REBOOT.md`**（貼 **`AO-RESUME`**）。  
+- **換電腦／新機**：先 **§1.5**，之後每次開工 **§2** 再在 Cursor 用 **`AO-RESUME`**。
 
 ## 6) 開工完成判定（Definition of Ready）
 
 符合以下 5 項才算「可安全開工」：
-1. `git pull --ff-only`（或等價對齊 `origin/main`）成功，且在正確分支。  
-2. 依賴還原完成（若有 wrappers）。  
+1. `git pull --ff-only origin main`（或等價對齊 `origin/main`）成功，且在正確分支。  
+2. **`lobster-factory` 已執行** `npm ci`；若有 `mcp-local-wrappers` 則一併 `npm ci`。  
 3. `verify-build-gates.ps1` Critical Gate = PASS。  
 4. 已讀 `LAST_SYSTEM_STATUS.md` / `TASKS.md` / `integrated-status-LATEST.md`。  
-5. **`AO-RESUME` 在 §2 第 1 步之後執行**，回覆可清楚列出「已完成／目前進度／下一步」（含龍蝦 Milestone/DoD/風險，見 `AGENTS.md`）。
+5. **`AO-RESUME` 在 Git 同步與閘道之後執行**（例行流程即 §2；新機第一次即 §1.5），回覆可清楚列出「已完成／目前進度／下一步」（含龍蝦 Milestone/DoD/風險，見 `AGENTS.md`）。
 
 ## Related Documents (Auto-Synced)
 - `../README.md`
 
-_Last synced: 2026-03-31 12:06:18 UTC_
+_Last synced: 2026-04-01（§1／§1.5／§2 分工與依賴含 `lobster-factory`；doc-sync 錨點曾於 2026-03-31 UTC）_
 

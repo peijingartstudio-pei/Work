@@ -1,4 +1,4 @@
-﻿# 綜合進度報告（單檔總覽）
+# 綜合進度報告（單檔總覽）
 
 > **用途**：每天想「一次看完」待辦、工廠主線、續接記憶、今日日記與附錄時，開這裡指到的**產出檔**即可。  
 > **原則**：狀態仍只維護在各「單一真實來源」；本報告由腳本**拼裝**，不重複手動維護勾選。
@@ -41,7 +41,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\generate-integrated-status-re
 ## 與其他「一頁」的關係
 
 - **`docs/overview/EXECUTION_DASHBOARD.md`**：儀表板與 Gate、每日路徑（仍建議每天先掃一眼）。
-- **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：雙機／換機開工順序與 AO-RESUME 30 秒自檢（開工事件單一真相）。
+- **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：雙機／換機開工順序與 AO-RESUME 30 秒自檢（開工事件單一真相）；**新機 §1.5**、**例行 §2**：含 `pull`、`lobster-factory npm ci`、閘道，再 **`AO-RESUME`**（與儀表板 §4 一致）。
 - **`docs/operations/end-of-day-checklist.md`**：AO-CLOSE 收工流程（收工事件單一真相）。
 - **本頁 + `integrated-status-LATEST.md`**：要把「待辦 + 工廠 + 記憶 + 今日」**塞進同一視窗**時用。
 
