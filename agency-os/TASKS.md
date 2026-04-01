@@ -1,4 +1,4 @@
-﻿# Global Task Board
+# Global Task Board
 
 ## In Progress
 - [x] 建立多租戶案場資料夾結構（company -> site -> project）
@@ -84,6 +84,7 @@
 - [x] 建立 release notes + upgrade path + migration checklist
 - [x] `lobster-factory` 補齊 raw spec 差距檔案（C4-1~C4-5 完成）
 - [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager）
+- [ ] **`lobster-factory/packages/workflows` `npm audit`**（2026-04-01）：16 筆多為 **Trigger.dev CLI／`@trigger.dev/core` 傳遞依賴**（socket.io／cookie、esbuild dev、tar、giget、systeminformation 等）。**勿**對本目錄跑 `npm audit fix --force`（會把人帶到不相容 Trigger 版本）。**對策**：等官方 `@trigger.dev/sdk`／`trigger.dev` 小版修 upstream；或 Trigger 釋出安全修補後再 `npm update` + 回歸；本機勿將 Trigger **dev** 伺服器暴露公網。
 
 ## Related Documents (Auto-Synced)
 - `.cursor/rules/00-session-bootstrap.mdc`
@@ -99,5 +100,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-01 02:31:21 UTC_
+_Last synced: 2026-04-01（Backlog：`packages/workflows` npm audit 追蹤，不 force fix）_
 
