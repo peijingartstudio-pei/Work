@@ -101,8 +101,11 @@ foreach ($f in $coreFiles) {
 $genPath = Join-Path $root "scripts\generate-integrated-status-report.ps1"
 if (Test-Path $genPath) {
     $genRaw = Get-Content -LiteralPath $genPath -Raw -Encoding UTF8
-    $genOk = ($genRaw.Length -ge 2500) -and ($genRaw -match "Get-UncheckedInSection")
-    Add-Check -Name "Script sanity: generate-integrated-status-report.ps1 (full generator)" -Pass $genOk -Detail ($(if ($genOk) { "OK" } else { "Too small or missing expected symbols (wrapper overwrite?)" }))
+    $isFullGenerator = ($genRaw.Length -ge 2500) -and ($genRaw -match "Get-UncheckedInSection")
+    $isIntentionalWrapper = ($genRaw -match "Single-owner design") -and ($genRaw -match "owner script")
+    $genOk = $isFullGenerator -or $isIntentionalWrapper
+    $genDetail = if ($isFullGenerator) { "OK (full generator)" } elseif ($isIntentionalWrapper) { "OK (intentional wrapper)" } else { "Too small or missing expected symbols (wrapper overwrite?)" }
+    Add-Check -Name "Script sanity: generate-integrated-status-report.ps1 (full/wrapper)" -Pass $genOk -Detail $genDetail
     if (-not $genOk) { Add-CriticalFailure -Reason "generate-integrated-status-report.ps1 failed sanity check" }
 }
 $wkPath = Join-Path $root "scripts\weekly-system-review.ps1"

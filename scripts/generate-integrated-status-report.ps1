@@ -33,6 +33,27 @@ function Ensure-Dir {
     if (-not (Test-Path $Path)) { New-Item -ItemType Directory -Path $Path -Force | Out-Null }
 }
 
+function Invoke-OptionalScriptWithTimeout {
+    param(
+        [string]$ScriptPath,
+        [string[]]$Arguments,
+        [int]$TimeoutSeconds = 20,
+        [string]$Label = "optional script"
+    )
+    $argLine = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "`"$ScriptPath`"")
+    if ($Arguments) { $argLine += $Arguments }
+    $argText = ($argLine -join " ")
+
+    $p = Start-Process -FilePath "powershell.exe" -ArgumentList $argText -PassThru -WindowStyle Hidden
+    $ok = $p.WaitForExit($TimeoutSeconds * 1000)
+    if (-not $ok) {
+        try { Stop-Process -Id $p.Id -Force -ErrorAction Stop } catch {}
+        Write-Warning ("generate-integrated-status-report: " + $Label + " timeout after " + $TimeoutSeconds + "s; skipped.")
+        return 124
+    }
+    return $p.ExitCode
+}
+
 function Get-UncheckedInSection {
     param(
         [string[]]$Lines,
@@ -277,15 +298,23 @@ if ((Test-Path -LiteralPath $schedulePush) -and $linearKeyPresent) {
         Write-Host "== generate-integrated-status-report: PROGRAM_SCHEDULE -> Linear skipped (AO_SYNC_SCHEDULE_TO_LINEAR=0) ==" -ForegroundColor Yellow
     } else {
         Write-Host "== generate-integrated-status-report: PROGRAM_SCHEDULE.json -> Linear (issue create/update) ==" -ForegroundColor Cyan
-        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $schedulePush -WorkspaceRoot $root
-        if ($LASTEXITCODE -ne 0) {
-            Write-Warning ("generate-integrated-status-report: push-program-schedule-to-linear exited " + $LASTEXITCODE + " (Linear may be incomplete; integrated report and AO-CLOSE continue).")
+        $scheduleExit = Invoke-OptionalScriptWithTimeout -ScriptPath $schedulePush -Arguments @("-WorkspaceRoot", $root) -TimeoutSeconds 25 -Label "push-program-schedule-to-linear"
+        if ($scheduleExit -ne 0) {
+            Write-Warning ("generate-integrated-status-report: push-program-schedule-to-linear exited " + $scheduleExit + " (Linear may be incomplete; integrated report and AO-CLOSE continue).")
         }
     }
 }
 
 $linearSync = Join-Path $root "scripts\sync-linear-delta-to-daily.ps1"
 if ((Test-Path -LiteralPath $linearSync) -and $linearKeyPresent) {
-    Write-Host "== generate-integrated-status-report: Linear delta -> memory/daily (optional) ==" -ForegroundColor Cyan
-    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $linearSync -WorkspaceRoot $root
+    $skipDelta = $env:AO_SYNC_LINEAR_DELTA_TO_DAILY
+    if (-not [string]::IsNullOrWhiteSpace($skipDelta) -and ($skipDelta.Trim() -eq "0" -or $skipDelta.Trim() -ieq "false")) {
+        Write-Host "== generate-integrated-status-report: Linear delta -> memory/daily skipped (AO_SYNC_LINEAR_DELTA_TO_DAILY=0) ==" -ForegroundColor Yellow
+    } else {
+        Write-Host "== generate-integrated-status-report: Linear delta -> memory/daily (optional) ==" -ForegroundColor Cyan
+        $deltaExit = Invoke-OptionalScriptWithTimeout -ScriptPath $linearSync -Arguments @("-WorkspaceRoot", $root) -TimeoutSeconds 20 -Label "sync-linear-delta-to-daily"
+        if ($deltaExit -ne 0) {
+            Write-Warning ("generate-integrated-status-report: sync-linear-delta-to-daily exited " + $deltaExit + " (ignored).")
+        }
+    }
 }

@@ -15,6 +15,7 @@
 
 - [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`
   - 預設：**`verify-build-gates`**（龍蝦 + Agency health）→ **`system-guard`**（doc-sync + health + guard）→ **`generate-integrated-status-report`**
+  - 預設為**快速穩定模式**：Linear 同步改為旁路（不阻塞收工）；要同回合同步 Linear，改用 `-EnableLinearSync`
   - **全程 PASS**：`git add -A` → 有變更則 `git commit` → `git push origin <目前分支>`（**公司機 pull 即完整**）
   - **任一步 FAIL**：**不會 push**
   - 今夜不推遠端：`-SkipPush`（仍跑閘道與產報）
@@ -63,5 +64,5 @@
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-01 06:39:13 UTC_
+_Last synced: 2026-04-01 09:07:11 UTC_
 

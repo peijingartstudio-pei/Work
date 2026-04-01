@@ -4,6 +4,17 @@
 
 ## 2026-04-01
 
+### AO-CLOSE 穩定性優化（Linear 旁路化 + timeout）
+- `scripts/ao-close.ps1` 新增 `-EnableLinearSync`：預設不讓 Linear 阻塞收工；需要時才同回合同步 Linear。
+- `scripts/generate-integrated-status-report.ps1` 新增 optional script timeout 包裝：
+  - `push-program-schedule-to-linear`（25s timeout）
+  - `sync-linear-delta-to-daily`（20s timeout）
+- 新增環境變數開關：
+  - `AO_SYNC_SCHEDULE_TO_LINEAR=0`（跳過 schedule push）
+  - `AO_SYNC_LINEAR_DELTA_TO_DAILY=0`（跳過 delta append）
+- `docs/operations/end-of-day-checklist.md` 已更新：AO-CLOSE 預設快速穩定，Linear 同步改為可選 `-EnableLinearSync`。
+- 補強健康檢查相容：`agency-os/scripts/system-health-check.ps1` 的 generator sanity check 現在允許「full generator」或「intentional wrapper」，避免 Single Owner 設計被誤判為故障。
+
 ### Next-Gen 升級藍圖 v1 已落地（使用者同意直接衝高階版）
 - 新增 `docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`，定義 3 里程碑（M1 環境標準化、M2 gate/回滾自動化、M3 控制台化）與 2-4 週節奏。
 - 文件包含：建議改動檔案、腳本清單、DoD 驗收標準、風險對策與本週啟動順序。
@@ -208,7 +219,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-01 07:50:53 UTC_
+_Last synced: 2026-04-01 09:16:22 UTC_
 
 ## 2026-03-20
 
@@ -661,6 +672,8 @@ _Last synced: 2026-04-01 07:50:53 UTC_
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
+
 
 
 
