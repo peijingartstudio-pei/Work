@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-04-01 15:55:38
+- Generated: 2026-04-01 17:00:31
 - agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -231,7 +231,7 @@ _no file for today yet._
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-04-01 15:55:30`
+- Time: `2026-04-01 17:00:29`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
@@ -239,8 +239,8 @@ _no file for today yet._
 - Result: **PASS**
 
 ## Latest Reports
-- Health: `reports/health/health-20260401-155530.md`
-- Closeout: `reports/closeout/closeout-20260401-155528.md`
+- Health: `reports/health/health-20260401-170029.md`
+- Closeout: `reports/closeout/closeout-20260401-170026.md`
 
 ## Action
 - No blocking issue detected.
