@@ -10,7 +10,15 @@ function Resolve-AgencyRoot {
     if ($InputRoot -and (Test-Path -LiteralPath $InputRoot)) {
         return (Resolve-Path -LiteralPath $InputRoot).Path
     }
-    return (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+    $here = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+    # Normal: …/agency-os/scripts -> agency root is parent.
+    $sopHere = Join-Path $here "tenants\NEW_TENANT_ONBOARDING_SOP.md"
+    if (Test-Path -LiteralPath $sopHere) { return $here }
+    # Fallback: invoked from monorepo scripts/ copy.
+    $nested = Join-Path $here "agency-os"
+    $sopNested = Join-Path $nested "tenants\NEW_TENANT_ONBOARDING_SOP.md"
+    if (Test-Path -LiteralPath $sopNested) { return $nested }
+    return $here
 }
 
 function Assert-PathExists {

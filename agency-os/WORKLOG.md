@@ -4,6 +4,13 @@
 
 ## 2026-04-01
 
+### A10-2 本機 staging 管線 4/4（DRY）+ 可重現性修復
+- **Preflight**：修正 monorepo 根執行時 `agency-os` 解析（`scripts/preflight-onboarding-a10-2-readiness.ps1`；`agency-os/scripts` 鏡像一併防呆）。
+- **Regression**：`npm run regression:staging-pipeline -- --wpRootPath=C:\Users\USER\Work\.scratch\wp-dummy` **4/4 PASS**。
+- **Windows**：`execute-apply-manifest-staging.mjs` 自動尋找 `C:\Program Files\Git\bin\bash.exe`；`install-from-manifest.sh` 在 **DRY_RUN** 時不強制 `wp-cli`（仍印出預定 wp 指令）。
+- **Drill 報告**：`emit-staging-drill-report.mjs` 新增 `--wpRootPath=`，產出 `agency-os/reports/e2e/staging-pipeline-drill-20260401-113446.md`。
+- **證據**：`reports/e2e/onboarding-a10-2/20260331-215507-company-p1-pilot-2026-010-p1-pilot/02-a10-2-evidence.md`、`03-run-id-map.md` 已更新。**Production / Trigger 真實 ID** 仍待下一輪。
+
 ### AO-RESUME：雙機 §1.5 + audit 強制口頭提醒
 - 使用者要求在未完成另一台 §1.5 與 `machine-environment-audit.ps1 -FetchOrigin` PASS 前，**每次** `AO-RESUME` 的「下一步」須提醒；已寫入 `memory/CONVERSATION_MEMORY.md` 與 **`.cursor/rules/30-resume-keyword.mdc` 第 7 點**（根目錄規則檔同步）。
 

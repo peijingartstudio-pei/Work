@@ -24,11 +24,6 @@ if [[ ! -d "${WP_PATH}" ]]; then
   exit 1
 fi
 
-if ! command -v wp >/dev/null 2>&1; then
-  echo "wp-cli is required but not found in PATH"
-  exit 1
-fi
-
 if ! command -v node >/dev/null 2>&1; then
   echo "Node.js is required but not found in PATH"
   exit 1
@@ -36,6 +31,12 @@ fi
 
 if [[ "${DRY_RUN:-0}" == "1" ]]; then
   echo "[DRY_RUN] enabled. No changes will be applied."
+  if ! command -v wp >/dev/null 2>&1; then
+    echo "[DRY_RUN] wp-cli not in PATH — listing intended wp commands only (no wp execution)."
+  fi
+elif ! command -v wp >/dev/null 2>&1; then
+  echo "wp-cli is required but not found in PATH (use DRY_RUN=1 for preview without wp)"
+  exit 1
 fi
 
 TARGET="$(node -e "const fs=require('fs');const m=JSON.parse(fs.readFileSync(process.argv[1],'utf8'));process.stdout.write(String(m.target||''));" "${MANIFEST_PATH}")"

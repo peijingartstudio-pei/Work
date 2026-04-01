@@ -72,6 +72,21 @@ function assertManifest(manifest, manifestPathForError) {
   }
 }
 
+/** On Windows, `bash.exe` is often not on PATH; prefer Git for Windows if present. */
+function resolveBashExecutable() {
+  const fromEnv = process.env.LOBSTER_BASH?.trim();
+  if (fromEnv) return fromEnv;
+  if (process.platform !== "win32") return "bash";
+  const candidates = [
+    "C:\\Program Files\\Git\\bin\\bash.exe",
+    "C:\\Program Files (x86)\\Git\\bin\\bash.exe",
+  ];
+  for (const c of candidates) {
+    if (fs.existsSync(c)) return c;
+  }
+  return "bash.exe";
+}
+
 function runBashOnce({ bash, scriptPath, manifestPath, wpRootPath, dryRun, timeoutMs }) {
   return new Promise((resolve, reject) => {
     const child = spawn(bash, [scriptPath, manifestPath, wpRootPath], {
@@ -140,9 +155,7 @@ async function main() {
     throw new Error(`Missing install script: ${scriptPath}`);
   }
 
-  const bash =
-    process.env.LOBSTER_BASH?.trim() ||
-    (process.platform === "win32" ? "bash.exe" : "bash");
+  const bash = resolveBashExecutable();
   const timeoutMs = Number(process.env.LOBSTER_MANIFEST_SHELL_TIMEOUT_MS || 120000);
 
   const exitCode = await runBashOnce({

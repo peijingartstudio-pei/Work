@@ -2,6 +2,9 @@
 .claude/
 **/.claude/
 
+# --- Local scratch (wp-dummy paths for regression; never push) ---
+.scratch/
+
 # --- Dependencies (reinstall with npm ci / npm install) ---
 node_modules/
 lobster-factory/packages/workflows/.trigger/

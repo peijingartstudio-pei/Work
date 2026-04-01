@@ -10,7 +10,14 @@ function Resolve-AgencyRoot {
     if ($InputRoot -and (Test-Path -LiteralPath $InputRoot)) {
         return (Resolve-Path -LiteralPath $InputRoot).Path
     }
-    return (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+    # Monorepo: scripts/ lives next to agency-os/; default folder must be agency-os (not repo root).
+    $monorepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+    $agencyNested = Join-Path $monorepoRoot "agency-os"
+    $sopProbe = Join-Path $agencyNested "tenants\NEW_TENANT_ONBOARDING_SOP.md"
+    if (Test-Path -LiteralPath $sopProbe) {
+        return $agencyNested
+    }
+    return $monorepoRoot
 }
 
 function Assert-PathExists {

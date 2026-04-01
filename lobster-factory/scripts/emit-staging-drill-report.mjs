@@ -43,16 +43,18 @@ function stamp() {
 async function main() {
   if (process.argv.includes("--help") || process.argv.includes("-h")) {
     console.log(`
-Usage: node scripts/emit-staging-drill-report.mjs [--runRegression=1|0] [--runBootstrap=0|1] [--notes=text]
+Usage: node scripts/emit-staging-drill-report.mjs [--runRegression=1|0] [--runBootstrap=0|1] [--wpRootPath=DIR] [--notes=text]
 
 Writes: <WORK_ROOT>/agency-os/reports/e2e/staging-pipeline-drill-<stamp>.md
 WORK_ROOT = LOBSTER_WORK_ROOT or parent of lobster-factory.
+Optional --wpRootPath forwards to run-staging-pipeline-regression (enables 4/4 shell DRY_RUN when set).
 `);
     return;
   }
 
   const runRegression = getArg("runRegression", "1") !== "0";
   const runBootstrap = getArg("runBootstrap", "0") === "1";
+  const wpRootPath = getArg("wpRootPath", "");
   const notes = getArg("notes", "");
 
   const wr = workRoot();
@@ -63,11 +65,11 @@ WORK_ROOT = LOBSTER_WORK_ROOT or parent of lobster-factory.
   if (runRegression) {
     regressionExit = String(
       runExitCode(() => {
-        execFileSync(
-          process.execPath,
-          [path.join(repoRoot, "scripts", "run-staging-pipeline-regression.mjs"), "--mode=fast"],
-          { stdio: "inherit", cwd: repoRoot, env: process.env }
-        );
+        const regArgs = [path.join(repoRoot, "scripts", "run-staging-pipeline-regression.mjs"), "--mode=fast"];
+        if (wpRootPath) {
+          regArgs.push(`--wpRootPath=${path.resolve(wpRootPath)}`);
+        }
+        execFileSync(process.execPath, regArgs, { stdio: "inherit", cwd: repoRoot, env: process.env });
       })
     );
   }
