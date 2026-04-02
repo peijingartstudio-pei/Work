@@ -51,9 +51,14 @@ jobs:
             echo "Missing Trigger credentials. Set secrets.TRIGGER_ACCESS_TOKEN (PAT, prefix tr_pat_)."
             exit 1
           fi
+          if [ -z "${TRIGGER_SECRET_KEY}" ]; then
+            echo "Missing Trigger credentials. Set secrets.TRIGGER_SECRET_KEY (prefix tr_secret_)."
+            exit 1
+          fi
       - name: Deploy Trigger.dev
         env:
           TRIGGER_ACCESS_TOKEN: ${{ secrets.TRIGGER_ACCESS_TOKEN }}
+          TRIGGER_SECRET_KEY: ${{ secrets.TRIGGER_SECRET_KEY }}
         run: |
           for attempt in {1..5}; do
             delay=$((30 * (2 ** ($attempt - 1))))
