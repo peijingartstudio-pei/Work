@@ -10,3 +10,5 @@
 `lobster-factory/packages/manifests/` 下同檔名或新增檔，並跑 monorepo 根 **`verify-build-gates.ps1`**。
 
 **勿**只在這裡改 JSON 就以為 staging／production 行為已更新。
+
+**若要把權威檔單向拷贝成範例**（培訓／簡報）：依上層 [`../../SYNC_EXAMPLES_FROM_LOBSTER.md`](../../SYNC_EXAMPLES_FROM_LOBSTER.md)。

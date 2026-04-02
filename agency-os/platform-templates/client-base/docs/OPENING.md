@@ -13,6 +13,9 @@
 ## 開案必連回（至少瀏覽一次）
 
 - [ ] 新租戶：已開或將開 **`tenants/company-*`**？依 **`tenants/NEW_TENANT_ONBOARDING_SOP.md`**
+- [ ] 專案階段節奏：瀏覽 **`project-kit/00_MASTER_CHECKLIST.md`**
+- [ ] 長期紀律（AI／閘道／雙機）：**`docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`**（§9–§10）
+- [ ] 一站連結：[`platform-templates/SSOT_LINKS.md`](../../SSOT_LINKS.md)
 - [ ] Woo／manifest：**執行權威**在 **`lobster-factory/packages/manifests/`**（**ADR 001**）
 - [ ] 編排／核准／MCP：**`lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`**
 - [ ] 釋出／備份／多租戶 DB 變更：**`tenants/templates/core/RELEASE_GATES_CHECKLIST.md`**、**ADR 006**

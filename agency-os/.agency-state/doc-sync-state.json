@@ -1,17 +1,17 @@
 ﻿{
-    "last_run_utc":  "2026-04-02T06:03:47.5185583Z",
+    "last_run_utc":  "2026-04-02T06:09:23.4024162Z",
     "changed_files":  [
-                          "memory/CONVERSATION_MEMORY.md",
-                          "tenants/templates/core/RELEASE_GATES_CHECKLIST.md",
+                          "docs/CHANGE_IMPACT_MATRIX.md",
+                          "docs/overview/repo-template-locations.md",
                           "WORKLOG.md"
                       ],
     "impacted_files":  [
-                           "memory/CONVERSATION_MEMORY.md",
-                           "tenants/templates/core/RELEASE_GATES_CHECKLIST.md",
+                           "docs/CHANGE_IMPACT_MATRIX.md",
+                           "docs/overview/repo-template-locations.md",
                            "WORKLOG.md"
                        ],
     "auto_updated_files":  [
-                               "memory/CONVERSATION_MEMORY.md",
+                               "docs/CHANGE_IMPACT_MATRIX.md",
                                "WORKLOG.md"
                            ]
 }

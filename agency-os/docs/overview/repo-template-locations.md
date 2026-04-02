@@ -24,6 +24,6 @@
 - [`../architecture/decisions/001-wordpress-manifest-and-shell-ssot.md`](../architecture/decisions/001-wordpress-manifest-and-shell-ssot.md)（manifest／shell SSOT）
 - [`../architecture/decisions/003-no-automated-manifest-dual-sync.md`](../architecture/decisions/003-no-automated-manifest-dual-sync.md)（否決自動雙邊同步）
 - [`LONG_TERM_OPERATING_DISCIPLINE.md`](LONG_TERM_OPERATING_DISCIPLINE.md)
-- [`platform-templates/README.md`](../../platform-templates/README.md)
+- [`platform-templates/README.md`](../../platform-templates/README.md)；[`platform-templates/SSOT_LINKS.md`](../../platform-templates/SSOT_LINKS.md)、[`platform-templates/SYNC_EXAMPLES_FROM_LOBSTER.md`](../../platform-templates/SYNC_EXAMPLES_FROM_LOBSTER.md)
 - [`tenants/README.md`](../../tenants/README.md)
 - [`ecommerce-project-playbook.md`](../operations/ecommerce-project-playbook.md)
