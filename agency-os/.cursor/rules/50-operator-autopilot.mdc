@@ -64,7 +64,7 @@ alwaysApply: true
 
 ## 7) Git：checkpoint（本機 `commit`）與 `push`（收工）
 
-**人類可讀流程表（不重複貼全文）**：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2.5。
+**人類可讀流程表（不重複貼全文）**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2.5（工作區僅開 `agency-os` 時同檔在 `docs/overview/`）。
 
 **原則**：開工期間保留**可回滾的本地節點**；遠端 `main` 仍以**過收工閘道後的 push**為主，避免半成品上雲。
 

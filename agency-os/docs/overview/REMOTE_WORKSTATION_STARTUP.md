@@ -179,6 +179,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 
 ## 2.5 日內 Git 節奏（checkpoint 與收工）— **單一真相（人類可讀）**
 
+> **自動防漂移**：`scripts/validate-git-workflow-ssot.ps1` 由 **`system-health-check`**（進而 **`verify-build-gates`**）呼叫；若 SSOT 檔漏字、兩份 `50-operator-autopilot.mdc` 不一致、或 `ao-resume` 腳本被誤覆蓋成多段 `param`，閘道會 **FAIL**。
+
 > **代理強制細節**（何時必跑 checkpoint、何時略過）：`.cursor/rules/50-operator-autopilot.mdc` §7（repo 根與 `agency-os/.cursor/rules` 應同文）。
 
 | 階段 | 誰做什麼 | Git |
@@ -316,5 +318,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-02 02:29:31 UTC_
+_Last synced: 2026-04-02 02:45:24 UTC_
 

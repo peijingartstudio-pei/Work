@@ -132,6 +132,22 @@ if (Test-Path -LiteralPath $syncVerifyScript) {
     Add-Check -Name "Monorepo root mirrors agency-os rules 63-66 (SHA256)" -Pass $true -Detail "Skipped: no sync script at monorepo scripts/"
 }
 
+# 1d) Git workflow SSOT (checkpoint + AO-CLOSE surfaces; fail on legacy doc drift)
+$gitVal = Join-Path $monoRoot "scripts\validate-git-workflow-ssot.ps1"
+if (Test-Path -LiteralPath $gitVal) {
+    $prevGe = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    & powershell -NoProfile -ExecutionPolicy Bypass -File $gitVal -MonorepoRoot $monoRoot 2>&1 | Out-Null
+    $gvExit = $LASTEXITCODE
+    $ErrorActionPreference = $prevGe
+    $gvPass = ($gvExit -eq 0)
+    Add-Check -Name "Git workflow SSOT (validate-git-workflow-ssot.ps1)" -Pass $gvPass -Detail ($(if ($gvPass) { "OK" } else { "FAIL — see script output; fix REMOTE/AGENTS/50-operator/ao-resume" }))
+    if (-not $gvPass) { Add-CriticalFailure -Reason "validate-git-workflow-ssot.ps1 failed" }
+} else {
+    Add-Check -Name "Git workflow SSOT (validate-git-workflow-ssot.ps1)" -Pass $false -Detail "Missing monorepo scripts/validate-git-workflow-ssot.ps1"
+    Add-CriticalFailure -Reason "Missing scripts/validate-git-workflow-ssot.ps1"
+}
+
 # 2) Map consistency
 $mapPath = Join-Path $root "docs/change-impact-map.json"
 if (Test-Path $mapPath) {
