@@ -39,8 +39,8 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: "22.x"
-      - name: Install dependencies with Yarn
-        run: yarn install --immutable
+            - name: Install dependencies with npm
+                run: npm ci
         working-directory: lobster-factory/packages/workflows
       - name: Validate Trigger credentials
         env:
