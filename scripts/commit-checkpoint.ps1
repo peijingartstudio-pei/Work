@@ -1,3 +1,5 @@
+# Local-only git checkpoint (no push). Intended for the agent to run at milestones;
+# the operator does not need to run this by hand unless the environment blocks git.
 param(
     [Parameter(Mandatory = $true)]
     [string]$Message,
