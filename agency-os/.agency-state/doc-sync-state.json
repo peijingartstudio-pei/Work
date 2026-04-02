@@ -1,12 +1,23 @@
 ﻿{
-    "last_run_utc":  "2026-04-01T09:16:24.3371147Z",
+    "last_run_utc":  "2026-04-02T02:01:10.8859378Z",
     "changed_files":  [
-                          "docs/overview/PROGRAM_TIMELINE.md",
-                          "WORKLOG.md"
+                          ".cursor/rules/50-operator-autopilot.mdc",
+                          "AGENTS.md"
                       ],
     "impacted_files":  [
-                           "docs/overview/PROGRAM_TIMELINE.md",
-                           "WORKLOG.md"
+                           ".cursor/rules/50-operator-autopilot.mdc",
+                           "AGENTS.md",
+                           "docs/CHANGE_IMPACT_MATRIX.md",
+                           "docs/operations/cursor-enterprise-rules-index.md",
+                           "docs/operations/new-doc-linkage-checklist.md",
+                           "README.md",
+                           "scripts/register-new-governance-doc.ps1"
                        ],
-    "auto_updated_files":  "WORKLOG.md"
+    "auto_updated_files":  [
+                               "AGENTS.md",
+                               "docs/CHANGE_IMPACT_MATRIX.md",
+                               "docs/operations/cursor-enterprise-rules-index.md",
+                               "docs/operations/new-doc-linkage-checklist.md",
+                               "README.md"
+                           ]
 }

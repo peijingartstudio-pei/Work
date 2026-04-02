@@ -199,6 +199,23 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 - `HEAD...origin/main` 應為 `0 0`（非 `0 0` 代表尚未完全對齊）。
 - `verify-build-gates` 要 PASS（避免「版本對齊但行為錯」的邏輯 bug 持續擴散）。
 
+## 2.4 大量刪檔後：怎麼避免「pull 又長回來」？
+
+**原因一句話**：Git 只相信**已 commit 且已 push 到 `origin/main` 的歷史**。只在檔案總管刪檔、沒把「刪除」寫進 commit，遠端仍視那些路徑為存在；下次 `pull`／合併就會讓工作目錄再出現它們。
+
+**固定做法（收斂成習慣）**
+
+1. **刪完立刻看索引**：在 monorepo 根執行 `git status`。若刪的是**原本有追蹤**的檔案，應看到 `deleted:` 或 `D`；若什麼都沒有，代表 Git 還不知道你刪了（或刪的是從未入庫的檔案）。
+2. **把刪除一併提交**：`git add -A`（或只 `git add` 你改過的路徑），commit 訊息寫清楚（例如 `chore: remove obsolete reports`），再 **`git push origin main`**。
+3. **另一台電腦**：下次只做 §2 第 1 步 `pull`，工作樹就會與「已刪乾淨的 main」一致，不會無故復活。
+4. **不確定遠端還有沒有某路徑時**：在 monorepo 根執行（可把關鍵字換成資料夾或檔名片段）：
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\scripts\git-audit-tracked-remote.ps1 -Pattern "關鍵字"
+   ```
+   腳本會 `fetch`、比對 `HEAD` 與 `origin/main`、列出「索引有但磁碟沒有」的追蹤檔，並可選列出遠端仍追蹤且路徑含該關鍵字的檔案。**0 筆**代表遠端 main 上已沒有該片段路徑，pull 不會為了那串字把檔案加回來。
+
+**之後在對話裡怎麼配合**：只要你說「刪了一堆檔／整理過目錄」，續接前應先完成上面第 2 步（commit + push），或明講「還沒 push、先幫我稽核」；代理應優先建議跑 `git-audit-tracked-remote.ps1` 並看 `git status`，而不是假設本機磁碟即團隊真相。
+
 ## 2.2 臨時離席／可能斷網（吃飯前 30 秒版）
 
 1. 在 **monorepo 根** `<WORK_ROOT>` 開終端機（例：`C:\Users\USER\Work` 或 `D:\Work`）
@@ -282,5 +299,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-01 06:39:13 UTC_
+_Last synced: 2026-04-02 01:48:25 UTC_
 

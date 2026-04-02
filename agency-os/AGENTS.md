@@ -49,9 +49,10 @@
   - **單一真相**：AO-CLOSE 的操作步驟以 `docs/operations/end-of-day-checklist.md` 為準，關鍵字行為以 `.cursor/rules/40-shutdown-closeout.mdc` 為準。
   - **或分部手動**（與一鍵擇一）：`doc-sync-automation -AutoDetect` → `system-health-check` → `system-guard -Mode manual` → 再自行 `git push`（見 `docs/operations/end-of-day-checklist.md`）。
 
-## Git 推送節奏（使用者共識）
-- **平常進行中**：代理**不**主動執行 `git commit`／`git push`；以本機改檔、驗證、回寫 `TASKS`／`WORKLOG`／`memory` 為主。
-- **收工**：**`AO-CLOSE`**（建議 `.\scripts\ao-close.ps1`）再統一做 commit + push（或使用者明確要求 `-SkipPush` 時僅收斂本機）。
+## Git：本機 checkpoint 與收工 push（使用者共識）
+- **開工～收工之間**：每完成一個**可敘述、已驗證**的里程碑，代理**應**做**本機** `commit`（**不** `push`），避免整天只有未提交變更。建議：`powershell -ExecutionPolicy Bypass -File .\scripts\commit-checkpoint.ps1 -Message "checkpoint: …"`（無可提交內容時腳本會安靜結束）。
+- **不要**在剛跑完 **`AO-RESUME` 前檢**或僅草稿階段為了習慣而空 commit。
+- **收工**：**`AO-CLOSE`**（建議 `.\scripts\ao-close.ps1`）為**預設**最終 **`commit`（收斂殘留）+ `push`**；或使用者明確 `-SkipPush` 時僅收斂本機。
 - **例外**：使用者**明確一句話**要求立即提交／推送（例如 hotfix、客戶急件）時，可依指示執行。
 
 ## First Run
@@ -129,5 +130,5 @@
 - `README.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-04-01 07:06:27 UTC_
+_Last synced: 2026-04-02 02:01:10 UTC_
 

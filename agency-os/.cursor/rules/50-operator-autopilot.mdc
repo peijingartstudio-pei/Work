@@ -61,8 +61,12 @@ alwaysApply: true
 使用者不需每次輸入「今天目標/限制」。代理需從上下文推斷並自動執行。
 若需使用者輸入，僅請求最小必要資訊，且一次只問一題。
 
-## 7) Git：`commit`／`push`（預設）
+## 7) Git：checkpoint（本機 `commit`）與 `push`（收工）
 
-- **平常進行中**：代理**不**主動執行 `git commit` 或 `git push`（避免半成品或未經收工閘道的變更上到遠端）。
-- **收工**：**`AO-CLOSE`** 流程內（`ao-close.ps1` 或使用者要求的等價收工序列）才**預設**做 commit + push。
-- **例外**：使用者**明確一句話**要求立即提交／推送時，可依指示執行。
+**原則**：開工期間保留**可回滾的本地節點**；遠端 `main` 仍以**過收工閘道後的 push**為主，避免半成品上雲。
+
+- **里程碑完成時（`AO-RESUME` 之後～`AO-CLOSE` 之前）**：代理在交付一個**可敘述、已通過約定最小驗證**的單元後（例如一項 `TASKS` 子任務 DoD、一組檔案閉環、修復並跑過相關檢查），**應**在 monorepo 根做 **`git add` + `git commit`（僅本機，不 `push`）**。建議統一：`powershell -ExecutionPolicy Bypass -File .\scripts\commit-checkpoint.ps1 -Message "checkpoint: <簡述>"`。
+- **不要**在僅完成 **`AO-RESUME` 前檢**、或只有草稿／雜訊時為了習慣而**空 commit**。
+- **可略過 checkpoint**：疑似祕密未排除、使用者明示先不要 commit、純實驗性變更且將丟棄、或明知與即將收工閘道衝突的 WIP（應先說明風險）。
+- **收工**：**`AO-CLOSE`**（`ao-close.ps1`）仍為**預設**最終 **`commit`（收斂殘留變更）+ `push`** 的入口；通過閘道後再推。當日若已有多顆本地 checkpoint，**一次 push 可帶上多顆 commit**（無需 squash，除非使用者要）。
+- **例外**：使用者**明確一句話**要求立即提交／推送（hotfix、急件）時，依指示執行。
