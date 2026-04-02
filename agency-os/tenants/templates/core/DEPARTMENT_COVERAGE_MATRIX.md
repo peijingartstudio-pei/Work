@@ -3,6 +3,11 @@
 > **Owner (tenant SSOT):** this file maps **「企業多部門」關注點**到 `tenants/company-*/` 內**應填哪裡**，避免在多份文件重複貼同一段長文。  
 > **規則：** 細部政策以 `agency-os/docs/operations/*` 為準；此處只做 **路由與必填欄位提醒**。
 
+## 客戶「選部門」放哪裡
+
+- **選型（ChatGPT 式 17+ 模組、可開案子集、可日後擴充）**：**`DEPARTMENT_CLUSTER_CATALOG.md`** + 每租戶 **`core/DEPARTMENT_SELECTION.json`**（範本：`DEPARTMENT_SELECTION.example.json`）。  
+- **本檔（矩陣）**：維持 **15 列交付歸桶**；列 **Notes** 與 `N/A` 與選型檔 **同步**，避免口頭與檔案不一致。
+
 ## 模板優先，再套到客戶（既有站或全新皆同）
 
 **建議順序：** 先把 `**tenants/templates/*`**（含 `core/`、`tenant-template/`、`site-template/`、`industry/*`）當 **唯一成熟版本** → 開案時 **複製到** `tenants/company-<slug>/` → 再依「代操／加功能／擴充」只多寫 **專案與站點層**（`projects/`、`sites/`），不要從某一家客戶反向長出第二套模板。
@@ -57,6 +62,8 @@
 
 ## Related (repo SSOT, do not duplicate body here)
 
+- `DEPARTMENT_CLUSTER_CATALOG.md`（**cluster_id** 選型與對照本矩陣列鍵）
+- `DEPARTMENT_SELECTION.example.json`
 - `docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`
 - `docs/operations/WORDPRESS_CLIENT_DELIVERY_MODELS.md`
 - `docs/operations/outsourcing-vendor-scorecard.md`

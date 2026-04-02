@@ -15,7 +15,7 @@
 - `docs/compliance/`：合規檢核與稽核清單
 - `docs/releases/`：版本發布、升級路徑、遷移清單
 - `docs/architecture/`：總控中心與多平台架構設計；**輕量 ADR** 見 [`architecture/decisions/README.md`](architecture/decisions/README.md)
-- `docs/overview/`：整體系統介紹與導讀（含 **四份 spec 原文整合閱讀**：[`docs/overview/company-os-four-sources-integration.md`](overview/company-os-four-sources-integration.md)；**V3 §三 20 模組跳行表**：[`docs/overview/company-os-twenty-modules.md`](overview/company-os-twenty-modules.md)；**長期營運紀律**：[`overview/LONG_TERM_OPERATING_DISCIPLINE.md`](overview/LONG_TERM_OPERATING_DISCIPLINE.md)）
+- `docs/overview/`：整體系統介紹與導讀（含 **四份 spec 原文整合閱讀**：[`docs/overview/company-os-four-sources-integration.md`](overview/company-os-four-sources-integration.md)；**V3 §三 20 模組跳行表**：[`docs/overview/company-os-twenty-modules.md`](overview/company-os-twenty-modules.md)；**長期營運紀律**：[`overview/LONG_TERM_OPERATING_DISCIPLINE.md`](overview/LONG_TERM_OPERATING_DISCIPLINE.md)；**30 年級 AI/coding/專案管理短憲章**：[`overview/30_YEAR_AI_CODING_EXEC_CHARTER.md`](overview/30_YEAR_AI_CODING_EXEC_CHARTER.md)；**客戶精簡鏡像**：[`overview/30_YEAR_AI_CODING_EXEC_CHARTER_CLIENT_SHORT.md`](overview/30_YEAR_AI_CODING_EXEC_CHARTER_CLIENT_SHORT.md)）
 - `docs/CHANGE_IMPACT_MATRIX.md`：文件連動關係
 
 ## 使用規則
@@ -29,5 +29,5 @@
 - `docs/operations/new-doc-linkage-checklist.md`
 - `docs/overview/agency-os-complete-system-introduction.md`
 
-_Last synced: 2026-04-02 05:57:37 UTC_
+_Last synced: 2026-04-02 06:54:36 UTC_
 

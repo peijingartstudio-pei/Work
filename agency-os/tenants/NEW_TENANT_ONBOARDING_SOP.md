@@ -26,6 +26,8 @@
    - `RELEASE_GATES_CHECKLIST.md`
    - `BACKUP_RESTORE_PROOF.md`
    - `DEPARTMENT_COVERAGE_MATRIX.md`（企業多部門時勾列；SMB 可標 `N/A`）
+   - `DEPARTMENT_CLUSTER_CATALOG.md`（**選型參考**；與客戶對齊要啟用哪些能力模組）
+   - `DEPARTMENT_SELECTION.example.json` → 複製為同目錄 **`DEPARTMENT_SELECTION.json`**，依約填 **`selected_cluster_ids`**／`excluded_explicit`；**日後擴部門**時只改此檔 + 本矩陣 Notes + 主檔
    - `CROSS_BORDER_GOVERNANCE.md`（跨國／多法人／強合規時填；純本地 SMB 可最小填）
 5. 依產業複製 Overlay 到 `tenants/company-<slug>/industry/`：
    - 旅遊業：`tenants/templates/industry/travel/*`
@@ -41,7 +43,7 @@
 7. 填寫 1-4 使用指南，對齊該客戶的角色、流程、工具與排程
 8. 填寫 `core/ENVIRONMENT_REGISTRY.md`（staging/prod 必填）
 9. 預先建立 `core/RELEASE_GATES_CHECKLIST.md` 與 `core/BACKUP_RESTORE_PROOF.md` 第一版
-10. 依規模填寫 `core/DEPARTMENT_COVERAGE_MATRIX.md`、`core/CROSS_BORDER_GOVERNANCE.md`（與 `PROFILE`／`FINANCIAL_LEDGER` 幣別欄位對齊）
+10. 依規模填寫 `core/DEPARTMENT_CLUSTER_CATALOG.md`（與客戶過選型）、`core/DEPARTMENT_SELECTION.json`、`core/DEPARTMENT_COVERAGE_MATRIX.md`、`core/CROSS_BORDER_GOVERNANCE.md`（與 `PROFILE`／`FINANCIAL_LEDGER` 幣別欄位對齊）；**未採購**的模組在矩陣 **Notes** 寫 `N/A — …`，並在 `DEPARTMENT_SELECTION.json` 的 `excluded_explicit` 或 `planned_future` 留痕
 
 ## Step 3：建立第一個站點
 1. 於 `tenants/company-<slug>/sites/` 建立 `<site-slug>/`
@@ -121,5 +123,5 @@
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 - `WORKLOG.md`
 
-_Last synced: 2026-04-02 03:00:08 UTC_
+_Last synced: 2026-04-02 06:26:32 UTC_
 

@@ -13,6 +13,8 @@
 | `docs/overview/agency-os-complete-system-introduction.md` | `README.md`, `docs/README.md`, `tenants/company-p1-pilot/01_COMMANDER_SYSTEM_GUIDE.md`, `tenants/company-p1-pilot/02_CLIENT_WORKSPACE_GUIDE.md`, `tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md`, `tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md` |
 | `docs/overview/EXECUTION_DASHBOARD.md` | `docs/overview/REMOTE_WORKSTATION_STARTUP.md`, `docs/overview/INTEGRATED_STATUS_REPORT.md`, `docs/operations/end-of-day-checklist.md`, `memory/CONVERSATION_MEMORY.md`, `AGENTS.md`, `RESUME_AFTER_REBOOT.md` |
 | `docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md` | `AGENTS.md`, `README.md`, `docs/README.md`, `docs/overview/repo-template-locations.md`, `docs/architecture/decisions/README.md`, `tenants/templates/core/RELEASE_GATES_CHECKLIST.md`（§ 編號／Related）, `memory/CONVERSATION_MEMORY.md`, `TASKS.md`（若節奏表與 Next 對齊時）, `WORKLOG.md` |
+| `docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER.md` | `docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER_CLIENT_SHORT.md`, `README.md`, `docs/README.md`, `TASKS.md`, `WORKLOG.md` |
+| `docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER_CLIENT_SHORT.md` | `docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER.md`, `README.md`, `docs/README.md`, `TASKS.md`, `WORKLOG.md` |
 | `docs/architecture/decisions/README.md` | `docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`, `docs/CHANGE_IMPACT_MATRIX.md`（若新增 ADR 影響治理時）, `WORKLOG.md` |
 | `platform-templates/README.md` | `docs/overview/repo-template-locations.md`, `docs/architecture/decisions/001-wordpress-manifest-and-shell-ssot.md`, `platform-templates/SSOT_LINKS.md`, `platform-templates/SYNC_EXAMPLES_FROM_LOBSTER.md`, `platform-templates/client-base/README.md`, `platform-templates/woocommerce/manifests/README.md`, `WORKLOG.md` |
 | `docs/architecture/decisions/001-wordpress-manifest-and-shell-ssot.md` | `docs/architecture/decisions/README.md`, `docs/overview/repo-template-locations.md`, `platform-templates/README.md`, `docs/operations/ecommerce-project-playbook.md`, `../lobster-factory/README.md`, `../lobster-factory/docs/WORDPRESS_FACTORY_EXECUTION_SPEC.md`（敘述衝突時）, `docs/architecture/decisions/003-no-automated-manifest-dual-sync.md`, `WORKLOG.md` |
@@ -54,7 +56,10 @@
 | `docs/standards/wordpress-custom-dev-guidelines.md` | 專案 `02_EXECUTION_PLAN.md`, `03_HANDOVER_CRITERIA.md` |
 | `docs/standards/n8n-workflow-architecture.md` | `docs/operations/tools-and-integrations.md`, 專案自動化文件、`README.md` |
 | `docs/metrics/kpi-margin-dashboard-spec.md` | `FINANCIAL_LEDGER.md`, `TASKS.md`, `WORKLOG.md` |
-| `tenants/NEW_TENANT_ONBOARDING_SOP.md` | `tenants/README.md`, `tenants/templates/tenant-template/01-04 guides`, `tenants/company-p1-pilot/01-04 guides`（試點參照）, `README.md`, `TASKS.md`, `WORKLOG.md` |
+| `tenants/NEW_TENANT_ONBOARDING_SOP.md` | `tenants/README.md`, `tenants/templates/tenant-template/01-04 guides`, `tenants/templates/core/DEPARTMENT_CLUSTER_CATALOG.md`, `tenants/templates/core/DEPARTMENT_SELECTION.example.json`, `tenants/templates/core/DEPARTMENT_COVERAGE_MATRIX.md`, `tenants/company-p1-pilot/01-04 guides`（試點參照）, `README.md`, `TASKS.md`, `WORKLOG.md` |
+| `tenants/templates/core/DEPARTMENT_CLUSTER_CATALOG.md` | `tenants/templates/core/DEPARTMENT_COVERAGE_MATRIX.md`（列鍵／Notes 對照）, `tenants/templates/core/DEPARTMENT_SELECTION.example.json`, `tenants/NEW_TENANT_ONBOARDING_SOP.md`, `docs/CHANGE_IMPACT_MATRIX.md` |
+| `tenants/templates/core/DEPARTMENT_SELECTION.example.json` | `tenants/templates/core/DEPARTMENT_CLUSTER_CATALOG.md`, `tenants/NEW_TENANT_ONBOARDING_SOP.md`, `docs/CHANGE_IMPACT_MATRIX.md` |
+| `tenants/templates/core/DEPARTMENT_COVERAGE_MATRIX.md` | `tenants/templates/core/DEPARTMENT_CLUSTER_CATALOG.md`, `tenants/templates/core/DEPARTMENT_SELECTION.example.json`, `tenants/NEW_TENANT_ONBOARDING_SOP.md`, `docs/CHANGE_IMPACT_MATRIX.md` |
 | `tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md` | `tenants/company-p1-pilot/01_COMMANDER_SYSTEM_GUIDE.md`, `tenants/README.md`, `README.md` |
 | `tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md` | `tenants/company-p1-pilot/02_CLIENT_WORKSPACE_GUIDE.md`, `tenants/README.md`, `README.md` |
 | `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md` | `tenants/company-p1-pilot/03_TOOLS_CONFIGURATION_GUIDE.md`, `tenants/README.md`, `README.md`, `docs/operations/tools-and-integrations.md` |
@@ -81,5 +86,5 @@
 - `docs/operations/new-doc-linkage-checklist.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-04-02 06:09:22 UTC_
+_Last synced: 2026-04-02 06:54:36 UTC_
 

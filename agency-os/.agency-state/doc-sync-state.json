@@ -1,8 +1,20 @@
 ﻿{
-    "last_run_utc":  "2026-04-02T06:20:25.6454074Z",
+    "last_run_utc":  "2026-04-02T06:56:02.8018898Z",
     "changed_files":  [
-                          "WORKLOG.md"
+                          "../README.md"
                       ],
-    "impacted_files":  "WORKLOG.md",
-    "auto_updated_files":  "WORKLOG.md"
+    "impacted_files":  [
+                           "../README.md",
+                           "docs/operations/cursor-enterprise-rules-index.md",
+                           "docs/overview/EXECUTION_DASHBOARD.md",
+                           "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
+                           "README.md"
+                       ],
+    "auto_updated_files":  [
+                               "../README.md",
+                               "docs/operations/cursor-enterprise-rules-index.md",
+                               "docs/overview/EXECUTION_DASHBOARD.md",
+                               "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
+                               "README.md"
+                           ]
 }

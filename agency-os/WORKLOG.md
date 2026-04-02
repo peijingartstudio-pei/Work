@@ -14,6 +14,11 @@
 ### LONG_TERM：新增 §9「AI 與自動化」、執行節奏改 §10
 - **`LONG_TERM_OPERATING_DISCIPLINE.md`**：補 **Coding／PM／MCP 輔助邊界**（非權威、Routing Spec、閘道定稿）；原 **§9 執行節奏** 遞延為 **§10**；Related 補 MCP 對照。
 
+### LONG_TERM：新增 30 年級 AI/coding/專案管理短憲章（跨國企業對外版）
+- 新增對外文件：`docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER.md`（管理層決定 + 工程層執行口徑；AI 協作邊界與閘道驗證一致）。
+- 新增客戶精簡鏡像：`docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER_CLIENT_SHORT.md`（非權威快速版；權威仍在主憲章）。
+- 補齊文件索引：`README.md`、`docs/README.md`；並在 `docs/CHANGE_IMPACT_MATRIX.md` 登記連動必查檔。
+
 ### platform-templates：對齊 Agency OS／龍蝦定位（三十年級邊界）
 - **決策**：維持 **輔材層**（教學／示例／一頁紙），權威仍在 **`lobster-factory/packages/manifests/`**、**`lobster-factory/templates/woocommerce/scripts/`**、`tenants/*`；避免與 ADR 001／003 分叉。
 - **執行**：改寫 **`platform-templates/README.md`**（系統平面對照表）；新增 **`woocommerce/README.md`**、`manifests/README.md`、`scripts/README.md`；改寫 **`client-base/README.md`**、`docs/OPENING.md`（檢查清單連回 SOP／ADR／閘道）；**`repo-template-locations.md`** 表格列補「非 SSOT」語意。
@@ -280,7 +285,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-02 06:20:24 UTC_
+_Last synced: 2026-04-02 06:54:36 UTC_
 
 ## 2026-03-20
 
@@ -737,6 +742,9 @@ _Last synced: 2026-04-02 06:20:24 UTC_
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
+
+
 
 
 
