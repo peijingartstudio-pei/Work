@@ -43,6 +43,6 @@
 
 ## Related (monorepo / long-term)
 
-- **30 年級紀律與執行節奏**（何時跑閘道、ADR、雙機）：[`docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`](../../../docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md)（含 **§9**）。
+- **30 年級紀律**（含 **§9 AI／MCP 邊界**、**§10 執行節奏**：閘道、ADR、雙機）：[`docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`](../../../docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md)。
 - **備份還原證據模板**：同層 [`BACKUP_RESTORE_PROOF.md`](BACKUP_RESTORE_PROOF.md)。
 - **變更牽涉 Supabase／多租戶**：對照 [`docs/architecture/decisions/006-supabase-tenant-isolation-and-clerk-mapping.md`](../../../docs/architecture/decisions/006-supabase-tenant-isolation-and-clerk-mapping.md)；合併前 monorepo 根跑 `.\scripts\verify-build-gates.ps1`。

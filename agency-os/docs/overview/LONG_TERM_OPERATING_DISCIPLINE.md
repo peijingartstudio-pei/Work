@@ -41,7 +41,18 @@
 - **新機／雙機**：`REMOTE_WORKSTATION_STARTUP`；**決策留痕**：`WORKLOG` + 必要時 ADR。
 - **檔名可讀**：`TYPE_SCOPE_PURPOSE`（`AGENTS.md`）；禁 `final-v2` 式命名。
 
-## 9. 執行節奏（原則 → 日曆）
+## 9. AI 與自動化（輔助；永遠不是權威）
+
+> **Coding**：人＋CI 仍以 **型別、閘道、遷移、PR** 為契約；AI 可加速草稿，**不可**替代 review 或繞過 `verify-build-gates`。  
+> **專案管理**：`TASKS`／`WORKLOG`／`memory` 為進度真相；Linear 等為視圖；重大分岔 **ADR + WORKLOG**。  
+> **AI 代理／MCP**：僅能在 **核准平面** 允許的範圍內動手；**生產寫入 SoR** 與長編排 **Routing Spec** 說了算，不是「模型覺得方便」。
+
+- **草稿與探索**：產生命令稿、查結構、草擬 ADR 段落；**定稿**須過真人與閘道。
+- **工具邊界**：`lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`、`docs/operations/cursor-mcp-and-plugin-inventory.md`；**身分／租戶** 見 ADR 002、006。
+- **禁止**：以聊天或 AI 輸出覆寫 **祕密、RLS、核准規則**；以「少一步驗證」換短期省力。
+- **可驗證**：與 AI 相關之 **高風險** 變更（schema、權限、workflow 路由）仍須 **staging 證據**＋既有釋出閘道。
+
+## 10. 執行節奏（原則 → 日曆）
 
 > 目標：30 年後仍能 **照表操課**；下列命令以 **monorepo 根**為準（路徑見 `REMOTE_WORKSTATION_STARTUP`）。
 
@@ -58,6 +69,7 @@
 
 ## Related
 
+- **§9 工具與核准平面**：`../../../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`、`../operations/cursor-mcp-and-plugin-inventory.md`
 - `docs/architecture/decisions/001-wordpress-manifest-and-shell-ssot.md`、`docs/architecture/decisions/002-clerk-identity-boundary.md`、`docs/architecture/decisions/003-no-automated-manifest-dual-sync.md`、`docs/architecture/decisions/004-trigger-vs-n8n-orchestration-boundary.md`、`docs/architecture/decisions/005-supabase-sor-vs-wordpress-runtime-db.md`、`docs/architecture/decisions/006-supabase-tenant-isolation-and-clerk-mapping.md`
 - `AGENTS.md`
 - `TASKS.md`（動態優先序與試點）

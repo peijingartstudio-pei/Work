@@ -4,7 +4,7 @@
 
 ## Current Operating Context
 - **2026-04-02（ADR 006 migration）**：已新增 **`lobster-factory/packages/db/migrations/0010_clerk_org_mapping_and_rls_expansion.sql`**（Clerk↔org 對照表、JWT org claim、`user_has_org_access` 擴充、多表 SELECT RLS）；ADR 006 已補 JWT／staging 驗證說明。
-- **2026-04-02（長期 §9）**：`LONG_TERM_OPERATING_DISCIPLINE.md` 新增 **§9 執行節奏表**（閘道／ADR／釋出／開收工／雙機／audit 紀律 + 12 個月 ADR 006 工程錨點）。
+- **2026-04-02（長期 §9–10）**：`LONG_TERM_OPERATING_DISCIPLINE.md` **§9** 為 **AI／MCP 輔助邊界**；**§10** 為 **執行節奏表**（閘道／ADR／釋出／開收工／雙機／audit + 12 個月 ADR 006 錨點）。
 - **2026-04-02（ADR 006 + 閘道）**：**006** 多租戶 **RLS／租戶鍵** 與 **Clerk 對照** 原則。`verify-build-gates` 已內建 **`verify-adr-index.ps1`**。見 `docs/architecture/decisions/006-supabase-tenant-isolation-and-clerk-mapping.md`。
 - **2026-04-02（ADR 004／005）**：**004** Trigger vs n8n 編排邊界（以 `MCP_TOOL_ROUTING_SPEC.md` 為準）。**005** Supabase SoR vs WordPress 執行期 DB。見 `docs/architecture/decisions/004-trigger-vs-n8n-orchestration-boundary.md`、`005-supabase-sor-vs-wordpress-runtime-db.md`。
 - **2026-04-02（ADR 002／003）**：**002** 應用層預設 **Clerk**，邊界見 `docs/architecture/decisions/002-clerk-identity-boundary.md`。**003** 否決 manifest **自動雙邊同步**，見 `003-no-automated-manifest-dual-sync.md`。
@@ -343,5 +343,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-02 05:18:52 UTC_
+_Last synced: 2026-04-02 06:03:46 UTC_
 

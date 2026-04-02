@@ -4,6 +4,9 @@
 
 ## 2026-04-02
 
+### LONG_TERM：新增 §9「AI 與自動化」、執行節奏改 §10
+- **`LONG_TERM_OPERATING_DISCIPLINE.md`**：補 **Coding／PM／MCP 輔助邊界**（非權威、Routing Spec、閘道定稿）；原 **§9 執行節奏** 遞延為 **§10**；Related 補 MCP 對照。
+
 ### platform-templates：對齊 Agency OS／龍蝦定位（三十年級邊界）
 - **決策**：維持 **輔材層**（教學／示例／一頁紙），權威仍在 **`lobster-factory/packages/manifests/`**、**`lobster-factory/templates/woocommerce/scripts/`**、`tenants/*`；避免與 ADR 001／003 分叉。
 - **執行**：改寫 **`platform-templates/README.md`**（系統平面對照表）；新增 **`woocommerce/README.md`**、`manifests/README.md`、`scripts/README.md`；改寫 **`client-base/README.md`**、`docs/OPENING.md`（檢查清單連回 SOP／ADR／閘道）；**`repo-template-locations.md`** 表格列補「非 SSOT」語意。
@@ -15,8 +18,8 @@
 ### Release checklist：多租戶／Supabase 閘道
 - **`tenants/templates/core/RELEASE_GATES_CHECKLIST.md`**：Pre-Deployment 新增 **Data / multi-tenant Gate**（條件式必勾：schema／RLS／Clerk 對照／越戶風險時 staging migration + 雙租戶抽測 + JWT org claim）；連結 ADR 006 與 **0010** migration。
 
-### 長期紀律 §9（執行節奏表）
-- **`LONG_TERM_OPERATING_DISCIPLINE.md`** 新增 **§9**：原則對照 **verify-build-gates／ADR／釋出閘道／AO-RESUME·CLOSE／雙機 audit／npm audit 紀律**，並列 **12 個月工程錨點**（ADR 006：RLS + Clerk 對照 + staging 無跨租戶證明）。
+### 長期紀律 §10（執行節奏表；舊稿曾標 §9）
+- **執行節奏表**現為 **`LONG_TERM_OPERATING_DISCIPLINE.md` §10**；內容仍為 **verify-build-gates／ADR／釋出／開收工／雙機／audit** 與 **12 個月 ADR 006 錨點**。
 
 ### ADR 006 + verify-build-gates 內建 ADR 索引
 - **006（DB 落地）**：新增 migration **`lobster-factory/packages/db/migrations/0010_clerk_org_mapping_and_rls_expansion.sql`** — `clerk_organization_mappings`、`current_clerk_org_id_from_jwt()`、`user_has_org_membership()`、擴充 **`user_has_org_access`**（JWT org + 對照表 或 membership）；`profiles`／memberships／roles／`user_role_assignments` 與 `workflow_runs`、`package_install_runs`、agents／incidents 軸、V3／H4／H5 業務表 **SELECT RLS**。JWT 須帶 `org_id`／`clerk_org_id`（或 metadata 後備）— 見 ADR 006 更新段。
@@ -270,7 +273,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-02 05:57:37 UTC_
+_Last synced: 2026-04-02 06:03:46 UTC_
 
 ## 2026-03-20
 
@@ -727,6 +730,8 @@ _Last synced: 2026-04-02 05:57:37 UTC_
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
+
 
 
 

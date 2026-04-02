@@ -1,4 +1,4 @@
-﻿# Change Impact Matrix
+# Change Impact Matrix
 
 ## 使用方式
 - 修改任一主文件時，必須同步檢查對應關聯文件
@@ -12,7 +12,7 @@
 | `docs/architecture/multi-platform-delivery-architecture.md` | `docs/standards/wordpress-custom-dev-guidelines.md`, `docs/operations/end-to-end-linkage-checklist.md`, `README.md` |
 | `docs/overview/agency-os-complete-system-introduction.md` | `README.md`, `docs/README.md`, `tenants/company-p1-pilot/01_COMMANDER_SYSTEM_GUIDE.md`, `tenants/company-p1-pilot/02_CLIENT_WORKSPACE_GUIDE.md`, `tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md`, `tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md` |
 | `docs/overview/EXECUTION_DASHBOARD.md` | `docs/overview/REMOTE_WORKSTATION_STARTUP.md`, `docs/overview/INTEGRATED_STATUS_REPORT.md`, `docs/operations/end-of-day-checklist.md`, `memory/CONVERSATION_MEMORY.md`, `AGENTS.md`, `RESUME_AFTER_REBOOT.md` |
-| `docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md` | `AGENTS.md`, `README.md`, `docs/README.md`, `docs/overview/repo-template-locations.md`, `docs/architecture/decisions/README.md`, `TASKS.md`（若節奏表與 Next 對齊時）, `WORKLOG.md` |
+| `docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md` | `AGENTS.md`, `README.md`, `docs/README.md`, `docs/overview/repo-template-locations.md`, `docs/architecture/decisions/README.md`, `tenants/templates/core/RELEASE_GATES_CHECKLIST.md`（§ 編號／Related）, `memory/CONVERSATION_MEMORY.md`, `TASKS.md`（若節奏表與 Next 對齊時）, `WORKLOG.md` |
 | `docs/architecture/decisions/README.md` | `docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`, `docs/CHANGE_IMPACT_MATRIX.md`（若新增 ADR 影響治理時）, `WORKLOG.md` |
 | `docs/architecture/decisions/001-wordpress-manifest-and-shell-ssot.md` | `docs/architecture/decisions/README.md`, `docs/overview/repo-template-locations.md`, `platform-templates/README.md`, `docs/operations/ecommerce-project-playbook.md`, `../lobster-factory/README.md`, `../lobster-factory/docs/WORDPRESS_FACTORY_EXECUTION_SPEC.md`（敘述衝突時）, `docs/architecture/decisions/003-no-automated-manifest-dual-sync.md`, `WORKLOG.md` |
 | `docs/architecture/decisions/002-clerk-identity-boundary.md` | `docs/architecture/decisions/README.md`, `docs/operations/security-secrets-policy.md`, `docs/operations/cursor-mcp-and-plugin-inventory.md`, `TASKS.md`, `docs/overview/PROGRAM_TIMELINE.md`, `WORKLOG.md`, `memory/CONVERSATION_MEMORY.md` |
