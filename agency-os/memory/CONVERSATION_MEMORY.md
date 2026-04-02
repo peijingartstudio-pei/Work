@@ -3,6 +3,14 @@
 > Historical snapshot note: this file preserves cross-session context and may include decisions from older process versions. For current operating rules, use event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (AO-RESUME/startup、**§2.5 日內 Git 節奏**) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (AO-CLOSE/shutdown). Agent-enforced Git detail: `.cursor/rules/50-operator-autopilot.mdc` §7.
 
 ## Current Operating Context
+- **2026-04-02（ADR 006 migration）**：已新增 **`lobster-factory/packages/db/migrations/0010_clerk_org_mapping_and_rls_expansion.sql`**（Clerk↔org 對照表、JWT org claim、`user_has_org_access` 擴充、多表 SELECT RLS）；ADR 006 已補 JWT／staging 驗證說明。
+- **2026-04-02（長期 §9）**：`LONG_TERM_OPERATING_DISCIPLINE.md` 新增 **§9 執行節奏表**（閘道／ADR／釋出／開收工／雙機／audit 紀律 + 12 個月 ADR 006 工程錨點）。
+- **2026-04-02（ADR 006 + 閘道）**：**006** 多租戶 **RLS／租戶鍵** 與 **Clerk 對照** 原則。`verify-build-gates` 已內建 **`verify-adr-index.ps1`**。見 `docs/architecture/decisions/006-supabase-tenant-isolation-and-clerk-mapping.md`。
+- **2026-04-02（ADR 004／005）**：**004** Trigger vs n8n 編排邊界（以 `MCP_TOOL_ROUTING_SPEC.md` 為準）。**005** Supabase SoR vs WordPress 執行期 DB。見 `docs/architecture/decisions/004-trigger-vs-n8n-orchestration-boundary.md`、`005-supabase-sor-vs-wordpress-runtime-db.md`。
+- **2026-04-02（ADR 002／003）**：**002** 應用層預設 **Clerk**，邊界見 `docs/architecture/decisions/002-clerk-identity-boundary.md`。**003** 否決 manifest **自動雙邊同步**，見 `003-no-automated-manifest-dual-sync.md`。
+- **2026-04-02（ADR 001）**：**Manifest SSOT** = `lobster-factory/packages/manifests/`；**install／rollback shell SSOT** = `lobster-factory/templates/woocommerce/scripts/`；**`agency-os/platform-templates/woocommerce/manifests/`** 僅輔材。見 **`docs/architecture/decisions/001-wordpress-manifest-and-shell-ssot.md`**。
+- **2026-04-02（長期營運正本）**：新增 **`docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`**（30 年級可驗證紀律）與 **`docs/architecture/decisions/README.md`**（輕量 ADR）；已接入 `AGENTS.md`、`README`、`CHANGE_IMPACT_MATRIX`。
+- **2026-04-02（租戶模板 v1）**：`tenants/templates/core/` 新增 **`DEPARTMENT_COVERAGE_MATRIX.md`**（企業多部門 → 檔案路由）與 **`CROSS_BORDER_GOVERNANCE.md`**（跨境／外包／審閱索引）；`PROFILE`／`FINANCIAL_LEDGER` 補幣別與多幣別欄；意圖是 **30 年可維護**：擴欄位不複製政策全文，政策仍在 `docs/operations/`。
 - **2026-04-02（Git 節奏）**：**§2.5** 為人類可讀 SSOT——日內里程碑由代理**自動**本機 `commit`（`commit-checkpoint.ps1`，不 push）；**預設 push** 仍在 **`AO-CLOSE`**。舊敘述「平常不 commit」已廢止（見下方 2026-03-28 歷史列之註記）。
 - 你正在建立多客戶網站與系統代營運模式
 - 核心平台：WordPress、Supabase、GitHub、**Linear（Cursor 外掛）**、n8n、Replicate、DataForSEO；**Airtable 已淘汰**（2026-03-30），同類資料改 **Supabase**
@@ -335,5 +343,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-02 02:45:24 UTC_
+_Last synced: 2026-04-02 05:18:52 UTC_
 

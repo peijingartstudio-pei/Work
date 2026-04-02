@@ -22,7 +22,9 @@ $mono = Get-MonorepoRoot -InputRoot $MonorepoRoot
 $sourceDir = Join-Path $mono "agency-os\.cursor\rules"
 $destDir = Join-Path $mono ".cursor\rules"
 
+# Canonical copy always under agency-os/.cursor/rules; monorepo root is mirrored (VerifyOnly in health gate).
 $names = @(
+    "50-operator-autopilot.mdc",
     "63-cursor-core-identity-risk.mdc",
     "64-architecture-mcp-routing.mdc",
     "65-build-standards-data-state.mdc",

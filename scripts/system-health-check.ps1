@@ -116,7 +116,7 @@ if (Test-Path $wkPath) {
     if (-not $wkOk) { Add-CriticalFailure -Reason "weekly-system-review.ps1 failed sanity check" }
 }
 
-# 1c) Monorepo root `.cursor/rules` must mirror agency-os enterprise 63-66 (SHA256)
+# 1c) Monorepo root `.cursor/rules` must mirror agency-os `50-operator` + enterprise 63-66 (SHA256)
 $monoRoot = Split-Path -Path $root -Parent
 $syncVerifyScript = Join-Path $monoRoot "scripts\sync-enterprise-cursor-rules-to-monorepo-root.ps1"
 if (Test-Path -LiteralPath $syncVerifyScript) {
@@ -126,26 +126,10 @@ if (Test-Path -LiteralPath $syncVerifyScript) {
     $verExit = $LASTEXITCODE
     $ErrorActionPreference = $prevOk
     $verPass = ($verExit -eq 0)
-    Add-Check -Name "Monorepo root mirrors agency-os rules 63-66 (SHA256)" -Pass $verPass -Detail $(if ($verPass) { "OK" } else { "Mismatch or missing - run scripts/sync-enterprise-cursor-rules-to-monorepo-root.ps1 or verify-build-gates" })
-    if (-not $verPass) { Add-CriticalFailure -Reason "Enterprise Cursor rules 63-66 differ between agency-os and monorepo root .cursor/rules" }
+    Add-Check -Name "Monorepo root mirrors agency-os rules 50 + 63-66 (SHA256)" -Pass $verPass -Detail $(if ($verPass) { "OK" } else { "Mismatch or missing - run scripts/sync-enterprise-cursor-rules-to-monorepo-root.ps1 or verify-build-gates" })
+    if (-not $verPass) { Add-CriticalFailure -Reason "Cursor rules (50 / 63-66) differ between agency-os and monorepo root .cursor/rules" }
 } else {
-    Add-Check -Name "Monorepo root mirrors agency-os rules 63-66 (SHA256)" -Pass $true -Detail "Skipped: no sync script at monorepo scripts/"
-}
-
-# 1d) Git workflow SSOT (checkpoint + AO-CLOSE surfaces; fail on legacy doc drift)
-$gitVal = Join-Path $monoRoot "scripts\validate-git-workflow-ssot.ps1"
-if (Test-Path -LiteralPath $gitVal) {
-    $prevGe = $ErrorActionPreference
-    $ErrorActionPreference = "Continue"
-    & powershell -NoProfile -ExecutionPolicy Bypass -File $gitVal -MonorepoRoot $monoRoot 2>&1 | Out-Null
-    $gvExit = $LASTEXITCODE
-    $ErrorActionPreference = $prevGe
-    $gvPass = ($gvExit -eq 0)
-    Add-Check -Name "Git workflow SSOT (validate-git-workflow-ssot.ps1)" -Pass $gvPass -Detail ($(if ($gvPass) { "OK" } else { "FAIL — see script output; fix REMOTE/AGENTS/50-operator/ao-resume" }))
-    if (-not $gvPass) { Add-CriticalFailure -Reason "validate-git-workflow-ssot.ps1 failed" }
-} else {
-    Add-Check -Name "Git workflow SSOT (validate-git-workflow-ssot.ps1)" -Pass $false -Detail "Missing monorepo scripts/validate-git-workflow-ssot.ps1"
-    Add-CriticalFailure -Reason "Missing scripts/validate-git-workflow-ssot.ps1"
+    Add-Check -Name "Monorepo root mirrors agency-os rules 50 + 63-66 (SHA256)" -Pass $true -Detail "Skipped: no sync script at monorepo scripts/"
 }
 
 # 2) Map consistency

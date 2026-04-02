@@ -36,7 +36,8 @@
 - [x] 建立總控中心架構與多平台（WordPress-first）連動設計
 - [x] AO-CLOSE 預設 100% health 閘道已落地（規則/文件/腳本三層）
 - [x] 用 1 個新客戶實跑 `tenants/NEW_TENANT_ONBOARDING_SOP.md`（`company-p1-pilot` 最小實跑完成，證據：`reports/e2e/onboarding-a10-2/20260331-214650-company-p1-pilot-2026-010-p1-pilot/`）
-- [ ] 明日待做：全面檢查並升級 `tenants/templates/`（目前過於簡陋），補齊「17-20 部門企業交付」所需模板欄位、流程與財務/支付治理內容
+- [x] 全面檢查並升級 `tenants/templates/`（v1）：新增 `core/DEPARTMENT_COVERAGE_MATRIX.md`、`core/CROSS_BORDER_GOVERNANCE.md`；強化 `PROFILE`／`FINANCIAL_LEDGER`；`NEW_TENANT_ONBOARDING_SOP`／`tenants/README` 已接上（2026-04-02）
+- [ ] `tenants/templates/` v2：試點 tenant 實填回饋後，再擴欄位與自動檢查（若有）
 - [ ] （Next-Gen 對齊）將 M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位（避免 Pilot 成果與跨國企業目標脫鉤）
 - [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈）
 - [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端）
@@ -110,5 +111,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-02 02:45:24 UTC_
+_Last synced: 2026-04-02 03:00:08 UTC_
 

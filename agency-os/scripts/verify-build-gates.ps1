@@ -39,10 +39,10 @@ if ($LobsterOnly) {
     exit 0
 }
 
-# Keep monorepo root .cursor/rules 63–66 identical to agency-os canonical (SSOT).
+# Keep monorepo root .cursor/rules 50-operator + 63–66 identical to agency-os canonical (SSOT).
 $syncEnt = Join-Path $WorkRoot "scripts\sync-enterprise-cursor-rules-to-monorepo-root.ps1"
 if (Test-Path -LiteralPath $syncEnt) {
-    Write-Host "== Monorepo: sync enterprise Cursor rules (63-66) to repo root ==" -ForegroundColor Cyan
+    Write-Host "== Monorepo: sync Cursor rules (50-operator + 63-66) to repo root ==" -ForegroundColor Cyan
     & powershell -ExecutionPolicy Bypass -NoProfile -File $syncEnt -MonorepoRoot $WorkRoot -Quiet
     if ($LASTEXITCODE -ne 0) {
         Write-Error "verify-build-gates: sync-enterprise-cursor-rules-to-monorepo-root failed (exit $LASTEXITCODE)"
@@ -55,6 +55,16 @@ $healthScript = Join-Path $agencyRoot "scripts\system-health-check.ps1"
 if (-not (Test-Path $healthScript)) {
     Write-Error "verify-build-gates: missing agency-os health script at $healthScript (use -LobsterOnly to skip)"
     exit 1
+}
+
+$adrIdx = Join-Path $agencyRoot "scripts\verify-adr-index.ps1"
+if (Test-Path -LiteralPath $adrIdx) {
+    Write-Host "== Agency OS: verify-adr-index ==" -ForegroundColor Cyan
+    & powershell -ExecutionPolicy Bypass -NoProfile -File $adrIdx
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "verify-build-gates: verify-adr-index failed (exit $LASTEXITCODE)"
+        exit $LASTEXITCODE
+    }
 }
 
 Write-Host "== Agency OS: system-health-check ==" -ForegroundColor Cyan

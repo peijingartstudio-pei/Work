@@ -36,6 +36,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 2. **他機／首次接線** — [`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)（**先 `git pull` 再 `AO-RESUME`**；**筆電／新機最短指令見該檔 §1.5**）。  
 3. **每日儀表板** — [`agency-os/docs/overview/EXECUTION_DASHBOARD.md`](agency-os/docs/overview/EXECUTION_DASHBOARD.md)（`TASKS` / 綜合狀態 / Gate）。  
 4. **人＋代理總則** — [`agency-os/AGENTS.md`](agency-os/AGENTS.md)（`AO-RESUME`／`AO-CLOSE`、MCP 清單入口）。  
+4b. **長期營運紀律（建置／換人仍可接）** — [`agency-os/docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`](agency-os/docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md)；重大分岔見 [`agency-os/docs/architecture/decisions/README.md`](agency-os/docs/architecture/decisions/README.md)。  
 5. **Cursor 企業規則（版控）** — [`agency-os/docs/operations/cursor-enterprise-rules-index.md`](agency-os/docs/operations/cursor-enterprise-rules-index.md)（**若與 AO 關鍵字流程衝突，以 `agency-os/.cursor/rules` 之 `00`／`30`／`40` 為準**）。  
 6. **龍蝦與藍圖** — [`lobster-factory/README.md`](lobster-factory/README.md)、Checklist、Runbook；**規格原文** [`docs/spec/README.md`](docs/spec/README.md)、[**四份整合怎麼讀**](agency-os/docs/overview/company-os-four-sources-integration.md)。
 
@@ -66,5 +67,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `README.md`
 
-_Last synced: 2026-04-02 02:45:24 UTC_
+_Last synced: 2026-04-02 03:38:15 UTC_
 

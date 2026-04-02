@@ -51,18 +51,6 @@
         "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
         "docs/overview/ao-lobster-operating-model.md"
       ]
-    },
-    {
-      "id": "git-workflow-checkpoint-close-ssot",
-      "owner": "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-      "marker": "## 2.5 日內 Git 節奏（checkpoint 與收工）",
-      "scan_files": [
-        "AGENTS.md",
-        ".cursor/rules/50-operator-autopilot.mdc",
-        "docs/operations/end-of-day-checklist.md",
-        "docs/overview/EXECUTION_DASHBOARD.md",
-        "docs/overview/INTEGRATED_STATUS_REPORT.md"
-      ]
     }
   ]
 }

@@ -25,6 +25,8 @@
    - `ENVIRONMENT_REGISTRY.md`
    - `RELEASE_GATES_CHECKLIST.md`
    - `BACKUP_RESTORE_PROOF.md`
+   - `DEPARTMENT_COVERAGE_MATRIX.md`（企業多部門時勾列；SMB 可標 `N/A`）
+   - `CROSS_BORDER_GOVERNANCE.md`（跨國／多法人／強合規時填；純本地 SMB 可最小填）
 5. 依產業複製 Overlay 到 `tenants/company-<slug>/industry/`：
    - 旅遊業：`tenants/templates/industry/travel/*`
    - 療癒/治療服務：`tenants/templates/industry/therapy/*`
@@ -39,6 +41,7 @@
 7. 填寫 1-4 使用指南，對齊該客戶的角色、流程、工具與排程
 8. 填寫 `core/ENVIRONMENT_REGISTRY.md`（staging/prod 必填）
 9. 預先建立 `core/RELEASE_GATES_CHECKLIST.md` 與 `core/BACKUP_RESTORE_PROOF.md` 第一版
+10. 依規模填寫 `core/DEPARTMENT_COVERAGE_MATRIX.md`、`core/CROSS_BORDER_GOVERNANCE.md`（與 `PROFILE`／`FINANCIAL_LEDGER` 幣別欄位對齊）
 
 ## Step 3：建立第一個站點
 1. 於 `tenants/company-<slug>/sites/` 建立 `<site-slug>/`
@@ -95,6 +98,8 @@
 - [ ] `core/ENVIRONMENT_REGISTRY.md` 已填妥 staging/prod、備份、回滾責任人
 - [ ] `core/RELEASE_GATES_CHECKLIST.md` 已建立首版（含 GO/NO-GO 欄位）
 - [ ] `core/BACKUP_RESTORE_PROOF.md` 已建立首版（至少有備份紀錄）
+- [ ] `core/DEPARTMENT_COVERAGE_MATRIX.md` 已備置（企業客戶勾列；SMB 可註記 `N/A`）
+- [ ] `core/CROSS_BORDER_GOVERNANCE.md` 已備置（跨境／外包／外部審閱索引；無則最小填）
 - [ ] 已套用至少 1 組產業 Overlay（`industry/*`）並完成必填 QA 場景
 - [ ] 任務板、工作日誌、記憶文件已同步
 - [ ] 每日/每週/每月/不定時任務排程已啟用
@@ -116,5 +121,5 @@
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 - `WORKLOG.md`
 
-_Last synced: 2026-04-01 07:42:46 UTC_
+_Last synced: 2026-04-02 03:00:08 UTC_
 

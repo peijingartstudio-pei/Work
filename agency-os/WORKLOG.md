@@ -1,6 +1,53 @@
-﻿# Worklog
+# Worklog
 
 > Historical snapshot note: this file records decisions/events by date. For current operating rules and commands, use the event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (startup/AO-RESUME) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (shutdown/AO-CLOSE).
+
+## 2026-04-02
+
+### GitHub：正式移除 `company-a` + 退役 `agency-os/templates/`
+- **確認**：`company-a` 已由 **`company-p1-pilot`／活躍試點**取代（TASKS／memory 已敘述）；`agency-os/templates/` 已收斂為 **`agency-os/platform-templates/`**（與 manifest SSOT 分工一致）。
+- **已執行**：`git` 以 **rename** 將 `templates` → `platform-templates`（保留歷史）；**刪除** `tenants/company-a/**`；更新 **`CHANGE_IMPACT_MATRIX`**、**`agency-os-complete-system-introduction.md`**；**`verify-build-gates` PASS** 後 **commit `99b3209` 並 `push origin main`**（連同先前未推之 commits 一併上遠端）。
+
+### Release checklist：多租戶／Supabase 閘道
+- **`tenants/templates/core/RELEASE_GATES_CHECKLIST.md`**：Pre-Deployment 新增 **Data / multi-tenant Gate**（條件式必勾：schema／RLS／Clerk 對照／越戶風險時 staging migration + 雙租戶抽測 + JWT org claim）；連結 ADR 006 與 **0010** migration。
+
+### 長期紀律 §9（執行節奏表）
+- **`LONG_TERM_OPERATING_DISCIPLINE.md`** 新增 **§9**：原則對照 **verify-build-gates／ADR／釋出閘道／AO-RESUME·CLOSE／雙機 audit／npm audit 紀律**，並列 **12 個月工程錨點**（ADR 006：RLS + Clerk 對照 + staging 無跨租戶證明）。
+
+### ADR 006 + verify-build-gates 內建 ADR 索引
+- **006（DB 落地）**：新增 migration **`lobster-factory/packages/db/migrations/0010_clerk_org_mapping_and_rls_expansion.sql`** — `clerk_organization_mappings`、`current_clerk_org_id_from_jwt()`、`user_has_org_membership()`、擴充 **`user_has_org_access`**（JWT org + 對照表 或 membership）；`profiles`／memberships／roles／`user_role_assignments` 與 `workflow_runs`、`package_install_runs`、agents／incidents 軸、V3／H4／H5 業務表 **SELECT RLS**。JWT 須帶 `org_id`／`clerk_org_id`（或 metadata 後備）— 見 ADR 006 更新段。
+- **006（原則）**：**Supabase RLS／租戶鍵** + **Clerk 組織對照表**；service role 須自帶 tenant scope。
+- **`verify-build-gates.ps1`**（根與 `agency-os/scripts` 鏡像）：在 `system-health-check` 前執行 **`verify-adr-index.ps1`**，避免 ADR 漏登。
+
+### ADR 004／005（編排邊界 + 資料 SoR）
+- **004**：耐久編排 **Trigger.dev**；**n8n** 僅 webhook／通知／低風險同步；規範衝突以 **`lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`** 為準。
+- **005**：**Supabase** 為工廠／核准／workflow 等 **SoR**；**WordPress DB** 為 **執行期**；禁止以 WP meta 作編排唯一真相（豁免須 ADR）。
+- **可執行**：新增 **`agency-os/scripts/verify-adr-index.ps1`**（ADR 檔必須出現在 `decisions/README.md`）；`decisions/README.md` 已附執行方式。
+
+### ADR 002／003（身分邊界 + manifest 同步策略）
+- **002**：應用層預設 **Clerk**；**SoR** 仍 **Supabase／API／RLS**；**不**預設取代客戶 **WP 終端帳號**；換 IdP 須新 ADR。
+- **003**：**否決** `platform-templates` ↔ `packages/manifests` **自動雙向同步**；僅允許權威在 packages、輔材手動或未來 **單向 CI** + 新 ADR。
+
+### ADR 001：WordPress manifest + install shell SSOT
+- 新增 **`docs/architecture/decisions/001-wordpress-manifest-and-shell-ssot.md`**：權威 manifest 在 **`lobster-factory/packages/manifests/`**；install／rollback shell 在 **`lobster-factory/templates/woocommerce/scripts/`**；**`agency-os/platform-templates/woocommerce/manifests/`** 僅輔材。已更新 **`decisions/README.md`** 索引列、`CHANGE_IMPACT_MATRIX` 連動列。
+
+### 長期營運紀律 + ADR 骨架（30 年級）
+- 新增 **`docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`**（boring tech、Single Owner、平面分界、節奏／證據、相容退役、祕密、觀測、bus factor）。
+- 新增 **`docs/architecture/decisions/README.md`**（輕量 ADR 格式；重大分岔必留痕，其餘 `WORKLOG`）。
+- 已接入 **`AGENTS.md`**、**`README.md`**、**`docs/README.md`**、**`CHANGE_IMPACT_MATRIX.md`**、**`repo-template-locations.md`**；**`memory/CONVERSATION_MEMORY.md`** 一行摘要。
+
+### 範本索引（不必遍歷改名 docs/templates）
+- 新增 **`docs/overview/repo-template-locations.md`**：列舉 `tenants/templates`、`platform-templates`、`docs/templates`、`docs/product/templates`、`lobster-factory/templates` 等分工；**建議**保留合約範本目錄既有命名，僅用索引消除認知負擔。
+### 範本目錄收斂（避免兩個都叫 templates）
+- 將 `agency-os/templates/` **改名**為 **`agency-os/platform-templates/`**（Woo 範例／`client-base`）；與 **`tenants/templates/`**（租戶複製）分工；新增 `platform-templates/README.md`、`README.md`／`tenants/README.md` 導覽；`ecommerce-project-playbook.md` 路徑已更新並註明 manifest SSOT 在 `lobster-factory/packages/manifests/`。
+
+### 試點租戶 core 實填（Soulful + P1 Pilot）
+- `company-soulful-expression/core/`：新增 `DEPARTMENT_COVERAGE_MATRIX.md`、`CROSS_BORDER_GOVERNANCE.md`；補齊先前缺少之 `RELEASE_GATES_CHECKLIST.md`、`BACKUP_RESTORE_PROOF.md`；`PROFILE`／`FINANCIAL_LEDGER` 對齊幣別／語系附註。
+- `company-p1-pilot/core/`：新建全套 `ENVIRONMENT_REGISTRY`、`RELEASE_GATES`、`BACKUP`、`DEPARTMENT_COVERAGE_MATRIX`、`CROSS_BORDER_GOVERNANCE`（標註 drill／N/A）；`PROFILE`／`FINANCIAL_LEDGER` 小幅對齊模板。
+
+### Tenants templates v1（長期可擴、單一真相）
+- **決策**：不把「17–20 部門」拆成多部重複長文；以 **`tenants/templates/core/DEPARTMENT_COVERAGE_MATRIX.md`** 做部門簇 → 租戶檔案路由；跨境／外包／外部審閱索引集中在 **`core/CROSS_BORDER_GOVERNANCE.md`**（不提供法律／稅務結論，只收事實與狀態）。
+- **落地**：強化 `tenant-template/PROFILE.md`（語系、幣別）、`FINANCIAL_LEDGER.md`（多幣別列）；`NEW_TENANT_ONBOARDING_SOP.md`、`tenants/README.md`、`TASKS.md` 已接線；試點實填回饋留待 v2。
 
 ## 2026-04-01
 
@@ -219,7 +266,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-02 02:29:31 UTC_
+_Last synced: 2026-04-02 05:18:52 UTC_
 
 ## 2026-03-20
 
@@ -676,6 +723,17 @@ _Last synced: 2026-04-02 02:29:31 UTC_
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
+
+
+
+
+
+
+
+
+
+
 
 
 

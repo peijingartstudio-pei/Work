@@ -24,6 +24,11 @@
 - 將接案到交付流程產品化、可複製
 - 讓 AI 每次會話都先讀記憶，不從空白開始
 
+## 範本目錄（兩種，勿混用）
+- **租戶（每家公司）** 複製起點：`tenants/templates/`（`tenant-template`、`site-template`、`core`、`industry`）— 說明見 [`tenants/README.md`](tenants/README.md)。
+- **平台堆疊／Woo 對客範例／專案極簡骨架**：`platform-templates/`（`woocommerce`、`client-base`）— 說明見 [`platform-templates/README.md`](platform-templates/README.md)。
+- **合約／英文化對客範本、龍蝦 shell 等**：見 **索引正本** [`docs/overview/repo-template-locations.md`](docs/overview/repo-template-locations.md)（不建議無計畫遍歷改名）。
+
 ## 核心文件
 - **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**：**他處電腦／公司機開機與 pull 後須知**（**§1.5** 新機最短序列、**§2** 例行；與 `RESUME_AFTER_REBOOT.md` 同列必讀）
 - `AGENTS.md`: AI 協作規則
@@ -37,6 +42,7 @@
 - `docs/operations/security-secrets-policy.md`: 憑證與密鑰管理政策
 - `docs/operations/local-secrets-vault-dpapi.md`: 本機免費祕密庫（Windows DPAPI）
 - `docs/operations/mcp-add-server-quickstart.md`: MCP 新增快速手冊（常用）
+- **`docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`**：長期營運紀律（30 年級；可驗證、Single Owner、ADR 與節奏）
 - `docs/operations/WORDPRESS_CLIENT_DELIVERY_MODELS.md`: WordPress **雙模式交付 SOP**（既有站接手 + 新站從零，雲端 staging 優先）
 - `docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`: Next-Gen 升級藍圖（M1/M2/M3、驗收標準、風險對策）
 - **`docs/operations/cursor-mcp-and-plugin-inventory.md`**: Cursor **MCP／外掛** 與龍蝦 Routing 對照（**建議與根目錄 `mcp.json` 同步維護**）
@@ -189,5 +195,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-04-02 02:29:31 UTC_
+_Last synced: 2026-04-02 03:38:15 UTC_
 

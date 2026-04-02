@@ -6,6 +6,8 @@
 - 地區：Taiwan (planned international expansion)
 - 主要聯絡人：待補
 - 聯絡方式：待補
+- 常用語系／市場：`zh-TW`、`en`（網站實際語系 **待補**）
+- 主要結帳幣別：**待補**（預設與合約一致）
 
 ## 合作模式
 - 服務範圍：既有網站代操 / 維運 / 優化
@@ -21,3 +23,7 @@
 - 付款風險：待評估
 - 需求變更風險：中
 - 合規風險：中（跨國擴張）
+
+## 企業規模與部門覆蓋（索引）
+- 客戶類型：**成長型**（既有 production + 規劃跨國）
+- `core/DEPARTMENT_COVERAGE_MATRIX.md`、`core/CROSS_BORDER_GOVERNANCE.md` 已建立；跨境／報稅／法遵 **待外部補齊**

@@ -95,9 +95,9 @@ SSH 登入 staging server
 
 只有 staging/new site 才能跑
 
-manifests 在：agency-os/templates/woocommerce/manifests/
+manifests（對客／草案範例，執行期權威以 `lobster-factory/packages/manifests/` 為準）：`agency-os/platform-templates/woocommerce/manifests/`
 
-installer：agency-os/templates/woocommerce/scripts/install-from-manifest.sh
+installer（與龍蝦閘道實際路徑對齊；慣用為 `lobster-factory/templates/woocommerce/scripts/install-from-manifest.sh`）：`agency-os/platform-templates/woocommerce/scripts/install-from-manifest.sh`
 
 在 staging server 執行（示意）：
 

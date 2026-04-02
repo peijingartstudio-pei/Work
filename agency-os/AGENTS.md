@@ -107,6 +107,10 @@
 - 所有腳本讀寫檔案必須顯式使用 UTF-8，避免亂碼與編碼漂移
 - 每次變更前必須完整閱讀目標檔與直接關聯的 source-of-truth；變更後必做衝突檢查（重複、矛盾、路徑舊值、狀態不一致）
 
+## 長期營運紀律（30 年級）
+- **憲章級原則（短、可對照閘道）**：`docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md`
+- **重大分岔留下 ADR 骨架**：`docs/architecture/decisions/README.md`（採輕量格式；細節仍回寫 `WORKLOG`）
+
 ## 執行安全
 - 不做不可逆破壞操作
 - 生產環境操作前先列風險與回滾方案
@@ -129,5 +133,5 @@
 - `README.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-04-02 02:45:24 UTC_
+_Last synced: 2026-04-02 03:38:15 UTC_
 
