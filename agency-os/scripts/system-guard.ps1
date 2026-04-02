@@ -2,7 +2,9 @@ param(
     [string]$WorkspaceRoot = "",
     [double]$MinHealthScore = 100.0,
     [ValidateSet("manual", "daily", "pre_shutdown", "startup")][string]$Mode = "manual",
-    [switch]$OpenStatusFile
+    [switch]$OpenStatusFile,
+    # 保守自動修復：只重跑 doc-sync + system-health-check（不做任何資料/程式碼變更）
+    [switch]$DisableAutoRepair
 )
 
 Set-StrictMode -Version Latest
@@ -85,6 +87,33 @@ $closeoutExists = $null -ne $latestCloseout
 $gateOk = ($healthExitCode -eq 0) -and $closeoutExists
 $ok = ($score -ge $MinHealthScore) -and $gateOk
 
+$autoRepairAttempted = $false
+$autoRepairResult = "N/A"
+
+# Auto-repair (conservative): retry once with doc-sync + health check only.
+if (-not $ok -and -not $DisableAutoRepair) {
+    $autoRepairAttempted = $true
+    try {
+        Write-Host "System guard auto-repair: retry doc-sync + system-health-check once..." -ForegroundColor Yellow
+
+        & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root "scripts/doc-sync-automation.ps1") -AutoDetect | Out-Null
+        & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root "scripts/system-health-check.ps1") -WorkspaceRoot $root | Out-Null
+        $healthExitCode = $LASTEXITCODE
+
+        $latestHealth = Get-LatestFile -Dir $healthDir -Filter "health-*.md"
+        $latestCloseout = Get-LatestFile -Dir $closeoutDir -Filter "closeout-*.md"
+        $score = if ($latestHealth) { Parse-HealthScore -HealthReportPath $latestHealth.FullName } else { 0.0 }
+        $closeoutExists = $null -ne $latestCloseout
+        $gateOk = ($healthExitCode -eq 0) -and $closeoutExists
+        $ok = ($score -ge $MinHealthScore) -and $gateOk
+
+        if ($ok) { $autoRepairResult = "PASS" } else { $autoRepairResult = "FAIL" }
+    } catch {
+        # 自動修復失敗時保守處理：仍沿用原本 FAIL 邏輯並生成 ALERT。
+        $autoRepairResult = "ERROR"
+    }
+}
+
 $stamp = (Get-Date).ToString("yyyyMMdd-HHmmss")
 $guardReport = Join-Path $guardDir ("guard-" + $stamp + ".md")
 $statusFile = Join-Path $root "LAST_SYSTEM_STATUS.md"
@@ -100,6 +129,8 @@ $lines += ('- Threshold: **{0}%**' -f $MinHealthScore)
 $lines += ('- Health gate exit code: **{0}**' -f $healthExitCode)
 $lines += ('- Closeout report exists: **{0}**' -f ($(if ($closeoutExists) { "YES" } else { "NO" })))
 $lines += ('- Result: **{0}**' -f ($(if ($ok) { "PASS" } else { "FAIL" })))
+$lines += ('- Auto-repair attempted: **{0}**' -f ($(if ($autoRepairAttempted) { "YES" } else { "NO" })))
+$lines += ('- Auto-repair result: **{0}**' -f $autoRepairResult)
 $lines += ""
 $lines += "## Latest Reports"
 $healthRef = if ($latestHealth) { "reports/health/" + $latestHealth.Name } else { "N/A" }

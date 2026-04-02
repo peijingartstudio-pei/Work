@@ -6,6 +6,7 @@
 ## 守護內容
 - 自動跑 `scripts/doc-sync-automation.ps1 -AutoDetect`
 - 自動跑 `scripts/system-health-check.ps1`
+- 若第一次 health/連動檢查 FAIL 且未禁用：保守自動修復一次（再重跑 doc-sync + system-health-check）
 - 顯示桌面彈窗：PASS/FAIL（可視化提醒）
 - 產生狀態報告與告警檔：
   - `reports/guard/guard-*.md`
@@ -30,7 +31,7 @@
 - 健康分數 **>= 100%** 視為 PASS（`system-guard.ps1` 預設 `-MinHealthScore 100`；與 **AO-CLOSE** 預設收工門檻一致）
 - 若需放寬（例如本機暫時性噪音）：手動執行時可傳 `-MinHealthScore 95`（不建議用於收工 push 前）
 - Health Critical Gate 必須 PASS（map 連動缺漏或 tenant 必要檔缺漏會直接 FAIL）
-- 低於門檻時建立 `ALERT_REQUIRED.txt` 並要求先修復再發布
+- 低於門檻時建立 `ALERT_REQUIRED.txt`；但若允許 auto-repair，會先做一次保守重跑（仍 FAIL 才產生 ALERT）
 
 ## Related Documents (Auto-Synced)
 - `AGENTS.md`
@@ -39,5 +40,5 @@
 - `RESUME_AFTER_REBOOT.md`
 - `scripts/system-guard.ps1`
 
-_Last synced: 2026-03-28 11:27:29 UTC_
+_Last synced: 2026-04-02 08:02:41 UTC_
 

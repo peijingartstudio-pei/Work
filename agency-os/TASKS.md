@@ -39,6 +39,7 @@
 - [x] 全面檢查並升級 `tenants/templates/`（v1）：新增 `core/DEPARTMENT_COVERAGE_MATRIX.md`、`core/CROSS_BORDER_GOVERNANCE.md`；強化 `PROFILE`／`FINANCIAL_LEDGER`；`NEW_TENANT_ONBOARDING_SOP`／`tenants/README` 已接上（2026-04-02）
 - [x] 新增對外短憲章：`docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER.md`（30 年 AI/coding/專案管理跨國企業決策與執行口徑）
 - [x] 新增客戶精簡鏡像：`docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER_CLIENT_SHORT.md`
+- [x] `system-guard.ps1` FAIL 後保守 auto-repair：只重跑 `doc-sync-automation` + `system-health-check` 一次（仍 FAIL 才產生 `ALERT_REQUIRED.txt`）
 - [ ] `tenants/templates/` v2：試點 tenant 實填回饋後，再擴欄位與自動檢查（若有）
 - [ ] （Next-Gen 對齊）將 M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位（避免 Pilot 成果與跨國企業目標脫鉤）
 - [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈）
@@ -113,5 +114,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-02 06:54:36 UTC_
+_Last synced: 2026-04-02 08:02:41 UTC_
 

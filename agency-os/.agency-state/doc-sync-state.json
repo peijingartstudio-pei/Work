@@ -1,20 +1,27 @@
 ﻿{
-    "last_run_utc":  "2026-04-02T06:56:02.8018898Z",
+    "last_run_utc":  "2026-04-02T08:02:42.0205684Z",
     "changed_files":  [
-                          "../README.md"
+                          "docs/operations/system-guard-and-notification.md",
+                          "scripts/system-guard.ps1",
+                          "TASKS.md",
+                          "WORKLOG.md"
                       ],
     "impacted_files":  [
-                           "../README.md",
-                           "docs/operations/cursor-enterprise-rules-index.md",
-                           "docs/overview/EXECUTION_DASHBOARD.md",
-                           "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                           "README.md"
+                           "AGENTS.md",
+                           "automation/REGISTER_SYSTEM_GUARD_TASKS.ps1",
+                           "docs/operations/system-guard-and-notification.md",
+                           "README.md",
+                           "RESUME_AFTER_REBOOT.md",
+                           "scripts/system-guard.ps1",
+                           "TASKS.md",
+                           "WORKLOG.md"
                        ],
     "auto_updated_files":  [
-                               "../README.md",
-                               "docs/operations/cursor-enterprise-rules-index.md",
-                               "docs/overview/EXECUTION_DASHBOARD.md",
-                               "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                               "README.md"
+                               "AGENTS.md",
+                               "docs/operations/system-guard-and-notification.md",
+                               "README.md",
+                               "RESUME_AFTER_REBOOT.md",
+                               "TASKS.md",
+                               "WORKLOG.md"
                            ]
 }
