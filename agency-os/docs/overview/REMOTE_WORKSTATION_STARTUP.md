@@ -177,6 +177,22 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
    **至此已完成 Git 同步**後，在 Cursor 對 AI 輸入 **`AO-RESUME`**。  
    > **重要**：`AO-RESUME` 會先檢查並嘗試 `git pull --ff-only`；但若你本機已有未提交變更/衝突，pull 仍可能失敗。為了穩定，建議先手動完成 §2 第 1 步，再打 `AO-RESUME`。
 
+## 2.5 日內 Git 節奏（checkpoint 與收工）— **單一真相（人類可讀）**
+
+> **代理強制細節**（何時必跑 checkpoint、何時略過）：`.cursor/rules/50-operator-autopilot.mdc` §7（repo 根與 `agency-os/.cursor/rules` 應同文）。
+
+| 階段 | 誰做什麼 | Git |
+|------|-----------|-----|
+| **`AO-RESUME`（開工前檢）** | 你：在 Cursor 打關鍵字；代理：跑 `ao-resume.ps1` preflight、讀進度檔 | **不**為「開場」自動空 commit；僅對齊／閘道／列出自上次以來的 `agency-os/reports/*` 增量 |
+| **工作中（至收工前）** | 你：下任務；代理：實作與驗證 | 每完成一個**可敘述、已驗證**的里程碑：代理**應自動**在 monorepo 根執行 **`scripts/commit-checkpoint.ps1`**（**本機 commit**，**不 push**）。**你不必手動**跑該腳本。 |
+| **`AO-CLOSE`（收工）** | 你：關鍵字或明示收工；代理：更新 `TASKS`／`WORKLOG`／`memory` 後跑 `ao-close.ps1` | 閘道 **PASS** 後 **`git add` → `commit`（收斂殘留）→ `git push`**；可一次推上當日**多顆**本機 commit。 |
+
+**補充**
+
+- **遠端真相**仍是 `origin/main`：日內 checkpoint 只救本機；**雙機／隔天續接**靠收工 **push**（或你明講的立即推送）。
+- **刪檔別被 pull 洗回**：見 **§2.4**；刪除應進 commit，上雲可併入當日 **AO-CLOSE** 或急件時單獨 `push`。
+- **稽核遠端是否仍追蹤某路徑**：`scripts/git-audit-tracked-remote.ps1`（可選 `-Pattern`）。
+
 ## 2.1 失敗處置（不要硬做）
 
 - `git pull --ff-only` 失敗：先 `git status`，整理本機變更後再 pull，避免強制覆蓋。
@@ -206,15 +222,16 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 **固定做法（收斂成習慣）**
 
 1. **刪完立刻看索引**：在 monorepo 根執行 `git status`。若刪的是**原本有追蹤**的檔案，應看到 `deleted:` 或 `D`；若什麼都沒有，代表 Git 還不知道你刪了（或刪的是從未入庫的檔案）。
-2. **把刪除一併提交**：`git add -A`（或只 `git add` 你改過的路徑），commit 訊息寫清楚（例如 `chore: remove obsolete reports`），再 **`git push origin main`**。
-3. **另一台電腦**：下次只做 §2 第 1 步 `pull`，工作樹就會與「已刪乾淨的 main」一致，不會無故復活。
-4. **不確定遠端還有沒有某路徑時**：在 monorepo 根執行（可把關鍵字換成資料夾或檔名片段）：
+2. **把刪除寫進 Git（本機）**：`git add -A`（或只 `git add` 相關路徑）後 **commit**；可請代理代跑 **`commit-checkpoint.ps1 -Message "chore: remove …"`**（與 **§2.5** 一致）。
+3. **讓遠端／另一台也一致**：須把含刪除的 commit **push** 到 `origin/main`——通常併入當日 **`AO-CLOSE`**；若雙機急於對齊可當下 **`git push origin main`**（仍須遵守祕密與閘道意識）。
+4. **另一台電腦**：下次只做 §2 第 1 步 `pull`，工作樹就會與「已刪乾淨的 main」一致，不會無故復活。
+5. **不確定遠端還有沒有某路徑時**：在 monorepo 根執行（可把關鍵字換成資料夾或檔名片段）：
    ```powershell
    powershell -ExecutionPolicy Bypass -File .\scripts\git-audit-tracked-remote.ps1 -Pattern "關鍵字"
    ```
    腳本會 `fetch`、比對 `HEAD` 與 `origin/main`、列出「索引有但磁碟沒有」的追蹤檔，並可選列出遠端仍追蹤且路徑含該關鍵字的檔案。**0 筆**代表遠端 main 上已沒有該片段路徑，pull 不會為了那串字把檔案加回來。
 
-**之後在對話裡怎麼配合**：只要你說「刪了一堆檔／整理過目錄」，續接前應先完成上面第 2 步（commit + push），或明講「還沒 push、先幫我稽核」；代理應優先建議跑 `git-audit-tracked-remote.ps1` 並看 `git status`，而不是假設本機磁碟即團隊真相。
+**之後在對話裡怎麼配合**：只要你說「刪了一堆檔／整理過目錄」，應先完成 **commit**（可代理代跑 checkpoint），**push** 則依 **§2.5**（通常收工）；或明講「還沒 push、先幫我稽核」；代理應優先建議跑 `git-audit-tracked-remote.ps1` 並看 `git status`，而不是假設本機磁碟即團隊真相。
 
 ## 2.2 臨時離席／可能斷網（吃飯前 30 秒版）
 
@@ -226,7 +243,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 
 你會看到什麼（成功判斷）：
 - `ao-close`：會產生 closeout/health/guard 報告
-- `ao-resume.ps1`：顯示 preflight completed（**不**取代 `git pull`）
+- `ao-resume.ps1`：preflight completed + 自上次以來 `agency-os/reports/{closeout,health,guard,status}` 增量列表（**不**取代 `git pull`）
 
 ## 3) 兩份「綜合狀態」路徑別搞混
 
@@ -299,5 +316,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-02 01:48:25 UTC_
+_Last synced: 2026-04-02 02:29:31 UTC_
 

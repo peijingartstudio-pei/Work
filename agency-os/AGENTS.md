@@ -49,11 +49,10 @@
   - **單一真相**：AO-CLOSE 的操作步驟以 `docs/operations/end-of-day-checklist.md` 為準，關鍵字行為以 `.cursor/rules/40-shutdown-closeout.mdc` 為準。
   - **或分部手動**（與一鍵擇一）：`doc-sync-automation -AutoDetect` → `system-health-check` → `system-guard -Mode manual` → 再自行 `git push`（見 `docs/operations/end-of-day-checklist.md`）。
 
-## Git：本機 checkpoint 與收工 push（使用者共識）
-- **開工～收工之間**：每完成一個**可敘述、已驗證**的里程碑，代理**應**在 monorepo 根**自動代跑**本機 `commit`（**不** `push`）——**你不必手動執行** `commit-checkpoint.ps1`；由代理在終端執行（無可提交內容時腳本會安靜結束）。僅在環境無法寫 git 時，才請你一句話授權或在本機貼同指令。
-- **不要**在剛跑完 **`AO-RESUME` 前檢**或僅草稿階段為了習慣而空 commit。
-- **收工**：**`AO-CLOSE`**（建議 `.\scripts\ao-close.ps1`）為**預設**最終 **`commit`（收斂殘留）+ `push`**；或使用者明確 `-SkipPush` 時僅收斂本機。
-- **例外**：使用者**明確一句話**要求立即提交／推送（例如 hotfix、客戶急件）時，可依指示執行。
+## Git：checkpoint 與收工（不要與他處各寫一套）
+- **人類可讀單一流程表**：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§2.5**（`AO-RESUME` → 日內里程碑 → `AO-CLOSE`）。
+- **代理何時自動本機 commit、何時略過**：`.cursor/rules/50-operator-autopilot.mdc` §7（與 repo 根 `.cursor/rules` 同檔應同文）；實作腳本：`scripts/commit-checkpoint.ps1`（**由代理代跑**，你不必手動；無可提交內容時會安靜結束）。
+- **收工 push**：仍只預設在 **`AO-CLOSE`**（`ao-close.ps1`）閘道 PASS 後；例外為你**明確一句話**要求立即推送。
 
 ## First Run
 - 若有 `BOOTSTRAP.md`，先照檔案完成初始化再開始任務。
@@ -130,5 +129,5 @@
 - `README.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-04-02 02:05:42 UTC_
+_Last synced: 2026-04-02 02:29:31 UTC_
 

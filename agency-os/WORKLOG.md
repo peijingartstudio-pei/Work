@@ -219,7 +219,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-01 09:16:22 UTC_
+_Last synced: 2026-04-02 02:29:31 UTC_
 
 ## 2026-03-20
 
@@ -533,6 +533,10 @@ _Last synced: 2026-04-01 09:16:22 UTC_
 - 使用者共識：**平常進行中**代理不主動 `git commit`／`git push`；**預設**僅 **`AO-CLOSE`**（`ao-close.ps1`）統一做 commit + push；**例外**：使用者明確一句話要求立即提交／推送。
 - 已寫入：`AGENTS.md`（§Git 推送節奏）、repo 根 `.cursor/rules/50-operator-autopilot.mdc` §7（並去除該檔先前整段重複貼上）；`agency-os/.cursor/rules/50-operator-autopilot.mdc` 與根規則對齊。
 
+### Git：checkpoint + 收工 push（政策更新，2026-04-02）
+- **Supersedes** 上列 2026-03-28「平常不 commit」：改為 **里程碑本機 checkpoint**（代理自動跑 `scripts/commit-checkpoint.ps1`，不 push）+ **`AO-CLOSE`** 閘道 PASS 後 **commit（收斂殘留）+ push**。
+- **單一真相（人類）**：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §2.5；**代理細節**：`50-operator-autopilot.mdc` §7；**入口摘要**：`AGENTS.md`「Git：checkpoint 與收工」。
+
 ### Lobster A10-2 前置：SOP Step 7 + presign 範例（2026-03-28）
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`：新增 **Step 7**（Lobster／A10-2）+ Go/No-Go 勾選；連結 `OPERABLE_E2E_PLAYBOOK`、`STAGING_PIPELINE_E2E_PAYLOAD`、PRESIGN／lifecycle。
 - `PRESIGN_BROKER_MINIMAL.md`、`templates/lobster/presign-response.success.example.json`；`REMOTE_PUT` Related 已掛。
@@ -672,6 +676,7 @@ _Last synced: 2026-04-01 09:16:22 UTC_
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
 
 
 

@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-04-01 17:36:05
+- Generated: 2026-04-02 10:29:55
 - agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -166,7 +166,7 @@
 - 已落地報表單一路徑：所有入口強制寫入 `agency-os/reports/*`，root `reports/*` 退役；commit `5128e7d`（收工腳本會一併 push）。
 - 使用者關切：Cursor `user-copilot` MCP 認證重試迴圈不會等同模型 token 計費，但會耗少量本機資源；可停用該 MCP 項止刷 log。
 - 收工：執行 `AO-CLOSE`（`ao-close.ps1`）完成 verify + guard + integrated status + push。
-- **Git 節奏（使用者共識）**：平常進行中代理**不**主動 `commit`／`push`；**預設**僅 **`AO-CLOSE`**（`ao-close.ps1`）統一做；例外為使用者明確一句話要求。已寫入 `AGENTS.md` 與 `50-operator-autopilot.mdc` §7。
+- **Git 節奏（2026-03-28 紀錄；已 superseded 2026-04-02）**：當時共識為「平常不主動 commit」——已改為 **§2.5**：里程碑本機 checkpoint + **AO-CLOSE** push。請勿再以本行為準。
 
 ### Today (2026-03-28) - Lobster operator bundle（營運套裝）
 - `lobster-factory`：`npm run operator:sanity`（`validate` + `regression:staging-pipeline`）、`npm run payload:apply-manifest`（`print-apply-manifest-payload.mjs`）。
@@ -224,7 +224,7 @@
 
 > Full runbook: see `## Runbook Commands` in the source file.
 
-## 5) memory/daily/2026-04-01.md
+## 5) memory/daily/2026-04-02.md
 _no file for today yet._
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)

@@ -1,8 +1,9 @@
 ﻿# Conversation Memory
 
-> Historical snapshot note: this file preserves cross-session context and may include decisions from older process versions. For current operating rules, use event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (AO-RESUME/startup) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (AO-CLOSE/shutdown).
+> Historical snapshot note: this file preserves cross-session context and may include decisions from older process versions. For current operating rules, use event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (AO-RESUME/startup、**§2.5 日內 Git 節奏**) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (AO-CLOSE/shutdown). Agent-enforced Git detail: `.cursor/rules/50-operator-autopilot.mdc` §7.
 
 ## Current Operating Context
+- **2026-04-02（Git 節奏）**：**§2.5** 為人類可讀 SSOT——日內里程碑由代理**自動**本機 `commit`（`commit-checkpoint.ps1`，不 push）；**預設 push** 仍在 **`AO-CLOSE`**。舊敘述「平常不 commit」已廢止（見下方 2026-03-28 歷史列之註記）。
 - 你正在建立多客戶網站與系統代營運模式
 - 核心平台：WordPress、Supabase、GitHub、**Linear（Cursor 外掛）**、n8n、Replicate、DataForSEO；**Airtable 已淘汰**（2026-03-30），同類資料改 **Supabase**
 - **Linear 與 repo**：AO-RESUME／收工仍以 `TASKS.md`、`WORKLOG`、龍蝦 Checklist、Discovery 為準；僅在 Linear 改狀態時，收工前鏡像到 `WORKLOG` 或 `TASKS`（附 issue key）。詳 `AGENTS.md`「Linear」。
@@ -270,7 +271,7 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - 已落地報表單一路徑：所有入口強制寫入 `agency-os/reports/*`，root `reports/*` 退役；commit `5128e7d`（收工腳本會一併 push）。
 - 使用者關切：Cursor `user-copilot` MCP 認證重試迴圈不會等同模型 token 計費，但會耗少量本機資源；可停用該 MCP 項止刷 log。
 - 收工：執行 `AO-CLOSE`（`ao-close.ps1`）完成 verify + guard + integrated status + push。
-- **Git 節奏（使用者共識）**：平常進行中代理**不**主動 `commit`／`push`；**預設**僅 **`AO-CLOSE`**（`ao-close.ps1`）統一做；例外為使用者明確一句話要求。已寫入 `AGENTS.md` 與 `50-operator-autopilot.mdc` §7。
+- **Git 節奏（2026-03-28 紀錄；已 superseded 2026-04-02）**：當時共識為「平常不主動 commit」——已改為 **§2.5**：里程碑本機 checkpoint + **AO-CLOSE** push。請勿再以本行為準。
 
 ## Today (2026-03-28) - Lobster operator bundle（營運套裝）
 - `lobster-factory`：`npm run operator:sanity`（`validate` + `regression:staging-pipeline`）、`npm run payload:apply-manifest`（`print-apply-manifest-payload.mjs`）。
@@ -334,5 +335,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-02 01:48:25 UTC_
+_Last synced: 2026-04-02 02:29:31 UTC_
 
