@@ -18,10 +18,8 @@
 
 ## Related Documents (Auto-Synced)
 - `docs/operations/airtable-to-supabase-migration-playbook.md`
-- `docs/operations/linear-repo-sync-playbook.md`
 - `docs/operations/tools-and-integrations.md`
 - `README.md`
-- `scripts/sync-linear-delta-to-daily.ps1`
 
-_Last synced: 2026-03-29 18:43:48 UTC_
+_Last synced: 2026-04-02 09:33:58 UTC_
 

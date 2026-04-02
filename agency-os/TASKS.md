@@ -58,7 +58,6 @@
 - [x] AO + Lobster 事件流圖（Mermaid）已落地到 `docs/overview/ao-lobster-operating-model.md`
 - [x] 落地「Single Owner 最高原則」：核心規則/`AGENTS.md` 已寫入；`doc-sync-automation.ps1` 新增 owner 重複內容檢查（registry 驅動）
 - [x] Single Owner 第 2 階段：registry 擴充 AO-RESUME 主流程、30 秒自檢、AO-CLOSE 硬性 Gate（避免關鍵流程多處複製）
-- [x] Linear 同步品質收斂：已修復 Linear source title 生成邏輯、重跑 push（31 筆 update 全成功）、清理 `memory/daily/2026-03-31.md` 歷史亂碼區塊並完成重跑驗證
 - [x] P1/P2 跑道加速：新增 preflight（`scripts/preflight-onboarding-a10-2-readiness.ps1`）、證據骨架初始化（`scripts/init-onboarding-a10-2-evidence-skeleton.ps1`）、Run ID 對照規格（`docs/operations/ONBOARDING_A10_2_RUN_ID_TRACEABILITY_SPEC.md`）
 - [x] 整合 `LOBSTER_FACTORY_MASTER_V3` 至系統建置路線（gap map + skeleton sprint + gate 追蹤，H1~H6 baseline 完成）
 - [x] `lobster-factory` H3 第一批 skeleton sprint（Sales/Marketing/Partner/Media/Decision Engine/Merchandising）
@@ -86,9 +85,6 @@
 - [x] `lobster-factory` C1-3 execute 驗證（DB 寫入韌性：retry/compensation/trace）
 - [x] 建立零成本本機 Secrets Vault（Windows DPAPI，`scripts/secrets-vault.ps1`）
 - [x] 完成 Secrets Vault 一鍵匯入（`mcp.json` + Lobster/Slack 關鍵值）
-- [x] `PROGRAM_SCHEDULE.json` → Linear：`push-program-schedule-to-linear.ps1` + playbook §3（單向；稽核仍靠 `sync-linear-delta-to-daily`）
-- [x] Linear 雙向同步修復與驗證完成（2026-03-31）：先前 GraphQL／StrictMode／timeout 等阻塞已排除；`agency-os/reports/linear/linear-schedule-map.json`（31 筆對照）、`memory/daily` 之 `### Linear API sync`；`scripts/linear-sync-all.ps1`；分流 project env：`LINEAR_PROJECT_ID_AO/LF/PJ`。
-
 ## Backlog
 - [x] 客戶分級與風險評分模型
 - [x] 外包交付評分卡
@@ -114,5 +110,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-02 08:02:41 UTC_
+_Last synced: 2026-04-02 09:23:24 UTC_
 

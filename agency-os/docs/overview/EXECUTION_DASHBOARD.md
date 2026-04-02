@@ -7,7 +7,6 @@
 ## 0) 你每天只需要看什麼
 - **狀態**：`LAST_SYSTEM_STATUS.md`
 - **進度板（唯一真實來源）**：`TASKS.md`
-- **Linear（可選）**：Cursor／團隊議題與 sprint；**企業預設**：設好 **`LINEAR_API_KEY`** 後，**AO-CLOSE 產報**會把 issue 摘要 **append** 到當日 `memory/daily`（稽核帳）；手動鏡像與合規說明見 **`docs/operations/linear-repo-sync-playbook.md`**、`AGENTS.md`「Linear」。
 - **發生了什麼（證據/日誌）**：`WORKLOG.md`
 - **可續接摘要（AO-RESUME/AO-CLOSE）**：`memory/CONVERSATION_MEMORY.md`
 - **今日細節**：`memory/daily/YYYY-MM-DD.md`
@@ -116,5 +115,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-04-02 06:56:02 UTC_
+_Last synced: 2026-04-02 09:23:24 UTC_
 

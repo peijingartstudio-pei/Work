@@ -3,8 +3,7 @@ param(
     [string]$CommitMessage = "",
     [switch]$SkipPush,
     [switch]$SkipVerify,
-    [switch]$AllowNonPerfectHealth,
-    [switch]$EnableLinearSync
+    [switch]$AllowNonPerfectHealth
 )
 
 Set-StrictMode -Version Latest

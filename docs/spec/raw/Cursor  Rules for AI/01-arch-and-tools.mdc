@@ -47,7 +47,6 @@ Present alternatives as proposals — not actions.
 | **work-global** | 本機檔案系統 MCP：**允許讀取的路徑**依你方 `mcp.json` + **inventory §work-global**（常見為使用者目錄與工作副本根；**勿寫死單一磁碟機代號**） | Any production write |
 | **Perplexity** | Web search and verification | Authoritative system data |
 | **Replicate** | Image generation / inference | Not on critical path |
-| **Linear MCP** | Issue tracking per linear-repo-sync-playbook.md | System-of-record data |
 | **chatgpt / claude / gemini wrappers** | Drafting, exploration | Replacing Supabase as authoritative source |
 
 ### Critical Routing Rules

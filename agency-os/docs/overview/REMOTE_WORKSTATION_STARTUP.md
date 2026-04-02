@@ -124,7 +124,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 
 ### 憑證（無法一鍵複製：每台各做一次）
 
-- **DPAPI vault**（Linear、Trigger 等腳本用）：`scripts/secrets-vault.ps1` — 手冊 **`docs/operations/local-secrets-vault-dpapi.md`**。  
+- **DPAPI vault**（Trigger 等腳本用）：`scripts/secrets-vault.ps1` — 手冊 **`docs/operations/local-secrets-vault-dpapi.md`**。  
 - **Cursor MCP／`mcp.json`**：只存在本機，換機後依 **`docs/operations/mcp-add-server-quickstart.md`** 重建；**勿**把 token 提交進 repo。
 
 ### 做完後
@@ -255,8 +255,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 ## 4) 憑證與不可進庫的檔案
 
 - **勿**把 `.env`、API key、Claude OAuth 等放進 Git（見 `docs/operations/security-secrets-policy.md`）。
-- **可選**：換機後若要用 **Linear → `memory/daily` 自動稽核帳**，請在使用者環境重設 **`LINEAR_API_KEY`**（見 `docs/operations/linear-repo-sync-playbook.md`）；不入庫。
-- **Linear MCP（Cursor）**：`mcp.json` 裡的 **linear** 走 **OAuth**，授權存在**該台電腦**的本機快取；**公司桌機 `pull` 不會帶過去**。到公司機後：`pull` 完 → Cursor **啟動 linear MCP** → 再 **登入 Linear 一次**（與筆電各登各的）。
 - `.claude\`、`node_modules\` 已被 `.gitignore`；新機要**各自重新登入** Claude / MCP / GitHub（本機憑證管理員）。
 - MCP 若因換機路徑失效，請只改本機設定（例如 `C:\Users\USER\.cursor\mcp.json`），不要把秘密值提交到 repo。
 - 密鑰庫建置與復原手冊：`docs/operations/local-secrets-vault-dpapi.md`（換機時先照手冊重建 vault）
@@ -316,5 +314,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-02 06:56:02 UTC_
+_Last synced: 2026-04-02 09:23:24 UTC_
 

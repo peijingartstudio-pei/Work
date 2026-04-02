@@ -63,26 +63,6 @@
 - 任一對話很長（約 8000+ 中文字）時，必須濃縮回寫長期記憶
 - 禁止寫入敏感資訊原文（API keys、密碼、個資）
 
-## Linear（Cursor 外掛／團隊議題板）
-- **定位**：**工程議題、sprint、狀態流、跨人協作**的視圖與操作介面（與 Slack 通知、GitHub PR 可並存）。
-- **不取代**（續接／收工／綜合狀態仍以檔案為準）：
-  - **Next / Backlog 真相**：`TASKS.md`
-  - **證據與決策紀錄**：`WORKLOG.md`
-  - **龍蝦工程勾選**：`lobster-factory/docs/LOBSTER_FACTORY_MASTER_CHECKLIST.md`
-  - **客戶 Discovery**：`tenants/**/10_DISCOVERY.md` 等
-  - **AO-RESUME / AO-CLOSE / integrated-status**：只讀上述檔案拼裝，**不讀** Linear API。
-- **代理行為約定**：
-  1. 使用者若只在 **Linear** 改狀態、拆 sub-issue：**收工前**應在 `WORKLOG.md` 或 `TASKS.md` **鏡像一句**（含 **Linear issue key**，例如 `AGN-42`）或勾選對應條目，避免他機 `AO-RESUME` 漏接。
-  2. 大項承諾（對公司／對客戶 visible）仍寫進 **`TASKS.md` Next/Backlog**；Linear 適合細拆與 UI 操作，必要時在 Linear 描述欄貼回 repo 相對路徑。
-  3. **憑證**：Linear token／OAuth 僅能留在 Cursor／本機設定與核准的 secrets 流程，**不入庫**、不寫進 `memory`／聊天紀錄。
-- **預設企業配置（已落地）**：**模式 A 自動化** — `scripts/sync-linear-delta-to-daily.ps1` 於 **`generate-integrated-status-report`／AO-CLOSE** 產報階段執行（**僅当**本機已設 **`LINEAR_API_KEY`**），把最近更新之 issues **append** 至 **`memory/daily/YYYY-MM-DD.md`** 作**稽核帳**；詳 **`docs/operations/linear-repo-sync-playbook.md`**。
-- **與 repo「要不要同步」**：**應對齊**，但用 **有裁判的一次向同步** 優於 **雙向即時雙寫**。
-  - **預設（維持 AO 閘道可行）**：仍以 **`TASKS.md` / `WORKLOG` / Checklist** 為 **source of truth**；Linear 是 **執行視圖**。團隊天天用 Linear 時，至少要 **人工或工具** 把「完成了什麼」對回 repo（收工前一句 + issue key），或改走下方其中一種自動化。
-  - **模式 A｜Linear → repo（稽核帳）**：排程或 webhook 把「本週已關閉 issues」摘要寫進 `WORKLOG` 或 `memory/daily`（**不**直接覆寫 `TASKS` 全文，避免和人工編輯對撞）。適合：大家要線上板，但公司機靠 `git pull` 續接。
-  - **模式 B｜repo → Linear（發布計畫）**：從 `TASKS` / `PROGRAM_SCHEDULE.json` **週期性**建立或更新 Linear milestone／issue（單向推送）。適合：計畫在 repo 凍結，線上板給團隊看。
-  - **模式 C｜雙向**：僅在定義 **欄位級規則**（例如「狀態只許在 Linear 改、標題只許在 repo 改」「衝突以 repo 為準」）且願意維護 **n8n／自建 sync** 時再做；與其讓兩邊互寫全表，不如 **一邊主表、一邊 mirror 摘要**。
-- **何時以 Linear 為準**：僅限「團隊已宣告某專案 **只追 Linear**」時——仍須在 `WORKLOG` 留 **專案↔Workspace** 約定，並且應採 **模式 A**（週期匯入 repo），否則 **AO-RESUME / integrated-status** 仍會漏。
-
 ## 文件同步規範
 - 決策更新：`WORKLOG.md`
 - 任務狀態更新：`TASKS.md`
@@ -133,5 +113,5 @@
 - `README.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-04-02 08:02:41 UTC_
+_Last synced: 2026-04-02 09:23:24 UTC_
 

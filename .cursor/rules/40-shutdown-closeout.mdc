@@ -22,7 +22,7 @@ When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
    `powershell -ExecutionPolicy Bypass -File .\agency-os\scripts\ao-close.ps1`
    - **`verify-build-gates.ps1`**（lobster `bootstrap-validate` + Agency `system-health-check`）— **預設必跑**；失敗則 **不 push**。
    - **`system-guard -Mode manual`**（內含 `doc-sync-automation -AutoDetect` + health + guard 報告 + `LAST_SYSTEM_STATUS.md`）。
-   - **`generate-integrated-status-report.ps1`** → 更新 `reports/status/integrated-status-LATEST.md`；若已設 **`LINEAR_API_KEY`**，同階段會 **`PROGRAM_SCHEDULE.json` → Linear**（`push-program-schedule-to-linear.ps1`）並 **`sync-linear-delta-to-daily`**（見 `docs/operations/linear-repo-sync-playbook.md`）。跳過推送可設 **`AO_SYNC_SCHEDULE_TO_LINEAR=0`**。
+   - **`generate-integrated-status-report.ps1`** → 更新 `reports/status/integrated-status-LATEST.md`。
    - 若全程 **PASS**：`git add -A` → 有變更則 `git commit` → `git push origin <current-branch>`。
    - **`-SkipPush`**：仍跑上述閘道與產報，**不** commit／push（僅當使用者明確要暫存本機時）。
    - **`-SkipVerify`**：略過龍蝦閘道（較快；**不建議**在「明天公司機要 pull 完整」前使用）。

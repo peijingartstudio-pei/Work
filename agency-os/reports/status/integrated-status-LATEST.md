@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-04-02 10:29:55
+- Generated: 2026-04-02 17:33:37
 - agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -15,7 +15,7 @@
 - `LAST_SYSTEM_STATUS.md`, `WORKLOG.md`
 
 ## 1) TASKS.md - Next (unchecked)
-- [ ] **（AO-RESUME 提醒）雙機環境對齊（桌機＋筆電）**：兩台執行與功能一致——**新機／筆電首次**只跟 [`docs/overview/REMOTE_WORKSTATION_STARTUP.md`](docs/overview/REMOTE_WORKSTATION_STARTUP.md) **§1.5**（含 **§1.5.1**：Windows 本機 **MariaDB + PHP + WP-CLI** + `scripts/bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni`；與 **Supabase／MCP** 分列，WordPress 仍需 MySQL 相容庫）；**之後每次開工**跟同檔 **§2**（`git pull`、`lobster-factory\packages\workflows` 之 `npm ci`、可選 wrappers、`verify-build-gates`、再 **`AO-RESUME`**）。要點：筆電安裝 **GitHub CLI**（`winget install --id GitHub.cli`；裝完重開終端或刷新 `PATH`）並 **`gh auth login`**；**Node** 大版本與桌機／CI 一致；**`scripts/secrets-vault.ps1`（DPAPI）與 Cursor `mcp.json`／MCP 為每台各自設定**（勿假設會跟著 `git pull`）。完成後勾選本項。 - [ ] 啟動 Next-Gen 升級藍圖 v1（M1→M3）：`docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`（先選 2 個試點：1 既有站接手 + 1 新站建置） - [ ] **既有站接手（Soulful Expression Art Therapy）**：完成 M1 台帳（staging/prod、備份策略、維護窗、baseline 外掛/版本） - [ ] **新站建置（Scenery Travel Mongolia）**：完成 M1 啟動（tenant/site/project + 雲端 staging 可用 + Discovery 國際需求補齊） - [ ] **既有站接手 Day 1（Soulful Expression）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_A_EXISTING_SITE_SOULFUL_EXPRESSION.md` 第 1~2 節，輸出權限與基線盤點 - [ ] **新站建置 Day 1（Scenery Travel Mongolia）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_B_NEW_SITE_SCENERY_TRAVEL_MONGOLIA.md` 第 1~2 節，完成新站 staging 啟動條件 - [ ] 明日待做：全面檢查並升級 `tenants/templates/`（目前過於簡陋），補齊「17-20 部門企業交付」所需模板欄位、流程與財務/支付治理內容 - [ ] （Next-Gen 對齊）將 M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位（避免 Pilot 成果與跨國企業目標脫鉤） - [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈） - [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端） - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
+- [ ] **（AO-RESUME 提醒）雙機環境對齊（桌機＋筆電）**：兩台執行與功能一致——**新機／筆電首次**只跟 [`docs/overview/REMOTE_WORKSTATION_STARTUP.md`](docs/overview/REMOTE_WORKSTATION_STARTUP.md) **§1.5**（含 **§1.5.1**：Windows 本機 **MariaDB + PHP + WP-CLI** + `scripts/bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni`；與 **Supabase／MCP** 分列，WordPress 仍需 MySQL 相容庫）；**之後每次開工**跟同檔 **§2**（`git pull`、`lobster-factory\packages\workflows` 之 `npm ci`、可選 wrappers、`verify-build-gates`、再 **`AO-RESUME`**）。要點：筆電安裝 **GitHub CLI**（`winget install --id GitHub.cli`；裝完重開終端或刷新 `PATH`）並 **`gh auth login`**；**Node** 大版本與桌機／CI 一致；**`scripts/secrets-vault.ps1`（DPAPI）與 Cursor `mcp.json`／MCP 為每台各自設定**（勿假設會跟著 `git pull`）。完成後勾選本項。 - [ ] 啟動 Next-Gen 升級藍圖 v1（M1→M3）：`docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`（先選 2 個試點：1 既有站接手 + 1 新站建置） - [ ] **既有站接手（Soulful Expression Art Therapy）**：完成 M1 台帳（staging/prod、備份策略、維護窗、baseline 外掛/版本） - [ ] **新站建置（Scenery Travel Mongolia）**：完成 M1 啟動（tenant/site/project + 雲端 staging 可用 + Discovery 國際需求補齊） - [ ] **既有站接手 Day 1（Soulful Expression）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_A_EXISTING_SITE_SOULFUL_EXPRESSION.md` 第 1~2 節，輸出權限與基線盤點 - [ ] **新站建置 Day 1（Scenery Travel Mongolia）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_B_NEW_SITE_SCENERY_TRAVEL_MONGOLIA.md` 第 1~2 節，完成新站 staging 啟動條件 - [ ] `tenants/templates/` v2：試點 tenant 實填回饋後，再擴欄位與自動檢查（若有） - [ ] （Next-Gen 對齊）將 M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位（避免 Pilot 成果與跨國企業目標脫鉤） - [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈） - [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端） - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
 
 ## 2) TASKS.md - Backlog (unchecked)
 - [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核） - [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager） - [ ] **`lobster-factory/packages/workflows` `npm audit`**（2026-04-01）：16 筆多為 **Trigger.dev CLI／`@trigger.dev/core` 傳遞依賴**（socket.io／cookie、esbuild dev、tar、giget、systeminformation 等）。**勿**對本目錄跑 `npm audit fix --force`（會把人帶到不相容 Trigger 版本）。**對策**：等官方 `@trigger.dev/sdk`／`trigger.dev` 小版修 upstream；或 Trigger 釋出安全修補後再 `npm update` + 回歸；本機勿將 Trigger **dev** 伺服器暴露公網。
@@ -176,9 +176,6 @@
 ### Today (2026-03-29) - 續接驗證
 - 使用者「好」＝執行：`git pull`（up to date）、`verify-build-gates` PASS、health **100%**（`health-20260329-221913.md`）、`npm run operator:sanity` PASS。
 
-### Today (2026-03-29) - PROGRAM_SCHEDULE ↔ Linear（同步＝單向推送 v1）
-- 需求：讓 **`PROGRAM_SCHEDULE.json`** 與 **Linear 看板**對齊；實作 **`push-program-schedule-to-linear.ps1`**（create/update + `reports/linear/linear-schedule-map.json`）；**不**自動把 Linear 寫回 JSON（衝突風險）。稽核鏈仍為 **`sync-linear-delta-to-daily`** → `memory/daily`。Playbook **`linear-repo-sync-playbook.md`** §3 已寫入操作與 env；**DryRun 31/31** 驗證通過。
-
 ### Today (2026-03-28) - AO-CLOSE（晚）
 - **AO-CLOSE** 完成：`verify-build-gates` PASS、health **100%**、`system-guard` PASS、integrated-status 已產出；**Git** `e04be6f` 已 **push `main`**。
 
@@ -200,24 +197,6 @@
 ### Today (2026-03-30) - cursor-mcp inventory：純 Supabase／SoR 敘述
 - `docs/operations/cursor-mcp-and-plugin-inventory.md`：使用者要求 **本檔不出現任何第三方表格式工具名稱**；已刪除該列與所有相關段落／SSOT／Related 連結。**supabase** 兩欄改為**自足**寫法：平台 SoR、RLS／Storage／Webhook、MCP 與 `read_only` 邊界、以及對 [`MCP_TOOL_ROUTING_SPEC`](../../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md) 中 Trigger／n8n 分工的對齊。**`change-impact-map`** 已取消本檔 ↔ migration playbook 的強制連動（health 仍 100%）。
 
-### Today (2026-03-30) - Linear sync incident (handoff for AO-RESUME)
-- 使用者要求當場完成雙向同步（repo -> Linear、Linear -> repo）。
-- `LINEAR_API_KEY` 初始缺失；後已寫入本機 DPAPI vault（`scripts/secrets-vault.ps1`）。
-- 故障鏈：
-  - `push-program-schedule-to-linear.ps1` 在 StrictMode 讀取不存在的 `Exception.Response` 造成二次拋錯。
-  - GraphQL 呼叫出現長時間無輸出卡住。
-- 已完成修補（root + `agency-os` 兩份腳本同步）：
-  - `push-program-schedule-to-linear.ps1`：安全化 exception handling；改為 `HttpClient`；加入 timeout/cancellation。
-  - `sync-linear-delta-to-daily.ps1`：改為 `HttpClient`；加入 timeout，避免 AO-CLOSE/手動同步掛住。
-- 截至收工：仍未成功產生 `reports/linear/linear-schedule-map.json`，`memory/daily` 未新增新一輪 `### Linear API sync`；需 AO-RESUME 續做 smoke -> full run。
-
-### Today (2026-03-31) - Linear sync resolved + auto flow
-- 問題已收斂：`LINEAR_API_KEY` 有效、viewer 查詢通過；`push-program-schedule-to-linear` 完成 smoke 與 full（31 筆）。
-- 成果：`agency-os/reports/linear/linear-schedule-map.json` 建立；`memory/daily/2026-03-31.md` 成功 append `### Linear API sync`。
-- 修補：StrictMode `.errors/.Count` 防呆、projectId UUID 驗證、同步腳本相容性修復（root + agency-os 同步）。
-- 自動化：新增 `scripts/linear-sync-all.ps1`（push + delta 一鍵）；支援分流 project env `LINEAR_PROJECT_ID_AO/LF/PJ`。
-- 管理策略：預設不再全流綁單一 project；AO 已綁定 `ffe9e2b5-55ee-4cbb-baa6-7479cbf10f49`，LF/PJ 待指定。
-
 ### Today (2026-03-28) - Lobster `http_json` hosting
 - `LOBSTER_HOSTING_ADAPTER=http_json` + `HTTP_JSON_HOSTING_ADAPTER.md`；`provisionHttpJsonStaging`；`create-wp-site` 支援 `vendor_staging_provisioned` 與 `vendorStaging`；`resolveStagingProvisioning` 為 async。
 - **互動偏好**：可驗證範圍內代理自主推進、減少選項式追問；不可逆決策仍單點確認。
@@ -225,22 +204,30 @@
 > Full runbook: see `## Runbook Commands` in the source file.
 
 ## 5) memory/daily/2026-04-02.md
-_no file for today yet._
+# 2026-04-02
+
+- **背景**：延續長期營運治理；補齊 ADR 006 與索引／影響矩陣／閘道銜接。
+- **已完成**：`decisions/README.md` 納入 006；`CHANGE_IMPACT_MATRIX`、`LONG_TERM_OPERATING_DISCIPLINE`、002/005 Related 更新；`WORKLOG`／`CONVERSATION_MEMORY` 記錄；`verify-adr-index` + `verify-build-gates` **ALL PASSED**（health 100%）。
+- **未完成**：無（本批）。
+- **風險／阻塞**：無。
+- **下一步**：Schema／migration 落地時對照 ADR 006 實作 RLS 與 Clerk 對照表；例行自 monorepo 根跑 `verify-build-gates`。
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-04-01 17:35:57`
+- Time: `2026-04-02 16:03:03`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
 - Closeout report exists: **YES**
 - Result: **PASS**
+- Auto-repair attempted: **NO**
+- Auto-repair result: **N/A**
 
 ## Latest Reports
-- Health: `reports/health/health-20260401-173557.md`
-- Closeout: `reports/closeout/closeout-20260401-171624.md`
+- Health: `reports/health/health-20260402-160303.md`
+- Closeout: `reports/closeout/closeout-20260402-160242.md`
 
 ## Action
 - No blocking issue detected.

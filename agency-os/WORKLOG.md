@@ -73,16 +73,9 @@
 
 ## 2026-04-01
 
-### AO-CLOSE 穩定性優化（Linear 旁路化 + timeout）
-- `scripts/ao-close.ps1` 新增 `-EnableLinearSync`：預設不讓 Linear 阻塞收工；需要時才同回合同步 Linear。
-- `scripts/generate-integrated-status-report.ps1` 新增 optional script timeout 包裝：
-  - `push-program-schedule-to-linear`（25s timeout）
-  - `sync-linear-delta-to-daily`（20s timeout）
-- 新增環境變數開關：
-  - `AO_SYNC_SCHEDULE_TO_LINEAR=0`（跳過 schedule push）
-  - `AO_SYNC_LINEAR_DELTA_TO_DAILY=0`（跳過 delta append）
-- `docs/operations/end-of-day-checklist.md` 已更新：AO-CLOSE 預設快速穩定，Linear 同步改為可選 `-EnableLinearSync`。
-- 補強健康檢查相容：`agency-os/scripts/system-health-check.ps1` 的 generator sanity check 現在允許「full generator」或「intentional wrapper」，避免 Single Owner 設計被誤判為故障。
+### AO-CLOSE 穩定性優化（timeout + deterministic closeout）
+- `scripts/generate-integrated-status-report.ps1` 新增 optional script timeout 包裝（避免外部因素卡住 closeout）。
+- `agency-os/scripts/system-health-check.ps1` 的 generator sanity check 允許「full generator」或「intentional wrapper」，避免 Single Owner 設計被誤判為故障。
 
 ### Next-Gen 升級藍圖 v1 已落地（使用者同意直接衝高階版）
 - 新增 `docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`，定義 3 里程碑（M1 環境標準化、M2 gate/回滾自動化、M3 控制台化）與 2-4 週節奏。
@@ -161,12 +154,6 @@
 - 本機已執行 `packages\workflows` 之 `npm ci` 以補齊 Trigger 依賴目錄。
 
 ## 2026-03-31
-
-### Linear source cleanup hardening
-- 修復 Linear title 生成防呆：`push-program-schedule-to-linear.ps1` 改為 `"$($task.name)"`，避免把整個 task object 序列化成 `@{id=...}` 汙染 issue title。
-- 來源修復已執行：全量 push update 成功（31 筆，failed=0），既有 polluted issue title 已回寫為乾淨格式。
-- 日誌防呆已補上：`sync-linear-delta-to-daily.ps1` 新增 `Normalize-LinearTitleForDaily`，避免 control chars/異常 payload 汙染 daily。
-- 歷史亂碼區塊已從 `memory/daily/2026-03-31.md` 清理，並完成重跑驗證。
 
 ### AO + Lobster event flow diagram landed
 - 已將 AO + Lobster 事件流 Mermaid 圖落地到 `docs/overview/ao-lobster-operating-model.md`，作為「開工 -> 執行 -> 收工 -> 他機續接」單一視覺化流程。
@@ -288,7 +275,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-02 08:02:41 UTC_
+_Last synced: 2026-04-02 09:23:24 UTC_
 
 ## 2026-03-20
 
@@ -635,8 +622,8 @@ _Last synced: 2026-04-02 08:02:41 UTC_
 
 ### AO-CLOSE（晚）
 - 收工前更新：`TASKS.md`（明日 **四份 spec 原文整理** 提醒項）、`WORKLOG.md`、`memory/CONVERSATION_MEMORY.md`、`memory/daily/2026-03-30.md`。
-- 執行：`powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`；首輪卡於 **Linear 排程推送**；改設 **`AO_SYNC_SCHEDULE_TO_LINEAR=0`** 後重跑完成。
-- **連動檢查**：`verify-build-gates` **PASS**；`system-health-check` **100%（286/286）**（`reports/health/health-20260330-024902.md`）；`system-guard` **PASS**（`reports/guard/guard-20260330-024905.md`）；綜合狀態 `reports/status/integrated-status-20260330-024914.md`、`integrated-status-LATEST.md`；Linear **delta sync** HTTP 400（略過，不阻斷）。
+- 執行：`powershell -ExecutionPolicy Bypass -File D:\Work\scripts\ao-close.ps1`。
+- **連動檢查**：`verify-build-gates` **PASS**；`system-health-check` **100%（286/286）**（`reports/health/health-20260330-024902.md`）；`system-guard` **PASS**（`reports/guard/guard-20260330-024905.md`）；綜合狀態 `reports/status/integrated-status-20260330-024914.md`、`integrated-status-LATEST.md`。
 - **Git**：`chore: AO-CLOSE sync 2026-03-30 0249` → commit **`10fe5df`**；已 **`push origin main`**。
 - **資安後續（同日補救）**：`hostinger-recovery-codes.txt` 曾被 `git add -A` 一併入庫並推送；已 **刪檔 + `.gitignore` + commit `c2bb268` push**。**請使用者至 Hostinger 立即作廢並重新產生復原碼**（歷史提交仍可能含有該檔；若 repo 公開建議評估 history purge）。
 
@@ -657,16 +644,10 @@ _Last synced: 2026-04-02 08:02:41 UTC_
 
 ## 2026-03-29
 
-### Linear（Cursor 外掛）納入治理
-- **`AGENTS.md`**：新增「Linear」— 定位為議題／sprint 視圖；**不取代** `TASKS`／`WORKLOG`／Checklist／AO-RESUME 拼裝；收工前鏡像 + issue key、憑證不入庫。
-- **`EXECUTION_DASHBOARD.md`** §0、`docs/operations/tools-and-integrations.md`：連動說明。
-- **企業預設同步（模式 A）**：新增 **`docs/operations/linear-repo-sync-playbook.md`**、`scripts/sync-linear-delta-to-daily.ps1`；當 **`LINEAR_API_KEY`** 存在時，`generate-integrated-status-report`／**AO-CLOSE** 會把 Linear 更新摘要 **append** 至 **`memory/daily`**（API 失敗不阻斷收工）。
-
 ### 排程單一來源 + AO-CLOSE 聯動甘特
 - **`docs/overview/PROGRAM_SCHEDULE.json`**：三流（AO／LF／PJ）任務與日期；可複製到客戶專案或 `project-kit` 範本。
 - **`scripts/render-program-timeline-from-schedule.ps1`**：UTF-8 JSON → `PROGRAM_TIMELINE.md` 標記區（表 + Mermaid）；腳本本體 **ASCII-only** 以相容 PS 5.1。
 - **`generate-integrated-status-report.ps1`** 末尾**單次**呼叫渲染；**AO-CLOSE** 路徑因此每次收工會重渲時間軸（仍以 TASKS／Checklist／Discovery 為完成真相）。
-- **`scripts/push-program-schedule-to-linear.ps1`**（根目錄 **`D:\Work\scripts`** 亦有相容副本）：**模式 B** 將 JSON 排程 **單向推送** 至 Linear issues；對應表 `reports/linear/linear-schedule-map.json`；`-DryRun` 演練 **31/31** 通過（2026-03-29）。詳 **`docs/operations/linear-repo-sync-playbook.md`** §3。
 
 ### 續接驗證（使用者授權「進行」）
 - `git pull origin main`：**Already up to date**。
@@ -716,35 +697,14 @@ _Last synced: 2026-04-02 08:02:41 UTC_
 - 新增 `docs/spec/raw/README-four-sources-maintenance.md`（分工表、大段錨點、SSOT 對照、勿雙軌手抄）。
 - 四檔首段加維護區塊（V3／Spec v1／ENTERPRISE／CURSOR_PACK）；`docs/spec/README.md` 與 `agency-os/docs/overview/company-os-four-sources-integration.md` 連回維護索引；`TASKS.md` 勾選完成。
 
-### Linear 雙向同步排錯（收工前，待 AO-RESUME 續跑）
-- 使用者要求「兩邊同步」：`PROGRAM_SCHEDULE.json -> Linear` + `Linear -> memory/daily`。
-- 現場事實：
-  - 本機起初 `LINEAR_API_KEY` 缺失（Process/User/Machine 皆空）；後續已由使用者透過 `scripts/secrets-vault.ps1 -Action set-prompt -Name LINEAR_API_KEY` 寫入 DPAPI vault。
-  - `push-program-schedule-to-linear.ps1` 在 StrictMode 下遇特定 HTTP 例外時讀 `Exception.Response` 會再拋錯（PropertyNotFound），導致提前 crash；已修正為安全存取。
-  - 既有 `Invoke-RestMethod` 路徑出現長時間無輸出卡住；已改為 `HttpClient` 並加入 30 秒 timeout + cancellation token，避免無限等待。
-  - `sync-linear-delta-to-daily.ps1` 同步改為 `HttpClient + timeout`，避免同類網路掛住。
-- 目前結果（收工時）：
-  - 尚未產生 `agency-os/reports/linear/linear-schedule-map.json`。
-  - `agency-os/memory/daily/2026-03-30.md` 尚未出現新一輪 `### Linear API sync` 區塊。
-- AO-RESUME 首要續測建議：
-  1) `secrets-vault.ps1 -Action run -Names LINEAR_API_KEY` 包裹執行 `push-program-schedule-to-linear.ps1 -MaxTasks 1`（先 smoke）。
-  2) 成功後確認 `reports/linear/linear-schedule-map.json` 出現，再跑全量（不帶 `-MaxTasks`）。
-  3) 執行 `sync-linear-delta-to-daily.ps1`，確認 daily 新增 `### Linear API sync (...)`。
-  4) 若仍卡住，優先檢查公司網路對 `https://api.linear.app/graphql` 出站策略/代理限制與 Linear Team 權限。
-
-### Linear 同步修復完成（2026-03-31）
-- 授權與連線驗證完成：以 `viewer` 查詢確認 API 可用；`push-program-schedule-to-linear` smoke + full 成功。
-- 產物落地：`agency-os/reports/linear/linear-schedule-map.json` 已建立並寫入 31 筆 issue 對照（`SOU-11`~`SOU-41`）。
-- 稽核落盤：`sync-linear-delta-to-daily.ps1` 成功 append，`memory/daily/2026-03-31.md` 已有 `### Linear API sync (...)` 區塊。
-- 腳本穩定化：修正 StrictMode 下 `.errors/.Count` 例外、防呆 `LINEAR_PROJECT_ID` UUID、補一鍵 `scripts/linear-sync-all.ps1`。
-- 專案管理分流：已改為支援 `LINEAR_PROJECT_ID_AO/LF/PJ`；目前 AO 綁定 `ffe9e2b5-55ee-4cbb-baa6-7479cbf10f49`，預設 `LINEAR_PROJECT_ID` 已清除避免全流誤綁。
-
 ### 雙機環境對齊（待辦；AO-RESUME 口頭提醒）
 - 使用者要求桌機與筆電「執行與功能一致」。
 - 已入 **`TASKS.md` → Next** 第一則未勾項 **「（AO-RESUME 提醒）雙機環境對齊」**；並在 **`memory/CONVERSATION_MEMORY.md` → Current Operating Context** 註明：之後每次 **`AO-RESUME`** Agent 須列出該待辦，直到勾選完成。
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
+
 
 
 

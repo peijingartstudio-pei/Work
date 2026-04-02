@@ -13,11 +13,7 @@
 - **2026-04-02（租戶模板 v1）**：`tenants/templates/core/` 新增 **`DEPARTMENT_COVERAGE_MATRIX.md`**（企業多部門 → 檔案路由）與 **`CROSS_BORDER_GOVERNANCE.md`**（跨境／外包／審閱索引）；`PROFILE`／`FINANCIAL_LEDGER` 補幣別與多幣別欄；意圖是 **30 年可維護**：擴欄位不複製政策全文，政策仍在 `docs/operations/`。
 - **2026-04-02（Git 節奏）**：**§2.5** 為人類可讀 SSOT——日內里程碑由代理**自動**本機 `commit`（`commit-checkpoint.ps1`，不 push）；**預設 push** 仍在 **`AO-CLOSE`**。舊敘述「平常不 commit」已廢止（見下方 2026-03-28 歷史列之註記）。
 - 你正在建立多客戶網站與系統代營運模式
-- 核心平台：WordPress、Supabase、GitHub、**Linear（Cursor 外掛）**、n8n、Replicate、DataForSEO；**Airtable 已淘汰**（2026-03-30），同類資料改 **Supabase**
-- **Linear 與 repo**：AO-RESUME／收工仍以 `TASKS.md`、`WORKLOG`、龍蝦 Checklist、Discovery 為準；僅在 Linear 改狀態時，收工前鏡像到 `WORKLOG` 或 `TASKS`（附 issue key）。詳 `AGENTS.md`「Linear」。
 - 服務線：建置、維運、行銷、自動化、WordPress 客製系統
-- **2026-03-31 更新**：`docs/spec/raw/` 四份原文維護索引與整合入口已完成；後續重點改為 A10-2 實跑、A7/A9 補齊、Linear 同步品質收斂與 AO+Lobster 事件流圖落地（見 `TASKS.md` 未勾項）。
-- **2026-03-31 補充**：Linear 汙染來源已修復（title 組字防呆 + source issue 回寫 + daily 同步正規化）；`TASKS.md` 的「Linear 同步品質收斂」已結案。
 - **2026-03-31 補充**：已確立「Single Owner」為最高執行原則（除非必要，一份內容只允許一個 Owner File）；並新增 `doc-sync` 自動檢查（registry: `docs/operations/single-owner-registry.json`）避免重複內容回流。
 - **2026-03-31 補充**：Single Owner registry 已擴充到開工/收工關鍵段落（AO-RESUME 主流程、30 秒自檢、AO-CLOSE 硬性 Gate），改由 closeout 自動檢查重複。
 - **2026-03-31 補充**：`lobster-factory` A9 baseline 已完成（lifecycle + IAM + audit automation），並接入 bootstrap gate。
@@ -289,9 +285,6 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 ## Today (2026-03-29) - 續接驗證
 - 使用者「好」＝執行：`git pull`（up to date）、`verify-build-gates` PASS、health **100%**（`health-20260329-221913.md`）、`npm run operator:sanity` PASS。
 
-## Today (2026-03-29) - PROGRAM_SCHEDULE ↔ Linear（同步＝單向推送 v1）
-- 需求：讓 **`PROGRAM_SCHEDULE.json`** 與 **Linear 看板**對齊；實作 **`push-program-schedule-to-linear.ps1`**（create/update + `reports/linear/linear-schedule-map.json`）；**不**自動把 Linear 寫回 JSON（衝突風險）。稽核鏈仍為 **`sync-linear-delta-to-daily`** → `memory/daily`。Playbook **`linear-repo-sync-playbook.md`** §3 已寫入操作與 env；**DryRun 31/31** 驗證通過。
-
 ## Today (2026-03-28) - AO-CLOSE（晚）
 - **AO-CLOSE** 完成：`verify-build-gates` PASS、health **100%**、`system-guard` PASS、integrated-status 已產出；**Git** `e04be6f` 已 **push `main`**。
 
@@ -313,24 +306,6 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 ## Today (2026-03-30) - cursor-mcp inventory：純 Supabase／SoR 敘述
 - `docs/operations/cursor-mcp-and-plugin-inventory.md`：使用者要求 **本檔不出現任何第三方表格式工具名稱**；已刪除該列與所有相關段落／SSOT／Related 連結。**supabase** 兩欄改為**自足**寫法：平台 SoR、RLS／Storage／Webhook、MCP 與 `read_only` 邊界、以及對 [`MCP_TOOL_ROUTING_SPEC`](../../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md) 中 Trigger／n8n 分工的對齊。**`change-impact-map`** 已取消本檔 ↔ migration playbook 的強制連動（health 仍 100%）。
 
-## Today (2026-03-30) - Linear sync incident (handoff for AO-RESUME)
-- 使用者要求當場完成雙向同步（repo -> Linear、Linear -> repo）。
-- `LINEAR_API_KEY` 初始缺失；後已寫入本機 DPAPI vault（`scripts/secrets-vault.ps1`）。
-- 故障鏈：
-  - `push-program-schedule-to-linear.ps1` 在 StrictMode 讀取不存在的 `Exception.Response` 造成二次拋錯。
-  - GraphQL 呼叫出現長時間無輸出卡住。
-- 已完成修補（root + `agency-os` 兩份腳本同步）：
-  - `push-program-schedule-to-linear.ps1`：安全化 exception handling；改為 `HttpClient`；加入 timeout/cancellation。
-  - `sync-linear-delta-to-daily.ps1`：改為 `HttpClient`；加入 timeout，避免 AO-CLOSE/手動同步掛住。
-- 截至收工：仍未成功產生 `reports/linear/linear-schedule-map.json`，`memory/daily` 未新增新一輪 `### Linear API sync`；需 AO-RESUME 續做 smoke -> full run。
-
-## Today (2026-03-31) - Linear sync resolved + auto flow
-- 問題已收斂：`LINEAR_API_KEY` 有效、viewer 查詢通過；`push-program-schedule-to-linear` 完成 smoke 與 full（31 筆）。
-- 成果：`agency-os/reports/linear/linear-schedule-map.json` 建立；`memory/daily/2026-03-31.md` 成功 append `### Linear API sync`。
-- 修補：StrictMode `.errors/.Count` 防呆、projectId UUID 驗證、同步腳本相容性修復（root + agency-os 同步）。
-- 自動化：新增 `scripts/linear-sync-all.ps1`（push + delta 一鍵）；支援分流 project env `LINEAR_PROJECT_ID_AO/LF/PJ`。
-- 管理策略：預設不再全流綁單一 project；AO 已綁定 `ffe9e2b5-55ee-4cbb-baa6-7479cbf10f49`，LF/PJ 待指定。
-
 ## Today (2026-03-28) - Lobster `http_json` hosting
 - `LOBSTER_HOSTING_ADAPTER=http_json` + `HTTP_JSON_HOSTING_ADAPTER.md`；`provisionHttpJsonStaging`；`create-wp-site` 支援 `vendor_staging_provisioned` 與 `vendorStaging`；`resolveStagingProvisioning` 為 async。
 - **互動偏好**：可驗證範圍內代理自主推進、減少選項式追問；不可逆決策仍單點確認。
@@ -343,5 +318,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-02 06:03:46 UTC_
+_Last synced: 2026-04-02 09:23:24 UTC_
 

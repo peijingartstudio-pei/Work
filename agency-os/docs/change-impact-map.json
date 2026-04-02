@@ -254,8 +254,6 @@
       "source": "docs/standards/n8n-workflow-architecture.md",
       "targets": [
         "docs/operations/tools-and-integrations.md",
-    "docs/operations/linear-repo-sync-playbook.md",
-    "scripts/sync-linear-delta-to-daily.ps1",
         "README.md"
       ]
     },

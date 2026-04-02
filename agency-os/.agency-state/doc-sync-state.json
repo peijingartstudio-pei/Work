@@ -1,27 +1,30 @@
 ﻿{
-    "last_run_utc":  "2026-04-02T08:02:42.0205684Z",
+    "last_run_utc":  "2026-04-02T09:33:59.2226524Z",
     "changed_files":  [
-                          "docs/operations/system-guard-and-notification.md",
-                          "scripts/system-guard.ps1",
-                          "TASKS.md",
-                          "WORKLOG.md"
+                          "docs/change-impact-map.json",
+                          "docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER.md",
+                          "docs/overview/ao-lobster-operating-model.md",
+                          "docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md",
+                          "docs/overview/PROGRAM_TIMELINE.md",
+                          "docs/standards/n8n-workflow-architecture.md",
+                          "memory/daily/2026-03-29.md",
+                          "memory/daily/2026-03-30.md"
                       ],
     "impacted_files":  [
-                           "AGENTS.md",
-                           "automation/REGISTER_SYSTEM_GUARD_TASKS.ps1",
-                           "docs/operations/system-guard-and-notification.md",
-                           "README.md",
-                           "RESUME_AFTER_REBOOT.md",
-                           "scripts/system-guard.ps1",
-                           "TASKS.md",
-                           "WORKLOG.md"
+                           "docs/change-impact-map.json",
+                           "docs/operations/tools-and-integrations.md",
+                           "docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER.md",
+                           "docs/overview/ao-lobster-operating-model.md",
+                           "docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md",
+                           "docs/overview/PROGRAM_TIMELINE.md",
+                           "docs/standards/n8n-workflow-architecture.md",
+                           "memory/daily/2026-03-29.md",
+                           "memory/daily/2026-03-30.md",
+                           "README.md"
                        ],
     "auto_updated_files":  [
-                               "AGENTS.md",
-                               "docs/operations/system-guard-and-notification.md",
-                               "README.md",
-                               "RESUME_AFTER_REBOOT.md",
-                               "TASKS.md",
-                               "WORKLOG.md"
+                               "docs/operations/tools-and-integrations.md",
+                               "docs/standards/n8n-workflow-architecture.md",
+                               "README.md"
                            ]
 }

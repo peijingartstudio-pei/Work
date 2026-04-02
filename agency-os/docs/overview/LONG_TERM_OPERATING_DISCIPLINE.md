@@ -19,7 +19,7 @@
 
 ## 4. 節奏與證據（Rhythm & evidence）
 
-- **開工／收工**：`AO-RESUME` / `AO-CLOSE` 與 `REMOTE_WORKSTATION_STARTUP`、`end-of-day-checklist`；**真相**仍在 `TASKS` / `WORKLOG` / `memory`， Linear 僅視圖。
+- **開工／收工**：`AO-RESUME` / `AO-CLOSE` 與 `REMOTE_WORKSTATION_STARTUP`、`end-of-day-checklist`；**真相**仍在 `TASKS` / `WORKLOG` / `memory`，看板僅視圖。
 - **釋出與變更**：staging-first、備份與 rollback 證據；tenant 層見 `tenants/templates/core/RELEASE_GATES_CHECKLIST.md`、`BACKUP_RESTORE_PROOF.md`。
 
 ## 5. 相容與退役（Compatibility）
@@ -44,7 +44,7 @@
 ## 9. AI 與自動化（輔助；永遠不是權威）
 
 > **Coding**：人＋CI 仍以 **型別、閘道、遷移、PR** 為契約；AI 可加速草稿，**不可**替代 review 或繞過 `verify-build-gates`。  
-> **專案管理**：`TASKS`／`WORKLOG`／`memory` 為進度真相；Linear 等為視圖；重大分岔 **ADR + WORKLOG**。  
+> **專案管理**：`TASKS`／`WORKLOG`／`memory` 為進度真相；看板僅視圖；重大分岔 **ADR + WORKLOG**。  
 > **AI 代理／MCP**：僅能在 **核准平面** 允許的範圍內動手；**生產寫入 SoR** 與長編排 **Routing Spec** 說了算，不是「模型覺得方便」。
 
 - **草稿與探索**：產生命令稿、查結構、草擬 ADR 段落；**定稿**須過真人與閘道。

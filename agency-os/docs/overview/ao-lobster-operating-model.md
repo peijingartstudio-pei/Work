@@ -70,7 +70,6 @@ These are known "must run in rhythm" items to convert configuration into real op
 
 - Run one real new-client onboarding flow (`tenants/NEW_TENANT_ONBOARDING_SOP.md`).
 - Close Lobster A10-2 business loop (new client -> acceptance -> production evidence chain).
-- Keep Linear sync quality stable (issue updates mirrored into repo evidence path).
 
 ## 7) Related Core Docs
 

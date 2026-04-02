@@ -10,8 +10,7 @@ param(
     [string]$CommitMessage = "",
     [switch]$SkipPush,
     [switch]$SkipVerify,
-    [switch]$AllowNonPerfectHealth,
-    [switch]$EnableLinearSync
+    [switch]$AllowNonPerfectHealth
 )
 
 Set-StrictMode -Version Latest
@@ -62,12 +61,6 @@ if ($guardExit -ne 0) {
 $genScript = Join-Path $agencyRoot "scripts\generate-integrated-status-report.ps1"
 if (Test-Path -LiteralPath $genScript) {
     Write-Host "== AO-CLOSE: generate integrated-status report ==" -ForegroundColor Cyan
-    # Keep AO-CLOSE deterministic and fast by default.
-    # Linear sync is optional and can be enabled explicitly with -EnableLinearSync.
-    if (-not $EnableLinearSync) {
-        $env:AO_SYNC_SCHEDULE_TO_LINEAR = "0"
-        $env:AO_SYNC_LINEAR_DELTA_TO_DAILY = "0"
-    }
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $genScript -WorkspaceRoot $agencyRoot
     if ($LASTEXITCODE -ne 0) {
         Write-Error "ao-close: generate-integrated-status-report failed (exit $LASTEXITCODE)"
