@@ -7,7 +7,7 @@
 | 路徑（相對 `agency-os/` 或 monorepo） | 用途 | 誰會複製／執行 |
 |----------------------------------------|------|----------------|
 | **`tenants/templates/`** | 新 **租戶** `company-*`：tenant/site/core/industry 複製起點 | 營運／導入（見 `tenants/NEW_TENANT_ONBOARDING_SOP.md`） |
-| **`platform-templates/`** | **Woo 堆疊範例**、`client-base` 專案極簡骨架（非租戶公司夾） | 對客說明／playbook；manifest **執行權威**見下表龍蝦列 |
+| **`platform-templates/`** | **對人輔材**：Woo 範例 JSON、示範 shell、`client-base` 一頁紙；**非**租戶台帳、**非**可執行 manifest SSOT（見目錄內各 `README.md`） | 培訓／簡報／playbook；**機器驗證**用 manifest／shell 見 **`../lobster-factory/packages/manifests/`**、**`../lobster-factory/templates/woocommerce/scripts/`** |
 | **`docs/templates/`** | **MSA / SOW / CR** 等中文合約與變更範本 | 法務／商務填寫後交付 |
 | **`docs/product/templates/`** | **英文化**提案／SOW／月報等對客範本 | 商務／交付 |
 | **`../lobster-factory/templates/woocommerce/scripts/`** | **龍蝦** staging manifest 安裝／rollback 等 **shell**（程式解析路徑） | CI / `installManifestStaging`／bootstrap 驗證 |

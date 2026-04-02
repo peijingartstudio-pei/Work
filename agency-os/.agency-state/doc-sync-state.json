@@ -1,10 +1,32 @@
 ﻿{
-    "last_run_utc":  "2026-04-02T05:24:03.1396327Z",
+    "last_run_utc":  "2026-04-02T05:57:38.2594516Z",
     "changed_files":  [
-                          "tenants/templates/core/RELEASE_GATES_CHECKLIST.md"
+                          "docs/CHANGE_IMPACT_MATRIX.md",
+                          "docs/overview/agency-os-complete-system-introduction.md",
+                          "docs/overview/repo-template-locations.md",
+                          "WORKLOG.md"
                       ],
-    "impacted_files":  "tenants/templates/core/RELEASE_GATES_CHECKLIST.md",
-    "auto_updated_files":  {
-
-                           }
+    "impacted_files":  [
+                           "docs/CHANGE_IMPACT_MATRIX.md",
+                           "docs/overview/agency-os-complete-system-introduction.md",
+                           "docs/overview/repo-template-locations.md",
+                           "docs/README.md",
+                           "README.md",
+                           "tenants/company-p1-pilot/01_COMMANDER_SYSTEM_GUIDE.md",
+                           "tenants/company-p1-pilot/02_CLIENT_WORKSPACE_GUIDE.md",
+                           "tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md",
+                           "tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md",
+                           "WORKLOG.md"
+                       ],
+    "auto_updated_files":  [
+                               "docs/CHANGE_IMPACT_MATRIX.md",
+                               "docs/overview/agency-os-complete-system-introduction.md",
+                               "docs/README.md",
+                               "README.md",
+                               "tenants/company-p1-pilot/01_COMMANDER_SYSTEM_GUIDE.md",
+                               "tenants/company-p1-pilot/02_CLIENT_WORKSPACE_GUIDE.md",
+                               "tenants/templates/tenant-template/01_COMMANDER_SYSTEM_GUIDE.md",
+                               "tenants/templates/tenant-template/02_CLIENT_WORKSPACE_GUIDE.md",
+                               "WORKLOG.md"
+                           ]
 }
