@@ -8,11 +8,16 @@ alwaysApply: true
 **`AO-CLOSE` 關鍵字與收工回覆格式（今日完成／未完成／連動檢查／明日優先）維持不變。**  
 目標：使用者收工前打 `AO-CLOSE` 後，**本機通過完整閘道、產出報告、並推上 GitHub**，公司電腦 **`git pull` 即得完整可續接狀態**（含龍蝦治理 + Agency 連動 + 綜合狀態檔）。
 
+**預設操作者模型**：流程與檔案寫入**由 AI 代理執行**；規則下文「代理必須…」即對本輪代理的硬性要求。
+
+**`AO-CLOSE` 關鍵字 = 內含授權（無須再加一句口頭指令）**：使用者只須打 **`AO-CLOSE`**（或「收工／關機」等同等意圖），等同要求代理在跑 **`ao-close.ps1` 之前**已做完：併讀 **`TASKS.md`** 尚未 `- [x]` 之項、**當輪對話中可驗證之完成事實**（＋必要時先跑／對照 **`scripts/print-today-closeout-recap.ps1`** 輸出），對**每一項本輪已達 DoD** 者在 **`WORKLOG.md`** 當日 **`## yyyy-MM-dd`** 下補 **`- AUTO_TASK_DONE: <唯一子字串>`**。**禁止**要求使用者再打字如「照對話全寫進 AUTO_TASK_DONE」才動手。  
+- 若證據不足、無法判定是否完成：**只問一個**針對性確認題；仍由代理代寫 **`AUTO_TASK_DONE`**（或明示留待下一輪），**不要求**使用者親編 WORKLOG 機器行。
+
 When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
 "要關機", "收工", "今天先到這"), run this closeout sequence before ending:
 
 1. **First** update progress files (so the next step can commit them):
-   - `TASKS.md`（**預設不必手動勾選**：由代理在 **`WORKLOG.md`** 當日區塊寫 **`- AUTO_TASK_DONE: <子字串>`**，**`ao-close`** 內 **`apply-closeout-task-checkmarks`** 自動翻 `- [ ]`→`- [x]`）
+   - `TASKS.md`（**預設不必手動勾選**：由代理在 **`WORKLOG.md`** 當日區塊寫 **`- AUTO_TASK_DONE: <子字串>`**，**`ao-close`** 內 **`apply-closeout-task-checkmarks`** 自動翻 `- [ ]`→`- [x]`；**見上文：打 AO-CLOSE 即觸發代理代寫，無須使用者加句**）
    - `WORKLOG.md`
    - `memory/CONVERSATION_MEMORY.md`
    - `memory/daily/YYYY-MM-DD.md` (create if missing, then write closeout summary)

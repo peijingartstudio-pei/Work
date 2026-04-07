@@ -4,7 +4,7 @@
 > - **單一清單**：所有「之後還要做」的事，應以本檔 **`Next — 未完成`** 或 **`Backlog — 未完成`** 的一條 `- [ ]` 表示；不要只放在聊天或腦裡。  
 > - **當天做不完／臨時改做別的**：在當日 **`WORKLOG.md`** 寫一句（做了什麼、停在哪、為何轉向）；若承諾仍有效，**留在下面未完成清單**；若作廢，把該條刪除或改成「已取消／改路由至…」。  
 > - **`Next — 已完成歷程`**：僅供查說：曾經排過、已完成者；**新工作請不要加在這裡**。  
-> - **收工與打勾（預設全自動）**：**不必手動**改 `TASKS`。代理在當日 **`WORKLOG.md`**（`## yyyy-MM-dd`）為每項已完成的 DoD 加一行 **`- AUTO_TASK_DONE: <唯一子字串>`**（須只命中一條仍為 `- [ ]` 的待辦；已 `[x]` 時收工會略過並收斂標記）。收工 **`AO-CLOSE`** 會跑 **`scripts/apply-closeout-task-checkmarks.ps1`** 把 `TASKS` 打勾，並把上述行改為 **`AUTO_TASK_DONE_APPLIED (UTC): …`**。選填：本機 **`agency-os/.agency-state/pending-task-completions.txt`**（見 **`pending-task-completions.example.txt`**）。**不用靠記性**：`AO-CLOSE` 開頭會印 **`print-today-closeout-recap.ps1`** 摘要。
+> - **收工與打勾（預設全自動）**：**不必手動**改 `TASKS`。**只打 `AO-CLOSE`（或收工同義詞）即觸發代理**依當輪對話與 **`TASKS` 開放項**在當日 **`WORKLOG.md`**（`## yyyy-MM-dd`）寫 **`- AUTO_TASK_DONE: <唯一子字串>`**（須只命中一條仍為 `- [ ]` 的待辦；已 `[x]` 時略過並收斂標記），**不必再口頭重複指令**。收工腳本會跑 **`scripts/apply-closeout-task-checkmarks.ps1`** 打勾並改為 **`AUTO_TASK_DONE_APPLIED (UTC): …`**。選填： **`pending-task-completions.txt`**（見 **`pending-task-completions.example.txt`**）。`AO-CLOSE` 開頭會印 **`print-today-closeout-recap.ps1`** 摘要。
 
 ## In Progress
 - [x] 建立多租戶案場資料夾結構（company -> site -> project）
@@ -121,5 +121,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-07 05:12:10 UTC_
+_Last synced: 2026-04-07 05:16:38 UTC_
 
