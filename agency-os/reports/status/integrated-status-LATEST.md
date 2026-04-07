@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-04-07 10:16:11
+- Generated: 2026-04-07 17:33:28
 - agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -15,10 +15,10 @@
 - `LAST_SYSTEM_STATUS.md`, `WORKLOG.md`
 
 ## 1) TASKS.md - Next (unchecked)
-- [ ] **（AO-RESUME 提醒）雙機環境對齊（桌機＋筆電）**：兩台執行與功能一致——**新機／筆電首次**只跟 [`docs/overview/REMOTE_WORKSTATION_STARTUP.md`](docs/overview/REMOTE_WORKSTATION_STARTUP.md) **§1.5**（含 **§1.5.1**：Windows 本機 **MariaDB + PHP + WP-CLI** + `scripts/bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni`；與 **Supabase／MCP** 分列，WordPress 仍需 MySQL 相容庫）；**之後每次開工**跟同檔 **§2**（`git pull`、`lobster-factory\packages\workflows` 之 `npm ci`、可選 wrappers、`verify-build-gates`、再 **`AO-RESUME`**）。要點：筆電安裝 **GitHub CLI**（`winget install --id GitHub.cli`；裝完重開終端或刷新 `PATH`）並 **`gh auth login`**；**Node** 大版本與桌機／CI 一致；**`scripts/secrets-vault.ps1`（DPAPI）與 Cursor `mcp.json`／MCP 為每台各自設定**（勿假設會跟著 `git pull`）。完成後勾選本項。 - [ ] 啟動 Next-Gen 升級藍圖 v1（M1→M3）：`docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`（先選 2 個試點：1 既有站接手 + 1 新站建置） - [ ] **既有站接手（Soulful Expression Art Therapy）**：完成 M1 台帳（staging/prod、備份策略、維護窗、baseline 外掛/版本） - [ ] **新站建置（Scenery Travel Mongolia）**：完成 M1 啟動（tenant/site/project + 雲端 staging 可用 + Discovery 國際需求補齊） - [ ] **既有站接手 Day 1（Soulful Expression）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_A_EXISTING_SITE_SOULFUL_EXPRESSION.md` 第 1~2 節，輸出權限與基線盤點 - [ ] **新站建置 Day 1（Scenery Travel Mongolia）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_B_NEW_SITE_SCENERY_TRAVEL_MONGOLIA.md` 第 1~2 節，完成新站 staging 啟動條件 - [ ] `tenants/templates/` v2：試點 tenant 實填回饋後，再擴欄位與自動檢查（若有） - [ ] （Next-Gen 對齊）將 M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位（避免 Pilot 成果與跨國企業目標脫鉤） - [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈） - [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端） - [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
+
 
 ## 2) TASKS.md - Backlog (unchecked)
-- [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核） - [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager） - [ ] **`lobster-factory/packages/workflows` `npm audit`**（2026-04-01）：16 筆多為 **Trigger.dev CLI／`@trigger.dev/core` 傳遞依賴**（socket.io／cookie、esbuild dev、tar、giget、systeminformation 等）。**勿**對本目錄跑 `npm audit fix --force`（會把人帶到不相容 Trigger 版本）。**對策**：等官方 `@trigger.dev/sdk`／`trigger.dev` 小版修 upstream；或 Trigger 釋出安全修補後再 `npm update` + 回歸；本機勿將 Trigger **dev** 伺服器暴露公網。
+
 
 ## 3) Lobster Factory Master Checklist - open items (sections A-C, before section D)
 - [ ] A7. 串接 WordPress 真正 provision/shell execution（仍須 guardrails；**manifest 套用 shell 已具備**，全站自動建站仍待 hosting adapter） - [ ] A10-2. **商業閉環**：新客戶從建立→驗收 + 生產 Trigger 全鏈固定證據（對齊 `agency-os/tenants/NEW_TENANT_ONBOARDING_SOP.md` 實跑） - [ ] C5-1. Observability：Sentry（錯誤追蹤）+ PostHog（產品分析） - [ ] C5-2. Edge/Security：Cloudflare（WAF/CDN/Rate limit） - [ ] C5-3. Secrets：1Password Secrets Automation（或同級） - [ ] C5-4. Identity/Org：Clerk/WorkOS/Auth0（三選一） - [ ] C5-5. Cost/Decision：成本與決策引擎可觀測化（budget/ROI guardrails） - [ ] C5-6. 後續建議：Langfuse / Upstash / Stripe / Object Storage / Search
@@ -94,8 +94,8 @@
 - `validate-package-install-runs-flow.mjs --execute=1`：PASS（`installRunId=ae8c6e48-fac9-4ac6-8721-d142c831c620`，`workflowRunId=73c91be3-3663-4977-aa9a-4c2b7e24dd97`，flow pending→running→completed）。
 - `bootstrap-validate.mjs`：PASS。主檢查清單 **C1-2** 已勾選。
 
-### Today (2026-03-26) - AO-CLOSE
-- **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`scripts/ao-close.ps1`** 為正本（**`agency-os/scripts/ao-close.ps1`** 為 thin wrapper 轉發同參數）。預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report`；push 前 **`git fetch`** 且**不得落後** `origin/<分支>`（**`-AllowPushWhileBehind`** 僅例外）；**PASS 後** `git commit`／`git push`；`-SkipPush`／`-SkipVerify`／`-AllowNonPerfectHealth` 為選用。
+### Today (2026-03-26) - AO-CLOSE（歷史快照；**現行順序**見 **`.cursor/rules/40-shutdown-closeout.mdc` 第 2 步**）
+- **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**monorepo 根 `scripts/ao-close.ps1`** 為正本（**`agency-os/scripts/ao-close.ps1`** 為 thin wrapper）。**現行**另含：**`print-today-closeout-recap`**、**`apply-closeout-task-checkmarks`**（**WORKLOG `AUTO_TASK_DONE`**）；閘道仍為 **`verify-build-gates` → `system-guard` → `generate-integrated-status-report`**；push 前 **`git fetch`**／落後攔截；旗標見 **`end-of-day-checklist`**。
 - AO-CLOSE 預設新增硬門檻：`system-health-check` 分數需為 **100%**，未達 100% 直接視為收工未完成（需修復或經使用者明確授權才可放寬）。
 - **他處電腦開機**：固定閱讀 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（**§1.5** 新機、**§2** 例行；與 `RESUME_AFTER_REBOOT.md` 分機情境）；綜合報告以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準。
 - **報表路徑收斂**：腳本已加 monorepo guardrail，從 repo 根執行也會強制寫入 `agency-os/reports/*`；root `reports/*` 已退役為相容用途。
@@ -212,6 +212,9 @@
 ## 已完成
 - Git 同步／腳本強化（stash 行為、pull、`ao-close` fetch／behind guard、workflows `npm ci` 自動步驟）。
 - 文件／wrapper／memory／integrated-status 與腳本一致化；本日 **AO-CLOSE** 推遠端。
+- AO-RESUME 補強：預設列出 `TASKS.md` 全部未完成（`print-open-tasks`）。
+- AO-CLOSE 補強：預設列出今日回顧（`print-today-closeout-recap`）與 `WORKLOG` `AUTO_TASK_DONE` 自動打勾 `TASKS`（`apply-closeout-task-checkmarks`）。
+- 規則統一：`AO-CLOSE` 單關鍵字即授權代理代寫 `AUTO_TASK_DONE`，不再要求使用者補口頭句；`40/50/30`、`AGENTS`、`README`、`end-of-day-checklist`、`EXECUTION_DASHBOARD` 對齊。
 
 ## 未完成
 - `TASKS`「雙機環境對齊」等既有 Next 項（未變）。
@@ -220,13 +223,14 @@
 - 無。
 
 ## 下一步
+- 執行本次 **AO-CLOSE** 一鍵收工（gate + 報告 + push）。
 - 筆電依 **REMOTE** 開工；下次 **AO-RESUME** 前 **pull**。
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-04-07 10:16:06`
+- Time: `2026-04-07 17:33:19`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
@@ -236,8 +240,8 @@
 - Auto-repair result: **N/A**
 
 ## Latest Reports
-- Health: `reports/health/health-20260407-101606.md`
-- Closeout: `reports/closeout/closeout-20260407-101604.md`
+- Health: `reports/health/health-20260407-173319.md`
+- Closeout: `reports/closeout/closeout-20260407-173317.md`
 
 ## Action
 - No blocking issue detected.
