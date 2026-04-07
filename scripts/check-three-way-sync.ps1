@@ -3,7 +3,10 @@ param(
     [switch]$SkipVerify,
     [switch]$StrictDirty,
     [switch]$AutoFix,
-    [switch]$AllowUnexpectedDirty
+    [switch]$AllowUnexpectedDirty,
+    [switch]$AllowStashBeforePull,
+    [switch]$AllowAutoStashUnexpected,
+    [switch]$AllowPendingStash
 )
 
 Set-StrictMode -Version Latest
@@ -20,6 +23,11 @@ function Write-Result {
     if ($Detail) {
         Write-Host ("  - {0}" -f $Detail)
     }
+}
+
+function Get-GitStashCount {
+    $list = @(git stash list 2>$null | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+    return $list.Count
 }
 
 if (-not $WorkRoot) {
@@ -78,7 +86,19 @@ try {
         return $paths
     }
 
-    git fetch origin | Out-Null
+    $stashCountAtStart = Get-GitStashCount
+
+    git fetch origin 2>&1 | Out-Host
+    if ($LASTEXITCODE -ne 0) {
+        Write-Result -Label "git fetch origin" -Pass $false -Detail "fetch failed (network/auth?)"
+        exit 1
+    }
+    git rev-parse --verify origin/main 2>$null | Out-Null
+    if ($LASTEXITCODE -ne 0) {
+        Write-Result -Label "origin/main" -Pass $false -Detail "Missing origin/main after fetch."
+        exit 1
+    }
+
     $head = (git rev-parse --short HEAD).Trim()
     $remote = (git rev-parse --short origin/main).Trim()
     $isLatest = $head -eq $remote
@@ -97,7 +117,11 @@ try {
             }
         }
 
-        git fetch origin | Out-Null
+        git fetch origin 2>&1 | Out-Host
+        if ($LASTEXITCODE -ne 0) {
+            Write-Result -Label "git fetch (AutoFix)" -Pass $false -Detail "fetch failed"
+            exit 1
+        }
         $head = (git rev-parse --short HEAD).Trim()
         $remote = (git rev-parse --short origin/main).Trim()
         $isLatest = $head -eq $remote
@@ -105,15 +129,26 @@ try {
         if (-not $isLatest) {
             $dirtyForPull = @(Get-DirtyPaths)
             if ($dirtyForPull.Count -gt 0) {
+                if (-not $AllowStashBeforePull) {
+                    Write-Result -Label "AutoFix pull" -Pass $false -Detail "Behind origin/main but worktree is dirty. Commit, discard, stash manually, or pass -AllowStashBeforePull (with -AllowPendingStash if stash is created)."
+                    Write-Host ("  Dirty: " + ($dirtyForPull -join "; ")) -ForegroundColor Yellow
+                    exit 1
+                }
                 $stamp = Get-Date -Format "yyyyMMdd-HHmmss"
-                git stash push -m "auto-sync-before-pull-$stamp" | Out-Null
+                Write-Host "== AO-RESUME: stashing before fast-forward pull ==" -ForegroundColor Yellow
+                git stash push -m "ao-resume-before-pull-$stamp" 2>&1 | Out-Host
+                if ($LASTEXITCODE -ne 0) {
+                    Write-Result -Label "AutoFix stash" -Pass $false -Detail "git stash push failed"
+                    exit 1
+                }
             }
-            git pull --ff-only | Out-Null
+            git pull --ff-only origin main 2>&1 | Out-Host
             if ($LASTEXITCODE -ne 0) {
-                Write-Result -Label "AutoFix pull" -Pass $false -Detail "Unable to fast-forward pull"
+                Write-Result -Label "AutoFix pull" -Pass $false -Detail "Fast-forward failed. Try: git status; git pull --rebase origin main; or reset to origin/main if remote is truth."
                 exit 1
             }
-            git fetch origin | Out-Null
+            git fetch origin 2>&1 | Out-Host
+            if ($LASTEXITCODE -ne 0) { exit 1 }
             $head = (git rev-parse --short HEAD).Trim()
             $remote = (git rev-parse --short origin/main).Trim()
             $isLatest = $head -eq $remote
@@ -125,11 +160,22 @@ try {
             if ($knownNoise -notcontains $p) { $postFixUnexpected += $p }
         }
         if (($postFixUnexpected.Count -gt 0) -and (-not $AllowUnexpectedDirty)) {
-            $stamp = Get-Date -Format "yyyyMMdd-HHmmss"
-            git stash push -m "auto-sync-unexpected-dirty-$stamp" | Out-Null
+            if ($AllowAutoStashUnexpected) {
+                $stamp = Get-Date -Format "yyyyMMdd-HHmmss"
+                Write-Host "== AO-RESUME: stashing unexpected (auto-repair) ==" -ForegroundColor Yellow
+                git stash push -m "ao-resume-unexpected-dirty-$stamp" 2>&1 | Out-Host
+                if ($LASTEXITCODE -ne 0) {
+                    Write-Result -Label "stash unexpected" -Pass $false -Detail "git stash push failed"
+                    exit 1
+                }
+            } else {
+                Write-Result -Label "AutoFix worktree" -Pass $false -Detail ("Unexpected dirty: " + ($postFixUnexpected -join "; "))
+                exit 1
+            }
         }
 
-        git fetch origin | Out-Null
+        git fetch origin 2>&1 | Out-Host
+        if ($LASTEXITCODE -ne 0) { exit 1 }
         $head = (git rev-parse --short HEAD).Trim()
         $remote = (git rev-parse --short origin/main).Trim()
         $isLatest = $head -eq $remote
@@ -153,8 +199,15 @@ try {
     if ($isCleanEnough) {
         if ($dirtyPaths.Count -eq 0) {
             Write-Result -Label "Working tree" -Pass $true -Detail "Clean"
-        } else {
+        } elseif ($unexpectedDirty.Count -eq 0) {
             Write-Result -Label "Working tree" -Pass $true -Detail ("Only known noise: " + ($dirtyPaths -join ", "))
+        } else {
+            $detail = if ($AllowUnexpectedDirty) {
+                "Allowed by -AllowUnexpectedDirty: " + ($unexpectedDirty -join "; ")
+            } else {
+                "Unexpected: " + ($unexpectedDirty -join "; ")
+            }
+            Write-Result -Label "Working tree" -Pass $true -Detail $detail
         }
     } else {
         Write-Result -Label "Working tree" -Pass $false -Detail ("Unexpected dirty files: " + ($unexpectedDirty -join ", "))
@@ -173,6 +226,17 @@ try {
         }
     } else {
         Write-Result -Label "Correctness gate (verify-build-gates)" -Pass $true -Detail "Skipped by -SkipVerify"
+    }
+
+    $stashCountNow = Get-GitStashCount
+    if ($AutoFix -and (-not $AllowPendingStash) -and ($stashCountNow -gt $stashCountAtStart)) {
+        Write-Result -Label "Stash drift guard" -Pass $false -Detail "New stash ($stashCountAtStart -> $stashCountNow). git stash list; pop/drop; re-run. Use -AllowPendingStash with autopilot."
+        $stateDir = Join-Path $WorkRoot "agency-os\.agency-state"
+        $null = New-Item -ItemType Directory -Force -Path $stateDir
+        $note = Join-Path $stateDir "ao-resume-stash-warning.txt"
+        $utf8 = New-Object System.Text.UTF8Encoding $false
+        [System.IO.File]::WriteAllText($note, "Stash created during AO-RESUME. UTC: $([DateTime]::UtcNow.ToString('o'))`n", $utf8)
+        exit 1
     }
 
     $finalPass = $isLatest -and $isCleanEnough -and $verifyPass

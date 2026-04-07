@@ -1,7 +1,9 @@
 param(
     [string]$WorkRoot = "",
     [switch]$SkipVerify,
-    [switch]$AllowUnexpectedDirty
+    [switch]$AllowUnexpectedDirty,
+    [switch]$AllowStashBeforePull,
+    [switch]$AllowPendingStash
 )
 
 Set-StrictMode -Version Latest
@@ -31,6 +33,8 @@ $syncArgs = @(
 )
 if ($SkipVerify) { $syncArgs += "-SkipVerify" }
 if ($AllowUnexpectedDirty) { $syncArgs += "-AllowUnexpectedDirty" }
+if ($AllowUnexpectedDirty -or $AllowStashBeforePull) { $syncArgs += "-AllowStashBeforePull" }
+if ($AllowUnexpectedDirty -or $AllowPendingStash) { $syncArgs += "-AllowPendingStash" }
 
 & powershell.exe @syncArgs
 if ($LASTEXITCODE -ne 0) {

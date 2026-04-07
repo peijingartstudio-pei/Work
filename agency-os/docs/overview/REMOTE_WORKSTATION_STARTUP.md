@@ -175,7 +175,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
    - `agency-os\reports\status\integrated-status-LATEST.md`  
 
    **至此已完成 Git 同步**後，在 Cursor 對 AI 輸入 **`AO-RESUME`**。  
-   > **重要**：`AO-RESUME` 會先檢查並嘗試 `git pull --ff-only`；但若你本機已有未提交變更/衝突，pull 仍可能失敗。為了穩定，建議先手動完成 §2 第 1 步，再打 `AO-RESUME`。
+   > **重要**：`AO-RESUME` 會 `fetch` 並在乾淨或可接受條件下 **`git pull --ff-only origin main`**；**若落後遠端且工作樹仍有未提交變更**，預設 **不**自動 stash（見 **2.5.1**）。建議仍先手動完成本節第 1 步再打關鍵字。
 
 ## 2.5 日內 Git 節奏（checkpoint 與收工）— **單一真相（人類可讀）**
 
@@ -192,6 +192,17 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 - **遠端真相**仍是 `origin/main`：日內 checkpoint 只救本機；**雙機／隔天續接**靠收工 **push**（或你明講的立即推送）。
 - **刪檔別被 pull 洗回**：見 **§2.4**；刪除應進 commit，上雲可併入當日 **AO-CLOSE** 或急件時單獨 `push`。
 - **稽核遠端是否仍追蹤某路徑**：`scripts/git-audit-tracked-remote.ps1`（可選 `-Pattern`）。
+
+### 2.5.1 AO-RESUME／AO-CLOSE 與 GitHub 單一真相（腳本實際行為）
+
+- **`scripts/ao-resume.ps1`**（對應關鍵字 **AO-RESUME**）會呼叫 **`check-three-way-sync.ps1 -AutoFix`**。預設（桌機／正式雙機節奏）：
+  - **落後 `origin/main` 且工作樹仍有未提交變更**：**不**自動 stash；請先 **commit、捨棄或手動 `git stash`**，再跑 AO-RESUME，避免「以為已對齊、變其實在 stash」。
+  - **需要開機自動 pull 且可接受暫存**：筆電 **Autopilot** 已傳 **`-AllowUnexpectedDirty`**（會連帶啟用 `-AllowStashBeforePull`、`-AllowPendingStash`）。僅在手動確認時可自傳：  
+    `-AllowStashBeforePull`、`-AllowPendingStash`。
+  - **若在 pull 前替你建了 stash 且未允許擱置**：會 **FAIL**；依畫面指示執行 `git stash list`，再 `git stash pop` 或 `git stash drop` 後重跑。
+  - Pull 為 **`git pull --ff-only origin main`**；若失敗，代表與遠端 **非快轉關係**，請 `git status` 後 **rebase** 或依上文 **`reset --hard origin/main`**（以 GitHub 為準時）處理。
+- **`scripts/ao-close.ps1`**（**AO-CLOSE**）：在未加 **`-SkipPush`** 時，會先 **`git fetch`** 並檢查目前分支是否 **落後 `origin/<同一分支>`**；若落後則 **中止**，避免未 pull 就 push。僅在明示風險且必要時使用 **`-AllowPushWhileBehind`**。
+- **「整台電腦目錄」仍不可能與 GitHub 完全相同**：`node_modules`、本機 MCP／vault 等多為 **`.gitignore`**，兩台需各依 **1.5** 與 **6.2** 建置。
 
 ## 2.1 失敗處置（不要硬做）
 
@@ -314,5 +325,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-02 09:23:24 UTC_
+_Last synced: 2026-04-07 02:04:17 UTC_
 

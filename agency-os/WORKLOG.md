@@ -2,6 +2,16 @@
 
 > Historical snapshot note: this file records decisions/events by date. For current operating rules and commands, use the event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (startup/AO-RESUME) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (shutdown/AO-CLOSE).
 
+## 2026-04-07
+
+### AO-RESUME／AO-CLOSE：雙機與 `origin/main` 強制一致（減少靜默 stash／未 pull 即 push）
+- **`scripts/check-three-way-sync.ps1`**：`AutoFix` 預設在「落後且工作樹髒」時 **不**自動 stash（改為明確 FAIL）；`-AllowStashBeforePull` + `-AllowPendingStash` 給 Autopilot／明示鬆綁。pull 改為 **`git pull --ff-only origin main`**，fetch／pull 錯誤可見。移除「未預期髒檔→靜默 stash」；改 **FAIL** 或 `-AllowAutoStashUnexpected`（alert 自動修復）。**Stash drift guard**：若本次 run 新增 stash 且未 `-AllowPendingStash` → FAIL 並寫 `agency-os/.agency-state/ao-resume-stash-warning.txt`。
+- **`scripts/ao-resume.ps1`**：`-AllowUnexpectedDirty` 時連帶傳遞 `-AllowStashBeforePull`、`-AllowPendingStash`；另可加手動 `-AllowStashBeforePull`／`-AllowPendingStash`。
+- **`scripts/ao-close.ps1`**：push 前 **`git fetch`**；若目前分支落後 **`origin/<分支>`** → **中止**（`-AllowPushWhileBehind` 跳過）。
+- **`agency-os/scripts/check-three-way-sync.ps1`**：改為 **wrapper** 呼叫 monorepo 根正本（修正舊版錯用 `agency-os` 為 WorkRoot 的風險）。
+- **`autopilot-phase1.ps1`**（根與 agency-os）：alert 同步補 **`-AllowStashBeforePull -AllowAutoStashUnexpected -AllowPendingStash`**。
+- **文件**：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` 新增 **2.5.1**（腳本行為與單一真相）。
+
 ## 2026-04-02
 
 ### platform-templates：`wc-core.json` 與龍蝦權威對齊；移除無 SSOT 對應之舊範例
@@ -280,7 +290,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-02 09:46:10 UTC_
+_Last synced: 2026-04-07 02:04:18 UTC_
 
 ## 2026-03-20
 
@@ -708,6 +718,7 @@ _Last synced: 2026-04-02 09:46:10 UTC_
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
 
 
 

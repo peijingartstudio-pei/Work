@@ -48,7 +48,7 @@ switch ($Mode) {
         Invoke-Notify -Title "AO Alert Triggered" -Message "ALERT_REQUIRED detected. Starting auto-repair flow." -Level "warn"
 
         $sync = Join-Path $script:Root "scripts\check-three-way-sync.ps1"
-        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $sync -WorkRoot $script:Root -AutoFix -SkipVerify
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $sync -WorkRoot $script:Root -AutoFix -SkipVerify -AllowStashBeforePull -AllowAutoStashUnexpected -AllowPendingStash
         if ($LASTEXITCODE -ne 0) {
             Invoke-Notify -Title "AO Alert Auto-Repair FAIL" -Message ("sync auto-fix failed with exit code " + $LASTEXITCODE) -Level "error"
             exit $LASTEXITCODE

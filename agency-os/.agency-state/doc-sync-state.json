@@ -1,17 +1,36 @@
 ﻿{
-    "last_run_utc":  "2026-04-02T09:46:12.1615426Z",
+    "last_run_utc":  "2026-04-07T02:04:18.9198798Z",
     "changed_files":  [
-                          "memory/CONVERSATION_MEMORY.md",
-                          "memory/daily/2026-04-02.md",
+                          "docs/overview/PROGRAM_TIMELINE.md",
+                          "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
                           "WORKLOG.md"
                       ],
     "impacted_files":  [
+                           "../README.md",
+                           ".cursor/rules/00-session-bootstrap.mdc",
+                           ".cursor/rules/30-resume-keyword.mdc",
+                           ".cursor/rules/40-shutdown-closeout.mdc",
+                           "AGENTS.md",
+                           "docs/operations/end-of-day-checklist.md",
+                           "docs/overview/EXECUTION_DASHBOARD.md",
+                           "docs/overview/INTEGRATED_STATUS_REPORT.md",
+                           "docs/overview/PROGRAM_TIMELINE.md",
+                           "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
                            "memory/CONVERSATION_MEMORY.md",
-                           "memory/daily/2026-04-02.md",
+                           "RESUME_AFTER_REBOOT.md",
+                           "TASKS.md",
                            "WORKLOG.md"
                        ],
     "auto_updated_files":  [
+                               "../README.md",
+                               "AGENTS.md",
+                               "docs/operations/end-of-day-checklist.md",
+                               "docs/overview/EXECUTION_DASHBOARD.md",
+                               "docs/overview/INTEGRATED_STATUS_REPORT.md",
+                               "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
                                "memory/CONVERSATION_MEMORY.md",
+                               "RESUME_AFTER_REBOOT.md",
+                               "TASKS.md",
                                "WORKLOG.md"
                            ]
 }

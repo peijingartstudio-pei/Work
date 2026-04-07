@@ -10,7 +10,8 @@ param(
     [string]$CommitMessage = "",
     [switch]$SkipPush,
     [switch]$SkipVerify,
-    [switch]$AllowNonPerfectHealth
+    [switch]$AllowNonPerfectHealth,
+    [switch]$AllowPushWhileBehind
 )
 
 Set-StrictMode -Version Latest
@@ -36,6 +37,44 @@ $guardScript = Join-Path $agencyRoot "scripts\system-guard.ps1"
 if (-not (Test-Path -LiteralPath $guardScript)) {
     Write-Error "ao-close: missing system-guard at $guardScript"
     exit 1
+}
+
+if (-not $SkipPush -and -not $AllowPushWhileBehind) {
+    Write-Host "== AO-CLOSE: git fetch + push safety (ahead/behind vs origin) ==" -ForegroundColor Cyan
+    Push-Location $WorkRoot
+    try {
+        $null = git rev-parse --git-dir 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "ao-close: not a git repository at $WorkRoot"
+            exit 1
+        }
+        git fetch origin 2>&1 | Out-Host
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "ao-close: git fetch failed; fix network/auth or pass -SkipPush."
+            exit 1
+        }
+        $branch = (git rev-parse --abbrev-ref HEAD).Trim()
+        if ($branch -ne "HEAD") {
+            $remoteRef = "origin/$branch"
+            git rev-parse --verify $remoteRef 2>$null | Out-Null
+            if ($LASTEXITCODE -eq 0) {
+                $lr = (git rev-list --left-right --count "${remoteRef}...HEAD").Trim()
+                $parts = @($lr -split '\s+' | Where-Object { $_ })
+                if ($parts.Count -ge 2) {
+                    $behind = [int]$parts[0]
+                    $ahead = [int]$parts[1]
+                    if ($behind -gt 0) {
+                        Write-Error "ao-close: $remoteRef is ahead by $behind commit(s). Run AO-RESUME or git pull --ff-only origin $branch (then resolve), then AO-CLOSE again. Or pass -AllowPushWhileBehind (unsafe)."
+                        exit 1
+                    }
+                }
+            }
+        }
+    } finally {
+        Pop-Location
+    }
+} elseif ($AllowPushWhileBehind) {
+    Write-Host "== AO-CLOSE: -AllowPushWhileBehind set; skipping behind-remote guard ==" -ForegroundColor Yellow
 }
 
 $verifyScript = Join-Path $WorkRoot "scripts\verify-build-gates.ps1"
