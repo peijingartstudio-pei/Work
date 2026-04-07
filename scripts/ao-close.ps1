@@ -1,7 +1,7 @@
 # AO-CLOSE: monorepo verify-build-gates -> system-guard (doc-sync + health + guard) ->
 #   generate integrated-status report -> git commit + push.
 # Run AFTER updating TASKS.md, WORKLOG.md, and memory files so they are included in the commit.
-# May be invoked from monorepo root scripts\ OR agency-os\scripts\ (keep both copies identical).
+# Primary: monorepo root scripts\ao-close.ps1. agency-os\scripts\ao-close.ps1 is a thin wrapper (same flags).
 # -SkipPush: no git commit/push (still runs gates and reports).
 # -SkipVerify: skip verify-build-gates (faster; not recommended before company pull).
 

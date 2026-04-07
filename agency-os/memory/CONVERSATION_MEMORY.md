@@ -1,4 +1,4 @@
-﻿# Conversation Memory
+# Conversation Memory
 
 > Historical snapshot note: this file preserves cross-session context and may include decisions from older process versions. For current operating rules, use event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (AO-RESUME/startup、**§2.5 日內 Git 節奏**) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (AO-CLOSE/shutdown). Agent-enforced Git detail: `.cursor/rules/50-operator-autopilot.mdc` §7.
 
@@ -143,7 +143,7 @@
 以下命令中的 `<WORK_ROOT>` 請替換為本機實際路徑（例如 `D:\Work` 或 `C:\Users\USER\Work`）。
 
 ### 開工前（雙機必做；早於 `AO-RESUME` 讀檔）
-`AO-RESUME` 會先檢查並嘗試 `git pull --ff-only`，但若本機有未提交變更/衝突仍可能失敗；為求穩定，另一台 **AO-CLOSE** push 後本機仍建議先手動對齊 `origin/main`：
+`AO-RESUME` 會 `fetch` 並在條件允許時嘗試 **`git pull --ff-only origin main`**；**落後且工作樹仍有未提交變更時，預設不會自動 stash**（見 `REMOTE_WORKSTATION_STARTUP` **2.5.1**）。另一台 **AO-CLOSE** push 後，仍建議先手動對齊 `origin/main` 再打關鍵字：
 ```
 cd <WORK_ROOT>
 git fetch origin
@@ -205,7 +205,7 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `bootstrap-validate.mjs`：PASS。主檢查清單 **C1-2** 已勾選。
 
 ## Today (2026-03-26) - AO-CLOSE
-- **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`ao-close.ps1`**（雙路徑同內容）預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`，讓公司機 **`pull` 即完整**；`-SkipPush`／`-SkipVerify` 為選用。
+- **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`scripts/ao-close.ps1`** 為正本（**`agency-os/scripts/ao-close.ps1`** 為 thin wrapper 轉發同參數）。預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report`；push 前 **`git fetch`** 且**不得落後** `origin/<分支>`（**`-AllowPushWhileBehind`** 僅例外）；**PASS 後** `git commit`／`git push`；`-SkipPush`／`-SkipVerify`／`-AllowNonPerfectHealth` 為選用。
 - AO-CLOSE 預設新增硬門檻：`system-health-check` 分數需為 **100%**，未達 100% 直接視為收工未完成（需修復或經使用者明確授權才可放寬）。
 - **他處電腦開機**：固定閱讀 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（**§1.5** 新機、**§2** 例行；與 `RESUME_AFTER_REBOOT.md` 分機情境）；綜合報告以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準。
 - **報表路徑收斂**：腳本已加 monorepo guardrail，從 repo 根執行也會強制寫入 `agency-os/reports/*`；root `reports/*` 已退役為相容用途。

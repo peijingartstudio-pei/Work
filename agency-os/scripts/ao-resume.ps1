@@ -1,7 +1,10 @@
 param(
     [string]$WorkRoot = "",
     [switch]$SkipVerify,
-    [switch]$AllowUnexpectedDirty
+    [switch]$AllowUnexpectedDirty,
+    [switch]$AllowStashBeforePull,
+    [switch]$AllowPendingStash,
+    [switch]$SkipWorkflowsDeps
 )
 
 Set-StrictMode -Version Latest

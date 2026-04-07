@@ -1,4 +1,4 @@
-﻿# End-of-day Checklist (AO-CLOSE)
+# End-of-day Checklist (AO-CLOSE)
 
 > 目的：每次關機前**逐項打勾**，確保不疏漏、不重工，並留下可追溯證據（reports + 進度文件）。
 
@@ -20,6 +20,7 @@
   - **任一步 FAIL**：**不會 push**
   - 今夜不推遠端：`-SkipPush`（仍跑閘道與產報）
   - 略過龍蝦閘（不建議）：`-SkipVerify`
+  - 遠端已超前仍強制 push（**高風險**，僅明示核准）：`-AllowPushWhileBehind`
 
 ### 1b) 手動三步（與 1a 擇一即可）
 在 `<WORK_ROOT>\agency-os` 目錄執行（與 1a **擇一**；**收工推薦 1a 於 repo 根**）：

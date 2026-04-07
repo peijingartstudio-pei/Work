@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-04-02 17:46:24
+- Generated: 2026-04-07 10:14:23
 - agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -95,7 +95,7 @@
 - `bootstrap-validate.mjs`：PASS。主檢查清單 **C1-2** 已勾選。
 
 ### Today (2026-03-26) - AO-CLOSE
-- **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`ao-close.ps1`**（雙路徑同內容）預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report` → **PASS 後** `git commit`／`git push`，讓公司機 **`pull` 即完整**；`-SkipPush`／`-SkipVerify` 為選用。
+- **`AO-CLOSE` 關鍵字與四段收工回覆格式不變**；**`scripts/ao-close.ps1`** 為正本（**`agency-os/scripts/ao-close.ps1`** 為 thin wrapper 轉發同參數）。預設：`verify-build-gates` → `system-guard`（doc-sync+health+guard）→ `generate-integrated-status-report`；push 前 **`git fetch`** 且**不得落後** `origin/<分支>`（**`-AllowPushWhileBehind`** 僅例外）；**PASS 後** `git commit`／`git push`；`-SkipPush`／`-SkipVerify`／`-AllowNonPerfectHealth` 為選用。
 - AO-CLOSE 預設新增硬門檻：`system-health-check` 分數需為 **100%**，未達 100% 直接視為收工未完成（需修復或經使用者明確授權才可放寬）。
 - **他處電腦開機**：固定閱讀 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md`**（**§1.5** 新機、**§2** 例行；與 `RESUME_AFTER_REBOOT.md` 分機情境）；綜合報告以 **`agency-os/reports/status/integrated-status-LATEST.md`** 為準。
 - **報表路徑收斂**：腳本已加 monorepo guardrail，從 repo 根執行也會強制寫入 `agency-os/reports/*`；root `reports/*` 已退役為相容用途。
@@ -203,18 +203,8 @@
 
 > Full runbook: see `## Runbook Commands` in the source file.
 
-## 5) memory/daily/2026-04-02.md
-# 2026-04-02
-
-- **背景**：延續長期營運治理；補齊 ADR 006 與索引／影響矩陣／閘道銜接。
-- **已完成**：`decisions/README.md` 納入 006；`CHANGE_IMPACT_MATRIX`、`LONG_TERM_OPERATING_DISCIPLINE`、002/005 Related 更新；`WORKLOG`／`CONVERSATION_MEMORY` 記錄；`verify-adr-index` + `verify-build-gates` **ALL PASSED**（health 100%）。
-- **已完成（專案管理工具退役）**：已將 **Linear** 從 repo **完全移除**（含腳本、文件、報表產物、`mcp.json` server、以及歷史文字），並確認全 repo `Linear/LINEAR_/linear.app` 相關字樣為 **零命中**；`doc-sync`、health、`verify-build-gates` 全綠後已推送到 `origin/main`。
-- **未完成**：無（本批）。
-- **風險／阻塞**：無。
-- **下一步**：Schema／migration 落地時對照 ADR 006 實作 RLS 與 Clerk 對照表；例行自 monorepo 根跑 `verify-build-gates`。
-
-## AO-CLOSE（收工）
-- 將執行 `powershell -ExecutionPolicy Bypass -File .\\scripts\\ao-close.ps1` 產出最新 `reports/{closeout,health,guard,status}`，並在 PASS 後推送（公司機 `git pull` 可續接）。
+## 5) memory/daily/2026-04-07.md
+_no file for today yet._
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status

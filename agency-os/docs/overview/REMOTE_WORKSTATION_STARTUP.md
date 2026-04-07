@@ -259,7 +259,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 
 你會看到什麼（成功判斷）：
 - `ao-close`：會產生 closeout/health/guard 報告
-- `ao-resume.ps1`：preflight completed + 自上次以來 `agency-os/reports/{closeout,health,guard,status}` 增量列表（**不**取代 `git pull`）
+- `ao-resume.ps1`：preflight completed；`check-three-way-sync` 在條件允許時會 **`git pull --ff-only origin main`**（見 **2.5.1**）；通過後會跑 **workflows `npm ci`** 檢查（除非 `-SkipWorkflowsDeps`）；並列出自上次以來 `agency-os/reports/{closeout,health,guard,status}` 增量。**仍建議**例行先完成本節 §2 第 1 步再依賴腳本，以降低 dirty／stash 失敗率。
 
 ## 3) 兩份「綜合狀態」路徑別搞混
 
