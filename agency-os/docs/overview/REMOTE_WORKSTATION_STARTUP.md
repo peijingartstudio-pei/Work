@@ -189,7 +189,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 |------|-----------|-----|
 | **`AO-RESUME`（開工前檢）** | 你：在 Cursor 打關鍵字；代理：跑 `ao-resume.ps1` preflight、讀進度檔 | **不**為「開場」自動空 commit；預設會在終端**列出 `agency-os/TASKS.md` 全部 `- [ ]`（含所屬 `##` 區塊）**；另列出自上次以來的 `agency-os/reports/*` 增量。進階略過：**`-SkipOpenTasksList`**。 |
 | **工作中（至收工前）** | 你：下任務；代理：實作與驗證 | 每完成一個**可敘述、已驗證**的里程碑：代理**應自動**在 monorepo 根執行 **`scripts/commit-checkpoint.ps1`**（**本機 commit**，**不 push**）。**你不必手動**跑該腳本。 |
-| **`AO-CLOSE`（收工）** | 你：關鍵字或明示收工；代理：更新 `TASKS`／`WORKLOG`／`memory` 後跑 `ao-close.ps1` | **開頭**先跑 **`scripts/print-today-closeout-recap.ps1`**（今日 commit、`git status`、`WORKLOG` 今日區塊、`memory/daily`）— **不必靠腦記**今天做了什麼；進階略過 **`-SkipTodayRecap`**。閘道 **PASS** 後：可選 **`pending-task-completions`** 自動打勾 `TASKS`；再 **`git add` → `commit`（收斂殘留）→ `git push`**；可一次推上當日**多顆**本機 commit。 |
+| **`AO-CLOSE`（收工）** | 你：關鍵字或明示收工；代理：更新 **`WORKLOG`**／`memory`（**不必手動勾 `TASKS`**）後跑 `ao-close.ps1` | **開頭** **`print-today-closeout-recap`**；閘道 **PASS** 後、**`git add` 前**：**`apply-closeout-task-checkmarks`** 讀取當日 **`WORKLOG`** 之 **`- AUTO_TASK_DONE: …`**（＋選用 **`pending-task-completions.txt`**）自動打勾 **`TASKS`**。略過：**`-SkipAutoTaskCheckmarks`**。其餘略過旗標見 **`end-of-day-checklist`**。再 **`git add` → `commit` → `git push`**。 |
 
 **補充**
 
@@ -206,7 +206,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
     `-AllowStashBeforePull`、`-AllowPendingStash`。
   - **若在 pull 前替你建了 stash 且未允許擱置**：會 **FAIL**；依畫面指示執行 `git stash list`，再 `git stash pop` 或 `git stash drop` 後重跑。
   - Pull 為 **`git pull --ff-only origin main`**；若失敗，代表與遠端 **非快轉關係**，請 `git status` 後 **rebase** 或依上文 **`reset --hard origin/main`**（以 GitHub 為準時）處理。
-- **`scripts/ao-close.ps1`**（**AO-CLOSE**）：預設先 **`print-today-closeout-recap`**（今日 Git／`WORKLOG`／`memory/daily`）；**`-SkipTodayRecap`** 可略過。在未加 **`-SkipPush`** 時，會先 **`git fetch`** 並檢查目前分支是否 **落後 `origin/<同一分支>`**；若落後則 **中止**，避免未 pull 就 push。僅在明示風險且必要時使用 **`-AllowPushWhileBehind`**。在 **`git add` 前**會執行 **`apply-pending-task-checkmarks.ps1`**（僅當 **`pending-task-completions.txt`** 存在；該檔 **`.gitignore`**）。
+- **`scripts/ao-close.ps1`**（**AO-CLOSE**）：預設先 **`print-today-closeout-recap`**；**`-SkipTodayRecap`** 可略過。在未加 **`-SkipPush`** 時，會先 **`git fetch`** 並檢查是否落後 **`origin/<同一分支>`**；若落後則 **中止**。僅在明示風險且必要時使用 **`-AllowPushWhileBehind`**。在 **`git add` 前**會執行 **`apply-closeout-task-checkmarks.ps1`**（自 **`WORKLOG` 當日 `## yyyy-MM-dd`** 區塊解析 **`- AUTO_TASK_DONE:`** 行，並合併選用之 **`pending-task-completions.txt`**；**`-SkipAutoTaskCheckmarks`** 可略過）。
 - **「整台電腦目錄」仍不可能與 GitHub 完全相同**：`node_modules`、本機 MCP／vault 等多為 **`.gitignore`**，兩台需各依 **1.5** 與 **6.2** 建置。
 
 ## 2.1 失敗處置（不要硬做）
@@ -330,5 +330,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-07 03:54:08 UTC_
+_Last synced: 2026-04-07 05:12:10 UTC_
 

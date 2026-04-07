@@ -7,12 +7,12 @@
 ### AO-CLOSE：今日完成「外接記憶」（給記性差／易斷線者）
 - **`scripts/print-today-closeout-recap.ps1`**：`AO-CLOSE` 預設**開頭**印 **今日 Git commit**、`git status`、**`WORKLOG`** 當日 `## yyyy-mm-dd` 區塊、`memory/daily` 尾端——**不必靠腦記**今天做過什麼；亦可單獨先跑再補四份進度檔。**`-SkipTodayRecap`** 可略過。
 
-### AO-RESUME／AO-CLOSE：待辦可見性 + 安全自動打勾
-- **`scripts/print-open-tasks.ps1`**：`AO-RESUME` 預設在終端列出 **`agency-os/TASKS.md`** 全部 `- [ ]`（含所屬 `##`）；**`-SkipOpenTasksList`** 可略過；Windows 5.x 終端補 **UTF-8** 以降低中文亂碼。
-- **`scripts/apply-pending-task-checkmarks.ps1`** + 本機 **`agency-os/.agency-state/pending-task-completions.txt`**（**`.gitignore`**）：`AO-CLOSE` 在 **`git add` 前**依每行**唯一**子字串將對應項 `- [ ]`→`- [x]`（對不到或對多條則整批失敗不寫檔）；成功後刪除 pending 檔。範例與說明見 **`pending-task-completions.example.txt`**、`TASKS.md` 待辦原則、**`REMOTE`** 2.5／2.5.1。
+### AO-RESUME／AO-CLOSE：待辦可見性 + 全自動打勾（WORKLOG 驅動）
+- **`scripts/print-open-tasks.ps1`**：`AO-RESUME` 預設列出 **`TASKS.md`** 全部 `- [ ]`；**`-SkipOpenTasksList`** 可略過。
+- **`scripts/apply-closeout-task-checkmarks.ps1`**：`AO-CLOSE` 在 **`git add` 前**讀 **當日 `WORKLOG`** 之 **`- AUTO_TASK_DONE: <子字串>`**（＋選用 **`pending-task-completions.txt`**），將命中之 `- [ ]`→`- [x]`；`WORKLOG` 標記改為 **`AUTO_TASK_DONE_APPLIED`**；已 `[x]` 者 idempotent。legacy 呼叫仍可用 **`apply-pending-task-checkmarks.ps1`**（僅 pending 檔）。
 
 ### TASKS.md：未完成／已完成分區 + 待辦原則
-- 檔首新增 **待辦原則**（單一清單、做不完／轉向寫 WORKLOG、`AO-CLOSE` 不自動打勾）。
+- 檔首 **待辦原則**：單一清單、轉向寫 **`WORKLOG`**；**預設不必手動勾 `TASKS`**（見 **`50-operator-autopilot`**、`TASKS` 檔首）。
 - **Next／Backlog** 拆分為 **「未完成」**與 **「已完成歷程」**，使 **14** 條開放待辦（Next 11 + Backlog 3）一目可見，避免長列表埋沒 `- [ ]`。
 
 ### AO-CLOSE（收工推送）
@@ -311,7 +311,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-07 03:54:08 UTC_
+_Last synced: 2026-04-07 05:12:10 UTC_
 
 ## 2026-03-20
 
@@ -739,6 +739,7 @@ _Last synced: 2026-04-07 03:54:08 UTC_
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
 
 
 

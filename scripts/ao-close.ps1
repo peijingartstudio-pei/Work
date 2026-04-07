@@ -1,9 +1,9 @@
 # AO-CLOSE: print-today-closeout-recap (see -SkipTodayRecap) -> verify-build-gates ->
 #   system-guard (doc-sync + health + guard) -> generate integrated-status report ->
-#   optional apply-pending-task-checkmarks -> git commit + push.
+#   optional apply-closeout-task-checkmarks -> git commit + push.
 # Run AFTER updating TASKS.md, WORKLOG.md, and memory files so they are included in the commit.
-# Optional: agency-os/.agency-state/pending-task-completions.txt (gitignored) lists substrings
-# for apply-pending-task-checkmarks.ps1 to flip matching - [ ] lines in TASKS.md before git add.
+# apply-closeout-task-checkmarks: WORKLOG today "- AUTO_TASK_DONE: <substring>" + optional
+# agency-os/.agency-state/pending-task-completions.txt (gitignored).
 # Primary: monorepo root scripts\ao-close.ps1. agency-os\scripts\ao-close.ps1 is a thin wrapper (same flags).
 # -SkipPush: no git commit/push (still runs gates and reports).
 # -SkipVerify: skip verify-build-gates (faster; not recommended before company pull).
@@ -15,7 +15,8 @@ param(
     [switch]$SkipVerify,
     [switch]$AllowNonPerfectHealth,
     [switch]$AllowPushWhileBehind,
-    [switch]$SkipTodayRecap
+    [switch]$SkipTodayRecap,
+    [switch]$SkipAutoTaskCheckmarks
 )
 
 Set-StrictMode -Version Latest
@@ -147,14 +148,16 @@ if (Test-Path -LiteralPath $healthDir) {
     }
 }
 
-$applyMarks = Join-Path $WorkRoot "scripts\apply-pending-task-checkmarks.ps1"
-if (Test-Path -LiteralPath $applyMarks) {
-    Write-Host "== AO-CLOSE: pending TASKS checkmarks (optional .agency-state file) ==" -ForegroundColor Cyan
+$applyMarks = Join-Path $WorkRoot "scripts\apply-closeout-task-checkmarks.ps1"
+if (-not $SkipAutoTaskCheckmarks -and (Test-Path -LiteralPath $applyMarks)) {
+    Write-Host "== AO-CLOSE: TASKS checkmarks (WORKLOG AUTO_TASK_DONE + optional pending file) ==" -ForegroundColor Cyan
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $applyMarks -WorkRoot $WorkRoot
     if ($LASTEXITCODE -ne 0) {
-        Write-Error "ao-close: apply-pending-task-checkmarks failed (exit $LASTEXITCODE). Fix pending file or TASKS.md."
+        Write-Error "ao-close: apply-closeout-task-checkmarks failed (exit $LASTEXITCODE). Fix WORKLOG markers, pending file, or TASKS.md."
         exit $LASTEXITCODE
     }
+} elseif ($SkipAutoTaskCheckmarks) {
+    Write-Host "== AO-CLOSE: -SkipAutoTaskCheckmarks（略過自動打勾）==" -ForegroundColor DarkYellow
 }
 
 if ($SkipPush) {

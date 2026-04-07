@@ -12,7 +12,7 @@ When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
 "要關機", "收工", "今天先到這"), run this closeout sequence before ending:
 
 1. **First** update progress files (so the next step can commit them):
-   - `TASKS.md`
+   - `TASKS.md`（**預設不必手動勾選**：由代理在 **`WORKLOG.md`** 當日區塊寫 **`- AUTO_TASK_DONE: <子字串>`**，**`ao-close`** 內 **`apply-closeout-task-checkmarks`** 自動翻 `- [ ]`→`- [x]`）
    - `WORKLOG.md`
    - `memory/CONVERSATION_MEMORY.md`
    - `memory/daily/YYYY-MM-DD.md` (create if missing, then write closeout summary)

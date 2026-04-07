@@ -5,7 +5,8 @@ param(
     [switch]$SkipVerify,
     [switch]$AllowNonPerfectHealth,
     [switch]$AllowPushWhileBehind,
-    [switch]$SkipTodayRecap
+    [switch]$SkipTodayRecap,
+    [switch]$SkipAutoTaskCheckmarks
 )
 
 Set-StrictMode -Version Latest
