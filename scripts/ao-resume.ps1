@@ -3,7 +3,8 @@ param(
     [switch]$SkipVerify,
     [switch]$AllowUnexpectedDirty,
     [switch]$AllowStashBeforePull,
-    [switch]$AllowPendingStash
+    [switch]$AllowPendingStash,
+    [switch]$SkipWorkflowsDeps
 )
 
 Set-StrictMode -Version Latest
@@ -43,6 +44,17 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "AO-RESUME preflight completed: repo is synced and ready." -ForegroundColor Green
+
+$depsScript = Join-Path $WorkRoot "scripts\ensure-lobster-workflows-deps.ps1"
+if (-not $SkipWorkflowsDeps -and (Test-Path -LiteralPath $depsScript)) {
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $depsScript -WorkRoot $WorkRoot
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "ao-resume: workflows dependency step failed (exit $LASTEXITCODE)."
+        exit $LASTEXITCODE
+    }
+} elseif ($SkipWorkflowsDeps) {
+    Write-Host "== AO-RESUME: -SkipWorkflowsDeps（略過 npm ci 檢查）==" -ForegroundColor DarkYellow
+}
 
 # Report delta since last AO-RESUME (local stamp under agency-os/.agency-state/)
 $stateDir = Join-Path $WorkRoot "agency-os\.agency-state"

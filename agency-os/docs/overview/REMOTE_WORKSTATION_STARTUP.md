@@ -1,4 +1,4 @@
-﻿# 他處電腦／公司機 — 開機與首次接線須知
+# 他處電腦／公司機 — 開機與首次接線須知
 
 > **目的**：在家 push 後，到**另一台電腦**（公司機、筆電、新機）能**最快、安全、可驗證**地續接，並把流程收斂為「可重複、可回復、可追蹤」。
 >
@@ -148,6 +148,10 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
    若失敗，先處理本機未提交或衝突，再往下走。
 
 2. **依賴還原（`node_modules` 不入庫）**  
+
+   **（小白）`npm ci` 是什麼？** 可以想成：照著 **`package-lock.json` 這份購物清單**，把要用到的 JavaScript 套件裝進本機的 **`node_modules`** 資料夾。清單會跟著 GitHub；`node_modules` 太大通常不入庫，所以**每一台電腦**至少要裝一次；**`git pull` 之後若清單有更新**，也要再裝一次才跟筆電／CI 一致。  
+   **現在打 `AO-RESUME`（跑 `ao-resume.ps1`）時，若偵測到還沒裝過或清單變新了，會自動替你執行 `npm ci`**（腳本會印簡短英文說明；npm 本身可能出現黃色 **英文警告**，多數可忽略，只要最後顯示完成即可）。想略過可傳 **`-SkipWorkflowsDeps`**（進階用）。亦可手動貼上：  
+
    - **龍蝦 workflows 套件**（`packages/workflows` 具 `package-lock.json`；Trigger／zod 等依賴在此）：  
      ```powershell
      cd lobster-factory\packages\workflows
@@ -195,6 +199,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 
 ### 2.5.1 AO-RESUME／AO-CLOSE 與 GitHub 單一真相（腳本實際行為）
 
+- **`scripts/ao-resume.ps1`** 在 Git 同步通過後會呼叫 **`scripts/ensure-lobster-workflows-deps.ps1`**（除非 **`-SkipWorkflowsDeps`**）：在需要時自動執行 **`lobster-factory\packages\workflows`** 的 **`npm ci`**，並印出小白說明（見上文「`npm ci` 是什麼」）。
 - **`scripts/ao-resume.ps1`**（對應關鍵字 **AO-RESUME**）會呼叫 **`check-three-way-sync.ps1 -AutoFix`**。預設（桌機／正式雙機節奏）：
   - **落後 `origin/main` 且工作樹仍有未提交變更**：**不**自動 stash；請先 **commit、捨棄或手動 `git stash`**，再跑 AO-RESUME，避免「以為已對齊、變其實在 stash」。
   - **需要開機自動 pull 且可接受暫存**：筆電 **Autopilot** 已傳 **`-AllowUnexpectedDirty`**（會連帶啟用 `-AllowStashBeforePull`、`-AllowPendingStash`）。僅在手動確認時可自傳：  
@@ -325,5 +330,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-07 02:04:17 UTC_
+_Last synced: 2026-04-07 02:07:24 UTC_
 
