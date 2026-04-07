@@ -26,13 +26,15 @@ When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
    `powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`
    If `.\scripts\ao-close.ps1` is missing, retry:
    `powershell -ExecutionPolicy Bypass -File .\agency-os\scripts\ao-close.ps1`
-   - **`verify-build-gates.ps1`**（lobster `bootstrap-validate` + Agency `system-health-check`）— **預設必跑**；失敗則 **不 push**。
-   - **`system-guard -Mode manual`**（內含 `doc-sync-automation -AutoDetect` + health + guard 報告 + `LAST_SYSTEM_STATUS.md`）。
-   - **`generate-integrated-status-report.ps1`** → 更新 `reports/status/integrated-status-LATEST.md`。
-   - 若全程 **PASS**：`git add -A` → 有變更則 `git commit` → `git push origin <current-branch>`。
-   - **`-SkipPush`**：仍跑上述閘道與產報，**不** commit／push（僅當使用者明確要暫存本機時）。
-   - **`-SkipVerify`**：略過龍蝦閘道（較快；**不建議**在「明天公司機要 pull 完整」前使用）。
-   - 預設要求 `system-health-check` 分數 **100%**；未達 100% 視為收工未完成（除非使用者明確允許非 100% 收工）。
+   - **`ao-close.ps1` 內部順序**（與 **`docs/operations/end-of-day-checklist.md`** §1a 一致——自 monorepo 根讀 **`agency-os/docs/operations/end-of-day-checklist.md`**；細節以腳本為準）：
+     1. **`print-today-closeout-recap`**（`-SkipTodayRecap` 略過）
+     2. （未 `-SkipPush`）**`git fetch`**；若落後 **`origin/<目前分支>`** → **中止**（`-AllowPushWhileBehind` 僅例外）
+     3. **`verify-build-gates`**（`-SkipVerify` 略過；**不建議**跨機前略過）
+     4. **`system-guard -Mode manual`**（內含 doc-sync + health + guard + `LAST_SYSTEM_STATUS.md`）
+     5. **`generate-integrated-status-report`** → `reports/status/integrated-status-LATEST.md`
+     6. 預設 health **100%**（`-AllowNonPerfectHealth` 僅明示核准）
+     7. **`apply-closeout-task-checkmarks`**（`-SkipAutoTaskCheckmarks` 略過；讀 **WORKLOG `AUTO_TASK_DONE`** ± **pending 檔**）
+     8. （未 `-SkipPush`）**`git add -A`** → 有變更則 **`commit`** → **`git push origin <branch>`**
    - Execute from a folder that is the git repository root (or contains `agency-os/`).
 3. Confirm：`verify-build-gates` 與 guard 路徑皆 **PASS**，且 push 成功（或依使用者要求正確使用 `-SkipPush`）。
 

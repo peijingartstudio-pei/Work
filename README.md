@@ -61,7 +61,8 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 
 ## 收工與同步
 
-- 關鍵字 **`AO-CLOSE`**：依 **`agency-os/.cursor/rules/40-shutdown-closeout.mdc`** 執行 **repo 根** `.\scripts\ao-close.ps1`（閘道、狀態報告、預設含 commit + push；**`system-health-check` 預設須 100%** 與 `AGENTS.md` 一致）。**勿**在僅 `lobster-factory` 子目錄執行（該路徑無此腳本）。
+- 關鍵字 **`AO-CLOSE`**：依 **`agency-os/.cursor/rules/40-shutdown-closeout.mdc`**；**repo 根**執行 **`.\scripts\ao-close.ps1`**（**正本**；**`agency-os\scripts\ao-close.ps1`** 僅 wrapper）。腳本含 **今日 recap**、**閘道**、**`apply-closeout-task-checkmarks`**（自 **`WORKLOG`** **`- AUTO_TASK_DONE:`** 打勾 **`TASKS`**）、預設 **commit + push**；health **100%** 與 **`AGENTS.md`** 一致。**勿**在僅 `lobster-factory` 子目錄執行。
+- **monorepo 根 `.cursor/rules/40`、`30`**：應與 **`agency-os/.cursor/rules`** 同檔**同文**（可由 **`verify-build-gates`** 內 **`sync-enterprise-cursor-rules-to-monorepo-root`** 鏡像）；若只改一邊會造成**開收工規則分叉**。
 
 ## Related Documents (Auto-Synced)
 - `docs/operations/cursor-enterprise-rules-index.md`
@@ -69,5 +70,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `README.md`
 
-_Last synced: 2026-04-07 05:12:10 UTC_
+_Last synced: 2026-04-07 05:30:14 UTC_
 

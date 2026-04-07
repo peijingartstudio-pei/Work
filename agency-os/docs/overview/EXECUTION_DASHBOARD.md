@@ -66,12 +66,13 @@
    **雙機必做**：在 monorepo 根先 `git fetch origin` → `git pull --ff-only origin main`（若 push 曾與遠端分叉則 `git pull --rebase origin main`）。
 1. 先看 `LAST_SYSTEM_STATUS.md`
 2. 打開 `TASKS.md`，只做 Next/Backlog 最高優先
-3. 在 Cursor 輸入 **`AO-RESUME`**（讀 `AGENTS.md` + 記憶檔 + 龍蝦 checklist／Completion Plan）
+3. 在 Cursor 輸入 **`AO-RESUME`**（讀 `AGENTS.md` + 記憶檔 + 龍蝦 checklist／Completion Plan）  
+   - 另：於 repo 根跑 **`scripts\ao-resume.ps1`** 時，預設會 **`print-open-tasks`** 列出全部 **`- [ ]`**（**`-SkipOpenTasksList`** 略過）
 4. 需要工程驗收就跑（Strict 或 Fast）：
    - 參考 `memory/CONVERSATION_MEMORY.md` 的 Runbook Commands
 
 ### 收工（AO-CLOSE）
-- **單一真相**：收工流程統一看 `docs/operations/end-of-day-checklist.md`（操作）與 `.cursor/rules/40-shutdown-closeout.mdc`（關鍵字規則）。本頁僅保留入口，不再重複維護整段命令細節。
+- **單一真相**：`docs/operations/end-of-day-checklist.md`（操作）+ `.cursor/rules/40-shutdown-closeout.mdc`（關鍵字；**單打 AO-CLOSE 即授權代理**寫 **`WORKLOG`** **`- AUTO_TASK_DONE:`**）。`ao-close.ps1` 內含 **recap**、閘道、**`apply-closeout-task-checkmarks`**、push；本頁不重複逐步指令。
 
 ### 公司機／他處電腦（pull 後）
 **完整清單請固定看：`docs/overview/REMOTE_WORKSTATION_STARTUP.md`。** **新機／筆電第一次**用該檔 **§1.5**；**之後每次**用 **§2**。摘要（與 §2 一致）：
@@ -100,7 +101,7 @@
 
 ## 5) 防漏 / 防重工規則（你要我遵守的）
 - **單一真實來源**：任務狀態只認 `TASKS.md`
-- **事實與狀態分離**：做了什麼寫 `WORKLOG.md`，待辦狀態改 `TASKS.md`
+- **事實 vs 狀態**：做了什麼寫 **`WORKLOG.md`**；**預設 Autopilot** 以 **`WORKLOG`** **`- AUTO_TASK_DONE:`** + 收工 **`apply-closeout-task-checkmarks`** 同步到 **`TASKS.md`**（見 **40／50**）；手動改 `TASKS` 仍允許
 - **Gate 先行**：未通過 gate 不進下一步（避免把錯誤帶到後面）
 - **收工必留證據**：closeout/health/guard report 檔名要寫進 `daily note`
 - **龍蝦工廠主軸固定追蹤**：每次 AO-RESUME 必須同步回報 Milestone（M1~M5）/ 今日 DoD / 阻塞
@@ -115,5 +116,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `memory/CONVERSATION_MEMORY.md`
 
-_Last synced: 2026-04-07 05:12:10 UTC_
+_Last synced: 2026-04-07 05:30:14 UTC_
 
