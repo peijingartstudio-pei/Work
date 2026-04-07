@@ -1,45 +1,16 @@
 ﻿{
-    "last_run_utc":  "2026-04-07T02:16:04.6501813Z",
+    "last_run_utc":  "2026-04-07T03:19:55.0388208Z",
     "changed_files":  [
-                          ".cursor/rules/40-shutdown-closeout.mdc",
-                          "docs/operations/end-of-day-checklist.md",
                           "docs/overview/PROGRAM_TIMELINE.md",
-                          "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                          "memory/CONVERSATION_MEMORY.md",
-                          "memory/daily/2026-04-07.md",
+                          "TASKS.md",
                           "WORKLOG.md"
                       ],
     "impacted_files":  [
-                           "../README.md",
-                           ".cursor/rules/00-session-bootstrap.mdc",
-                           ".cursor/rules/30-resume-keyword.mdc",
-                           ".cursor/rules/40-shutdown-closeout.mdc",
-                           "AGENTS.md",
-                           "docs/operations/end-of-day-checklist.md",
-                           "docs/overview/EXECUTION_DASHBOARD.md",
-                           "docs/overview/INTEGRATED_STATUS_REPORT.md",
                            "docs/overview/PROGRAM_TIMELINE.md",
-                           "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                           "memory/CONVERSATION_MEMORY.md",
-                           "memory/daily/2026-04-07.md",
-                           "README.md",
-                           "RESUME_AFTER_REBOOT.md",
-                           "scripts/doc-sync-automation.ps1",
-                           "scripts/system-guard.ps1",
-                           "scripts/system-health-check.ps1",
                            "TASKS.md",
                            "WORKLOG.md"
                        ],
     "auto_updated_files":  [
-                               "../README.md",
-                               "AGENTS.md",
-                               "docs/operations/end-of-day-checklist.md",
-                               "docs/overview/EXECUTION_DASHBOARD.md",
-                               "docs/overview/INTEGRATED_STATUS_REPORT.md",
-                               "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                               "memory/CONVERSATION_MEMORY.md",
-                               "README.md",
-                               "RESUME_AFTER_REBOOT.md",
                                "TASKS.md",
                                "WORKLOG.md"
                            ]

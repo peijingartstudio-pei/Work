@@ -1,5 +1,11 @@
 ﻿# Global Task Board
 
+> **待辦原則（給營運者）**  
+> - **單一清單**：所有「之後還要做」的事，應以本檔 **`Next — 未完成`** 或 **`Backlog — 未完成`** 的一條 `- [ ]` 表示；不要只放在聊天或腦裡。  
+> - **當天做不完／臨時改做別的**：在當日 **`WORKLOG.md`** 寫一句（做了什麼、停在哪、為何轉向）；若承諾仍有效，**留在下面未完成清單**；若作廢，把該條刪除或改成「已取消／改路由至…」。  
+> - **`Next — 已完成歷程`**：僅供查說：曾經排過、已完成者；**新工作請不要加在這裡**。  
+> - **收工**：`AO-CLOSE` **不會**自動幫你打勾；達成定義後請自行把 `- [ ]` 改成 `- [x]`。
+
 ## In Progress
 - [x] 建立多租戶案場資料夾結構（company -> site -> project）
 - [x] 設計標準報價包（建置/維運/行銷/客製）
@@ -9,15 +15,22 @@
 - [x] 補齊 `2026-001` 時程與里程碑日期（初版）
 - [x] 建立 `lobster-factory` Phase 1 底座骨架（Supabase migrations + wc-core manifest + workflow 安全骨架）
 
-## Next
+## Next — 未完成（目前正式隊列）
 - [ ] **（AO-RESUME 提醒）雙機環境對齊（桌機＋筆電）**：兩台執行與功能一致——**新機／筆電首次**只跟 [`docs/overview/REMOTE_WORKSTATION_STARTUP.md`](docs/overview/REMOTE_WORKSTATION_STARTUP.md) **§1.5**（含 **§1.5.1**：Windows 本機 **MariaDB + PHP + WP-CLI** + `scripts/bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni`；與 **Supabase／MCP** 分列，WordPress 仍需 MySQL 相容庫）；**之後每次開工**跟同檔 **§2**（`git pull`、`lobster-factory\packages\workflows` 之 `npm ci`、可選 wrappers、`verify-build-gates`、再 **`AO-RESUME`**）。要點：筆電安裝 **GitHub CLI**（`winget install --id GitHub.cli`；裝完重開終端或刷新 `PATH`）並 **`gh auth login`**；**Node** 大版本與桌機／CI 一致；**`scripts/secrets-vault.ps1`（DPAPI）與 Cursor `mcp.json`／MCP 為每台各自設定**（勿假設會跟著 `git pull`）。完成後勾選本項。
-- [x] 建立 WordPress 客戶交付「雙模式 SOP」（既有站接手 + 新站從零）並明確雲端 staging 優先，避免跨機重工：`docs/operations/WORDPRESS_CLIENT_DELIVERY_MODELS.md`
 - [ ] 啟動 Next-Gen 升級藍圖 v1（M1→M3）：`docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`（先選 2 個試點：1 既有站接手 + 1 新站建置）
 - [ ] **既有站接手（Soulful Expression Art Therapy）**：完成 M1 台帳（staging/prod、備份策略、維護窗、baseline 外掛/版本）
 - [ ] **新站建置（Scenery Travel Mongolia）**：完成 M1 啟動（tenant/site/project + 雲端 staging 可用 + Discovery 國際需求補齊）
 - [ ] **既有站接手 Day 1（Soulful Expression）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_A_EXISTING_SITE_SOULFUL_EXPRESSION.md` 第 1~2 節，輸出權限與基線盤點
-- [x] **既有站接手 Day 1（Soulful Expression）前置實填完成**：已建立 `tenants/company-soulful-expression/` 基本台帳（`PROFILE.md`、`SITES_INDEX.md`、`core/ENVIRONMENT_REGISTRY.md`、therapy QA、專案 brief），未知欄位標記 `待補` 待權限盤點後回填
 - [ ] **新站建置 Day 1（Scenery Travel Mongolia）**：執行 `docs/operations/PRODUCTION_RUNBOOK_PILOT_B_NEW_SITE_SCENERY_TRAVEL_MONGOLIA.md` 第 1~2 節，完成新站 staging 啟動條件
+- [ ] `tenants/templates/` v2：試點 tenant 實填回饋後，再擴欄位與自動檢查（若有）
+- [ ] （Next-Gen 對齊）將 M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位（避免 Pilot 成果與跨國企業目標脫鉤）
+- [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈）
+- [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端）
+- [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
+
+## Next — 已完成歷程（查詢用）
+- [x] 建立 WordPress 客戶交付「雙模式 SOP」（既有站接手 + 新站從零）並明確雲端 staging 優先，避免跨機重工：`docs/operations/WORDPRESS_CLIENT_DELIVERY_MODELS.md`
+- [x] **既有站接手 Day 1（Soulful Expression）前置實填完成**：已建立 `tenants/company-soulful-expression/` 基本台帳（`PROFILE.md`、`SITES_INDEX.md`、`core/ENVIRONMENT_REGISTRY.md`、therapy QA、專案 brief），未知欄位標記 `待補` 待權限盤點後回填
 - [x] **Phase 1 模板硬化（Core）**：新增 `tenants/templates/core/ENVIRONMENT_REGISTRY.md`、`RELEASE_GATES_CHECKLIST.md`、`BACKUP_RESTORE_PROOF.md`，並升級 `ACCESS_REGISTER.md`、`SITES_INDEX.md`、`OPERATIONS_SCHEDULE.json`、`NEW_TENANT_ONBOARDING_SOP.md`
 - [x] **Phase 1.5 產業 Overlay（首批）**：新增 `tenants/templates/industry/travel/*` 與 `tenants/templates/industry/therapy/*`，並接入 `tenants/README.md`、`NEW_TENANT_ONBOARDING_SOP.md`、`NEXT_GEN_DELIVERY_BLUEPRINT_V1.md`
 - [x] **（2026-03-30）** 整理 `docs/spec/raw/` **四份原文**（V3／Spec v1／ENTERPRISE／CURSOR_PACK）：新增 [`docs/spec/raw/README-four-sources-maintenance.md`](../docs/spec/raw/README-four-sources-maintenance.md)（維護索引 + 大段錨點 + SSOT 對照）；各檔首段加維護提示；`company-os-four-sources-integration.md` 與 `docs/spec/README.md` 已連回。
@@ -40,11 +53,6 @@
 - [x] 新增對外短憲章：`docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER.md`（30 年 AI/coding/專案管理跨國企業決策與執行口徑）
 - [x] 新增客戶精簡鏡像：`docs/overview/30_YEAR_AI_CODING_EXEC_CHARTER_CLIENT_SHORT.md`
 - [x] `system-guard.ps1` FAIL 後保守 auto-repair：只重跑 `doc-sync-automation` + `system-health-check` 一次（仍 FAIL 才產生 `ALERT_REQUIRED.txt`）
-- [ ] `tenants/templates/` v2：試點 tenant 實填回饋後，再擴欄位與自動檢查（若有）
-- [ ] （Next-Gen 對齊）將 M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位（避免 Pilot 成果與跨國企業目標脫鉤）
-- [ ] `lobster-factory` A10-2 商業閉環實跑（新客戶建立 -> 驗收 -> production 觸發證據鏈）
-- [ ] `lobster-factory` A7 全站自動建站補齊（hosting adapter + provision/shell guardrails 端到端）
-- [x] `lobster-factory` A9 雲端 artifacts 治理補齊 baseline（生命周期規則/IAM/稽核自動化：policy + validator + audit report）
 - [x] 完成今日 AO-CLOSE 三步收工檢查（doc-sync / health / guard 全 PASS）
 - [x] 完成今日 AO-CLOSE 一鍵閘道與同步推送（verify-build-gates + guard + integrated-status + git push；**2026-03-28 晚** 再跑一輪以收斂 A10／SOP／presign 等本機變更）
 - [x] 報表單一路徑收斂（canonical=`agency-os/reports`，root `reports/` 退役為相容用途）
@@ -54,7 +62,6 @@
 - [x] 他處／公司機開機須知（`docs/overview/REMOTE_WORKSTATION_STARTUP.md` + `RESUME_AFTER_REBOOT.md` 分機情境）
 - [x] Enterprise 工具層選型/安裝完成（Sentry/PostHog/Cloudflare/Clerk；Secrets 先採 env/mcp；輔助：Supabase/Slack）
 - [x] 啟用 Operator Autopilot 規則與 Phase1 自動化腳本（startup preflight / alert auto-repair / closeout optional push / Slack notify）
-- [ ] Enterprise 工具層 Phase 1 正式串接（Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts）
 - [x] AO + Lobster 事件流圖（Mermaid）已落地到 `docs/overview/ao-lobster-operating-model.md`
 - [x] 落地「Single Owner 最高原則」：核心規則/`AGENTS.md` 已寫入；`doc-sync-automation.ps1` 新增 owner 重複內容檢查（registry 驅動）
 - [x] Single Owner 第 2 階段：registry 擴充 AO-RESUME 主流程、30 秒自檢、AO-CLOSE 硬性 Gate（避免關鍵流程多處複製）
@@ -85,16 +92,20 @@
 - [x] `lobster-factory` C1-3 execute 驗證（DB 寫入韌性：retry/compensation/trace）
 - [x] 建立零成本本機 Secrets Vault（Windows DPAPI，`scripts/secrets-vault.ps1`）
 - [x] 完成 Secrets Vault 一鍵匯入（`mcp.json` + Lobster/Slack 關鍵值）
-## Backlog
+- [x] `lobster-factory` A9 雲端 artifacts 治理補齊 baseline（生命周期規則/IAM/稽核自動化：policy + validator + audit report）
+
+## Backlog — 未完成
+- [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核）
+- [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager）
+- [ ] **`lobster-factory/packages/workflows` `npm audit`**（2026-04-01）：16 筆多為 **Trigger.dev CLI／`@trigger.dev/core` 傳遞依賴**（socket.io／cookie、esbuild dev、tar、giget、systeminformation 等）。**勿**對本目錄跑 `npm audit fix --force`（會把人帶到不相容 Trigger 版本）。**對策**：等官方 `@trigger.dev/sdk`／`trigger.dev` 小版修 upstream；或 Trigger 釋出安全修補後再 `npm update` + 回歸；本機勿將 Trigger **dev** 伺服器暴露公網。
+
+## Backlog — 已完成歷程
 - [x] 客戶分級與風險評分模型
 - [x] 外包交付評分卡
 - [x] 合規檢查清單（抓取與 leads）
-- [ ] 建立跨國稅務與法遵顧問審核流程（法律文件外部審核）
 - [x] 建立英文化客戶輸出模板（Proposal/SOW/Monthly Report）
 - [x] 建立 release notes + upgrade path + migration checklist
 - [x] `lobster-factory` 補齊 raw spec 差距檔案（C4-1~C4-5 完成）
-- [ ] `lobster-factory` Enterprise 必備工具補強路線：Sentry/PostHog/Cloudflare/Secrets/Identity（已選型：Identity=Clerk；Secrets 暫採 env/mcp，待升級 secrets manager）
-- [ ] **`lobster-factory/packages/workflows` `npm audit`**（2026-04-01）：16 筆多為 **Trigger.dev CLI／`@trigger.dev/core` 傳遞依賴**（socket.io／cookie、esbuild dev、tar、giget、systeminformation 等）。**勿**對本目錄跑 `npm audit fix --force`（會把人帶到不相容 Trigger 版本）。**對策**：等官方 `@trigger.dev/sdk`／`trigger.dev` 小版修 upstream；或 Trigger 釋出安全修補後再 `npm update` + 回歸；本機勿將 Trigger **dev** 伺服器暴露公網。
 
 ## Related Documents (Auto-Synced)
 - `.cursor/rules/00-session-bootstrap.mdc`
@@ -110,5 +121,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-07 02:16:03 UTC_
+_Last synced: 2026-04-07 03:19:53 UTC_
 
