@@ -4,7 +4,7 @@
 > - **單一清單**：所有「之後還要做」的事，應以本檔 **`Next — 未完成`** 或 **`Backlog — 未完成`** 的一條 `- [ ]` 表示；不要只放在聊天或腦裡。  
 > - **當天做不完／臨時改做別的**：在當日 **`WORKLOG.md`** 寫一句（做了什麼、停在哪、為何轉向）；若承諾仍有效，**留在下面未完成清單**；若作廢，把該條刪除或改成「已取消／改路由至…」。  
 > - **`Next — 已完成歷程`**：僅供查說：曾經排過、已完成者；**新工作請不要加在這裡**。  
-> - **收工與打勾**：達成定義後，請**自行**把 `- [ ]` 改成 `- [x]`，或在收工前建立本機檔 **`agency-os/.agency-state/pending-task-completions.txt`**（每行一組**唯一**子字串，須只對應一條未完成項；見同目錄 **`pending-task-completions.example.txt`**）。跑 **`AO-CLOSE`** 時會在 `git add` 前套用並刪除此檔（**全有或全無**：任一行對不到或對到多條會整批中止）。
+> - **收工與打勾**：達成定義後，請**自行**把 `- [ ]` 改成 `- [x]`，或在收工前建立本機檔 **`agency-os/.agency-state/pending-task-completions.txt`**（每行一組**唯一**子字串，須只對應一條未完成項；見同目錄 **`pending-task-completions.example.txt`**）。跑 **`AO-CLOSE`** 時會在 `git add` 前套用並刪除此檔（**全有或全無**：任一行對不到或對到多條會整批中止）。**不用靠記性**：`AO-CLOSE` 開頭會印 **`scripts/print-today-closeout-recap.ps1`**（今日 commit、`git status`、**`WORKLOG`** 今日區塊、`memory/daily`），請依此補寫／打勾；也可請代理根據當日對話代寫 **WORKLOG／pending 檔**。
 
 ## In Progress
 - [x] 建立多租戶案場資料夾結構（company -> site -> project）
@@ -121,5 +121,5 @@
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-07 03:49:30 UTC_
+_Last synced: 2026-04-07 03:54:08 UTC_
 

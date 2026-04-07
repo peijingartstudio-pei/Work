@@ -1,5 +1,6 @@
-# AO-CLOSE: monorepo verify-build-gates -> system-guard (doc-sync + health + guard) ->
-#   generate integrated-status report -> optional apply-pending-task-checkmarks -> git commit + push.
+# AO-CLOSE: print-today-closeout-recap (see -SkipTodayRecap) -> verify-build-gates ->
+#   system-guard (doc-sync + health + guard) -> generate integrated-status report ->
+#   optional apply-pending-task-checkmarks -> git commit + push.
 # Run AFTER updating TASKS.md, WORKLOG.md, and memory files so they are included in the commit.
 # Optional: agency-os/.agency-state/pending-task-completions.txt (gitignored) lists substrings
 # for apply-pending-task-checkmarks.ps1 to flip matching - [ ] lines in TASKS.md before git add.
@@ -13,7 +14,8 @@ param(
     [switch]$SkipPush,
     [switch]$SkipVerify,
     [switch]$AllowNonPerfectHealth,
-    [switch]$AllowPushWhileBehind
+    [switch]$AllowPushWhileBehind,
+    [switch]$SkipTodayRecap
 )
 
 Set-StrictMode -Version Latest
@@ -39,6 +41,17 @@ $guardScript = Join-Path $agencyRoot "scripts\system-guard.ps1"
 if (-not (Test-Path -LiteralPath $guardScript)) {
     Write-Error "ao-close: missing system-guard at $guardScript"
     exit 1
+}
+
+$recapScript = Join-Path $WorkRoot "scripts\print-today-closeout-recap.ps1"
+if (-not $SkipTodayRecap -and (Test-Path -LiteralPath $recapScript)) {
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $recapScript -WorkRoot $WorkRoot
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "ao-close: print-today-closeout-recap failed (exit $LASTEXITCODE)."
+        exit $LASTEXITCODE
+    }
+} elseif ($SkipTodayRecap) {
+    Write-Host "== AO-CLOSE: -SkipTodayRecap (略過今日機器摘要) ==" -ForegroundColor DarkYellow
 }
 
 if (-not $SkipPush -and -not $AllowPushWhileBehind) {

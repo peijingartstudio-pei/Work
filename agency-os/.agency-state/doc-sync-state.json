@@ -1,8 +1,11 @@
 ﻿{
-    "last_run_utc":  "2026-04-07T03:49:31.5484898Z",
+    "last_run_utc":  "2026-04-07T03:54:09.6453806Z",
     "changed_files":  [
+                          ".cursor/rules/40-shutdown-closeout.mdc",
+                          "docs/operations/end-of-day-checklist.md",
                           "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
-                          "TASKS.md"
+                          "TASKS.md",
+                          "WORKLOG.md"
                       ],
     "impacted_files":  [
                            "../README.md",
@@ -15,8 +18,13 @@
                            "docs/overview/INTEGRATED_STATUS_REPORT.md",
                            "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
                            "memory/CONVERSATION_MEMORY.md",
+                           "README.md",
                            "RESUME_AFTER_REBOOT.md",
-                           "TASKS.md"
+                           "scripts/doc-sync-automation.ps1",
+                           "scripts/system-guard.ps1",
+                           "scripts/system-health-check.ps1",
+                           "TASKS.md",
+                           "WORKLOG.md"
                        ],
     "auto_updated_files":  [
                                "../README.md",
@@ -26,7 +34,9 @@
                                "docs/overview/INTEGRATED_STATUS_REPORT.md",
                                "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
                                "memory/CONVERSATION_MEMORY.md",
+                               "README.md",
                                "RESUME_AFTER_REBOOT.md",
-                               "TASKS.md"
+                               "TASKS.md",
+                               "WORKLOG.md"
                            ]
 }

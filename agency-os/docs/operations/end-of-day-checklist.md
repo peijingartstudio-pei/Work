@@ -12,7 +12,7 @@
 ## 1) 必跑三步（硬性 Gate）
 
 ### 1a) 一鍵收工 + 推 GitHub（推薦）
-在 **monorepo 根** `<WORK_ROOT>` 執行（且請**先**改好 `TASKS.md` / `WORKLOG.md` / `memory/**`，才會被 commit 進去）：
+在 **monorepo 根** `<WORK_ROOT>` 執行（且請**先**改好 `TASKS.md` / `WORKLOG.md` / `memory/**`，才會被 commit 進去；**若記不得今天做了什麼**：腳本開頭會先印今日 Git／`WORKLOG`／`memory/daily` 摘要，可邊看邊補）：
 
 - [ ] `powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`
   - 預設：**`verify-build-gates`**（龍蝦 + Agency health）→ **`system-guard`**（doc-sync + health + guard）→ **`generate-integrated-status-report`**
@@ -21,6 +21,7 @@
   - 今夜不推遠端：`-SkipPush`（仍跑閘道與產報）
   - 略過龍蝦閘（不建議）：`-SkipVerify`
   - 遠端已超前仍強制 push（**高風險**，僅明示核准）：`-AllowPushWhileBehind`
+  - 略過開頭「今日機器摘要」（進階／純 CI）：`-SkipTodayRecap`
 
 ### 1b) 手動三步（與 1a 擇一即可）
 在 `<WORK_ROOT>\agency-os` 目錄執行（與 1a **擇一**；**收工推薦 1a 於 repo 根**）：
@@ -65,5 +66,5 @@
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-07 03:49:30 UTC_
+_Last synced: 2026-04-07 03:54:08 UTC_
 

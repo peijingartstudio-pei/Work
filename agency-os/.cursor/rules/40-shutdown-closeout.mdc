@@ -16,6 +16,7 @@ When the user indicates end of day or shutdown intent (examples: `AO-CLOSE`,
    - `WORKLOG.md`
    - `memory/CONVERSATION_MEMORY.md`
    - `memory/daily/YYYY-MM-DD.md` (create if missing, then write closeout summary)
+   - **若使用者記不得今日完成**：**建議**先跑 **`scripts/print-today-closeout-recap.ps1`** 對照 **Git 今日 commit**／**`WORKLOG` 今日區塊**後再補齊上述檔案；**`ao-close.ps1` 開頭仍會再印同摘要**供複核。代理應依**當日對話 + 該摘要**代寫進度檔，再進第 2 步。
 2. Run **one-shot closeout + GitHub push** from the current repo root:
    `powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1`
    If `.\scripts\ao-close.ps1` is missing, retry:

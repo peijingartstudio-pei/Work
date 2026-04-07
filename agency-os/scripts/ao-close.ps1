@@ -4,7 +4,8 @@ param(
     [switch]$SkipPush,
     [switch]$SkipVerify,
     [switch]$AllowNonPerfectHealth,
-    [switch]$AllowPushWhileBehind
+    [switch]$AllowPushWhileBehind,
+    [switch]$SkipTodayRecap
 )
 
 Set-StrictMode -Version Latest
