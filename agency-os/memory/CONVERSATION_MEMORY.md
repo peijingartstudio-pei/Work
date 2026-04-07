@@ -1,8 +1,9 @@
-# Conversation Memory
+﻿# Conversation Memory
 
 > Historical snapshot note: this file preserves cross-session context and may include decisions from older process versions. For current operating rules, use event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (AO-RESUME/startup、**§2.5 日內 Git 節奏**) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (AO-CLOSE/shutdown). Agent-enforced Git detail: `.cursor/rules/50-operator-autopilot.mdc` §7.
 
 ## Current Operating Context
+- **2026-04-07（AO-RESUME／AO-CLOSE 營運硬化）**：`check-three-way-sync` 預設與 `origin/main` 對齊策略（stash／pull／stash guard）、`ao-close` push 前落後攔截、**`ensure-lobster-workflows-deps`** 掛入 **`ao-resume`**；**REMOTE 2.5.1**、`40-shutdown-closeout`、`memory` Runbook、`agency-os` **ao-resume／ao-close wrapper** 參數與正本對齊；詳 **WORKLOG 2026-04-07**。
 - **2026-04-02（ADR 006 migration）**：已新增 **`lobster-factory/packages/db/migrations/0010_clerk_org_mapping_and_rls_expansion.sql`**（Clerk↔org 對照表、JWT org claim、`user_has_org_access` 擴充、多表 SELECT RLS）；ADR 006 已補 JWT／staging 驗證說明。
 - **2026-04-02（長期 §9–10）**：`LONG_TERM_OPERATING_DISCIPLINE.md` **§9** 為 **AI／MCP 輔助邊界**；**§10** 為 **執行節奏表**（閘道／ADR／釋出／開收工／雙機／audit + 12 個月 ADR 006 錨點）。
 - **2026-04-02（ADR 006 + 閘道）**：**006** 多租戶 **RLS／租戶鍵** 與 **Clerk 對照** 原則。`verify-build-gates` 已內建 **`verify-adr-index.ps1`**。見 `docs/architecture/decisions/006-supabase-tenant-isolation-and-clerk-mapping.md`。
@@ -319,5 +320,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-07 02:07:24 UTC_
+_Last synced: 2026-04-07 02:16:03 UTC_
 

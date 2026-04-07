@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-04-07 10:14:23
+- Generated: 2026-04-07 10:16:11
 - agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -204,13 +204,29 @@
 > Full runbook: see `## Runbook Commands` in the source file.
 
 ## 5) memory/daily/2026-04-07.md
-_no file for today yet._
+# 2026-04-07
+
+## 背景
+使用者要求 AO-RESUME／AO-CLOSE 與 GitHub 單一真相一致、小白能理解 `npm ci`，並做全文對齊複查。
+
+## 已完成
+- Git 同步／腳本強化（stash 行為、pull、`ao-close` fetch／behind guard、workflows `npm ci` 自動步驟）。
+- 文件／wrapper／memory／integrated-status 與腳本一致化；本日 **AO-CLOSE** 推遠端。
+
+## 未完成
+- `TASKS`「雙機環境對齊」等既有 Next 項（未變）。
+
+## 風險／阻塞
+- 無。
+
+## 下一步
+- 筆電依 **REMOTE** 開工；下次 **AO-RESUME** 前 **pull**。
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-04-02 17:46:15`
+- Time: `2026-04-07 10:16:06`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
@@ -220,8 +236,8 @@ _no file for today yet._
 - Auto-repair result: **N/A**
 
 ## Latest Reports
-- Health: `reports/health/health-20260402-174615.md`
-- Closeout: `reports/closeout/closeout-20260402-174612.md`
+- Health: `reports/health/health-20260407-101606.md`
+- Closeout: `reports/closeout/closeout-20260407-101604.md`
 
 ## Action
 - No blocking issue detected.

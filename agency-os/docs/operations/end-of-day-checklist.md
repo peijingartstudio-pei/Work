@@ -1,4 +1,4 @@
-# End-of-day Checklist (AO-CLOSE)
+﻿# End-of-day Checklist (AO-CLOSE)
 
 > 目的：每次關機前**逐項打勾**，確保不疏漏、不重工，並留下可追溯證據（reports + 進度文件）。
 
@@ -65,5 +65,5 @@
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-07 02:07:24 UTC_
+_Last synced: 2026-04-07 02:16:03 UTC_
 
