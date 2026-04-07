@@ -1,6 +1,8 @@
 # AO-CLOSE: monorepo verify-build-gates -> system-guard (doc-sync + health + guard) ->
-#   generate integrated-status report -> git commit + push.
+#   generate integrated-status report -> optional apply-pending-task-checkmarks -> git commit + push.
 # Run AFTER updating TASKS.md, WORKLOG.md, and memory files so they are included in the commit.
+# Optional: agency-os/.agency-state/pending-task-completions.txt (gitignored) lists substrings
+# for apply-pending-task-checkmarks.ps1 to flip matching - [ ] lines in TASKS.md before git add.
 # Primary: monorepo root scripts\ao-close.ps1. agency-os\scripts\ao-close.ps1 is a thin wrapper (same flags).
 # -SkipPush: no git commit/push (still runs gates and reports).
 # -SkipVerify: skip verify-build-gates (faster; not recommended before company pull).
@@ -129,6 +131,16 @@ if (Test-Path -LiteralPath $healthDir) {
             Write-Error "ao-close: unable to parse health score from $($latestHealth.FullName)."
             exit 1
         }
+    }
+}
+
+$applyMarks = Join-Path $WorkRoot "scripts\apply-pending-task-checkmarks.ps1"
+if (Test-Path -LiteralPath $applyMarks) {
+    Write-Host "== AO-CLOSE: pending TASKS checkmarks (optional .agency-state file) ==" -ForegroundColor Cyan
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $applyMarks -WorkRoot $WorkRoot
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "ao-close: apply-pending-task-checkmarks failed (exit $LASTEXITCODE). Fix pending file or TASKS.md."
+        exit $LASTEXITCODE
     }
 }
 

@@ -1,8 +1,12 @@
-﻿# Worklog
+# Worklog
 
 > Historical snapshot note: this file records decisions/events by date. For current operating rules and commands, use the event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (startup/AO-RESUME) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (shutdown/AO-CLOSE).
 
 ## 2026-04-07
+
+### AO-RESUME／AO-CLOSE：待辦可見性 + 安全自動打勾
+- **`scripts/print-open-tasks.ps1`**：`AO-RESUME` 預設在終端列出 **`agency-os/TASKS.md`** 全部 `- [ ]`（含所屬 `##`）；**`-SkipOpenTasksList`** 可略過；Windows 5.x 終端補 **UTF-8** 以降低中文亂碼。
+- **`scripts/apply-pending-task-checkmarks.ps1`** + 本機 **`agency-os/.agency-state/pending-task-completions.txt`**（**`.gitignore`**）：`AO-CLOSE` 在 **`git add` 前**依每行**唯一**子字串將對應項 `- [ ]`→`- [x]`（對不到或對多條則整批失敗不寫檔）；成功後刪除 pending 檔。範例與說明見 **`pending-task-completions.example.txt`**、`TASKS.md` 待辦原則、**`REMOTE`** 2.5／2.5.1。
 
 ### TASKS.md：未完成／已完成分區 + 待辦原則
 - 檔首新增 **待辦原則**（單一清單、做不完／轉向寫 WORKLOG、`AO-CLOSE` 不自動打勾）。

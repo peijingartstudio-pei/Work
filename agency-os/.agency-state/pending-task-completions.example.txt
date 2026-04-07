@@ -1,0 +1,10 @@
+# Copy to pending-task-completions.txt (same folder) before AO-CLOSE when you want
+# automatic - [ ] -> - [x] in agency-os/TASKS.md.
+# Rules:
+# - One line per completed open task. Lines starting with # are ignored.
+# - Each line must appear as a substring of exactly ONE unchecked task line.
+# - Use distinctive text (e.g. a unique pilot name or doc path).
+#
+# Example (remove # to try):
+# Soulful Expression Art Therapy
+# NEXT_GEN_DELIVERY_BLUEPRINT_V1

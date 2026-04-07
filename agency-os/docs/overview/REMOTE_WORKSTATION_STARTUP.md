@@ -187,7 +187,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 
 | 階段 | 誰做什麼 | Git |
 |------|-----------|-----|
-| **`AO-RESUME`（開工前檢）** | 你：在 Cursor 打關鍵字；代理：跑 `ao-resume.ps1` preflight、讀進度檔 | **不**為「開場」自動空 commit；僅對齊／閘道／列出自上次以來的 `agency-os/reports/*` 增量 |
+| **`AO-RESUME`（開工前檢）** | 你：在 Cursor 打關鍵字；代理：跑 `ao-resume.ps1` preflight、讀進度檔 | **不**為「開場」自動空 commit；預設會在終端**列出 `agency-os/TASKS.md` 全部 `- [ ]`（含所屬 `##` 區塊）**；另列出自上次以來的 `agency-os/reports/*` 增量。進階略過：**`-SkipOpenTasksList`**。 |
 | **工作中（至收工前）** | 你：下任務；代理：實作與驗證 | 每完成一個**可敘述、已驗證**的里程碑：代理**應自動**在 monorepo 根執行 **`scripts/commit-checkpoint.ps1`**（**本機 commit**，**不 push**）。**你不必手動**跑該腳本。 |
 | **`AO-CLOSE`（收工）** | 你：關鍵字或明示收工；代理：更新 `TASKS`／`WORKLOG`／`memory` 後跑 `ao-close.ps1` | 閘道 **PASS** 後 **`git add` → `commit`（收斂殘留）→ `git push`**；可一次推上當日**多顆**本機 commit。 |
 
@@ -199,7 +199,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 
 ### 2.5.1 AO-RESUME／AO-CLOSE 與 GitHub 單一真相（腳本實際行為）
 
-- **`scripts/ao-resume.ps1`** 在 Git 同步通過後會呼叫 **`scripts/ensure-lobster-workflows-deps.ps1`**（除非 **`-SkipWorkflowsDeps`**）：在需要時自動執行 **`lobster-factory\packages\workflows`** 的 **`npm ci`**，並印出小白說明（見上文「`npm ci` 是什麼」）。
+- **`scripts/ao-resume.ps1`** 在 Git 同步通過後會呼叫 **`scripts/ensure-lobster-workflows-deps.ps1`**（除非 **`-SkipWorkflowsDeps`**）：在需要時自動執行 **`lobster-factory\packages\workflows`** 的 **`npm ci`**，並印出小白說明（見上文「`npm ci` 是什麼」）。通過後預設會呼叫 **`scripts/print-open-tasks.ps1`** 列出 **`agency-os/TASKS.md`** 所有未完成項（**`-SkipOpenTasksList`** 可略過）。
 - **`scripts/ao-resume.ps1`**（對應關鍵字 **AO-RESUME**）會呼叫 **`check-three-way-sync.ps1 -AutoFix`**。預設（桌機／正式雙機節奏）：
   - **落後 `origin/main` 且工作樹仍有未提交變更**：**不**自動 stash；請先 **commit、捨棄或手動 `git stash`**，再跑 AO-RESUME，避免「以為已對齊、變其實在 stash」。
   - **需要開機自動 pull 且可接受暫存**：筆電 **Autopilot** 已傳 **`-AllowUnexpectedDirty`**（會連帶啟用 `-AllowStashBeforePull`、`-AllowPendingStash`）。僅在手動確認時可自傳：  
@@ -259,7 +259,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 
 你會看到什麼（成功判斷）：
 - `ao-close`：會產生 closeout/health/guard 報告
-- `ao-resume.ps1`：preflight completed；`check-three-way-sync` 在條件允許時會 **`git pull --ff-only origin main`**（見 **2.5.1**）；通過後會跑 **workflows `npm ci`** 檢查（除非 `-SkipWorkflowsDeps`）；並列出自上次以來 `agency-os/reports/{closeout,health,guard,status}` 增量。**仍建議**例行先完成本節 §2 第 1 步再依賴腳本，以降低 dirty／stash 失敗率。
+- `ao-resume.ps1`：preflight completed；`check-three-way-sync` 在條件允許時會 **`git pull --ff-only origin main`**（見 **2.5.1**）；通過後會跑 **workflows `npm ci`** 檢查（除非 `-SkipWorkflowsDeps`）；並列出 **`TASKS.md` 全部未完成項**與自上次以來 `agency-os/reports/{closeout,health,guard,status}` 增量。**仍建議**例行先完成本節 §2 第 1 步再依賴腳本，以降低 dirty／stash 失敗率。
 
 ## 3) 兩份「綜合狀態」路徑別搞混
 
@@ -330,5 +330,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-07 02:16:03 UTC_
+_Last synced: 2026-04-07 03:49:30 UTC_
 

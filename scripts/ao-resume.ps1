@@ -4,7 +4,8 @@ param(
     [switch]$AllowUnexpectedDirty,
     [switch]$AllowStashBeforePull,
     [switch]$AllowPendingStash,
-    [switch]$SkipWorkflowsDeps
+    [switch]$SkipWorkflowsDeps,
+    [switch]$SkipOpenTasksList
 )
 
 Set-StrictMode -Version Latest
@@ -54,6 +55,17 @@ if (-not $SkipWorkflowsDeps -and (Test-Path -LiteralPath $depsScript)) {
     }
 } elseif ($SkipWorkflowsDeps) {
     Write-Host "== AO-RESUME: -SkipWorkflowsDeps（略過 npm ci 檢查）==" -ForegroundColor DarkYellow
+}
+
+$openTasksScript = Join-Path $WorkRoot "scripts\print-open-tasks.ps1"
+if (-not $SkipOpenTasksList -and (Test-Path -LiteralPath $openTasksScript)) {
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $openTasksScript -WorkRoot $WorkRoot
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "ao-resume: print-open-tasks failed (exit $LASTEXITCODE)."
+        exit $LASTEXITCODE
+    }
+} elseif ($SkipOpenTasksList) {
+    Write-Host "== AO-RESUME: -SkipOpenTasksList（略過列出 TASKS 未完成項）==" -ForegroundColor DarkYellow
 }
 
 # Report delta since last AO-RESUME (local stamp under agency-os/.agency-state/)

@@ -4,7 +4,8 @@ param(
     [switch]$AllowUnexpectedDirty,
     [switch]$AllowStashBeforePull,
     [switch]$AllowPendingStash,
-    [switch]$SkipWorkflowsDeps
+    [switch]$SkipWorkflowsDeps,
+    [switch]$SkipOpenTasksList
 )
 
 Set-StrictMode -Version Latest

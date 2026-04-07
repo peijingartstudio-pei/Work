@@ -4,6 +4,7 @@
 
 # AO-RESUME local stamp (see scripts/git-audit-tracked-remote.ps1 / check-three-way-sync knownNoise)
 agency-os/.agency-state/ao-resume-last.txt
+agency-os/.agency-state/pending-task-completions.txt
 
 # --- Local scratch (wp-dummy paths for regression; never push) ---
 .scratch/
