@@ -22,14 +22,32 @@ $mono = Get-MonorepoRoot -InputRoot $MonorepoRoot
 $sourceDir = Join-Path $mono "agency-os\.cursor\rules"
 $destDir = Join-Path $mono ".cursor\rules"
 
+function Apply-MonorepoRootCursorPathTransforms {
+    param([string]$Text)
+    # agency-os/.cursor/rules 內 `docs/...` 指 agency-os 樹；monorepo 根開啟時須加 `agency-os/` 前綴（lobster-factory 等不變）。
+    $c = $Text
+    $c = $c -replace '`docs/overview/REMOTE_WORKSTATION_STARTUP\.md`', '`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`'
+    $c = $c -replace '`docs/operations/cursor-mcp-and-plugin-inventory\.md`', '`agency-os/docs/operations/cursor-mcp-and-plugin-inventory.md`'
+    # 例如：（見 **`REMOTE_WORKSTATION_STARTUP` 2.5.1**）
+    $c = $c -replace '\*\*`REMOTE_WORKSTATION_STARTUP` 2\.5\.1\*\*', '**`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` 2.5.1**'
+    return $c
+}
+
 # Canonical copy always under agency-os/.cursor/rules; monorepo root is mirrored (VerifyOnly in health gate).
 $names = @(
+    "00-session-bootstrap.mdc",
+    "30-resume-keyword.mdc",
     "50-operator-autopilot.mdc",
     "63-cursor-core-identity-risk.mdc",
     "64-architecture-mcp-routing.mdc",
     "65-build-standards-data-state.mdc",
     "66-skills-observability-protocol.mdc"
 )
+
+$transformForRoot = @{
+    "00-session-bootstrap.mdc" = $true
+    "30-resume-keyword.mdc"      = $true
+}
 
 if (-not (Test-Path -LiteralPath $sourceDir)) {
     if (-not $Quiet) {
@@ -56,24 +74,50 @@ foreach ($n in $names) {
             $exitCode = 1
             continue
         }
-        $hs = (Get-FileHash -LiteralPath $src -Algorithm SHA256).Hash
-        $hd = (Get-FileHash -LiteralPath $dst -Algorithm SHA256).Hash
-        if ($hs -ne $hd) {
-            Write-Error "sync-enterprise-cursor-rules: verify FAIL — $n differs from agency-os canonical"
-            $exitCode = 1
+        $utf8 = New-Object System.Text.UTF8Encoding $false
+        $rawSrc = [System.IO.File]::ReadAllText($src, $utf8)
+        if ($transformForRoot.ContainsKey($n) -and $transformForRoot[$n]) {
+            $expected = Apply-MonorepoRootCursorPathTransforms -Text $rawSrc
+            $actual = [System.IO.File]::ReadAllText($dst, $utf8)
+            if ($actual -cne $expected) {
+                Write-Error "sync-enterprise-cursor-rules: verify FAIL — $n root must equal transform(agency-os); run sync (not VerifyOnly) to fix"
+                $exitCode = 1
+            }
+        } else {
+            $hs = (Get-FileHash -LiteralPath $src -Algorithm SHA256).Hash
+            $hd = (Get-FileHash -LiteralPath $dst -Algorithm SHA256).Hash
+            if ($hs -ne $hd) {
+                Write-Error "sync-enterprise-cursor-rules: verify FAIL — $n differs from agency-os canonical"
+                $exitCode = 1
+            }
         }
     } else {
         try {
-            Copy-Item -LiteralPath $src -Destination $dst -Force
+            $enc = New-Object System.Text.UTF8Encoding $false
+            if ($transformForRoot.ContainsKey($n) -and $transformForRoot[$n]) {
+                $rawSrcMirror = [System.IO.File]::ReadAllText($src, $enc)
+                $outMirror = Apply-MonorepoRootCursorPathTransforms -Text $rawSrcMirror
+                [System.IO.File]::WriteAllText($dst, $outMirror, $enc)
+            } else {
+                Copy-Item -LiteralPath $src -Destination $dst -Force
+            }
             if (-not $Quiet) {
                 Write-Output ("sync-enterprise-cursor-rules: mirrored " + $n)
             }
         } catch {
             # Cursor/IDE may lock root .cursor rules; if already identical, treat as pass.
             if (Test-Path -LiteralPath $dst) {
-                $hs = (Get-FileHash -LiteralPath $src -Algorithm SHA256).Hash
-                $hd = (Get-FileHash -LiteralPath $dst -Algorithm SHA256).Hash
-                if ($hs -eq $hd) {
+                $utf8 = New-Object System.Text.UTF8Encoding $false
+                $rawSrc = [System.IO.File]::ReadAllText($src, $utf8)
+                $rawDst = [System.IO.File]::ReadAllText($dst, $utf8)
+                $inSync = $false
+                if ($transformForRoot.ContainsKey($n) -and $transformForRoot[$n]) {
+                    $expected = Apply-MonorepoRootCursorPathTransforms -Text $rawSrc
+                    $inSync = ($rawDst -ceq $expected)
+                } else {
+                    $inSync = ($rawSrc -ceq $rawDst)
+                }
+                if ($inSync) {
                     if (-not $Quiet) {
                         Write-Output ("sync-enterprise-cursor-rules: locked but already in sync " + $n)
                     }

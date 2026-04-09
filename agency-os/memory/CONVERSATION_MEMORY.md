@@ -3,6 +3,7 @@
 > Historical snapshot note: this file preserves cross-session context and may include decisions from older process versions. For current operating rules, use event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (AO-RESUME/startup、**§2.5 日內 Git 節奏**) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (AO-CLOSE/shutdown). Agent-enforced Git detail: `.cursor/rules/50-operator-autopilot.mdc` §7.
 
 ## Current Operating Context
+- **2026-04-09（AO-RESUME 待辦可見性）**：**`print-open-tasks`** 會寫 **`agency-os/.agency-state/open-tasks-snapshot.md`**（gitignore）。**`AO-RESUME`** 代理須 **Read** 該檔並在聊天 **逐條全列** `- [ ]`（**`30-resume-keyword.mdc`**）；**>35 條**可同回合分段列完。**`sync-enterprise-cursor-rules-to-monorepo-root.ps1`** 已納入 **`00-session-bootstrap` + `30-resume-keyword`**（根目錄鏡像含路徑轉換），**health gate** 會驗證。
 - **2026-04-09（AO-RESUME 預設＝完整檢查）**：**`scripts/ao-resume.ps1`** 預設即跑 **`machine-environment-audit -FetchOrigin -Strict`**（與 **`align-workstation.ps1`** 相同）；**`-SkipStrictEnvironmentAudit`** 僅 Autopilot／輕量開機。只打 **`AO-RESUME`** 時代理應跑此預設腳本。
 - **2026-04-09（雙機對齊根因修復）**：`check-three-way-sync -AutoFix` 已**移除**對「known noise」路徑的 **`git restore`**（舊行為會靜默丟棄 `scripts/*.ps1` 等未提交修改，導致多機反覆對齊失敗）；白名單僅剩 **`agency-os/settings/local.permissions.json`**。`TASKS` 雙機項、`30-resume-keyword`、`REMOTE` §1.5／§6.2 與 **`machine-environment-audit -FetchOrigin -Strict`**（無 WARN 方可勾）已對齊；新增 **`agency-os/scripts/machine-environment-audit.ps1`** wrapper。
 - **2026-04-07（AO-RESUME／AO-CLOSE 營運硬化）**：`check-three-way-sync` 與 `origin/main`、`ao-close` push 前落後攔截、**`ensure-lobster-workflows-deps`** 掛入 **`ao-resume`**、**`print-open-tasks`／`print-today-closeout-recap`／`apply-closeout-task-checkmarks`**（**WORKLOG `AUTO_TASK_DONE`**）；**單打 AO-CLOSE** 即授權代理代寫 **`AUTO_TASK_DONE`**（**40／50／AGENTS／TASKS 待辦原則**）；**REMOTE 2.5.1**、`40`／`30` **monorepo 根鏡像須與 `agency-os` 正本一致**；詳 **WORKLOG 2026-04-07**。
@@ -321,5 +322,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-09 03:02:24 UTC_
+_Last synced: 2026-04-09 05:14:56 UTC_
 

@@ -188,7 +188,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 
 ## 2.5 日內 Git 節奏（checkpoint 與收工）— **單一真相（人類可讀）**
 
-> **規則正本（少分叉）**：**只改** `agency-os/.cursor/rules/50-operator-autopilot.mdc`。repo 根的 `.cursor/rules/50-operator-autopilot.mdc` 與 63–66 相同，由 **`verify-build-gates`** 裡的 **`sync-enterprise-cursor-rules-to-monorepo-root.ps1`** 自動從 agency-os **鏡像**，不必手動複製、也不再加第三支檢查腳本。代理細節見該檔 **§7**。
+> **規則正本（少分叉）**：**日常改動**以 `agency-os/.cursor/rules/` 為準（含 **`00-session-bootstrap`**、**`30-resume-keyword`**、**`50-operator-autopilot`**、**63–66**）。repo 根 `.cursor/rules/` 由 **`verify-build-gates`** 內 **`sync-enterprise-cursor-rules-to-monorepo-root.ps1`** 自動鏡像；其中 **`00`／`30`** 會套用 **monorepo 路徑轉換**（`docs/...` → `agency-os/docs/...`），**health gate** 以「轉換後內容」驗證 SHA 等價。代理細節見 **`50-operator-autopilot`** **§7**。
 
 | 階段 | 誰做什麼 | Git |
 |------|-----------|-----|
@@ -204,7 +204,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 
 ### 2.5.1 AO-RESUME／AO-CLOSE 與 GitHub 單一真相（腳本實際行為）
 
-- **`scripts/ao-resume.ps1`** 在 Git 同步通過後會呼叫 **`scripts/ensure-lobster-workflows-deps.ps1`**（除非 **`-SkipWorkflowsDeps`**）：在需要時自動執行 **`lobster-factory\packages\workflows`** 的 **`npm ci`**，並印出小白說明（見上文「`npm ci` 是什麼」）。通過後預設會呼叫 **`scripts/print-open-tasks.ps1`** 列出 **`agency-os/TASKS.md`** 所有未完成項（**`-SkipOpenTasksList`** 可略過）。**預設**在列印 TASKS 後再跑 **`machine-environment-audit.ps1 -FetchOrigin -Strict`**；僅在傳 **`-SkipStrictEnvironmentAudit`** 時略過（例如 Autopilot 開機）。
+- **`scripts/ao-resume.ps1`** 在 Git 同步通過後會呼叫 **`scripts/ensure-lobster-workflows-deps.ps1`**（除非 **`-SkipWorkflowsDeps`**）：在需要時自動執行 **`lobster-factory\packages\workflows`** 的 **`npm ci`**，並印出小白說明（見上文「`npm ci` 是什麼」）。通過後預設會呼叫 **`scripts/print-open-tasks.ps1`** 列出 **`agency-os/TASKS.md`** 所有未完成項（**`-SkipOpenTasksList`** 可略過），並**同步寫入** **`agency-os/.agency-state/open-tasks-snapshot.md`**（**gitignore**；內含 **Total open** 與依 **`##` 區塊**分段的 Markdown，供 **`AO-RESUME`** 代理 **Read** 後與聊天內「逐條全列」核對）。**預設**在列印 TASKS 後再跑 **`machine-environment-audit.ps1 -FetchOrigin -Strict`**；僅在傳 **`-SkipStrictEnvironmentAudit`** 時略過（例如 Autopilot 開機）。
 - **`scripts/ao-resume.ps1`**（對應關鍵字 **AO-RESUME**）會呼叫 **`check-three-way-sync.ps1 -AutoFix`**。**AutoFix 不會**對任何版本庫檔案做 **`git restore`**（避免未提交修正被靜默洗掉）；僅 **`agency-os/settings/local.permissions.json`** 可在未加 `-AllowUnexpectedDirty` 時仍視為可接受的本機差異。預設（桌機／正式雙機節奏）：
   - **落後 `origin/main` 且工作樹仍有未提交變更**：**不**自動 stash；請先 **commit、捨棄或手動 `git stash`**，再跑 AO-RESUME，避免「以為已對齊、變其實在 stash」。
   - **需要開機自動 pull 且可接受暫存**：筆電 **Autopilot** 已傳 **`-AllowUnexpectedDirty`**（會連帶啟用 `-AllowStashBeforePull`、`-AllowPendingStash`）。僅在手動確認時可自傳：  
@@ -338,5 +338,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-09 03:02:24 UTC_
+_Last synced: 2026-04-09 05:14:56 UTC_
 

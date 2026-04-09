@@ -1,4 +1,4 @@
-# Worklog
+﻿# Worklog
 
 > Historical snapshot note: this file records decisions/events by date. For current operating rules and commands, use the event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (startup/AO-RESUME) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (shutdown/AO-CLOSE).
 
@@ -18,6 +18,12 @@
 ### AO-RESUME 敘述掃齊（與「先手動 pull」脫鉤）
 - **目標**：所有活 SSOT 與 **GitHub `origin/main` 單一真相**一致——**桌機正式開工**＝monorepo 根 **`ao-resume.ps1` exit 0**（含 behind 時 ff-only pull、閘道、Strict）後再打 **`AO-RESUME`** 讀檔；**非**「必先手動 pull 再看狀態檔」。
 - **已改**：**`REMOTE_WORKSTATION_STARTUP`**（§0、§1.5 做完後、§2 捷徑、§2.2、§6.1）、**`EXECUTION_DASHBOARD`** §4、**`RESUME_AFTER_REBOOT.md`**、**`CONVERSATION_MEMORY`** Runbook、**`AGENTS`**（關鍵字順序）、**`00-session-bootstrap`**（agency-os + 根鏡像）、**`30-resume-keyword`** 第 5 點、**`end-of-day-checklist`** 註、**`LONG_TERM_OPERATING_DISCIPLINE`** 表、**`INTEGRATED_STATUS_REPORT`**、**`30_YEAR_*` 憲章**、根 **`README`** 他機條；**`verify-build-gates`** 已 PASS（含規則鏡像）。
+
+### AO-RESUME「最完整」閉環（快照 + 規則鏡像）
+- **`print-open-tasks.ps1`**：預設寫入 **`agency-os/.agency-state/open-tasks-snapshot.md`**（已 **gitignore**），分段 Markdown + **Total open**，供代理 **Read** 與聊天「全列」交叉核對；**`-NoSnapshot`** 可略過。
+- **`sync-enterprise-cursor-rules-to-monorepo-root.ps1`**：鏡像清單擴充 **`00-session-bootstrap` + `30-resume-keyword`**；根目錄 **`00`/`30`** 經 **`Apply-MonorepoRootCursorPathTransforms`**；**`-VerifyOnly`** 對 **`00`/`30`** 改為「轉換後內容」字串比對（非與正本同 hash）。
+- **`system-health-check`**（agency-os 與 monorepo **`scripts/`** 兩份）：檢查名稱更新為 **00 + 30 + 50 + 63-66**。**`verify-build-gates`** 日誌字樣同步。
+- **`REMOTE` §2.5.1**、**`AGENTS`**、**`CONVERSATION_MEMORY`**、**`.gitignore`** 已補交叉引用。
 
 ### AO-RESUME 回覆豐富度（使用者回饋）
 - **根因**：**`30-resume-keyword`** 曾要求 **concise**；**`print-open-tasks`** 僅終端輸出，聊天裡易省略；**阻塞／風險**允許單字「無」→ 代理傾向過短。
@@ -344,7 +350,7 @@
 - `docs/releases/release-notes.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-09 03:02:24 UTC_
+_Last synced: 2026-04-09 05:14:56 UTC_
 
 ## 2026-03-20
 
@@ -772,6 +778,7 @@ _Last synced: 2026-04-09 03:02:24 UTC_
 - 要點摘要：`gh` + `gh auth login`（筆電）；Node／`lobster-factory\packages\workflows` `npm ci`；**DPAPI vault 與 MCP 每台各自設定**；開工見 `REMOTE_WORKSTATION_STARTUP.md`。
 - **最短指令正本**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` **§1.5**（筆電／新機複製貼上序列）；根 `README.md` 他機接線條目已連到 §1.5；`TASKS` 雙機項已連回 §1.5。
 - **2026-04-01 整合** — 避免 §1／§1.5／§2 重工與邏輯矛盾：`§1` 僅剩「已 clone 之 `pull`」並指向 §1.5；`§2` 例行步驟補上 **`packages/workflows` `npm ci`**（與 lockfile 位置一致；非舊的錯誤 `lobster-factory` 根目錄 `npm ci`）；`§2.1`／`§6`／`§5` 與 **§1.5 做完後** 指引對齊；**EXECUTION_DASHBOARD**（公司機摘要）、**RESUME_AFTER_REBOOT**（換機段）、**AGENTS**（雙機）、**CONVERSATION_MEMORY**、根 **README** 一併與 `REMOTE_WORKSTATION_STARTUP` 單一真相對齊。
+
 
 
 
