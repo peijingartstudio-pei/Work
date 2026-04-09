@@ -30,6 +30,17 @@ function Apply-MonorepoRootCursorPathTransforms {
     $c = $c -replace '`docs/operations/cursor-mcp-and-plugin-inventory\.md`', '`agency-os/docs/operations/cursor-mcp-and-plugin-inventory.md`'
     # 例如：（見 **`REMOTE_WORKSTATION_STARTUP` 2.5.1**）
     $c = $c -replace '\*\*`REMOTE_WORKSTATION_STARTUP` 2\.5\.1\*\*', '**`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` 2.5.1**'
+    # 40-shutdown: monorepo-root readers — agency-os path first, then subfolder-workspace hint
+    # Build regex without embedding CJK literals in this .ps1 file (encoding-safe on Windows hosts).
+    # Allow CJK "與" as U+8207 (file SSOT) or U+4E0E (legacy/homoglyph).
+    $rx40 = [string]([char]0xFF08) + '(?:' + [char]0x8207 + '|' + [char]0x4E0E + ')' + ' \*\*`docs/operations/end-of-day-checklist\.md`\*\* ' + [char]0x00A7 + '1a .+?\*\*`agency-os/docs/operations/end-of-day-checklist\.md`\*\*' +
+        [char]0xFF1B + [char]0x7D30 + [char]0x7BC0 + [char]0x4EE5 + [char]0x8173 + [char]0x672C + [char]0x70BA + [char]0x6E96 + [char]0xFF09
+    $new40 = [string]([char]0xFF08) + [char]0x8207 + ' **`agency-os/docs/operations/end-of-day-checklist.md`** ' + [char]0x00A7 + '1a ' +
+        [char]0x4E00 + [char]0x81F4 + [char]0x2014 + [char]0x2014 +
+        [char]0x5DE5 + [char]0x4F5C + [char]0x5340 + [char]0x82E5 + [char]0x50C5 + [char]0x70BA +
+        ' `agency-os` ' + [char]0x5247 + [char]0x70BA + ' **`docs/operations/end-of-day-checklist.md`**' +
+        [char]0xFF1B + [char]0x7D30 + [char]0x7BC0 + [char]0x4EE5 + [char]0x8173 + [char]0x672C + [char]0x70BA + [char]0x6E96 + [char]0xFF09
+    $c = [regex]::Replace($c, $rx40, $new40)
     return $c
 }
 
@@ -37,6 +48,7 @@ function Apply-MonorepoRootCursorPathTransforms {
 $names = @(
     "00-session-bootstrap.mdc",
     "30-resume-keyword.mdc",
+    "40-shutdown-closeout.mdc",
     "50-operator-autopilot.mdc",
     "63-cursor-core-identity-risk.mdc",
     "64-architecture-mcp-routing.mdc",
@@ -47,6 +59,7 @@ $names = @(
 $transformForRoot = @{
     "00-session-bootstrap.mdc" = $true
     "30-resume-keyword.mdc"      = $true
+    "40-shutdown-closeout.mdc"   = $true
 }
 
 if (-not (Test-Path -LiteralPath $sourceDir)) {

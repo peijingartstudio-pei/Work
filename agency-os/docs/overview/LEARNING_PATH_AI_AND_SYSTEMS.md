@@ -1,4 +1,4 @@
-﻿# 邊做邊學：不懂 AI／程式時，怎麼跟我協作、最後自己當家
+# 邊做邊學：不懂 AI／程式時，怎麼跟我協作、最後自己當家
 
 > 目的：你不用先變成工程師，也能**一天比一天少依賴我**；同時把 `agency-os` 與 `lobster-factory` 變成你真正會用的系統。  
 > 本檔是「長版操作手冊」，可慢慢讀；每天實作只要照 **§6 每日 15 分鐘** 即可。
@@ -60,10 +60,10 @@
 ### 第 1 週：只學「公司怎麼每天轉」
 
 - 讀：`docs/overview/EXECUTION_DASHBOARD.md`（一頁）  
-- 每天做：`docs/operations/end-of-day-checklist.md` 裡的**必跑三步**（doc-sync / health / guard）  
+- 每天收工：**預設** monorepo 根 **`scripts/ao-close.ps1`**（關鍵字 **`AO-CLOSE`**；見 **`40-shutdown-closeout.mdc`**）— 內含 recap／閘道／integrated status／預設 push。若要**對照意義**，可讀 `docs/operations/end-of-day-checklist.md` **§1b「手動三步」**（doc-sync / health / guard）—與一鍵邏輯對齊、不是第二套正本。  
 - 學會看：`reports/health/health-*.md` 裡 **Critical Gate PASS/FAIL**  
 - 產一次綜合報告：`scripts/generate-integrated-status-report.ps1` → 開 `reports/status/integrated-status-LATEST.md`  
-- **本週目標**：你能向別人解釋「為什麼收工要跑這三步」。
+- **本週目標**：你能向別人解釋「為什麼收工要過閘道（手動拆三步時各自證明什麼）」。
 
 ### 第 2 週：學「客戶與專案資料放哪」
 
@@ -107,7 +107,7 @@
 
 - 能獨立完成新客戶 onboard 的檔案與 SOP，並知道證據放哪。  
 - 能讀懂 health 報告 FAIL 的類別（缺檔、路徑、編碼、地圖不一致）。  
-- 收工三步能自己跑完並在 daily note 留報告檔名。
+- 收工閘道能自己跑完（**`ao-close.ps1`** 或手動對照 **checklist**）並在 daily note 留報告檔名。
 
 **Lobster 大師**（務實定義，不要求你寫框架）：
 
@@ -187,7 +187,7 @@
 ## 14) Agency OS：外行最該先記住的五件事
 
 1. **EXECUTION_DASHBOARD**：每天一頁入口。  
-2. **收工三步**：doc-sync → health → guard（意義是：文件、骨架、狀態都有留痕）。  
+2. **收工閘道**：**預設** **`scripts/ao-close.ps1`**（**`AO-CLOSE`**）；手動對照時才是 doc-sync → health → guard（意義：文件、骨架、狀態留痕——見 **`end-of-day-checklist` §1b**）。  
 3. **`tenants/`**：一個客戶一包；大師要知道**新客戶從哪個 SOP 開始**。  
 4. **報告目錄**：`reports/health`、`reports/closeout`、`reports/guard` — 是「發生過什麼」的憑證。  
 5. **`AO-RESUME` / `AO-CLOSE`**：不是魔法，是強迫大家**先讀記憶與任務**再做事，降低断線成本。
@@ -235,10 +235,10 @@
 - **效益**：永遠知道「官方進度」在哪；**差錯**：雙軌待辦 → 重工、漏做、吵架。  
 - **檢查**：綜合報告 §1–2 與 `TASKS` 未勾項是否一致；**預防**：新想法先寫進 `TASKS` 再動手。
 
-### 17.3 套用：收工三步（doc-sync → health → guard）
+### 17.3 套用：收工閘道（預設 `ao-close.ps1`；手動時 doc-sync → health → guard）
 
-- **注意**：改的是「治理／文件／連動」時，doc-sync 才有意義；純寫程式未動 docs 時，重點在別的 gate。  
-- **推演**：doc-sync 產 closeout 報告 → health 掃結構與連結 → guard 寫狀態／告警 → **隔天 AO-RESUME 有憑有據**。  
+- **注意**：**營運預設**不必背「三步順序」—跑通 **`ao-close.ps1`** 即可；本節三步是**拆解理解**用。改的是「治理／文件／連動」時，doc-sync 才有意義；純寫程式未動 docs 時，重點在別的 gate。  
+- **推演**：doc-sync 產 closeout 報告 → health 掃結構與連結 → guard 寫狀態／告警 → **隔天 `ao-resume.ps1`／`AO-RESUME` 有憑有據**。  
 - **為什麼**：人會忘、聊天會不見；**機器可重跑的檢查**留下時間戳與 PASS/FAIL。  
 - **效益**：斷線、換電腦、半年後回來仍能接；**差錯**：跳過 → 以為系統健康、其實缺檔或斷鍊已擴散。  
 - **檢查**：`Critical Gate PASS`、報告檔名寫進 `memory/daily`；**預防**：收工清單固定勾、不要「累就先跳」。

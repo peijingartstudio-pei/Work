@@ -1,4 +1,4 @@
-﻿# Work — Agency OS + Lobster Factory
+# Work — Agency OS + Lobster Factory
 
 本儲存庫收斂兩條主線：**Agency OS**（治理、客戶與營運 SOP、健康檢查）與 **Lobster Factory**（WordPress 工廠、Supabase、Trigger 工作流程、結構閘道）。
 
@@ -62,7 +62,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 ## 收工與同步
 
 - 關鍵字 **`AO-CLOSE`**：依 **`agency-os/.cursor/rules/40-shutdown-closeout.mdc`**；**repo 根**執行 **`.\scripts\ao-close.ps1`**（**正本**；**`agency-os\scripts\ao-close.ps1`** 僅 wrapper）。腳本含 **今日 recap**、**閘道**、**`apply-closeout-task-checkmarks`**（自 **`WORKLOG`** **`- AUTO_TASK_DONE:`** 打勾 **`TASKS`**）、預設 **commit + push**；health **100%** 與 **`AGENTS.md`** 一致。**勿**在僅 `lobster-factory` 子目錄執行。
-- **monorepo 根 `.cursor/rules/40`、`30`**：應與 **`agency-os/.cursor/rules`** 同檔**同文**（可由 **`verify-build-gates`** 內 **`sync-enterprise-cursor-rules-to-monorepo-root`** 鏡像）；若只改一邊會造成**開收工規則分叉**。
+- **monorepo 根 `.cursor/rules`**（**`00`、`30`、`40`、`50`、`63–66`**）：正本在 **`agency-os/.cursor/rules`**；由 **`scripts/sync-enterprise-cursor-rules-to-monorepo-root.ps1`** 鏡像到根目錄（**`00`／`30`／`40`** 含路徑變換；**`verify-build-gates`** 預設會跑）。只改一邊會造成**規則分叉**。
 
 ## Related Documents (Auto-Synced)
 - `docs/operations/cursor-enterprise-rules-index.md`
