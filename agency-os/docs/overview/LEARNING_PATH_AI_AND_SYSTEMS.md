@@ -1,4 +1,4 @@
-# 邊做邊學：不懂 AI／程式時，怎麼跟我協作、最後自己當家
+﻿# 邊做邊學：不懂 AI／程式時，怎麼跟我協作、最後自己當家
 
 > 目的：你不用先變成工程師，也能**一天比一天少依賴我**；同時把 `agency-os` 與 `lobster-factory` 變成你真正會用的系統。  
 > 本檔是「長版操作手冊」，可慢慢讀；每天實作只要照 **§6 每日 15 分鐘** 即可。
@@ -288,5 +288,5 @@
 ## Related Documents (Auto-Synced)
 - `docs/overview/EXECUTION_DASHBOARD.md`
 
-_Last synced: 2026-04-09 05:26:05 UTC_
+_Last synced: 2026-04-09 05:52:22 UTC_
 

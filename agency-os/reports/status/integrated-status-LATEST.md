@@ -1,6 +1,6 @@
 ﻿# Integrated status report (assembled)
 
-- Generated: 2026-04-07 17:33:28
+- Generated: 2026-04-09 13:52:34
 - agency-os root: `C:\Users\USER\Work\agency-os`
 
 > Assembled from canonical sources only; edit those files to change truth. Chinese legend: `docs/overview/INTEGRATED_STATUS_REPORT.md`
@@ -203,34 +203,29 @@
 
 > Full runbook: see `## Runbook Commands` in the source file.
 
-## 5) memory/daily/2026-04-07.md
-# 2026-04-07
+## 5) memory/daily/2026-04-09.md
+# 2026-04-09
 
 ## 背景
-使用者要求 AO-RESUME／AO-CLOSE 與 GitHub 單一真相一致、小白能理解 `npm ci`，並做全文對齊複查。
+收工前收斂 AO-RESUME／AO-CLOSE 與 monorepo 根 `.cursor` 規則鏡像敘事。
 
 ## 已完成
-- Git 同步／腳本強化（stash 行為、pull、`ao-close` fetch／behind guard、workflows `npm ci` 自動步驟）。
-- 文件／wrapper／memory／integrated-status 與腳本一致化；本日 **AO-CLOSE** 推遠端。
-- AO-RESUME 補強：預設列出 `TASKS.md` 全部未完成（`print-open-tasks`）。
-- AO-CLOSE 補強：預設列出今日回顧（`print-today-closeout-recap`）與 `WORKLOG` `AUTO_TASK_DONE` 自動打勾 `TASKS`（`apply-closeout-task-checkmarks`）。
-- 規則統一：`AO-CLOSE` 單關鍵字即授權代理代寫 `AUTO_TASK_DONE`，不再要求使用者補口頭句；`40/50/30`、`AGENTS`、`README`、`end-of-day-checklist`、`EXECUTION_DASHBOARD` 對齊。
+- `40-shutdown-closeout.mdc` 納入 `sync-enterprise-cursor-rules-to-monorepo-root.ps1`；根目錄版 checklist 句路徑轉換；`與` 碼位／regex 穩定化；`agency-os` sync 腳本改轉發 SSOT；README／health／verify-build-gates 文案含 **40**；verify-build-gates PASS；checkpoint `9c7b15d`。
 
 ## 未完成
-- `TASKS`「雙機環境對齊」等既有 Next 項（未變）。
+- `TASKS` 開放項（雙機、Pilot、Next-Gen 等）仍依板面；本輪未新增可勾之 DoD。
 
 ## 風險／阻塞
-- 無。
+- 無（本機 **ahead** `origin/main`，收工腳本將 push）。
 
 ## 下一步
-- 執行本次 **AO-CLOSE** 一鍵收工（gate + 報告 + push）。
-- 筆電依 **REMOTE** 開工；下次 **AO-RESUME** 前 **pull**。
+- 他機：`git pull --ff-only origin main` 後 **`AO-RESUME`**；雙機項仍待兩台 **Strict audit** PASS。
 
 ## 6) LAST_SYSTEM_STATUS.md (appendix)
 # System Guard Status
 
 - Mode: `manual`
-- Time: `2026-04-07 17:33:19`
+- Time: `2026-04-09 13:52:25`
 - Health score: **100%**
 - Threshold: **100%**
 - Health gate exit code: **0**
@@ -240,8 +235,8 @@
 - Auto-repair result: **N/A**
 
 ## Latest Reports
-- Health: `reports/health/health-20260407-173319.md`
-- Closeout: `reports/closeout/closeout-20260407-173317.md`
+- Health: `reports/health/health-20260409-135225.md`
+- Closeout: `reports/closeout/closeout-20260409-135223.md`
 
 ## Action
 - No blocking issue detected.

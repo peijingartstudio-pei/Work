@@ -1,26 +1,42 @@
 ﻿{
-    "last_run_utc":  "2026-04-09T05:26:06.0334894Z",
+    "last_run_utc":  "2026-04-09T05:52:23.6265811Z",
     "changed_files":  [
-                          "docs/overview/EXECUTION_DASHBOARD.md",
+                          "../README.md",
+                          ".cursor/rules/40-shutdown-closeout.mdc",
                           "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
-                          "docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md",
+                          "memory/CONVERSATION_MEMORY.md",
+                          "memory/daily/2026-04-09.md",
+                          "scripts/system-health-check.ps1",
+                          "TASKS.md",
                           "WORKLOG.md"
                       ],
     "impacted_files":  [
-                           "docs/operations/end-of-day-checklist.md",
+                           "../README.md",
+                           ".cursor/rules/40-shutdown-closeout.mdc",
+                           "AGENTS.md",
+                           "docs/operations/cursor-enterprise-rules-index.md",
                            "docs/overview/EXECUTION_DASHBOARD.md",
-                           "docs/overview/INTEGRATED_STATUS_REPORT.md",
                            "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
-                           "docs/overview/LONG_TERM_OPERATING_DISCIPLINE.md",
+                           "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
                            "memory/CONVERSATION_MEMORY.md",
+                           "memory/daily/2026-04-09.md",
+                           "README.md",
+                           "scripts/doc-sync-automation.ps1",
+                           "scripts/system-guard.ps1",
+                           "scripts/system-health-check.ps1",
+                           "TASKS.md",
                            "WORKLOG.md"
                        ],
     "auto_updated_files":  [
-                               "docs/operations/end-of-day-checklist.md",
+                               "../README.md",
+                               "AGENTS.md",
+                               "docs/operations/cursor-enterprise-rules-index.md",
                                "docs/overview/EXECUTION_DASHBOARD.md",
-                               "docs/overview/INTEGRATED_STATUS_REPORT.md",
                                "docs/overview/LEARNING_PATH_AI_AND_SYSTEMS.md",
+                               "docs/overview/REMOTE_WORKSTATION_STARTUP.md",
                                "memory/CONVERSATION_MEMORY.md",
+                               "README.md",
+                               "TASKS.md",
                                "WORKLOG.md"
                            ]
 }
