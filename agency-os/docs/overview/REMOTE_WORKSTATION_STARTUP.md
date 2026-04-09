@@ -91,6 +91,9 @@ if (Test-Path .\mcp-local-wrappers) {
 
 # 一次閘道（通過再開工大改）
 powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
+
+# 雙機對齊可驗證判定（勾 `TASKS`「雙機環境對齊」前必達）：`-Strict` 將 gh／vault／mcp／乾淨樹等建議項視為失敗，輸出須為「PASS (no warnings)」
+powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1 -FetchOrigin -Strict
 ```
 
 ### 1.5.1 Windows：本機 WordPress 棧（筆電與公司桌機對齊｜**非 MCP**）
@@ -130,8 +133,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 ### 做完後
 
 1. 讀 `agency-os\LAST_SYSTEM_STATUS.md`、`agency-os\TASKS.md`、`agency-os\reports\status\integrated-status-LATEST.md`。  
-2. 在 Cursor 輸入 **`AO-RESUME`**（且 **已**完成本節的 `git pull` 與閘道）。  
-3. **下一趟起**：換機以外的**日常開機**請改依 **§2**（不必重跑 §1.5 全段；除非重新 clone、換機、或依賴損毀需重建）。
+2. 確認 **`machine-environment-audit.ps1 -FetchOrigin -Strict`** 已顯示 **PASS（無 WARN）**（與上方「工具與依賴」區塊最後一步一致；若略過 Strict，不應勾選 `TASKS` 雙機項）。  
+3. 在 Cursor 輸入 **`AO-RESUME`**（且 **已**完成本節的 `git pull` 與閘道）。  
+4. **下一趟起**：換機以外的**日常開機**請改依 **§2**（不必重跑 §1.5 全段；除非重新 clone、換機、或依賴損毀需重建）。
 
 ---
 
@@ -200,7 +204,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 ### 2.5.1 AO-RESUME／AO-CLOSE 與 GitHub 單一真相（腳本實際行為）
 
 - **`scripts/ao-resume.ps1`** 在 Git 同步通過後會呼叫 **`scripts/ensure-lobster-workflows-deps.ps1`**（除非 **`-SkipWorkflowsDeps`**）：在需要時自動執行 **`lobster-factory\packages\workflows`** 的 **`npm ci`**，並印出小白說明（見上文「`npm ci` 是什麼」）。通過後預設會呼叫 **`scripts/print-open-tasks.ps1`** 列出 **`agency-os/TASKS.md`** 所有未完成項（**`-SkipOpenTasksList`** 可略過）。
-- **`scripts/ao-resume.ps1`**（對應關鍵字 **AO-RESUME**）會呼叫 **`check-three-way-sync.ps1 -AutoFix`**。預設（桌機／正式雙機節奏）：
+- **`scripts/ao-resume.ps1`**（對應關鍵字 **AO-RESUME**）會呼叫 **`check-three-way-sync.ps1 -AutoFix`**。**AutoFix 不會**對任何版本庫檔案做 **`git restore`**（避免未提交修正被靜默洗掉）；僅 **`agency-os/settings/local.permissions.json`** 可在未加 `-AllowUnexpectedDirty` 時仍視為可接受的本機差異。預設（桌機／正式雙機節奏）：
   - **落後 `origin/main` 且工作樹仍有未提交變更**：**不**自動 stash；請先 **commit、捨棄或手動 `git stash`**，再跑 AO-RESUME，避免「以為已對齊、變其實在 stash」。
   - **需要開機自動 pull 且可接受暫存**：筆電 **Autopilot** 已傳 **`-AllowUnexpectedDirty`**（會連帶啟用 `-AllowStashBeforePull`、`-AllowPendingStash`）。僅在手動確認時可自傳：  
     `-AllowStashBeforePull`、`-AllowPendingStash`。
@@ -228,7 +232,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 
 判讀重點：
 - `git status -sb` 只看到 `## main...origin/main` 才是乾淨工作樹（有 `M`/`??` 就是 dirty）。
-- `HEAD...origin/main` 應為 `0 0`（非 `0 0` 代表尚未完全對齊）。
+- `git rev-list --left-right --count HEAD...origin/main` 輸出 **`ahead behind`**（兩個數字）：**第二個數字（behind）必須為 `0`** 才表示未落後遠端；第一個數字（ahead）可大於 `0`（本機已有未 push 的 checkpoint，與 **§2.5** 一致）。若 **behind > 0**，先 §2 第 1 步 `pull` 再開工大改。
 - `verify-build-gates` 要 PASS（避免「版本對齊但行為錯」的邏輯 bug 持續擴散）。
 
 ## 2.4 大量刪檔後：怎麼避免「pull 又長回來」？
@@ -308,14 +312,17 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 **一鍵稽核**（不讀取密鑰內容；可加上 `-FetchOrigin` 讓 ahead/behind 較準）：
 
 ```powershell
-# 快速：結構 + Git + Node + node_modules + gh / vault / mcp 占位
+# 快速診斷（仍有 WARN 亦 exit 0）：日常自查用；不足以勾選 `TASKS`「雙機環境對齊」
 powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1 -FetchOrigin
+
+# 勾選雙機項／§1.5 正式收尾：建議項視為失敗（須無 WARN）
+powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1 -FetchOrigin -Strict
 
 # 最嚴格：上述通過後再跑 verify-build-gates，且把「建議項」也當失敗
 powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1 -FetchOrigin -RunVerifyGates -Strict
 ```
 
-新機／第二台電腦在 §1.5 收尾時，建議至少跑 **第一段**；上線前或大改版前可跑 **第二段**。
+新機／第二台電腦在 §1.5 收尾時，**勾選 `TASKS` 雙機項前**須跑 **含 `-Strict` 之指令**（與 §1.5「工具與依賴」區塊一致）；上線前或大改版前可跑 **第三段**（`-RunVerifyGates`）。
 
 ## Related Documents (Auto-Synced)
 - `../README.md`
@@ -330,5 +337,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-07 05:30:14 UTC_
+_Last synced: 2026-04-09 02:00:03 UTC_
 

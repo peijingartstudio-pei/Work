@@ -51,7 +51,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 ## 開工與雙機同步（AO-RESUME）
 
 - **`AO-RESUME`**：請 Agent 依 **`agency-os/.cursor/rules/30-resume-keyword.mdc`**（若工作區根僅為 `agency-os` 則為該目錄下 `.cursor/rules`）讀進度檔；流程上會先檢查遠端並**嘗試** `git pull --ff-only`（遇未提交變更／衝突仍可能失敗），**實務上建議**你先在 monorepo 根手動 **`git fetch`** + **`git pull --ff-only origin main`** 再開工。
-- **另一台已 AO-CLOSE push 時**：在本機 monorepo 根先 **`git fetch origin`**，再 **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），**然後**再打 `AO-RESUME`。完整清單：[`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)（**§1.5** 新機、**§2** 例行）。
+- **另一台已 AO-CLOSE push 時**：在本機 monorepo 根先 **`git fetch origin`**，再 **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），**然後**再打 `AO-RESUME`。完整清單：[`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`](agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md)（**§1.5** 新機、**§2** 例行）。**勾選 `TASKS`「雙機環境對齊」前**：兩台皆在 repo 根跑 **`.\scripts\machine-environment-audit.ps1 -FetchOrigin -Strict`**，須 **PASS（無 WARN）**。
 
 ## 事件流程單一真相
 
@@ -70,5 +70,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1 -Lobst
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `README.md`
 
-_Last synced: 2026-04-07 05:30:14 UTC_
+_Last synced: 2026-04-09 02:00:03 UTC_
 

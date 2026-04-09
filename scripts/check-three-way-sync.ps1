@@ -42,6 +42,10 @@ if (-not $WorkRoot) {
 
 Push-Location $WorkRoot
 try {
+    # Native `git` writes progress to stderr; with $ErrorActionPreference Stop, PowerShell can treat that as a terminating error.
+    $savedEap = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+
     $null = git rev-parse --git-dir 2>$null
     if ($LASTEXITCODE -ne 0) {
         throw "Not a git repository: $WorkRoot"
@@ -51,27 +55,21 @@ try {
     Write-Host "Work root: $WorkRoot"
     Write-Host ""
 
-    $knownNoise = @(
-        ".cursor/rules/00-session-bootstrap.mdc",
-        ".cursor/rules/30-resume-keyword.mdc",
-        "agency-os/scripts/generate-integrated-status-report.ps1",
-        "agency-os/.cursor/rules/00-session-bootstrap.mdc",
-        "agency-os/.cursor/rules/30-resume-keyword.mdc",
-        "scripts/generate-integrated-status-report.ps1",
-        "scripts/check-three-way-sync.ps1",
-        "agency-os/scripts/check-three-way-sync.ps1",
-        "scripts/ao-resume.ps1",
-        "agency-os/scripts/ao-resume.ps1",
-        "scripts/autopilot-phase1.ps1",
-        "agency-os/scripts/autopilot-phase1.ps1",
-        "scripts/notify-ops.ps1",
-        "agency-os/scripts/notify-ops.ps1",
-        "scripts/register-autopilot-phase1.ps1",
-        "agency-os/scripts/register-autopilot-phase1.ps1",
-        "automation/REGISTER_AUTOPILOT_PHASE1_TASKS.ps1",
-        "agency-os/automation/REGISTER_AUTOPILOT_PHASE1_TASKS.ps1",
-        ".cursor/settings.json",
-        "agency-os/.cursor/settings.json",
+    function Get-AheadBehindOriginMain {
+        $line = (git rev-list --left-right --count HEAD...origin/main 2>$null | Select-Object -Last 1)
+        if ($line -match '^\s*(\d+)\s+(\d+)\s*$') {
+            return @{
+                Ahead  = [int]$Matches[1]
+                Behind = [int]$Matches[2]
+            }
+        }
+        return @{ Ahead = -1; Behind = -1 }
+    }
+
+    # Machine-local paths that may differ per workstation and must NEVER be `git restore`d by AutoFix.
+    # (Historically a long "knownNoise" list was restored here — that silently discarded uncommitted fixes to
+    # repo-owned scripts and broke multi-machine alignment. Only true local-only files belong here.)
+    $pathsAllowedDirtyWithoutFlag = @(
         "agency-os/settings/local.permissions.json"
     )
 
@@ -101,22 +99,10 @@ try {
 
     $head = (git rev-parse --short HEAD).Trim()
     $remote = (git rev-parse --short origin/main).Trim()
-    $isLatest = $head -eq $remote
+    $ab = Get-AheadBehindOriginMain
+    $notBehindOrigin = ($ab.Behind -eq 0)
 
     if ($AutoFix) {
-        $dirtyForFix = @(Get-DirtyPaths)
-        if ($dirtyForFix.Count -gt 0) {
-            $noiseToRestore = @()
-            foreach ($p in $dirtyForFix) {
-                if ($knownNoise -contains $p) { $noiseToRestore += $p }
-            }
-            if ($noiseToRestore.Count -gt 0) {
-                foreach ($n in $noiseToRestore) {
-                    cmd /c "git restore -- `"$n`" 1>nul 2>nul" | Out-Null
-                }
-            }
-        }
-
         git fetch origin 2>&1 | Out-Host
         if ($LASTEXITCODE -ne 0) {
             Write-Result -Label "git fetch (AutoFix)" -Pass $false -Detail "fetch failed"
@@ -124,9 +110,11 @@ try {
         }
         $head = (git rev-parse --short HEAD).Trim()
         $remote = (git rev-parse --short origin/main).Trim()
-        $isLatest = $head -eq $remote
+        $ab = Get-AheadBehindOriginMain
+        $notBehindOrigin = ($ab.Behind -eq 0)
 
-        if (-not $isLatest) {
+        # Only fast-forward when **behind** origin/main. Local commits ahead (checkpoint not pushed) must not trigger pull.
+        if ($ab.Behind -gt 0) {
             $dirtyForPull = @(Get-DirtyPaths)
             if ($dirtyForPull.Count -gt 0) {
                 if (-not $AllowStashBeforePull) {
@@ -151,13 +139,14 @@ try {
             if ($LASTEXITCODE -ne 0) { exit 1 }
             $head = (git rev-parse --short HEAD).Trim()
             $remote = (git rev-parse --short origin/main).Trim()
-            $isLatest = $head -eq $remote
+            $ab = Get-AheadBehindOriginMain
+            $notBehindOrigin = ($ab.Behind -eq 0)
         }
 
         $postFixDirty = @(Get-DirtyPaths)
         $postFixUnexpected = @()
         foreach ($p in $postFixDirty) {
-            if ($knownNoise -notcontains $p) { $postFixUnexpected += $p }
+            if ($pathsAllowedDirtyWithoutFlag -notcontains $p) { $postFixUnexpected += $p }
         }
         if (($postFixUnexpected.Count -gt 0) -and (-not $AllowUnexpectedDirty)) {
             if ($AllowAutoStashUnexpected) {
@@ -178,15 +167,21 @@ try {
         if ($LASTEXITCODE -ne 0) { exit 1 }
         $head = (git rev-parse --short HEAD).Trim()
         $remote = (git rev-parse --short origin/main).Trim()
-        $isLatest = $head -eq $remote
+        $ab = Get-AheadBehindOriginMain
+        $notBehindOrigin = ($ab.Behind -eq 0)
     }
 
-    Write-Result -Label "Latest (HEAD vs origin/main)" -Pass $isLatest -Detail "HEAD=$head, origin/main=$remote"
+    $syncDetail = if ($ab.Ahead -lt 0) {
+        "Could not parse ahead/behind; HEAD=$head, origin/main=$remote"
+    } else {
+        "ahead=$($ab.Ahead), behind=$($ab.Behind); HEAD=$head, origin/main=$remote"
+    }
+    Write-Result -Label "Origin/main (not behind)" -Pass $notBehindOrigin -Detail $syncDetail
 
     $dirtyPaths = @(Get-DirtyPaths)
     $unexpectedDirty = @()
     foreach ($p in $dirtyPaths) {
-        if ($knownNoise -notcontains $p) {
+        if ($pathsAllowedDirtyWithoutFlag -notcontains $p) {
             $unexpectedDirty += $p
         }
     }
@@ -200,7 +195,7 @@ try {
         if ($dirtyPaths.Count -eq 0) {
             Write-Result -Label "Working tree" -Pass $true -Detail "Clean"
         } elseif ($unexpectedDirty.Count -eq 0) {
-            Write-Result -Label "Working tree" -Pass $true -Detail ("Only known noise: " + ($dirtyPaths -join ", "))
+            Write-Result -Label "Working tree" -Pass $true -Detail ("Only allowed local drift: " + ($dirtyPaths -join ", "))
         } else {
             $detail = if ($AllowUnexpectedDirty) {
                 "Allowed by -AllowUnexpectedDirty: " + ($unexpectedDirty -join "; ")
@@ -239,14 +234,17 @@ try {
         exit 1
     }
 
-    $finalPass = $isLatest -and $isCleanEnough -and $verifyPass
+    $finalPass = $notBehindOrigin -and $isCleanEnough -and $verifyPass
     Write-Host ""
-    Write-Result -Label "FINAL (Latest + Correctness)" -Pass $finalPass -Detail $(if ($finalPass) { "Repo is synced and valid." } else { "Check failed items above." })
+    Write-Result -Label "FINAL (not behind + correctness)" -Pass $finalPass -Detail $(if ($finalPass) { "Repo is ready (not behind origin/main)." } else { "Check failed items above." })
 
     if (-not $finalPass) {
         exit 1
     }
 } finally {
+    if ($null -ne $savedEap) {
+        $ErrorActionPreference = $savedEap
+    }
     Pop-Location
 }
 

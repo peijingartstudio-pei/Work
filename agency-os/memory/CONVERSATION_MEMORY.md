@@ -3,6 +3,7 @@
 > Historical snapshot note: this file preserves cross-session context and may include decisions from older process versions. For current operating rules, use event SSOT docs: `docs/overview/REMOTE_WORKSTATION_STARTUP.md` (AO-RESUME/startup、**§2.5 日內 Git 節奏**) and `docs/operations/end-of-day-checklist.md` + `.cursor/rules/40-shutdown-closeout.mdc` (AO-CLOSE/shutdown). Agent-enforced Git detail: `.cursor/rules/50-operator-autopilot.mdc` §7.
 
 ## Current Operating Context
+- **2026-04-09（雙機對齊根因修復）**：`check-three-way-sync -AutoFix` 已**移除**對「known noise」路徑的 **`git restore`**（舊行為會靜默丟棄 `scripts/*.ps1` 等未提交修改，導致多機反覆對齊失敗）；白名單僅剩 **`agency-os/settings/local.permissions.json`**。`TASKS` 雙機項、`30-resume-keyword`、`REMOTE` §1.5／§6.2 與 **`machine-environment-audit -FetchOrigin -Strict`**（無 WARN 方可勾）已對齊；新增 **`agency-os/scripts/machine-environment-audit.ps1`** wrapper。
 - **2026-04-07（AO-RESUME／AO-CLOSE 營運硬化）**：`check-three-way-sync` 與 `origin/main`、`ao-close` push 前落後攔截、**`ensure-lobster-workflows-deps`** 掛入 **`ao-resume`**、**`print-open-tasks`／`print-today-closeout-recap`／`apply-closeout-task-checkmarks`**（**WORKLOG `AUTO_TASK_DONE`**）；**單打 AO-CLOSE** 即授權代理代寫 **`AUTO_TASK_DONE`**（**40／50／AGENTS／TASKS 待辦原則**）；**REMOTE 2.5.1**、`40`／`30` **monorepo 根鏡像須與 `agency-os` 正本一致**；詳 **WORKLOG 2026-04-07**。
 - **2026-04-02（ADR 006 migration）**：已新增 **`lobster-factory/packages/db/migrations/0010_clerk_org_mapping_and_rls_expansion.sql`**（Clerk↔org 對照表、JWT org claim、`user_has_org_access` 擴充、多表 SELECT RLS）；ADR 006 已補 JWT／staging 驗證說明。
 - **2026-04-02（長期 §9–10）**：`LONG_TERM_OPERATING_DISCIPLINE.md` **§9** 為 **AI／MCP 輔助邊界**；**§10** 為 **執行節奏表**（閘道／ADR／釋出／開收工／雙機／audit + 12 個月 ADR 006 錨點）。
@@ -24,7 +25,7 @@
 - **2026-03-31 補充**：已完成 P1/P2 跑道加速（Run ID 對照規格 + preflight 腳本 + 證據骨架初始化），可直接進入實跑。
 - **2026-03-31 補充**：P1 最小實跑已完成：舊 `company-a` 示範資料與舊骨架已清除，改用 `company-p1-pilot` 建立新 tenant/site/project，並產生新證據路徑 `reports/e2e/onboarding-a10-2/20260331-214650-company-p1-pilot-2026-010-p1-pilot/`。
 - **AO-RESUME 明日必回報提醒**：開場必先提醒並檢查 `reports/e2e/onboarding-a10-2/20260331-215507-company-p1-pilot-2026-010-p1-pilot/02-a10-2-evidence.md` 與同目錄 `03-run-id-map.md`（A10-2 pending 列），再決定是否直接啟動 A10-2。
-- **AO-RESUME 雙機提醒（使用者明示 + 未勾 `TASKS` 前持續報）**：**另一台電腦**須跑完 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §1.5**（**含 §1.5.1**：Windows 筆電須補 **MariaDB.Server + PHP.PHP.NTS.8.4 + `setup-wp-cli-windows.ps1` + `bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni`**，與 Supabase／MCP **分列**），然後在 **monorepo 根**執行 `powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1 -FetchOrigin` 至 **PASS（無 WARN）**，再勾 **`TASKS.md` → Next**「（AO-RESUME 提醒）雙機環境對齊」。在該項**仍未勾選**期間，每次 `AO-RESUME` 回覆的 **「下一步」**（必要時 **「目前進度」**）**必含一行專門口頭提醒**上述 §1.5 + **§1.5.1** + audit（見 `.cursor/rules/30-resume-keyword.mdc` 第 7、8 點）。要點仍含：`gh`、vault／MCP 每台重設、**§2** 例行節奏。
+- **AO-RESUME 雙機提醒（使用者明示 + 未勾 `TASKS` 前持續報）**：**另一台電腦**須跑完 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §1.5**（**含 §1.5.1**：Windows 筆電須補 **MariaDB.Server + PHP.PHP.NTS.8.4 + `setup-wp-cli-windows.ps1` + `bootstrap-local-wordpress-windows.ps1 -EnsurePhpIni`**，與 Supabase／MCP **分列**），然後在 **monorepo 根**執行 `powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1 -FetchOrigin -Strict` 至 **PASS（無 WARN）**，再勾 **`TASKS.md` → Next**「（AO-RESUME 提醒）雙機環境對齊」。在該項**仍未勾選**期間，每次 `AO-RESUME` 回覆的 **「下一步」**（必要時 **「目前進度」**）**必含一行專門口頭提醒**上述 §1.5 + **§1.5.1** + audit（見 `.cursor/rules/30-resume-keyword.mdc` 第 7、8 點）。要點仍含：`gh`、vault／MCP 每台重設、**§2** 例行節奏。
 - **2026-04-01 補充（雙機／筆電）**：使用者已表明**公司桌機基樁較完整、筆電要補**——在「雙機環境對齊」未勾選前，**每次 `AO-RESUME` 務必**提醒筆電完成 **§1.5.1**（MariaDB／PHP／WP-CLI／bootstrap）；MCP 工具庫存旁註見 **`docs/operations/cursor-mcp-and-plugin-inventory.md` §4**（強調非 MCP、不取代 Supabase）。
 - **2026-04-01 補充（環境 SSOT）**：「可驗證的完美環境」定義與指令見 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md` §6.2**；稽核腳本 **`scripts/machine-environment-audit.ps1`**（`-FetchOrigin`、選用 `-RunVerifyGates`、`-Strict`）。例行 **`npm ci` 目錄為 `lobster-factory\packages\workflows`**（根目錄無 package-lock，舊文件寫「在 lobster-factory 根 npm ci」為誤）。
 
@@ -320,5 +321,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-07 05:30:14 UTC_
+_Last synced: 2026-04-09 02:00:03 UTC_
 
