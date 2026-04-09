@@ -61,7 +61,7 @@
 | **合併／收工前** | `powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1` | 龍蝦 bootstrap、`verify-adr-index`、Agency `system-health-check` |
 | **跨平面或破壞性變更** | 新增／修訂 **ADR** + 更新 `docs/architecture/decisions/README.md` 索引 | 同上閘道；見 `CHANGE_IMPACT_MATRIX` |
 | **客戶釋出或重大變更** | 依 `tenants/templates/core/RELEASE_GATES_CHECKLIST.md`；備份與還原證據 | `BACKUP_RESTORE_PROOF.md` 模板與實填 |
-| **每日開工／收工** | `AO-RESUME`（含 Git 對齊）；`AO-CLOSE`（含 doc-sync／guard／integrated status） | `.cursor/rules/30-resume-keyword.mdc`、`40-shutdown-closeout.mdc` |
+| **每日開工／收工** | **`scripts/ao-resume.ps1`**（預設：Git、`verify-build-gates`、Strict 環境稽核）＋關鍵字 **`AO-RESUME`** 讀檔；`AO-CLOSE`（含 doc-sync／guard／integrated status） | `.cursor/rules/30-resume-keyword.mdc`、`40-shutdown-closeout.mdc` |
 | **新機／雙機** | `REMOTE_WORKSTATION_STARTUP` §1.5／§2；`machine-environment-audit.ps1 -FetchOrigin -Strict`（勾選 `TASKS` 雙機項前須無 WARN） | `TASKS.md`「雙機環境對齊」勾選條件 |
 | **依賴與 CVE** | 審閱 `npm audit`；**禁止**對 `lobster-factory/packages/workflows` 盲目 `npm audit fix --force` | `TASKS.md` Backlog（Trigger 傳遞依賴） |
 

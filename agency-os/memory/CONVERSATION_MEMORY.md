@@ -145,14 +145,13 @@
 你有兩種模式：`Strict`（安全最大）與 `Fast`（速度優先但仍有門檻）。
 以下命令中的 `<WORK_ROOT>` 請替換為本機實際路徑（例如 `D:\Work` 或 `C:\Users\USER\Work`）。
 
-### 開工前（雙機必做；早於 `AO-RESUME` 讀檔）
-`AO-RESUME` 會 `fetch` 並在條件允許時嘗試 **`git pull --ff-only origin main`**；**落後且工作樹仍有未提交變更時，預設不會自動 stash**（見 `REMOTE_WORKSTATION_STARTUP` **2.5.1**）。另一台 **AO-CLOSE** push 後，仍建議先手動對齊 `origin/main` 再打關鍵字：
+### 開工前（雙機必做；代理在 `AO-RESUME` 時應先跑腳本再讀檔）
+在 **monorepo 根**：
 ```
 cd <WORK_ROOT>
-git fetch origin
-git pull --ff-only origin main
+powershell -ExecutionPolicy Bypass -File .\scripts\ao-resume.ps1
 ```
-（若 `push` 曾與遠端分叉：`git pull --rebase origin main`。完整說明：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` — **新機 §1.5**、**例行 §2**。）
+**預設**行為＝`fetch`、**僅 behind>0** 時 **`git pull --ff-only origin main`**、`verify-build-gates`、workflows 依賴、`print-open-tasks`、**`machine-environment-audit -FetchOrigin -Strict`**（見 `REMOTE_WORKSTATION_STARTUP` **2.5.1**）。**落後且工作樹仍有未提交變更時，預設不會自動 stash**——腳本會**非 0**；請先 commit／stash／捨棄後重跑，**勿**只打關鍵字假設已對齊。另一台 **AO-CLOSE** push 後，本機須**跑通**上述腳本（exit 0）或手動等價對齊再打 **`AO-RESUME`**。若 ff-only 失敗：`git pull --rebase origin main`（見 **REMOTE** **例行 §2**）。
 
 ### Strict Mode（推薦，確保今天/明天不出問題）
 1. Phase 1 基線健檢
@@ -322,5 +321,5 @@ node <WORK_ROOT>\lobster-factory\scripts\validate-dryrun-apply-manifest.mjs --mo
 - `docs/overview/EXECUTION_DASHBOARD.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 
-_Last synced: 2026-04-09 02:52:46 UTC_
+_Last synced: 2026-04-09 03:02:24 UTC_
 

@@ -11,7 +11,7 @@
 
 - **Monorepo 根目錄**（含 `agency-os\`、`lobster-factory\`、根目錄 `scripts\`）：請整包 clone，不要只拷子資料夾。
 - **路徑可不同**（例如筆電 `D:\Work`、公司機 `C:\Users\USER\Work`），流程都用**相對路徑**執行，不綁磁碟代號。
-- **Cursor / IDE**：可開 repo 根或 `agency-os`；若規則/連動檢查找不到 `.cursor`，請先確認開啟位置與 `.cursor` 實際存在。**IDE 行為與 MCP 職責（版控正本）** 見 `docs/operations/cursor-enterprise-rules-index.md`（與本頁 **先 pull 再 AO-RESUME** 無衝突：`AO` 關鍵字流程仍優先）。
+- **Cursor / IDE**：可開 repo 根或 `agency-os`；若規則/連動檢查找不到 `.cursor`，請先確認開啟位置與 `.cursor` 實際存在。**IDE 行為與 MCP 職責（版控正本）** 見 `docs/operations/cursor-enterprise-rules-index.md`。桌機正式開工：在 monorepo 根跑 **`scripts/ao-resume.ps1`（預設）**＝**behind 時**才 `pull --ff-only`＋閘道＋依賴＋Strict 稽核；髒樹／衝突時腳本會非 0，須先整理（見 **2.5.1**），**不必**與「先手動 pull」綁死。
 
 ### 0.1 快速確認你在正確根目錄
 
@@ -132,16 +132,18 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 
 ### 做完後
 
-1. 讀 `agency-os\LAST_SYSTEM_STATUS.md`、`agency-os\TASKS.md`、`agency-os\reports\status\integrated-status-LATEST.md`。  
-2. 確認 **`machine-environment-audit.ps1 -FetchOrigin -Strict`** 已顯示 **PASS（無 WARN）**（與上方「工具與依賴」區塊最後一步一致；若略過 Strict，不應勾選 `TASKS` 雙機項）。  
-3. 在 Cursor 輸入 **`AO-RESUME`**（且 **已**完成本節的 `git pull` 與閘道）。  
+1. 你已在上方跑過 **`verify-build-gates`** 與 **`machine-environment-audit -FetchOrigin -Strict`**（與 **`ao-resume.ps1` 預設**內含步驟對齊；若略過 Strict，不應勾選 `TASKS` 雙機項）。  
+2. **下一趟起（日常）**：在 monorepo 根跑 **`scripts/ao-resume.ps1`**（或 Cursor 打 **`AO-RESUME`** 由代理代跑同一支腳本）即可；**Exit 0**＝未落後（必要時已 ff-only pull）＋閘道＋依賴＋Strict 無 WARN，**不必**為了「再對齊一次」重複手動 `pull`／閘道。  
+3. **人類掃一眼（可選）**：`agency-os\LAST_SYSTEM_STATUS.md`、`agency-os\TASKS.md`、`agency-os\reports\status\integrated-status-LATEST.md`。  
 4. **下一趟起**：換機以外的**日常開機**請改依 **§2**（不必重跑 §1.5 全段；除非重新 clone、換機、或依賴損毀需重建）。
 
 ---
 
 ## 2) 開機後必做四件事（約 5–15 分鐘）
 
-> **與 §1.5 的關係**：若你為 **新機** 且尚未跑過 §1.5 的「工具與依賴」區塊，請 **先完成 §1.5**，再視 §2 為**之後每次**的節奏。若 `lobster-factory\packages\workflows\package-lock.json` 有更新，務必在該目錄 **再執行** `npm ci`。
+> **捷徑（與關鍵字 `AO-RESUME` 對齊）**：在 monorepo 根執行 **`scripts/ao-resume.ps1`（預設）**＝下列第 1～4 步的**機器裁決版**（fetch、behind 時 ff-only pull、`npm ci` 由腳本在需要時觸發、`verify-build-gates`、**`print-open-tasks`**、**`machine-environment-audit -FetchOrigin -Strict`**）。**Exit 0** 後再開 Cursor 打 **`AO-RESUME`** 讀檔即可。下列分步保留給除錯或想手動理解內部者。
+>
+> **與 §1.5 的關係**：若你為 **新機** 且尚未跑過 §1.5 的「工具與依賴」區塊，請 **先完成 §1.5**，再視 §2 為**之後每次**的節奏。若 `lobster-factory\packages\workflows\package-lock.json` 有更新，務必在該目錄 **再執行** `npm ci`（或由 **`ao-resume.ps1`** 偵測後代跑）。
 
 1. **同步主線（先收斂到遠端真相）**  
    ```powershell
@@ -256,13 +258,13 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 
 1. 在 **monorepo 根** `<WORK_ROOT>` 開終端機（例：`C:\Users\USER\Work` 或 `D:\Work`）
 2. 貼上：`git status --short`
-3. 若只想暫停、不收工：可直接離開；（**回來後**建議先 `git pull --ff-only origin main` 再打 `AO-RESUME`，與 §2 第 1 步一致）
+3. 若只想暫停、不收工：可直接離開；（**回來後**建議在 monorepo 根跑 **`scripts/ao-resume.ps1`**，或手動 `git pull --ff-only origin main` 後再打 **`AO-RESUME`**）
 4. 若希望離開前做完整安全收工：`powershell -ExecutionPolicy Bypass -File .\scripts\ao-close.ps1 -SkipPush`
-5. 回來後在 **同一 repo 根**：可選 `powershell -ExecutionPolicy Bypass -File .\scripts\ao-resume.ps1 -AllowUnexpectedDirty`（Autopilot preflight）；**仍須**自行確認已 `pull` 對齊遠端後再當真開工
+5. 回來後在 **同一 repo 根**：桌機正式開工請跑 **`ao-resume.ps1`（預設，無 `-SkipVerify`）**；Autopilot 可選 `-AllowUnexpectedDirty` 等（見 **2.5.1**）。**Exit 0** 即表示已處理 fetch／必要時 ff-only pull／閘道／Strict（預設路徑）。
 
 你會看到什麼（成功判斷）：
 - `ao-close`：會產生 closeout/health/guard 報告
-- `ao-resume.ps1`：preflight completed；`check-three-way-sync` 在條件允許時會 **`git pull --ff-only origin main`**（見 **2.5.1**）；通過後會跑 **workflows `npm ci`** 檢查（除非 `-SkipWorkflowsDeps`）；並列出 **`TASKS.md` 全部未完成項**與自上次以來 `agency-os/reports/{closeout,health,guard,status}` 增量。**仍建議**例行先完成本節 §2 第 1 步再依賴腳本，以降低 dirty／stash 失敗率。
+- `ao-resume.ps1`：preflight completed；`check-three-way-sync` 在條件允許時會 **`git pull --ff-only origin main`**（見 **2.5.1**）；通過後會跑 **workflows `npm ci`** 檢查（除非 `-SkipWorkflowsDeps`）；並列出 **`TASKS.md` 全部未完成項**與自上次以來 `agency-os/reports/{closeout,health,guard,status}` 增量。若工作樹髒／behind，請先依 **2.5.1** 整理再重跑，避免強依賴「先手動 pull」與腳本两套敘述。
 
 ## 3) 兩份「綜合狀態」路徑別搞混
 
@@ -289,11 +291,11 @@ powershell -ExecutionPolicy Bypass -File .\scripts\verify-build-gates.ps1
 ### 6.1 可安全開工（最低標）
 
 符合以下 5 項才算「可安全開工」：
-1. `git pull --ff-only origin main`（或等價對齊 `origin/main`）成功，且在正確分支。  
-2. **`lobster-factory\packages\workflows` 已執行** `npm ci`（該處為目前唯一 lockfile）；若有 `mcp-local-wrappers` 則一併 `npm ci`。  
-3. `verify-build-gates.ps1` Critical Gate = PASS。  
-4. 已讀 `LAST_SYSTEM_STATUS.md` / `TASKS.md` / `integrated-status-LATEST.md`。  
-5. **`AO-RESUME` 在 Git 同步與閘道之後執行**（例行流程即 §2；新機第一次即 §1.5），回覆可清楚列出「已完成／目前進度／下一步」（含龍蝦 Milestone/DoD/風險，見 `AGENTS.md`）。
+1. **未落後** `origin/main`（behind=0；通常由 **`ao-resume.ps1`** 在 behind>0 時 ff-only pull 達成），且在正確分支；或手動 **`git pull --ff-only origin main`** 成功之等價狀態。  
+2. **`lobster-factory\packages\workflows` 已執行** `npm ci`（該處為目前唯一 lockfile；**`ao-resume.ps1`** 會在需要時代跑）；若有 `mcp-local-wrappers` 則一併 `npm ci`。  
+3. **`verify-build-gates.ps1` Critical Gate = PASS**（**`ao-resume.ps1` 預設**會跑）。  
+4. **`machine-environment-audit.ps1 -FetchOrigin -Strict` = PASS（無 WARN）**（**`ao-resume.ps1` 預設**會跑；Autopilot 略過不計入「正式開工」）。  
+5. **`AO-RESUME` 在腳本 Exit 0 之後**（代理讀檔並回覆）：可清楚列出「已完成／目前進度／下一步」（含龍蝦 Milestone/DoD/風險，見 `AGENTS.md`）。**`LAST_SYSTEM_STATUS.md`／`integrated-status-LATEST.md` 為可選人類掃視**，不與 Exit 0 機器裁決互斥。
 
 ### 6.2 「完美」環境（建議標：可重現、雙機一致、與 CI 對齊）
 
@@ -336,5 +338,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-09 02:52:46 UTC_
+_Last synced: 2026-04-09 03:02:24 UTC_
 

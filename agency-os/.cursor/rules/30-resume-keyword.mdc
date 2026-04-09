@@ -7,15 +7,14 @@ alwaysApply: true
 
 When the user message contains `AO-RESUME`, before proposing any new implementation:
 
-1. **Git 對齊（雙機／每日開工必做）**  
-   - **Agent 必做**：在可執行終端時，於 **monorepo 根**（`git rev-parse --show-toplevel`）執行 `git fetch origin`，再以 `git status -sb`（或 `git rev-list --left-right --count HEAD...origin/main`）檢查是否 **behind** `origin/main`。  
-   - **若 behind**：Agent 應先直接執行 **`git pull --ff-only origin main`**；若 pull 失敗，先用 `git status` 判斷是否有本機未提交／衝突，再請使用者決策（必要時改 **`git pull --rebase origin main`**）。  
-   - **AO-RESUME 後 30 秒自檢（必做）**：執行 `git status -sb` + `git rev-list --left-right --count HEAD...origin/main`（輸出為 **`ahead behind`**）；若工作樹 dirty（`M`／`??`）或 **behind > 0**（第二個數字），必須先明確標示風險，不得直接宣告「已與遠端對齊可續接」。（**ahead > 0** 僅代表本機有未 push commit，與 **§2.5** 一致，不單獨視為阻斷。）  
-   - **Preventive gate**：當日第一次 AO-RESUME，需建議執行 `.\scripts\verify-build-gates.ps1`（至少 daily baseline 一次）以降低「版本對齊但邏輯行為漂移」風險。  
-   - **僅在無法執行終端**時，才於回覆開頭提醒使用者手動 pull 並說明理由。  
-   - **完整開機 runbook**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` — **新機 §1.5**、**例行 §2**、§2.3。
-   - **（腳本行為）** 於 repo 根跑 **`scripts\ao-resume.ps1`** 時，preflight 通過後預設會呼叫 **`scripts\print-open-tasks.ps1`** 在終端列出 **`agency-os/TASKS.md`** 全部 `- [ ]`（**`-SkipOpenTasksList`** 可略過；見 **REMOTE 2.5.1**）。
-   - **（預設）機器裁決、不強迫目視狀態檔**：在 monorepo 根執行 **`.\scripts\ao-resume.ps1`**（**預設**已含 **`verify-build-gates` + `machine-environment-audit -FetchOrigin -Strict`**）；**僅在 exit 0** 後才宣告可當真開工大改。與 **`align-workstation.ps1`** 同行為。Autopilot 開機路徑會加 **`-SkipStrictEnvironmentAudit`**（輕量）。憑證類仍須各機一次性建立（Strict 會指出缺項）。
+1. **開工單一路徑（關鍵字 `AO-RESUME`＝跑正本腳本）**  
+   - **Agent 必做**：在可執行終端時，於 **monorepo 根**（`git rev-parse --show-toplevel`）執行 **`powershell -ExecutionPolicy Bypass -File .\scripts\ao-resume.ps1`**。  
+     **預設行為**（勿再加「第二套」完整檢查）：`fetch`；**僅 behind>0** 時 `git pull --ff-only origin main`；**`verify-build-gates`**；workflows 依賴；**`print-open-tasks`**；**`machine-environment-audit -FetchOrigin -Strict`**（見 **`docs/overview/REMOTE_WORKSTATION_STARTUP.md` 2.5.1**）。與 **`align-workstation.ps1`** 同行為。  
+   - **僅在 exit code 0 後**，再進行本規則第 2 步讀檔與第 3 步回覆；**exit 非 0** 時依終端輸出處置（髒樹／衝突／Strict 缺項），**不得**宣稱已與 GitHub 對齊可開工大改。  
+   - **無法執行終端**：改為手動 `git fetch` + `git status -sb` + `git rev-list --left-right --count HEAD...origin/main`；**behind>0** 時請使用者 **`git pull --ff-only origin main`**（必要時 **`git pull --rebase origin main`**），並在回覆標註「未跑完整 `ao-resume.ps1`」。  
+   - **30 秒自檢（補強）**：腳本成功後可再跑 **REMOTE §2.3** 三指令；判讀 **ahead behind** 時 **behind 必須為 0**，**ahead>0** 不單獨阻斷（見 §2.3）。  
+   - **Autopilot 開機**：**非**本節路徑——見 **`AGENTS.md`**（`-SkipVerify -SkipStrictEnvironmentAudit -AllowUnexpectedDirty`，輕量）。  
+   - **GitHub／雙機**：遠端真相 **`origin/main`**；他機 **`AO-CLOSE` push** 後，本機必須跑通 **`ao-resume.ps1`**（或手動 pull）再工作，否則進度檔過期、`push` 會被拒。
 
 2. Read these files in order:
 - `README.md`（根或 `agency-os` 視工作區而定）
@@ -40,7 +39,7 @@ If opened folder is `agency-os` only, use paths as above; lobster paths are `../
    - **今日 DoD**
    - **阻塞／風險**（無則寫「無」）
 
-5. In `已完成` 或 `目前進度` 中，若剛才 Git 檢查有執行，可一句話標註 **Git 已對齊 origin/main** 或 **提醒使用者先 pull**。
+5. In `已完成` 或 `目前進度` 中，若剛才 **`ao-resume.ps1` 或 Git 自檢**有執行，可一句話標註 **Git 已對齊 origin/main**，或 **提醒使用者**在 monorepo 根重跑 **`.\scripts\ao-resume.ps1`**（behind 時才會 pull）直至 exit 0。
 
 6. Ask one focused confirmation question only if a blocker or ambiguity exists.
 
