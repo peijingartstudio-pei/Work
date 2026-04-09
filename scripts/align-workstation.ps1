@@ -1,12 +1,9 @@
 <#
 .SYNOPSIS
-  One-shot workstation alignment: same as ao-resume.ps1 with -AutoVerifyAll always on.
+  Alias: same as ao-resume.ps1 default (full check including machine-environment-audit -Strict).
 
 .DESCRIPTION
-  Runs, in order: Git fetch / pull when behind (AutoFix), verify-build-gates, workflows npm ci if needed,
-  open TASKS list, then machine-environment-audit -FetchOrigin -Strict.
-  Exit 0 means the machine says you are ready to work—no manual reading of LAST_SYSTEM_STATUS / TASKS / integrated-status.
-  Does NOT auto-create secrets: gh auth, DPAPI vault, and Cursor mcp.json must exist per machine; -Strict fails until they do.
+  Kept for stable naming in docs; behavior matches .\scripts\ao-resume.ps1 with no quick/skip flags.
 
 .EXAMPLE
   powershell -ExecutionPolicy Bypass -File .\scripts\align-workstation.ps1
@@ -33,8 +30,7 @@ if (-not (Test-Path -LiteralPath $resume)) {
 $argv = @(
     "-NoProfile",
     "-ExecutionPolicy", "Bypass",
-    "-File", $resume,
-    "-AutoVerifyAll"
+    "-File", $resume
 )
 if ($WorkRoot) { $argv += "-WorkRoot", $WorkRoot }
 if ($AllowUnexpectedDirty) { $argv += "-AllowUnexpectedDirty" }

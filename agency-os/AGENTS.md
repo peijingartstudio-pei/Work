@@ -38,8 +38,8 @@
 ## 快速續接關鍵字
 - 跨系統運作模型（AO 治理 + 龍蝦執行）：`docs/overview/ao-lobster-operating-model.md`（作為事件節奏與責任分工的總入口）。
 - 使用者輸入 `AO-RESUME` 時，必須先讀取記憶與進度檔後再回覆。
-- **雙機協作硬性說明**：`AO-RESUME` 對應腳本 **`scripts/ao-resume.ps1`** 會 **`git fetch`**，且**僅在落後 `origin/main`（behind>0）** 時 **`git pull --ff-only origin main`**；若**落後且工作樹仍髒**，預設**不**自動 stash 可能失敗（見 `REMOTE` **2.5.1**）。**不要人工對照多份狀態檔時**：在 monorepo 根跑 **`.\scripts\align-workstation.ps1`** 或 **`.\scripts\ao-resume.ps1 -AutoVerifyAll`**——**Exit 0**＝閘道 + 嚴格環境稽核通過（`machine-environment-audit -Strict`）；失敗則依終端輸出修，無需開 `LAST_SYSTEM_STATUS`／`integrated-status` 目視。完整開工順序、30 秒自檢：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` — **新機 §1.5**、**例行 §2**。
-- 若已啟用 Autopilot Phase1，開機會自動執行 `scripts/ao-resume.ps1 -SkipVerify -AllowUnexpectedDirty`（**不**取代上述 `git pull`；Autopilot 只管本機 preflight，不管遠端是否超前）。
+- **雙機協作硬性說明**：`AO-RESUME` 對應腳本 **`scripts/ao-resume.ps1`** 會 **`git fetch`**，且**僅在落後 `origin/main`（behind>0）** 時 **`git pull --ff-only origin main`**；若**落後且工作樹仍髒**，預設**不**自動 stash 可能失敗（見 `REMOTE` **2.5.1**）。**預設**同一腳本在 preflight 後會跑 **`machine-environment-audit -FetchOrigin -Strict`**（與 **`align-workstation.ps1`** 相同）；**Exit 0**＝機器裁決可開工，無需目視 `LAST_SYSTEM_STATUS`／`integrated-status`。完整開工順序、30 秒自檢：`docs/overview/REMOTE_WORKSTATION_STARTUP.md` — **新機 §1.5**、**例行 §2**。
+- 若已啟用 Autopilot Phase1，開機會自動執行 `scripts/ao-resume.ps1 -SkipVerify -SkipStrictEnvironmentAudit -AllowUnexpectedDirty`（輕量 preflight；**不**跑完整閘道與 Strict 環境稽核；**不**取代你在桌機手動跑的完整 **`ao-resume.ps1`**）。
 - 回覆格式固定為：`已完成`、`目前進度`、`下一步`。
 - `目前進度` 必須包含龍蝦工廠欄位：`目前 Milestone`、`今日 DoD`、`阻塞/風險`。
 - 使用者輸入 **`AO-CLOSE`**（關鍵字不變）或明確表達要關機/收工時，必須先執行 **closeout**，再輸出：`今日完成`、`今日未完成`、`連動檢查`、`明日優先`。
@@ -114,5 +114,5 @@
 - `README.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-04-09 02:30:30 UTC_
+_Last synced: 2026-04-09 02:52:46 UTC_
 

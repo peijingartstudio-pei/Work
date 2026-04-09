@@ -1,7 +1,7 @@
 param(
     [string]$WorkRoot = "",
     [switch]$SkipVerify,
-    [switch]$AutoVerifyAll,
+    [switch]$SkipStrictEnvironmentAudit,
     [switch]$AllowUnexpectedDirty,
     [switch]$AllowStashBeforePull,
     [switch]$AllowPendingStash,

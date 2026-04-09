@@ -33,7 +33,7 @@ if (-not (Test-Path -LiteralPath $alertFile)) {
 switch ($Mode) {
     "startup" {
         $resume = Join-Path $script:Root "scripts\ao-resume.ps1"
-        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $resume -WorkRoot $script:Root -SkipVerify -AllowUnexpectedDirty
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $resume -WorkRoot $script:Root -SkipVerify -SkipStrictEnvironmentAudit -AllowUnexpectedDirty
         if ($LASTEXITCODE -eq 0) {
             Invoke-Notify -Title "AO Startup Preflight PASS" -Message "AO-RESUME preflight completed successfully." -Level "success"
             exit 0

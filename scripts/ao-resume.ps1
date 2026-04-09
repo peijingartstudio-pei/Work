@@ -1,7 +1,8 @@
 param(
     [string]$WorkRoot = "",
     [switch]$SkipVerify,
-    [switch]$AutoVerifyAll,
+    # Autopilot / 極速開機：略過結尾的 machine-environment-audit -Strict（仍可能已用 -SkipVerify 略過 verify-build-gates）。
+    [switch]$SkipStrictEnvironmentAudit,
     [switch]$AllowUnexpectedDirty,
     [switch]$AllowStashBeforePull,
     [switch]$AllowPendingStash,
@@ -34,10 +35,12 @@ $syncArgs = @(
     "-WorkRoot", $WorkRoot,
     "-AutoFix"
 )
-if ($AutoVerifyAll -and $SkipVerify) {
-    Write-Host "== AO-RESUME: -AutoVerifyAll overrides -SkipVerify（仍跑 verify-build-gates）==" -ForegroundColor DarkYellow
+# 預設＝完整開工（含 verify-build-gates + 結尾 Strict 環境稽核）。只有加上 -SkipStrictEnvironmentAudit 才允許「只跑輕量 preflight」。
+$fullResume = -not $SkipStrictEnvironmentAudit
+if ($SkipVerify -and $fullResume) {
+    Write-Host "== AO-RESUME: 預設完整檢查 — 忽略 -SkipVerify（仍跑 verify-build-gates）==" -ForegroundColor DarkYellow
 }
-if ($SkipVerify -and -not $AutoVerifyAll) { $syncArgs += "-SkipVerify" }
+if ($SkipVerify -and -not $fullResume) { $syncArgs += "-SkipVerify" }
 if ($AllowUnexpectedDirty) { $syncArgs += "-AllowUnexpectedDirty" }
 if ($AllowUnexpectedDirty -or $AllowStashBeforePull) { $syncArgs += "-AllowStashBeforePull" }
 if ($AllowUnexpectedDirty -or $AllowPendingStash) { $syncArgs += "-AllowPendingStash" }
@@ -72,14 +75,14 @@ if (-not $SkipOpenTasksList -and (Test-Path -LiteralPath $openTasksScript)) {
     Write-Host "== AO-RESUME: -SkipOpenTasksList（略過列出 TASKS 未完成項）==" -ForegroundColor DarkYellow
 }
 
-if ($AutoVerifyAll) {
+if ($fullResume) {
     $auditScript = Join-Path $WorkRoot "scripts\machine-environment-audit.ps1"
     if (-not (Test-Path -LiteralPath $auditScript)) {
         Write-Error "ao-resume: machine-environment-audit missing at $auditScript"
         exit 1
     }
     Write-Host ""
-    Write-Host "== AO-RESUME: -AutoVerifyAll（machine-environment-audit -FetchOrigin -Strict；零手動對照檔案）==" -ForegroundColor Cyan
+    Write-Host "== AO-RESUME: 預設完整檢查（machine-environment-audit -FetchOrigin -Strict）==" -ForegroundColor Cyan
     & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $auditScript -WorkRoot $WorkRoot -FetchOrigin -Strict
     if ($LASTEXITCODE -ne 0) {
         Write-Error "ao-resume: machine-environment-audit -Strict failed (exit $LASTEXITCODE). Fix output above; no manual markdown checklist required."

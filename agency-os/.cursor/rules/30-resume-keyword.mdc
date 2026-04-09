@@ -15,7 +15,7 @@ When the user message contains `AO-RESUME`, before proposing any new implementat
    - **僅在無法執行終端**時，才於回覆開頭提醒使用者手動 pull 並說明理由。  
    - **完整開機 runbook**：`agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md` — **新機 §1.5**、**例行 §2**、§2.3。
    - **（腳本行為）** 於 repo 根跑 **`scripts\ao-resume.ps1`** 時，preflight 通過後預設會呼叫 **`scripts\print-open-tasks.ps1`** 在終端列出 **`agency-os/TASKS.md`** 全部 `- [ ]`（**`-SkipOpenTasksList`** 可略過；見 **REMOTE 2.5.1**）。
-   - **零手動目視檢查（機器裁決）**：若使用者要「資料／環境齊全但不要人工對照 `LAST_SYSTEM_STATUS`／integrated-status」且可跑終端，優先執行 **`.\scripts\align-workstation.ps1`** 或 **`.\scripts\ao-resume.ps1 -AutoVerifyAll`**（內含 **`machine-environment-audit -FetchOrigin -Strict`**）；**僅在 exit 0** 後才宣告可當真開工大改。憑證類仍須各機一次性建立（腳本會以 Strict 指出缺項）。
+   - **（預設）機器裁決、不強迫目視狀態檔**：在 monorepo 根執行 **`.\scripts\ao-resume.ps1`**（**預設**已含 **`verify-build-gates` + `machine-environment-audit -FetchOrigin -Strict`**）；**僅在 exit 0** 後才宣告可當真開工大改。與 **`align-workstation.ps1`** 同行為。Autopilot 開機路徑會加 **`-SkipStrictEnvironmentAudit`**（輕量）。憑證類仍須各機一次性建立（Strict 會指出缺項）。
 
 2. Read these files in order:
 - `README.md`（根或 `agency-os` 視工作區而定）
