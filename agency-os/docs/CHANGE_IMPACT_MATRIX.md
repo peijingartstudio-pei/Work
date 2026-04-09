@@ -34,11 +34,13 @@
 | `docs/operations/new-doc-linkage-checklist.md` | `docs/operations/end-to-end-linkage-checklist.md`, `docs/operations/cursor-enterprise-rules-index.md`, `docs/CHANGE_IMPACT_MATRIX.md`, `docs/change-impact-map.json`, `docs/README.md`, `scripts/register-new-governance-doc.ps1`, `scripts/doc-sync-automation.ps1`, `scripts/system-health-check.ps1` |
 | `AGENTS.md` | `docs/operations/new-doc-linkage-checklist.md`, `docs/operations/cursor-enterprise-rules-index.md`, `docs/CHANGE_IMPACT_MATRIX.md`, `scripts/register-new-governance-doc.ps1`, `README.md` |
 | `scripts/register-new-governance-doc.ps1` | `docs/operations/new-doc-linkage-checklist.md`, `docs/change-impact-map.json`, `docs/CHANGE_IMPACT_MATRIX.md`, `AGENTS.md` |
-| `docs/operations/cursor-enterprise-rules-index.md` | `AGENTS.md`, `docs/operations/cursor-mcp-and-plugin-inventory.md`, `docs/operations/new-doc-linkage-checklist.md`, `docs/operations/security-secrets-policy.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`, `.cursor/rules/63-cursor-core-identity-risk.mdc`, `.cursor/rules/64-architecture-mcp-routing.mdc`, `.cursor/rules/65-build-standards-data-state.mdc`, `.cursor/rules/66-skills-observability-protocol.mdc`, `../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md`, `docs/CHANGE_IMPACT_MATRIX.md`, `docs/change-impact-map.json`, `docs/README.md`, `../README.md` |
+| `docs/operations/cursor-enterprise-rules-index.md` | `AGENTS.md`, `docs/operations/cursor-mcp-and-plugin-inventory.md`, `docs/operations/new-doc-linkage-checklist.md`, `docs/operations/security-secrets-policy.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`, `../lobster-factory/docs/ROUTING_MATRIX.md`, `.cursor/rules/63-cursor-core-identity-risk.mdc`, `.cursor/rules/64-architecture-mcp-routing.mdc`, `.cursor/rules/65-build-standards-data-state.mdc`, `.cursor/rules/66-skills-observability-protocol.mdc`, `../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md`, `docs/CHANGE_IMPACT_MATRIX.md`, `docs/change-impact-map.json`, `docs/README.md`, `../README.md` |
 | `../README.md`（monorepo 根） | `docs/operations/cursor-enterprise-rules-index.md`, `agency-os/docs/overview/REMOTE_WORKSTATION_STARTUP.md`, `agency-os/docs/overview/EXECUTION_DASHBOARD.md` |
-| `docs/operations/cursor-mcp-and-plugin-inventory.md` | `docs/operations/cursor-enterprise-rules-index.md`, `docs/operations/tools-and-integrations.md`, `.cursor/rules/64-architecture-mcp-routing.mdc`, `AGENTS.md`, `README.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md` |
+| `docs/operations/cursor-mcp-and-plugin-inventory.md` | `docs/operations/cursor-enterprise-rules-index.md`, `docs/operations/tools-and-integrations.md`, `.cursor/rules/64-architecture-mcp-routing.mdc`, `AGENTS.md`, `TASKS.md`, `README.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`, `../lobster-factory/docs/ROUTING_MATRIX.md` |
+| `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md` | `../lobster-factory/docs/ROUTING_MATRIX.md`, `docs/operations/cursor-mcp-and-plugin-inventory.md`, `docs/operations/cursor-enterprise-rules-index.md`, `TASKS.md`, `README.md` |
+| `../lobster-factory/docs/ROUTING_MATRIX.md` | `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`, `docs/operations/cursor-mcp-and-plugin-inventory.md`, `docs/operations/cursor-enterprise-rules-index.md`, `TASKS.md`, `README.md` |
 | `.cursor/rules/63-cursor-core-identity-risk.mdc` | `docs/operations/cursor-enterprise-rules-index.md`, `AGENTS.md` |
-| `.cursor/rules/64-architecture-mcp-routing.mdc` | `docs/operations/cursor-enterprise-rules-index.md`, `docs/operations/cursor-mcp-and-plugin-inventory.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`, `docs/operations/security-secrets-policy.md` |
+| `.cursor/rules/64-architecture-mcp-routing.mdc` | `docs/operations/cursor-enterprise-rules-index.md`, `docs/operations/cursor-mcp-and-plugin-inventory.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`, `../lobster-factory/docs/ROUTING_MATRIX.md`, `docs/operations/security-secrets-policy.md` |
 | `.cursor/rules/65-build-standards-data-state.mdc` | `docs/operations/cursor-enterprise-rules-index.md` |
 | `.cursor/rules/66-skills-observability-protocol.mdc` | `docs/operations/cursor-enterprise-rules-index.md`, `.cursor/rules/62-progress-heartbeat-15min.mdc` |
 | `../docs/spec/raw/Cursor  Rules for AI/README-部署說明.md` | `docs/operations/cursor-enterprise-rules-index.md`, `.cursor/rules/63-cursor-core-identity-risk.mdc`, `.cursor/rules/64-architecture-mcp-routing.mdc`, `.cursor/rules/65-build-standards-data-state.mdc`, `.cursor/rules/66-skills-observability-protocol.mdc` |
@@ -70,6 +72,8 @@
 | `.cursor/rules/30-resume-keyword.mdc` | `AGENTS.md`, `README.md`, `memory/CONVERSATION_MEMORY.md`, `TASKS.md`, `WORKLOG.md`, `LAST_SYSTEM_STATUS.md` |
 | `.cursor/rules/40-shutdown-closeout.mdc` | `AGENTS.md`, `README.md`, `TASKS.md`, `WORKLOG.md`, `memory/CONVERSATION_MEMORY.md`, `scripts/doc-sync-automation.ps1`, `scripts/system-health-check.ps1`, `scripts/system-guard.ps1` |
 
+| `docs/operations/TOOLS_DELIVERY_TRACEABILITY.md` | `docs/operations/cursor-mcp-and-plugin-inventory.md`, `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`, `../lobster-factory/docs/ROUTING_MATRIX.md`, `TASKS.md`, `WORKLOG.md`, `docs/operations/tools-and-integrations.md`, `docs/operations/security-secrets-policy.md`, `docs/operations/NEXT_GEN_DELIVERY_BLUEPRINT_V1.md` |
+
 ## 最小同步清單（每次改版）
 - [ ] `README.md` 路徑與入口已更新
 - [ ] `TASKS.md` 狀態已同步
@@ -86,5 +90,5 @@
 - `docs/operations/new-doc-linkage-checklist.md`
 - `scripts/register-new-governance-doc.ps1`
 
-_Last synced: 2026-04-09 05:14:56 UTC_
+_Last synced: 2026-04-09 09:29:25 UTC_
 

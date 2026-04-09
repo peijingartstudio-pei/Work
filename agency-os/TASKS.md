@@ -1,4 +1,4 @@
-# Global Task Board
+﻿# Global Task Board
 
 > **待辦原則（給營運者）**  
 > - **單一清單**：所有「之後還要做」的事，應以本檔 **`Next — 未完成`** 或 **`Backlog — 未完成`** 的一條 `- [ ]` 表示；不要只放在聊天或腦裡。  
@@ -36,7 +36,7 @@
   - 產出：新站 staging 啟動條件
 - [ ] `tenants/templates/` v2
   - 本項目標：試點 tenant 實填回饋後，再擴欄位與自動檢查（若有）
-- [ ] （Next-Gen 對齊）M3 控制台輸出映射到「17-20 部門」責任矩陣與模板欄位
+- [ ] （Next-Gen 對齊）M3 控制台輸出映射到「20 部門」責任矩陣與模板欄位
   - 目的：避免 Pilot 成果與跨國企業目標脫鉤
 - [ ] `lobster-factory` A10-2 商業閉環實跑
   - 流程：新客戶建立 -> 驗收 -> production 觸發證據鏈
@@ -44,6 +44,38 @@
   - 範圍：hosting adapter + provision/shell guardrails 端到端
 - [ ] Enterprise 工具層 Phase 1 正式串接
   - 範圍：Clerk auth、env/mcp secrets 治理、Cloudflare WAF/rate-limit、Sentry error ingest、PostHog core events、Slack alerts
+  - DoD：下列子任務全數完成且有對應證據連結（WORKLOG / report）
+- [ ] （工具建置）Phase 1 建議順序（P1 -> P7）
+  - P1：Secrets 治理升級（先處理金鑰與權限，避免後續返工）
+  - P2：Hetzner 自託管 n8n（staging）（先把自動化骨幹架好）
+  - P3：Sentry 觀測接入（先看得到錯誤，後面才好除錯）
+  - P4：PostHog 事件基線（建立可量測 funnel）
+  - P5：Cloudflare 邊界保護（staging 先上防護）
+  - P6：Clerk 組織與角色（B2B 多租戶權限落地）
+  - P7：Next.js 控制台 v1（把前面能力做成可操作介面）
+  - 依賴說明：P7 會依賴 P1/P3/P4/P6 的資料與權限設計
+  - 追溯總表：`docs/operations/TOOLS_DELIVERY_TRACEABILITY.md`（每一工具任務對回規格 + DoD + 證據欄位）
+- [ ] （工具建置）Next.js 控制台 v1（Internal Ops）
+  - 處理：建立 app skeleton、客戶清單頁、部門勾選頁（20 部門）、提交後寫出 `DEPARTMENT_SELECTION` payload
+  - DoD：可建立 1 個測試客戶設定並在 UI 回顯成功
+- [ ] （工具建置）Hetzner 自託管 n8n（staging）
+  - 處理：在 Hetzner 建立 n8n 節點（含 TLS、備份、最小權限），並接回現有 webhook/notification 路由
+  - DoD：`client_onboarding` 相關輕量流程可在 staging 端到端跑通 1 次
+- [ ] （工具建置）Sentry 觀測接入
+  - 處理：接入 API/workflow 錯誤上報 + release tag；定義 1 條告警規則
+  - DoD：可人工觸發 1 筆測試錯誤並在 Sentry 收到告警
+- [ ] （工具建置）PostHog 事件基線
+  - 處理：定義 core events（至少 onboarding_start / onboarding_completed / deploy_requested / deploy_result）
+  - DoD：可在 PostHog 看到一筆完整測試 funnel
+- [ ] （工具建置）Clerk 組織與角色（B2B 多租戶）
+  - 處理：建立 org + role 對照（owner/admin/operator/viewer）並映射到現有權限邏輯
+  - DoD：2 個測試角色登入後，看到不同權限結果
+- [ ] （工具建置）Cloudflare 邊界保護
+  - 處理：DNS / WAF / rate limit / 基本防護規則（先 staging）
+  - DoD：staging 入口啟用防護且不影響正常流程
+- [ ] （工具建置）Secrets 治理升級（從 env/mcp 到集中管控）
+  - 處理：定義 secrets owner、輪替節奏、最小讀取權限；先覆蓋 Trigger/n8n/GitHub 相關高風險金鑰
+  - DoD：完成一輪輪替演練，服務不中斷
 
 ## Next — 已完成歷程（查詢用）
 - [x] 建立 WordPress 客戶交付「雙模式 SOP」
@@ -157,6 +189,8 @@
 - [x] `lobster-factory` 補齊 raw spec 差距檔案（C4-1~C4-5 完成）
 
 ## Related Documents (Auto-Synced)
+- `../lobster-factory/docs/MCP_TOOL_ROUTING_SPEC.md`
+- `../lobster-factory/docs/ROUTING_MATRIX.md`
 - `.cursor/rules/00-session-bootstrap.mdc`
 - `.cursor/rules/20-doc-sync-closeout.mdc`
 - `.cursor/rules/30-resume-keyword.mdc`
@@ -165,10 +199,12 @@
 - `docs/compliance/leads-and-scraping-checklist.md`
 - `docs/metrics/kpi-margin-dashboard-spec.md`
 - `docs/operations/client-risk-scoring-model.md`
+- `docs/operations/cursor-mcp-and-plugin-inventory.md`
 - `docs/operations/outsourcing-vendor-scorecard.md`
 - `docs/operations/system-operation-sop.md`
+- `docs/operations/TOOLS_DELIVERY_TRACEABILITY.md`
 - `docs/overview/REMOTE_WORKSTATION_STARTUP.md`
 - `tenants/NEW_TENANT_ONBOARDING_SOP.md`
 
-_Last synced: 2026-04-09 05:52:22 UTC_
+_Last synced: 2026-04-09 09:29:25 UTC_
 
