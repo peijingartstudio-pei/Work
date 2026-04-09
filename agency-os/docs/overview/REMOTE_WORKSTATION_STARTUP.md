@@ -177,13 +177,15 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
    ```
    須已安裝 **Node.js**（給 `lobster-factory` 的檢驗腳本用）。**Critical Gate 必須 PASS** 再開始改大範圍。
 
-4. **看狀態三件套 + 對話續接**  
-   - `agency-os\LAST_SYSTEM_STATUS.md`  
-   - `agency-os\TASKS.md`  
-   - `agency-os\reports\status\integrated-status-LATEST.md`  
-
-   **至此已完成 Git 同步**後，在 Cursor 對 AI 輸入 **`AO-RESUME`**。  
-   > **重要**：`AO-RESUME` 會 `fetch` 並在乾淨或可接受條件下 **`git pull --ff-only origin main`**；**若落後遠端且工作樹仍有未提交變更**，預設 **不**自動 stash（見 **2.5.1**）。建議仍先手動完成本節第 1 步再打關鍵字。
+4. **對話續接（擇一）**  
+   - **零手動對照檔案（機器裁決）**：在 **monorepo 根**執行其一即可——**Exit 0** 即表示「與 `origin/main` 未落後（必要時已 ff-only pull）+ `verify-build-gates` PASS + workflows 依賴已檢查 + `machine-environment-audit -FetchOrigin -Strict` 無 WARN」；**不必**再開三件套 markdown 目視檢查。  
+     ```powershell
+     powershell -ExecutionPolicy Bypass -File .\scripts\align-workstation.ps1
+     ```
+     （等同 `.\scripts\ao-resume.ps1 -AutoVerifyAll`。）  
+     **做不到全自動的邊界**：`gh` 登入、DPAPI vault、`mcp.json` 等**不可進庫**，腳本只驗證「有／無」，缺了會 **Strict FAIL**——仍要你在該機做一次設定（見 **§1.5** 憑證段）。  
+   - **人類掃一眼**：讀 `agency-os\LAST_SYSTEM_STATUS.md`、`agency-os\TASKS.md`、`agency-os\reports\status\integrated-status-LATEST.md` 後，在 Cursor 對 AI 輸入 **`AO-RESUME`**；若你也要求零手動核對，請代理改跑 **`ao-resume.ps1 -AutoVerifyAll`**（或 **`align-workstation.ps1`**）。  
+   > **重要**：`ao-resume`／`align-workstation` 會 `fetch`；**僅在落後 `origin/main`（behind>0）** 時 **`git pull --ff-only`**。**若落後且工作樹仍有未提交變更**，預設 **不**自動 stash（見 **2.5.1**）；Autopilot 路徑可鬆綁 stash（見 **AGENTS.md**）。
 
 ## 2.5 日內 Git 節奏（checkpoint 與收工）— **單一真相（人類可讀）**
 
@@ -191,7 +193,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\bootstrap-local-wordpress-win
 
 | 階段 | 誰做什麼 | Git |
 |------|-----------|-----|
-| **`AO-RESUME`（開工前檢）** | 你：在 Cursor 打關鍵字；代理：跑 `ao-resume.ps1` preflight、讀進度檔 | **不**為「開場」自動空 commit；預設會在終端**列出 `agency-os/TASKS.md` 全部 `- [ ]`（含所屬 `##` 區塊）**；另列出自上次以來的 `agency-os/reports/*` 增量。進階略過：**`-SkipOpenTasksList`**。 |
+| **`AO-RESUME`（開工前檢）** | 你：在 Cursor 打關鍵字；代理：跑 `ao-resume.ps1` preflight、讀進度檔 | **不**為「開場」自動空 commit；預設會在終端**列出 `agency-os/TASKS.md` 全部 `- [ ]`（含所屬 `##` 區塊）**；另列出自上次以來的 `agency-os/reports/*` 增量。進階略過：**`-SkipOpenTasksList`**。**零手動對照檔案**：加 **`-AutoVerifyAll`**（或跑 **`scripts/align-workstation.ps1`**）→ 結尾再跑 **`machine-environment-audit -FetchOrigin -Strict`**，以 exit code 裁決。 |
 | **工作中（至收工前）** | 你：下任務；代理：實作與驗證 | 每完成一個**可敘述、已驗證**的里程碑：代理**應自動**在 monorepo 根執行 **`scripts/commit-checkpoint.ps1`**（**本機 commit**，**不 push**）。**你不必手動**跑該腳本。 |
 | **`AO-CLOSE`（收工）** | 你：關鍵字或明示收工；代理：更新 **`WORKLOG`**／`memory`（**不必手動勾 `TASKS`**）後跑 `ao-close.ps1` | **開頭** **`print-today-closeout-recap`**；閘道 **PASS** 後、**`git add` 前**：**`apply-closeout-task-checkmarks`** 讀取當日 **`WORKLOG`** 之 **`- AUTO_TASK_DONE: …`**（＋選用 **`pending-task-completions.txt`**）自動打勾 **`TASKS`**。略過：**`-SkipAutoTaskCheckmarks`**。其餘略過旗標見 **`end-of-day-checklist`**。再 **`git add` → `commit` → `git push`**。 |
 
@@ -337,5 +339,5 @@ powershell -ExecutionPolicy Bypass -File .\scripts\machine-environment-audit.ps1
 - `RESUME_AFTER_REBOOT.md`
 - `TASKS.md`
 
-_Last synced: 2026-04-09 02:00:03 UTC_
+_Last synced: 2026-04-09 02:30:30 UTC_
 

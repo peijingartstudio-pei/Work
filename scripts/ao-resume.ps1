@@ -1,6 +1,7 @@
 param(
     [string]$WorkRoot = "",
     [switch]$SkipVerify,
+    [switch]$AutoVerifyAll,
     [switch]$AllowUnexpectedDirty,
     [switch]$AllowStashBeforePull,
     [switch]$AllowPendingStash,
@@ -33,7 +34,10 @@ $syncArgs = @(
     "-WorkRoot", $WorkRoot,
     "-AutoFix"
 )
-if ($SkipVerify) { $syncArgs += "-SkipVerify" }
+if ($AutoVerifyAll -and $SkipVerify) {
+    Write-Host "== AO-RESUME: -AutoVerifyAll overrides -SkipVerify（仍跑 verify-build-gates）==" -ForegroundColor DarkYellow
+}
+if ($SkipVerify -and -not $AutoVerifyAll) { $syncArgs += "-SkipVerify" }
 if ($AllowUnexpectedDirty) { $syncArgs += "-AllowUnexpectedDirty" }
 if ($AllowUnexpectedDirty -or $AllowStashBeforePull) { $syncArgs += "-AllowStashBeforePull" }
 if ($AllowUnexpectedDirty -or $AllowPendingStash) { $syncArgs += "-AllowPendingStash" }
@@ -66,6 +70,21 @@ if (-not $SkipOpenTasksList -and (Test-Path -LiteralPath $openTasksScript)) {
     }
 } elseif ($SkipOpenTasksList) {
     Write-Host "== AO-RESUME: -SkipOpenTasksList（略過列出 TASKS 未完成項）==" -ForegroundColor DarkYellow
+}
+
+if ($AutoVerifyAll) {
+    $auditScript = Join-Path $WorkRoot "scripts\machine-environment-audit.ps1"
+    if (-not (Test-Path -LiteralPath $auditScript)) {
+        Write-Error "ao-resume: machine-environment-audit missing at $auditScript"
+        exit 1
+    }
+    Write-Host ""
+    Write-Host "== AO-RESUME: -AutoVerifyAll（machine-environment-audit -FetchOrigin -Strict；零手動對照檔案）==" -ForegroundColor Cyan
+    & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $auditScript -WorkRoot $WorkRoot -FetchOrigin -Strict
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "ao-resume: machine-environment-audit -Strict failed (exit $LASTEXITCODE). Fix output above; no manual markdown checklist required."
+        exit $LASTEXITCODE
+    }
 }
 
 # Report delta since last AO-RESUME (local stamp under agency-os/.agency-state/)
