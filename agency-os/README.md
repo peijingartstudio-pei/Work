@@ -1,4 +1,4 @@
-# Agency OS v1
+﻿# Agency OS v1
 
 這是一套給多客戶網站建置、客製系統、維運與行銷整合的營運框架。
 
@@ -199,5 +199,5 @@
 - `tenants/templates/tenant-template/03_TOOLS_CONFIGURATION_GUIDE.md`
 - `tenants/templates/tenant-template/04_OPERATIONS_AUTOMATION_GUIDE.md`
 
-_Last synced: 2026-04-09 09:29:25 UTC_
+_Last synced: 2026-04-09 09:38:17 UTC_
 
